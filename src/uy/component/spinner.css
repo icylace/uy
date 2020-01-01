@@ -1,0 +1,42 @@
+/* Based on: */
+/* https://stephanwagner.me/only-css-loading-spinner */
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner:before {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  margin-left: -10px;
+  border-radius: 50%;
+  border: 2px solid var(--color-gray--85);
+  border-top-color: var(--color-gray--15);
+  animation: spinner 0.6s linear infinite;
+}
+
+/* -------------------------------------------------------------------------- */
+
+/* *
+
+TODO: determine where to put this if anywhere
+
+.dashboard-cloning {
+  font-size: var(--regular-font-size);
+  padding-right: 3em;
+  position: relative;
+}
+
+.dashboard-cloning .spinner:before {
+  left: calc(50% + 25px);
+}
+
+/* */

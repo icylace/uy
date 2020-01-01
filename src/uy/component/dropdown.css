@@ -1,0 +1,86 @@
+/* https://speckyboy.com/open-source-css-javascript-select-box-snippets/ */
+
+.my-drop-down-wrapper {
+  --arrow-bg-color: var(--regular-button-bg-color);
+  --arrow-bg-color--hover: var(--regular-button-bg-color--hover);
+  --arrow-bg-color--focus: var(--regular-button-bg-color--focus);
+  --arrow-bg-color--active: var(--regular-button-bg-color--active);
+  --arrow-bg-color--disabled: var(--regular-button-bg-color--disabled);
+
+  --arrow-color: var(--regular-button-color);
+  --arrow-color--hover: var(--regular-button-color--hover);
+  --arrow-color--focus: var(--regular-button-color--focus);
+  --arrow-color--active: var(--regular-button-color--active);
+  --arrow-color--disabled: var(--regular-button-color--disabled);
+
+  --arrow-border-size: var(--regular-border-width);
+  --arrow-cover-width: calc(var(--regular-font-size) * 1.5);
+
+  --input-padding: var(--regular-border-width);
+}
+
+.my-drop-down-arrow {
+  display: inline-block;
+  position: relative;
+}
+
+/* Custom drop-down arrow cover. */
+.my-drop-down-arrow:before {
+  background-color: var(--arrow-bg-color);
+  bottom: calc(var(--arrow-border-size) + var(--input-padding));
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  right: calc(var(--arrow-border-size) + var(--input-padding));
+  top: calc(var(--arrow-border-size) + var(--input-padding));
+  width: var(--arrow-cover-width);
+}
+.my-drop-down-arrow:hover:before {
+  background-color: var(--arrow-bg-color--hover);
+}
+.my-drop-down-arrow.focus:before {
+  background-color: var(--arrow-bg-color--focus);
+}
+.my-drop-down-arrow:active:before {
+  background-color: var(--arrow-bg-color--active);
+}
+.my-drop-down-arrow.disabled:before {
+  background-color: var(--arrow-bg-color--disabled);
+}
+
+/* Custom drop-down arrow. */
+.my-drop-down-arrow:after {
+  color: var(--arrow-color);
+  content: "▼";
+  font-size: 0.7em;
+  pointer-events: none;
+  position: absolute;
+  margin-top: -0.5em;
+  right: calc(
+    (var(--arrow-cover-width) - var(--arrow-border-size)) / 2 - var(--regular-input-padding) +
+      (var(--input-padding) * 1.5)
+  );
+  top: 50%;
+}
+.my-drop-down-arrow:hover:after {
+  color: var(--arrow-color--hover);
+}
+.my-drop-down-arrow.focus:after {
+  color: var(--arrow-color--focus);
+}
+.my-drop-down-arrow:active:after {
+  color: var(--arrow-color--active);
+}
+.my-drop-down-arrow.disabled:after {
+  color: var(--arrow-color--disabled);
+}
+
+.my-drop-down {
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 0;
+  border-width: var(--regular-border-width);
+  cursor: pointer;
+  padding: var(--regular-input-padding);
+  padding-right: calc(var(--regular-input-padding) * 2 + var(--arrow-cover-width));
+}

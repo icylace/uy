@@ -1,0 +1,31 @@
+.uy-pager-container {
+  display: flex;
+  justify-content: center;
+}
+
+.uy-pager {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  user-select: none;
+}
+
+.uy-pager-page {
+  border: 1px solid var(--color-blue-violet--60);
+  color: var(--color-blue-violet--60);
+  cursor: pointer;
+  display: block;
+  padding: 0.7em 1em;
+  white-space: nowrap;
+}
+
+.uy-pager-more {
+  display: block;
+  padding: 0.7em 0.5em;
+}
+
+.uy-pager-active {
+  background-color: var(--color-blue-violet--60);
+  color: white;
+  cursor: default;
+}

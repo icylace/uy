@@ -1,0 +1,91 @@
+/* http://jsfiddle.net/plan/V2Q58/ */
+
+.uy-datePicker input {
+  --date-separator-color: var(--regular-input-border-color);
+  --date-separator-color--hover: var(--regular-input-border-color--hover);
+  --date-separator-color--focus: var(--regular-input-border-color--focus);
+  --date-separator-color--active: var(--regular-input-border-color--active);
+  --date-separator-color--disabled: var(--regular-input-border-color--disabled);
+
+  --date-arrow-bg-color: var(--regular-button-bg-color);
+  --date-arrow-bg-color--hover: var(--regular-button-bg-color--hover);
+  --date-arrow-bg-color--focus: var(--regular-button-bg-color--focus);
+  --date-arrow-bg-color--active: var(--regular-button-bg-color--active);
+  --date-arrow-bg-color--disabled: var(--regular-button-bg-color--disabled);
+
+  --date-arrow-color: var(--regular-button-color);
+  --date-arrow-color--hover: var(--regular-button-color--hover);
+  --date-arrow-color--focus: var(--regular-button-color--focus);
+  --date-arrow-color--active: var(--regular-button-color--active);
+  --date-arrow-color--disabled: var(--regular-button-color--disabled);
+}
+
+.uy-datePicker input {
+  cursor: pointer;
+}
+.uy-datePicker input {
+  padding: var(--regular-border-width);
+  padding-left: var(--regular-input-padding);
+}
+
+.uy-datePicker input::-webkit-datetime-edit-text {
+  padding-left: 0.1em;
+  padding-right: 0.1em;
+}
+.uy-datePicker input::-webkit-datetime-edit-text {
+  color: var(--date-separator-color);
+}
+.uy-datePicker input:hover::-webkit-datetime-edit-text {
+  color: var(--date-separator-color--hover);
+}
+.uy-datePicker input:focus::-webkit-datetime-edit-text {
+  color: var(--date-separator-color--focus);
+}
+.uy-datePicker input:active::-webkit-datetime-edit-text {
+  color: var(--date-separator-color--active);
+}
+.uy-datePicker input:disabled::-webkit-datetime-edit-text {
+  color: var(--date-separator-color--disabled);
+}
+
+.uy-datePicker input::-webkit-clear-button {
+  display: none;
+}
+
+.uy-datePicker input::-webkit-inner-spin-button {
+  display: none;
+}
+
+.uy-datePicker input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 1;
+}
+.uy-datePicker input::-webkit-calendar-picker-indicator {
+  padding: 0.75em;
+}
+.uy-datePicker input::-webkit-calendar-picker-indicator {
+  background-color: var(--date-arrow-bg-color);
+  color: var(--date-arrow-color);
+}
+.uy-datePicker input::-webkit-calendar-picker-indicator {
+  font-size: 0.7em;
+}
+.uy-datePicker input:hover::-webkit-calendar-picker-indicator {
+  background-color: var(--date-arrow-bg-color--hover);
+  color: var(--date-arrow-color--hover);
+}
+.uy-datePicker input:focus::-webkit-calendar-picker-indicator {
+  background-color: var(--date-arrow-bg-color--focus);
+  color: var(--date-arrow-color--focus);
+}
+.uy-datePicker input:active::-webkit-calendar-picker-indicator {
+  background-color: var(--date-arrow-bg-color--active);
+  color: var(--date-arrow-color--active);
+}
+.uy-datePicker input:disabled::-webkit-calendar-picker-indicator {
+  visibility: visible;
+}
+.uy-datePicker input:disabled::-webkit-calendar-picker-indicator {
+  background-color: var(--date-arrow-bg-color--disabled);
+  color: var(--date-arrow-color--disabled);
+}

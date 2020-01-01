@@ -1,0 +1,86 @@
+@import url("./color.css");
+@import url("./font.css");
+
+/* TODO: add `uy-` prefix to the CSS custom properties */
+/* TODO: try removing the `regular-` prefix.  is it even necessary ? */
+
+:root {
+  --regular-label-color: var(--color-gray--15);
+  --regular-label-color--hover: var(--color-gray--15);
+  --regular-label-color--focus: var(--color-gray--15);
+  --regular-label-color--active: var(--color-gray--15);
+  --regular-label-color--disabled: var(--color-gray--15__30);
+
+  /* --regular-input-bg-color: var(--color-gray--95); */
+  --regular-input-bg-color: white;
+  /* --regular-input-bg-color--hover: var(--color-gray--95); */
+  --regular-input-bg-color--hover: white;
+  --regular-input-bg-color--focus: var(--color-gray--98);
+  --regular-input-bg-color--active: white;
+
+  --regular-input-bg-color--disabled: var(--color-gray--70__50);
+  /* TODO: proposed naming format: */
+  /* --uy-input--bg-color--disabled: var(--color-gray--70__50); */
+
+  --regular-input-border-color: var(--color-blue-violet--70);
+  --regular-input-border-color--hover: var(--color-blue-violet--65);
+  --regular-input-border-color--focus: var(--color-blue-violet--40);
+  --regular-input-border-color--active: var(--color-blue-violet--60);
+  --regular-input-border-color--disabled: var(--color-gray--50__50);
+
+  --regular-input-color: var(--color-gray--15);
+  --regular-input-color--hover: var(--color-gray--15);
+  --regular-input-color--focus: var(--color-gray--15);
+  --regular-input-color--active: black;
+
+  --regular-input-color--disabled: var(--color-gray--40__50);
+  /* TODO: proposed naming format: */
+  /* --uy-input--color--disabled: var(--color-gray--40__50); */
+
+  --regular-button-bg-color: var(--color-blue-violet--70);
+  --regular-button-bg-color--hover: var(--color-blue-violet--65);
+  --regular-button-bg-color--focus: var(--color-blue-violet--60);
+  --regular-button-bg-color--active: var(--color-blue-violet--60);
+  --regular-button-bg-color--disabled: var(--color-gray--60__50);
+
+  --regular-button-border-color: var(--color-blue-violet--75);
+  --regular-button-border-color--hover: var(--color-blue-violet--60);
+  --regular-button-border-color--focus: var(--color-blue-violet--40);
+  --regular-button-border-color--active: var(--color-blue-violet--55);
+  --regular-button-border-color--disabled: var(--color-gray--70__50);
+
+  --regular-button-color: var(--color-gray--95);
+  --regular-button-color--hover: var(--color-gray--95);
+  --regular-button-color--focus: var(--color-gray--98);
+  --regular-button-color--active: var(--color-blue-violet--85);
+  --regular-button-color--disabled: var(--color-gray--40__50);
+
+  --regular-selected-bg-color: var(--color-blue-violet--55);
+  --regular-selected-bg-color--hover: var(--color-blue-violet--55);
+  --regular-selected-bg-color--focus: var(--color-blue-violet--50);
+  --regular-selected-bg-color--active: var(--color-blue-violet--60);
+  --regular-selected-bg-color--disabled: var(--color-gray--62__50);
+
+  --regular-selected-border-color: var(--color-blue-violet--75);
+  --regular-selected-border-color--hover: var(--color-blue-violet--60);
+  --regular-selected-border-color--focus: var(--color-blue-violet--40);
+  --regular-selected-border-color--active: var(--color-blue-violet--55);
+  --regular-selected-border-color--disabled: var(--color-gray--40__75);
+
+  --regular-selected-color: var(--color-gray--95);
+  --regular-selected-color--hover: var(--color-gray--95);
+  --regular-selected-color--focus: var(--color-gray--98);
+  --regular-selected-color--active: var(--color-blue-violet--85);
+  --regular-selected-color--disabled: var(--color-gray--40__50);
+
+  /* ------------------------------------------------------------------------ */
+
+  --regular-font-family: var(--font-verdana-like);
+  --regular-font-size: 1.8rem;
+
+  /* ------------------------------------------------------------------------ */
+
+  --regular-border-width: 2px;
+  --regular-border: var(--regular-border-width) solid var(--regular-input-border-color);
+  --regular-input-padding: 0.25em;
+}

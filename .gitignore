@@ -1,6 +1,9 @@
 # Ignore error logs.
 *.log
 
+# Ignore transpiled code.
+transpiled
+
 # Ignore Acquia Dev Desktop local sites.
 sites/*.dd
 

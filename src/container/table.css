@@ -1,0 +1,10 @@
+/* https://stackoverflow.com/a/49510703 */
+.uy-table table th {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.uy-table table th.sortable {
+  cursor: pointer;
+}

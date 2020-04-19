@@ -1,0 +1,10 @@
+{
+  "imports": {
+    "date-fns": "./date-fns.js",
+    "hyperapp": "./hyperapp.js",
+    "hyperapp-fx": "./hyperapp-fx.js",
+    "ramda": "./ramda.js",
+    "remeda": "./remeda.js",
+    "shades": "./shades.js"
+  }
+}

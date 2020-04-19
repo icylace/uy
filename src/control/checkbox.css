@@ -1,0 +1,32 @@
+/* https://www.inserthtml.com/2012/06/custom-form-radio-checkbox/ */
+
+.uy-checkbox {
+  align-items: center;
+  display: flex;
+}
+
+.uy-checkbox > label {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: stretch;
+}
+
+.uy-checkbox > label > input[type="checkbox"] {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  float: left;
+  justify-content: center;
+  position: relative;
+}
+
+.uy-checkbox > label > input[type="checkbox"]:before {
+  position: absolute;
+}
+
+.uy-checkbox > label > span {
+  align-items: center;
+  display: flex;
+  justify-content: stretch;
+}

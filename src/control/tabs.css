@@ -1,0 +1,26 @@
+.uy-tabs {
+  display: grid;
+  grid-template-rows: auto auto;
+}
+
+.uy-tabs-navigation {
+  align-items: center;
+  display: flex;
+}
+
+.uy-tabs-list {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.uy-tabs-item {
+  cursor: pointer;
+  user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+}
+.uy-tabs-item.selected {
+  color: blue;
+}

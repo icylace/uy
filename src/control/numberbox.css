@@ -1,0 +1,20 @@
+.uy-numberbox {
+  display: flex;
+}
+
+.uy-numberbox > label {
+  display: flex;
+}
+.uy-numberbox > label.disabled {
+  pointer-events: none;
+}
+
+.uy-numberbox > label span {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+}

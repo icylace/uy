@@ -1,0 +1,23 @@
+/* https://speckyboy.com/open-source-css-javascript-select-box-snippets/ */
+
+.uy-dropdown-arrow {
+  display: inline-block;
+  position: relative;
+}
+
+/* Custom dropdown arrow cover. */
+.uy-dropdown-arrow:before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+}
+
+/* Custom drop-down arrow. */
+.uy-dropdown-arrow:after {
+  pointer-events: none;
+  position: absolute;
+}
+
+.uy-dropdown select {
+  cursor: pointer;
+}

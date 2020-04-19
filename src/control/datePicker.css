@@ -1,0 +1,9 @@
+/* http://jsfiddle.net/plan/V2Q58/ */
+
+.uy-datePicker > input {
+  cursor: pointer;
+}
+
+.uy-datePicker > input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+}

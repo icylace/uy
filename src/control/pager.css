@@ -1,0 +1,22 @@
+.uy-pager-container {
+  display: flex;
+  justify-content: center;
+}
+
+.uy-pager > ul {
+  display: flex;
+  list-style: none;
+  user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+}
+
+.uy-pager-nav {
+  display: block;
+  white-space: nowrap;
+}
+
+.uy-pager-more {
+  display: block;
+}

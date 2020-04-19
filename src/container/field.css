@@ -1,0 +1,10 @@
+.uy-field > label {
+  cursor: pointer;
+  user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+}
+.uy-field > label.disabled {
+  pointer-events: none;
+}

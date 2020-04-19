@@ -1,0 +1,52 @@
+----
+
+Recipe:
+$ npm install --save-dev @swc/core @swc/cli @types/jest healthier jest snowpack typescript utility-types
+$ npm install --save @fortawesome/fontawesome-free axios date-fns hyperapp hyperapp-fx remeda sanctuary shades uuid
+
+
+Patching of 3rd-party tools:
+https://github.com/jamesmcnamara/shades/issues/37
+https://github.com/jamesmcnamara/shades/issues/37#issuecomment-594810688
+
+
+
+----
+
+
+
+The readonly attribute is supported by
+
+<!-- text, -->
+<!-- search, -->
+url,
+tel,
+email,
+password,
+<!-- date, -->
+<!-- month, -->
+<!-- week, -->
+<!-- time, -->
+<!-- datetime-local, -->
+<!-- and number -->
+<!-- <input> types and the -->
+<!-- <select> -->
+<!-- and <textarea> -->
+
+
+ form control elements. If present on any of these input types and elements, the :read-only pseudo class will match. If the attribute is not included, the :read-write pseudo class will match.
+
+
+ ----
+
+
+ The disabled attribute is supported by
+ <!-- <button>, -->
+ <!-- <command>, -->
+ <!-- <fieldset>, -->
+ <!-- <keygen>, -->
+ <optgroup>,
+ <option>,
+ <!-- <select>, -->
+ <!-- <textarea> -->
+ and <input>.

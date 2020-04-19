@@ -1,0 +1,10 @@
+.uy-button > button {
+  cursor: pointer;
+  user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+}
+.uy-button > button:disabled {
+  pointer-events: none;
+}

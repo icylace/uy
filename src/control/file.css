@@ -1,0 +1,31 @@
+/* BAsed on: */
+/* https://codepen.io/adamlaki/pen/VYpewx */
+
+.uy-file {
+  display: flex;
+}
+
+.uy-file > label {
+  align-content: center;
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+}
+.uy-file > label.disabled {
+  pointer-events: none;
+}
+
+.uy-file > label:after {
+  content: attr(data-text);
+}
+
+/* Hide the native browser file upload control. */
+/* https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/ */
+.uy-file > label > input[type="file"] {
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  width: 0.1px;
+  z-index: -1;
+}

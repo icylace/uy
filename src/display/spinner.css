@@ -1,0 +1,24 @@
+/* Based on: */
+/* https://stephanwagner.me/only-css-loading-spinner */
+
+@keyframes uy-spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.uy-spinner:before {
+  border: 1px solid white;
+  border-radius: 50%;
+  border-top-color: black;
+  box-sizing: border-box;
+  content: "";
+  height: 20px;
+  left: 50%;
+  margin-left: -10px;
+  margin-top: -10px;
+  position: absolute;
+  top: 50%;
+  width: 20px;
+  animation: uy-spinner 0.6s linear infinite;
+}

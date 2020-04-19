@@ -1,0 +1,12 @@
+.uy-radios > label {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: stretch;
+}
+
+.uy-radios > label > span {
+  align-items: center;
+  display: flex;
+  justify-content: stretch;
+}

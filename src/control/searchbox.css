@@ -1,0 +1,35 @@
+.uy-searchbox {
+  position: relative;
+}
+
+.uy-searchbox-label {
+  display: flex;
+}
+.uy-searchbox-label.disabled {
+  pointer-events: none;
+}
+
+.uy-searchbox-label > span {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+}
+
+/* -------------------------------------------------------------------------- */
+
+.uy-searchbox-results {
+  background-color: transparent;
+  list-style: none;
+  margin: 0;
+  max-height: var(--uy-searchbox-results-height);
+  overflow-y: scroll;
+  padding: 0;
+}
+
+.uy-searchbox-results > li:hover {
+  cursor: pointer;
+}

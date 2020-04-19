@@ -1,0 +1,204 @@
+/*
+
+uy
+
+- uy-control: An interactive component.
+- uy-container: A component meant to contain other components.
+- uy-indicator: A component meant to display information.
+- uy-input: The element of a control that accepts user input data.
+- uy-clicky: The element of a control that can be clicked.
+
+input control modes:
+- regular
+- selected
+- required
+
+input control states:
+- normal
+- hover
+- active
+- focus
+- locked
+- busy
+- disabled
+- clean
+- dirty
+- invalid
+- error
+
+*/
+
+/* -------------------------------------------------------------------------- */
+
+@import url(./container/field.css);
+@import url(./container/fieldset.css);
+@import url(./container/overlay.css);
+@import url(./container/popup.css);
+@import url(./container/table.css);
+@import url(./container/ui.css);
+
+@import url(./control/button.css);
+@import url(./control/checkbox.css);
+@import url(./control/checklist.css);
+@import url(./control/datePicker.css);
+@import url(./control/dropdown.css);
+@import url(./control/numberbox.css);
+@import url(./control/multiselect.css);
+@import url(./control/pager.css);
+@import url(./control/radios.css);
+@import url(./control/searchbox.css);
+@import url(./control/tabs.css);
+@import url(./control/textarea.css);
+@import url(./control/textbox.css);
+
+@import url(./display/icon.css);
+@import url(./display/spinner.css);
+
+/* -------------------------------------------------------------------------- */
+
+/* .hidden {
+  display: none !important;
+} */
+
+.disabled {
+  pointer-events: none !important;
+}
+
+.locked {
+  pointer-events: none;
+}
+
+/* -------------------------------------------------------------------------- */
+
+.uy-container {
+  background-color: var(--uy-container-bg-color);
+  border-color: var(--uy-container-border-color);
+  border-style: solid;
+  border-width: var(--uy-border-width);
+  color: var(--uy-container-color);
+  font-family: var(--uy-font-family);
+  font-size: var(--uy-font-size);
+  padding: var(--uy-container-padding);
+  outline: 0;
+}
+.uy-container.hover,
+.uy-container:hover {
+  background-color: var(--uy-container-bg-color--hover);
+  border-color: var(--uy-container-border-color--hover);
+  color: var(--uy-container-color--hover);
+}
+.uy-container.focus,
+.uy-container:focus {
+  background-color: var(--uy-container-bg-color--focus);
+  border-color: var(--uy-container-border-color--focus);
+  color: var(--uy-container-color--focus);
+}
+.uy-container.active,
+.uy-container:active {
+  background-color: var(--uy-container-bg-color--active);
+  border-color: var(--uy-container-border-color--active);
+  color: var(--uy-container-color--active);
+}
+.uy-container.disabled,
+.uy-container:disabled {
+  background-color: var(--uy-container-bg-color--disabled);
+  border-color: var(--uy-container-border-color--disabled);
+  color: var(--uy-container-color--disabled);
+  pointer-events: none;
+}
+.uy-container.locked {
+  border-color: var(--uy-container-border-color--disabled);
+}
+
+/* -------------------------------------------------------------------------- */
+
+.uy-input {
+  background-color: var(--uy-input-bg-color);
+  border-color: var(--uy-input-border-color);
+  border-style: solid;
+  border-width: var(--uy-border-width);
+  color: var(--uy-input-color);
+  cursor: pointer;
+  font-family: var(--uy-font-family);
+  font-size: var(--uy-font-size);
+  padding: var(--uy-input-padding);
+  outline: 0;
+}
+.uy-input.hover,
+.uy-input:hover {
+  background-color: var(--uy-input-bg-color--hover);
+  border-color: var(--uy-input-border-color--hover);
+  color: var(--uy-input-color--hover);
+}
+.uy-input.focus,
+.uy-input:focus {
+  background-color: var(--uy-input-bg-color--focus);
+  border-color: var(--uy-input-border-color--focus);
+  color: var(--uy-input-color--focus);
+}
+.uy-input.active,
+.uy-input:active {
+  background-color: var(--uy-input-bg-color--active);
+  border-color: var(--uy-input-border-color--active);
+  color: var(--uy-input-color--active);
+}
+.uy-input.disabled,
+.uy-input:disabled {
+  background-color: var(--uy-input-bg-color--disabled);
+  border-color: var(--uy-input-border-color--disabled);
+  color: var(--uy-input-color--disabled);
+  pointer-events: none;
+}
+.uy-input.locked {
+  border-color: var(--uy-input-border-color--disabled);
+  pointer-events: none;
+}
+
+/* -------------------------------------------------------------------------- */
+
+.uy-clicky {
+  cursor: pointer;
+}
+
+/* -------------------------------------------------------------------------- */
+
+/* .uy-horizontal {
+  align-items: center;
+  display: flex;
+}
+
+.uy-horizontal > * + * {
+  margin-left: 0.5em;
+}
+
+.uy-horizontal > * + .uy-checkbox-wrapper {
+  margin-left: 2em;
+}
+
+.uy-table .uy-horizontal .uy-textbox-wrapper {
+  margin-left: 0.5em;
+}
+
+.uy-table .uy-horizontal .uy-textbox {
+  width: 10em;
+} */
+
+/* -------------------------------------------------------------------------- */
+
+.only-print {
+  display: none !important;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  .only-print {
+    display: block !important;
+  }
+
+  .break-before {
+    page-break-before: always;
+  }
+}

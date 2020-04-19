@@ -1,0 +1,4 @@
+.uy-textarea textarea {
+  min-height: 1em;
+  resize: vertical;
+}

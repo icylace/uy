@@ -1,8 +1,8 @@
 import { h } from "hyperapp"
 import { box } from "../container/ui"
 import { component } from "../utility/component"
-import { action, handleValueWith } from "../utility/event"
-import { set } from "../utility/lens"
+import { handleValueWith } from "../utility/event"
+import { set } from "../utility/shadesHelper"
 import { asNumber, ifExists } from "../utility/utility"
 
 // freshNumberbox :: Int -> ControlData
@@ -16,7 +16,7 @@ const update = (path: string[]) => (value: string): any => set([...path, "value"
 
 // rawNumberbox :: LabeledControlOptions -> Object -> VNode
 const rawNumberbox = ({ disabled, locked, label, path, ...etc }: any): any => (data: any): any =>
-  box("uy-control uy-numberbox", [
+  box("uy-control uy-numberbox")([
     h("label", {
       class: {
         disabled,
@@ -31,8 +31,8 @@ const rawNumberbox = ({ disabled, locked, label, path, ...etc }: any): any => (d
         type: "number",
         value: data.value,
         onchange: handleValueWith(update(path)),
-        onfocus: action((_event: any) => set([...path, "focused"])(true)),
-        onblur: action((_event: any) => set([...path, "focused"])(false)),
+        onfocus: set([...path, "focused"])(true),
+        onblur: set([...path, "focused"])(false),
         ...etc,
         class: {
           disabled,

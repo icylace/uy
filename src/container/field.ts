@@ -1,9 +1,9 @@
 import { h } from "hyperapp"
 import { box } from "./ui"
 
-// field :: (ComponentOptions -> String -> State -> VNode) -> String -> ComponentOptions -> [String] -> VNode
+// field :: (ComponentOptions -> String -> State -> VNode) -> String -> ComponentOptions -> [String] -> State -> VNode
 const field = (f: Function) => (title: String) => ({ disabled, locked, ...etc }: any) => (path: string[]) => (state: any): any =>
-  box("uy-container uy-field", [
+  box("uy-container uy-field")([
     h("label", {
       ...etc,
       class: {

@@ -1,6 +1,6 @@
 import { h } from "hyperapp"
-import { ui } from "./ui"
 import { compose } from "../utility/utility"
+import { ui } from "./ui"
 
 // rawFieldset :: ComponentOptions -> [VNode] -> VNode
 const rawFieldset = ({ disabled, locked, label, ...etc }: any) => (contents: any[]): any =>

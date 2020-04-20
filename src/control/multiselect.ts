@@ -3,9 +3,6 @@ import { box } from "../container/ui"
 import { component } from "../utility/component"
 import { rawCheckbox } from "./checkbox"
 
-// @ts-ignore
-const { S } = window.sanctuary
-
 // freshMultiselect :: [String] -> ControlData
 const freshMultiselect = (value: string[]): any => ({ value })
 
@@ -23,15 +20,14 @@ const rawMultiselect = ({ disabled, locked, update, options, usingColumnMode, ..
       "uy-multiselect--grid-mode": usingColumnMode,
       [etc.class]: !!etc.class,
     },
-  }, [
-    box(
-      "uy-multiselect-options",
-      S.pairs(options).map(([x, label]: any) =>
+  })([
+    box("uy-multiselect-options")(
+      Object.entries(options).map(([x, label]: any) =>
         rawCheckbox({
           disabled,
           label,
           locked,
-          update: (checked: boolean) => (state: any): any => {
+          update: (state: any, checked: boolean) => {
             if (checked) {
               selection.add(x)
             } else {

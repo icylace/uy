@@ -4,7 +4,7 @@ import { box, ui } from "./ui"
 
 // rawOverlay :: ComponentOptions -> [VNode] -> VNode
 const rawOverlay = ({ disabled, locked, ...etc }: any) => (contents: any[]): any =>
-  box("uy-overlay-background", [
+  box("uy-overlay-background")([
     h("div", {
       disabled,
       ...etc,

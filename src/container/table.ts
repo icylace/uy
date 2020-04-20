@@ -55,9 +55,9 @@ const rawTable = ({ disabled, locked, headers, orderColumn, sortDescending, ...e
     locked,
     "uy-control": true,
     "uy-table": true,
-  }, [
+  })([
     h("table", etc, [
-      headers
+      headers.length
         ? h("thead", {}, headers.map(tableHeader(orderColumn)(!!sortDescending)))
         : null,
       h("tbody", {}, data.rows.map(tableRow)),

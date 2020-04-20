@@ -1,11 +1,8 @@
 import { h } from "hyperapp"
 import { box } from "../container/ui"
 import { component } from "../utility/component"
-import { action, handleValueWith } from "../utility/event"
-import { set } from "../utility/lens"
-
-// @ts-ignore
-const { S } = window.sanctuary
+import { handleValueWith } from "../utility/event"
+import { set } from "../utility/shadesHelper"
 
 // freshDropDown :: String -> ControlData
 const freshDropdown = (value: string): any => ({ value, focused: false })
@@ -16,20 +13,20 @@ const option = ([x, content]: any): any =>
 
 // rawDropdown :: DropdownOptions -> Object -> VNode
 const rawDropdown = ({ disabled, locked, options, path, update, ...etc }: any) => (data: any): any =>
-  box("uy-control uy-dropdown", [
+  box("uy-control uy-dropdown")([
     box({
       disabled,
       locked,
       "uy-dropdown-arrow": true,
       focus: data.focused,
-    }, [
+    })([
       h("select", {
         disabled,
         readonly: locked,
         value: data.value,
         onchange: handleValueWith(update),
-        onfocus: action((_event: any) => set([...path, "focused"])(true)),
-        onblur: action((_event: any) => set([...path, "focused"])(false)),
+        onfocus: set([...path, "focused"])(true),
+        onblur: set([...path, "focused"])(false),
         ...etc,
         class: {
           disabled,
@@ -37,7 +34,7 @@ const rawDropdown = ({ disabled, locked, options, path, update, ...etc }: any) =
           "uy-input": true,
           [etc.class]: !!etc.class,
         },
-      }, S.pairs(options).map(option)),
+      }, Object.entries(options).map(option)),
     ]),
   ])
 

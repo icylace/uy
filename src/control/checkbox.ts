@@ -9,7 +9,7 @@ const freshCheckbox = (value: boolean): any => ({ value })
 
 // rawCheckbox :: LabeledControlOptions -> Object -> VNode
 const rawCheckbox = ({ disabled, locked, label, update, ...etc }: any) => (data: any): any =>
-  box("uy-control uy-checkbox", [
+  box("uy-control uy-checkbox")([
     h("label", { class: { disabled, locked } }, [
       h("input", {
         disabled,

@@ -1,7 +1,7 @@
 import { h } from "hyperapp"
 import { rawTable } from "../container/table"
 import { component } from "../utility/component"
-import { set } from "../utility/lens"
+import { set } from "../utility/shadesHelper"
 import { rawCheckbox } from "./checkbox"
 
 // freshList :: [String] -> Object

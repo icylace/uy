@@ -1,9 +1,7 @@
 import { h } from "hyperapp"
 import { icon } from "../display/icon"
 import { component } from "../utility/component"
-
-// @ts-ignore
-const { S } = window.sanctuary
+import { range } from "../utility/utility"
 
 // freshPager :: Int -> Int -> PagerData
 const freshPager = (itemsTotal: number) => (value: number): any => ({ value, itemsTotal })
@@ -34,8 +32,8 @@ const rawPager = ({ disabled, locked, itemsPerPage, pageRange, update, ...etc }:
   const rangeStartPage = Math.max(0, data.value - pageRange)
   const rangeFinishPage = Math.min(lastPage, data.value + pageRange)
 
-  const pages = S.range(0)(rangeFinishPage - rangeStartPage + 1).map((i: any) => {
-    const currentPage = rangeStartPage + i
+  const pages = range(0)(rangeFinishPage - rangeStartPage + 1).map((n: number) => {
+    const currentPage = rangeStartPage + n
     const current = currentPage === data.value
     return rangeStartPage <= currentPage && currentPage <= rangeFinishPage
       ? h("li", {

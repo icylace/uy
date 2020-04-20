@@ -1,14 +1,13 @@
 import { h } from "hyperapp"
 import { box } from "../container/ui"
-import { action } from "../utility/event"
 
 // button :: ButtonOptions -> VNode
 const button = ({ disabled, locked, label, update, ...etc }: any): any =>
-  box("uy-control uy-button", [
+  box("uy-control uy-button")([
     h("button", {
       disabled,
       type: "button",
-      onclick: action(update),
+      onclick: update,
       ...etc,
       class: {
         disabled,

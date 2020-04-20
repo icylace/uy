@@ -8,7 +8,7 @@ const freshTextbox = (value: string): any => ({ value })
 
 // rawTextbox :: ControlOptions -> Object -> VNode
 const rawTextbox = ({ disabled, locked, update, ...etc }: any) => (data: any): any =>
-  box("uy-control uy-textbox", [
+  box("uy-control uy-textbox")([
     h("input", {
       disabled,
       readonly: locked,

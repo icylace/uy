@@ -4,17 +4,13 @@ import { component } from "../utility/component"
 import { handleValueWith } from "../utility/event"
 import { ifExists } from "../utility/utility"
 
-// @ts-ignore
-const { S } = window.sanctuary
-
 // freshRadios :: String -> ControlData
 const freshRadios = (value: any) => ({ value })
 
 // rawRadios :: RadiosOptions -> Object -> VNode
 const rawRadios = ({ disabled, locked, options, update, ...etc }: any) => (data: any) =>
-  box(
-    "uy-control uy-radios",
-    S.pairs(options).map(([value, label]: any) =>
+  box("uy-control uy-radios")(
+    Object.entries(options).map(([value, label]: any) =>
       h("label", { class: { locked, disabled } }, [
         h("input", {
           disabled,
@@ -32,8 +28,7 @@ const rawRadios = ({ disabled, locked, options, update, ...etc }: any) => (data:
         }),
         ifExists((x: any) => h("span", {}, [x]))(label),
       ])
-    )
-  )
+    ))
 
 // radios :: RadiosOptions -> [String] -> State -> VNode
 const radios = component(rawRadios)

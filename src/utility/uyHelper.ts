@@ -1,23 +1,17 @@
 import { get, has, mod, set } from "shades"
-import { action, handleUsing, onClick, onMouseDown, onOutside } from "./event"
-import { delist, identity, isSomething } from "./utility"
-
-// @ts-ignore
-const { S } = window.sanctuary
+import { handleUsing, onClick, onMouseDown, onOutside } from "./event"
+import { delist, identity, ifElse, isSomething, map, pipe } from "./utility"
 
 // -----------------------------------------------------------------------------
 
 // TODO:
 
 // // addClickHandler :: String -> Action -> State -> State
-// const addClickHandler = def ("addClickHandler :: String -> Object -> State -> State") (
-//   set ("uy", "utility", "eventHandler", "click")
-// )
+// const addClickHandler = set ("uy", "utility", "eventHandler", "click")
 
 // // TODO:
-// const removeClickHandler = def ("removeClickHandler :: String -> State -> State") (
-//   set ("uy", "utility", "eventHandler", "click") (undefined)
-// )
+// removeClickHandler :: String -> State -> State
+// const removeClickHandler = set ("uy", "utility", "eventHandler", "click") (undefined)
 
 // -----------------------------------------------------------------------------
 
@@ -26,21 +20,21 @@ const addInsideEl = (id: string): any => set("uy", "insideEl", id)
 
 // removeInsideEl :: String -> State -> State
 const removeInsideEl = (id: string): any =>
-  S.ifElse(has({ uy: { popups: { [id]: isSomething } } }))
+  ifElse(has({ uy: { popups: { [id]: isSomething } } }))
     (mod("uy", "insideEl")(delist(id)))
     (identity)
 
 // -----------------------------------------------------------------------------
 
 const detectOutside = ([popup, f]: any[]) =>
-  onOutside(`#${popup}`)((_: any) => S.pipe([f, removeInsideEl(popup)]))
+  onOutside(`#${popup}`)((_: any) => pipe([f, removeInsideEl(popup)]))
 
 const detectOutsideOfElements = (event: any) => (state: any): any => {
   const handlers =
-    S.pipe([
+    pipe([
       get("uy", "insideEl"),
-      S.pairs,
-      S.map(detectOutside),
+      Object.entries,
+      map(detectOutside),
     ])
   return handleUsing(handlers(state))(state, event)
 }
@@ -52,23 +46,23 @@ const freshState =
     utility: {
       eventHandler: {
         click: {},
-        mousedown: { detectOutsideAction: action(detectOutsideOfElements) },
+        mousedown: { detectOutsideAction: detectOutsideOfElements },
       },
     },
   })
 
 const clickSubscription =
-  S.pipe([
+  pipe([
     get("uy", "utility", "eventHandler", "click"),
-    S.values,
+    Object.values,
     handleUsing,
     onClick,
   ])
 
 const mouseDownSubscription =
-  S.pipe([
+  pipe([
     get("uy", "utility", "eventHandler", "mousedown"),
-    S.values,
+    Object.values,
     handleUsing,
     onMouseDown,
   ])

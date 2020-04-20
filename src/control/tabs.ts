@@ -47,12 +47,12 @@ const rawTabs = ({ disabled, locked, itemsFooter, itemsHeader, tabList, update, 
       },
     },
     [
-      box("uy-tabs-navigation", [
+      box("uy-tabs-navigation")([
         itemsHeader,
-        box("uy-tabs-list uy-scroller", headings.map(tab(data.value, update))),
+        box("uy-tabs-list uy-scroller")(headings.map(tab(data.value, update))),
         itemsFooter,
       ]),
-      box("uy-tabs-panels", [panels[headings.findIndex(isSelected(data.value))]]),
+      box("uy-tabs-panels")([panels[headings.findIndex(isSelected(data.value))]]),
     ]
   )
 }

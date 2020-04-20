@@ -1,17 +1,4 @@
-import { get, set } from "./lens"
-
-// @ts-ignore
-const { S } = window.sanctuary
-
-// etch :: StrMap Bool -> String
-const etch = S.pipe([S.pairs, S.filter(S.snd), S.map(S.fst), S.joinWith(" ")])
-
-// TODO:
-// const glam = def ("glam :: StrMap Bool -> String") (
-//   S.pipe ([S.pairs, S.filter (S.snd), S.map (S.fst), S.joinWith (" ")])
-// )
-
-// -----------------------------------------------------------------------------
+import { get, set } from "./shadesHelper"
 
 // component :: (Options -> [String] -> Object -> VNode) -> Object -> [String] -> State -> VNode
 const component = (f: Function) => (options: object) => (path: string[]) => (state: object): object => {
@@ -20,6 +7,4 @@ const component = (f: Function) => (options: object) => (path: string[]) => (sta
   return f({ update, path, ...options })(data)
 }
 
-// -----------------------------------------------------------------------------
-
-export { component, etch }
+export { component }

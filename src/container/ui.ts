@@ -1,20 +1,23 @@
 import { h } from "hyperapp"
+import { compose } from "../utility/utility"
+
+type ClassAttr = object | string
 
 // box :: ClassAttr -> [VNode] -> VNode
-const box = (classAttr: object | string, contents: any[]): any => h("div", { class: classAttr }, contents)
+const box = (classAttr: ClassAttr) => (contents: any[]): any =>
+  h("div", { class: classAttr }, contents)
 
-// TODO:
 // ui :: ([VNode] -> VNode) -> [(State -> VNode)] -> State -> VNode
-const ui = (f: any) => (gs: any) => (state: any): any => f(gs.map((g: Function): any => g(state)))
+const ui = (f: Function) => (gs: Function[]) => (state: any): any =>
+  f(gs.map((g: Function) => g(state)))
 
-// column :: [AnyFunction] -> State -> VNode
-const column = ui((xs: any[]): any => box("uy-column", xs))
+// column :: [Function] -> State -> VNode
+const column = ui(box("uy-column"))
 
-// panel :: ClassAttr -> [AnyFunction] -> State -> VNode
-const panel = (classAttr: object | string) => (contents: any[]) => (state: any) =>
-  ui((xs: any[]): any => box(classAttr, xs))(contents)(state)
+// panel :: ClassAttr -> [Function] -> State -> VNode
+const panel = compose(ui)(box)
 
-// row :: [AnyFunction] -> State -> VNode
-const row = ui((xs: any[]): any => box("uy-row", xs))
+// row :: [Function] -> State -> VNode
+const row = ui(box("uy-row"))
 
 export { box, column, panel, row, ui }

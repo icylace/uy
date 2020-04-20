@@ -2,7 +2,6 @@ import { h } from "hyperapp"
 import { box } from "../container/ui"
 import { icon } from "../display/icon"
 import { component } from "../utility/component"
-import { action } from "../utility/event"
 
 // freshFile :: String -> ControlData
 const freshFile = (value: string): any => ({ value })
@@ -17,7 +16,7 @@ const rawFile = ({ disabled, locked, update, label = "Select your file...", ...e
     "uy-control": true,
     "uy-file": true,
     "uy-input": true,
-  }, [
+  })([
     h("label", { class: "uy-clicky", "data-text": label }, [
       h("input", {
         disabled,
@@ -25,10 +24,10 @@ const rawFile = ({ disabled, locked, update, label = "Select your file...", ...e
         type: "file",
         // TODO:
         // - probably needs to be rethought
-        onchange: action(({ target }: any) => (state: any) => {
+        onchange: (state: any, { target }: any): any => {
           target.parentNode.dataset.text = target.value !== "" ? target.value.replace(/.*(\/|\\)/, "") : label
           return state
-        }),
+        },
         ...etc,
         class: {
           disabled,

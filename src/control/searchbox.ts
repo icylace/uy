@@ -3,12 +3,9 @@ import { popup } from "../container/popup"
 import { box } from "../container/ui"
 import { icon } from "../display/icon"
 import { component } from "../utility/component"
-import { action, targetValue } from "../utility/event"
-import { get, set } from "../utility/lens"
+import { get, set } from "../utility/shadesHelper"
 import { addInsideEl, removeInsideEl } from "../utility/uyHelper"
-
-// @ts-ignore
-const { S } = window.sanctuary
+import { pipe } from "../utility/utility"
 
 // freshSearchbox :: String -> SearchboxData
 const freshSearchbox = (value: string): any => ({
@@ -22,7 +19,7 @@ const freshSearchbox = (value: string): any => ({
 
 // chooseResult :: [String] -> String -> String -> State -> State
 const chooseResult = (path: string[]) => (id: string) => (value: string): any =>
-  S.pipe([
+  pipe([
     set([...path, "results"])([]),
     set([...path, "value"])(value),
     removeInsideEl(id),
@@ -33,7 +30,7 @@ const update = (search: Function) => (path: string[]) => (id: string) => (value:
   get([...path, "searching"])(state)
     ? set([...path, "value"])(value)(state)
     : [
-      S.pipe([
+      pipe([
         set([...path, "searching"])(true),
         set([...path, "value"])(value),
       ])(state),
@@ -56,7 +53,7 @@ const updateResults = (search: Function) => (path: string[]) => (id: string) => 
     ]
   }
 
-  const newState = S.pipe([
+  const newState = pipe([
     set([...path, "searching"])(false),
     set([...path, "results"])(results),
   ])(state)
@@ -84,7 +81,7 @@ const rawSearchbox = ({ disabled, locked, path, search, ...etc }: any) => (data:
     onfocus: set([...path, "focused"])(true),
     onblur: set([...path, "focused"])(false),
 
-    onkeyup: action(({ key, target: { value } }: any) => (state: any): any => {
+    onkeyup: (state: any, { key, target: { value } }: any) => {
       // We don't let certain keys unnecessarily affect searching.
       const noopKeys = [
         "Alt",
@@ -102,7 +99,7 @@ const rawSearchbox = ({ disabled, locked, path, search, ...etc }: any) => (data:
         "Super",
       ]
       return noopKeys.includes(key) ? state : update(search)(path)(id)(value)(state)
-    }),
+    },
 
     // Here we're using the non-standard `search` event because it can detect
     // when a searchbox's clear button is used. The `input` event can also
@@ -110,7 +107,7 @@ const rawSearchbox = ({ disabled, locked, path, search, ...etc }: any) => (data:
     // less convenient since it would conflict with how we're using
     // the `keyup` event.
     // https://stackoverflow.com/a/25569880
-    onsearch: [action(update(search)(path)(id)), targetValue],
+    onsearch: (state: any, event: any) => update(search)(path)(id)(event.target.value)(state),
 
     ...etc,
     class: {
@@ -126,7 +123,7 @@ const rawSearchbox = ({ disabled, locked, path, search, ...etc }: any) => (data:
     locked,
     "uy-control": true,
     "uy-searchbox": true,
-  }, [
+  })([
     h(
       "label",
       {
@@ -156,14 +153,13 @@ const rawSearchbox = ({ disabled, locked, path, search, ...etc }: any) => (data:
     ),
 
     data.results.length && !disabled
-      ? popup({ locked, disabled, id })
-        ([
-          h(
-            "ul",
-            { class: "uy-searchbox-results uy-scroller" },
-            data.results.map(searchResult(path)(id))
-          ),
-        ])
+      ? popup({ locked, disabled, id })([
+        h(
+          "ul",
+          { class: "uy-searchbox-results uy-scroller" },
+          data.results.map(searchResult(path)(id))
+        ),
+      ])
       : null,
   ])
 }

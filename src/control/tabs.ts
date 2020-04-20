@@ -1,6 +1,6 @@
 import { h } from "hyperapp"
+import { component } from "../component"
 import { box } from "../container/ui"
-import { component } from "../utility/component"
 import { hasOwn } from "../utility/utility"
 import { scrollIntoView } from "./tabs.effect"
 
@@ -31,8 +31,8 @@ const tab = (activeTab: string, update: Function) => (item: any, i: number): any
 
 // rawTabs :: TabsOptions -> Object -> VNode
 const rawTabs = ({ disabled, locked, itemsFooter, itemsHeader, tabList, update, ...etc }: any) => (data: any): any => {
-  const headings = tabList.map((x: any): any => x.heading)
-  const panels = tabList.map((x: any): any => x.panel)
+  const headings = tabList.map((x: any) => x.heading)
+  const panels = tabList.map((x: any) => x.panel)
   return h(
     "div",
     {

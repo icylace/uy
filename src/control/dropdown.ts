@@ -1,15 +1,11 @@
 import { h } from "hyperapp"
+import { component } from "../component"
 import { box } from "../container/ui"
-import { component } from "../utility/component"
 import { handleValueWith } from "../utility/event"
 import { set } from "../utility/shadesHelper"
 
 // freshDropDown :: String -> ControlData
 const freshDropdown = (value: string): any => ({ value, focused: false })
-
-// option :: (String, VNode) -> VNode
-const option = ([x, content]: any): any =>
-  h("option", Array.isArray(x) ? { value: x[1], ...x[0] } : { value: x }, [content])
 
 // rawDropdown :: DropdownOptions -> Object -> VNode
 const rawDropdown = ({ disabled, locked, options, path, update, ...etc }: any) => (data: any): any =>
@@ -34,7 +30,12 @@ const rawDropdown = ({ disabled, locked, options, path, update, ...etc }: any) =
           "uy-input": true,
           [etc.class]: !!etc.class,
         },
-      }, Object.entries(options).map(option)),
+      }, Object.entries(options).map(
+        ([x, content]: any) =>
+          h("option", Array.isArray(x)
+            ? { value: x[1], ...x[0] }
+            : { value: x }, [content])
+      )),
     ]),
   ])
 

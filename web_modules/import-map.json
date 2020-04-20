@@ -4,6 +4,7 @@
     "hyperapp": "./hyperapp.js",
     "hyperapp-fx": "./hyperapp-fx.js",
     "ramda": "./ramda.js",
+    "redaxios": "./redaxios.js",
     "remeda": "./remeda.js",
     "shades": "./shades.js"
   }

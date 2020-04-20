@@ -10,23 +10,11 @@ const eventFx = (name: string): Function =>
 const onClick = eventFx("click")
 const onMouseDown = eventFx("mousedown")
 
-// -----------------------------------------------------------------------------
+const handleCheckedWith = (f: Function): any => (state: any, event: any): any =>
+  f(state, event.target.checked)
 
-// // https://github.com/jorgebucaran/hyperapp/blob/c9aec31789b55fd5c73ff65c6c4b36548834bf3b/lib/events/src/index.js#L117
-// const targetChecked = (event: any): boolean => event.target.checked
-
-// // https://github.com/jorgebucaran/hyperapp/blob/c9aec31789b55fd5c73ff65c6c4b36548834bf3b/lib/events/src/index.js#L113
-// const targetValue = (event: any): string => event.target.value
-
-// const action = (f: Function) => (state: any, payload: any): any => f(payload)(state)
-//
-// const handleCheckedWith = (f: Function): any => [action(f), targetChecked]
-// const handleValueWith = (f: Function): any => [action(f), targetValue]
-
-const handleCheckedWith = (f: Function): any => (state: any, event: any) => f(state, event.target.checked)
-const handleValueWith = (f: Function): any => (state: any, event: any) => f(state, event.target.value)
-
-// -----------------------------------------------------------------------------
+const handleValueWith = (f: Function): any => (state: any, event: any): any =>
+  f(state, event.target.value)
 
 // Invokes a collection of event handlers with the same event.
 const handleUsing = (handlers: any[]) => (state: any, event: any): any =>
@@ -47,7 +35,6 @@ const onOutside = (selector: string) => (outsideAction: Function) => (state: any
 }
 
 export {
-  // action,
   eventFx,
   handleCheckedWith,
   handleUsing,
@@ -55,6 +42,4 @@ export {
   onClick,
   onMouseDown,
   onOutside,
-  // targetChecked,
-  // targetValue,
 }

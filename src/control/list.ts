@@ -1,6 +1,6 @@
 import { h } from "hyperapp"
+import { component } from "../component"
 import { rawTable } from "../container/table"
-import { component } from "../utility/component"
 import { get, set } from "../utility/shadesHelper"
 import { exclude } from "../utility/utility"
 import { button } from "./button"

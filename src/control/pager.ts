@@ -1,6 +1,6 @@
 import { h } from "hyperapp"
+import { component } from "../component"
 import { icon } from "../display/icon"
-import { component } from "../utility/component"
 import { range } from "../utility/utility"
 
 // freshPager :: Int -> Int -> PagerData

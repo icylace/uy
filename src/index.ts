@@ -25,5 +25,4 @@ export * from "./control/textbox"
 export * from "./display/icon"
 export * from "./display/spinner"
 
-export * from "./utility/component"
 export * from "./utility/event"

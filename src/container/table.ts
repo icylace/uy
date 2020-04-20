@@ -1,7 +1,7 @@
 import { h } from "hyperapp"
-import { box } from "./ui"
-import { component } from "../utility/component"
+import { component } from "../component"
 import { icon } from "../display/icon"
+import { box } from "./ui"
 
 // freshTable :: [Any] -> Object
 const freshTable = (rows: any[]): any => ({ rows })

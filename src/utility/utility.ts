@@ -20,10 +20,12 @@ const ifElse = (predicate: (a: any) => boolean) => (f: (a: any) => any) => (g: (
   predicate(x) ? f(x) : g(x)
 
 // ifExists :: (Nullable a, Nullable b) => (a -> b) -> a -> b
-const ifExists = (f: (a: any) => any) => (x: any): any => (x != null ? f(x) : null)
+const ifExists = (f: (a: any) => any) => (x: any): any =>
+  x != null ? f(x) : null
 
 // pipe :: [* -> *] -> * -> *
-const pipe = (fs: Function[]) => (x: any) => fs.reduce((acc: any, f: Function): any => f(acc), x)
+const pipe = (fs: Function[]) => (x: any): any =>
+  fs.reduce((acc: any, f: Function): any => f(acc), x)
 
 // -----------------------------------------------------------------------------
 

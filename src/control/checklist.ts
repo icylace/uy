@@ -1,18 +1,19 @@
 import { h } from "hyperapp"
+import { component } from "../component"
 import { rawTable } from "../container/table"
-import { component } from "../utility/component"
 import { set } from "../utility/shadesHelper"
 import { rawCheckbox } from "./checkbox"
 
 // freshList :: [String] -> Object
 const freshChecklist = (items: string[]): any => ({ items })
 
-// updateItem :: [String] -> Int -> String -> State -> State
-const updateItem = (path: string[]) => (i: number) => (value: string): any => set([...path, "items", i])(value)
+// updateItem :: [String] -> Int -> State -> String -> State
+const updateItem = (path: string[]) => (i: number) => (state: any, value: string): any =>
+  set([...path, "items", i])(value)(state)
 
 // rawChecklist :: ChecklistOptions -> Object -> VNode
 const rawChecklist = ({ disabled, locked, path, render, ...etc }: any) => (data: any): any => {
-  const item = (x: any, i: any) =>
+  const item = (x: any, i: number) =>
     [
       [
         { class: { "uy-horizontal": x.id === "other" } },

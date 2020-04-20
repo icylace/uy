@@ -1,7 +1,7 @@
 import { h } from "hyperapp"
+import { component } from "../component"
 import { box } from "../container/ui"
 import { icon } from "../display/icon"
-import { component } from "../utility/component"
 
 // freshFile :: String -> ControlData
 const freshFile = (value: string): any => ({ value })
@@ -24,7 +24,7 @@ const rawFile = ({ disabled, locked, update, label = "Select your file...", ...e
         type: "file",
         // TODO:
         // - probably needs to be rethought
-        onchange: (state: any, { target }: any): any => {
+        onchange: (state: any, { target }: any) => {
           target.parentNode.dataset.text = target.value !== "" ? target.value.replace(/.*(\/|\\)/, "") : label
           return state
         },

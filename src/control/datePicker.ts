@@ -1,6 +1,6 @@
 import { h } from "hyperapp"
+import { component } from "../component"
 import { box } from "../container/ui"
-import { component } from "../utility/component"
 import { handleValueWith } from "../utility/event"
 
 // -----------------------------------------------------------------------------

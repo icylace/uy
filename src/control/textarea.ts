@@ -1,7 +1,7 @@
 import { h } from "hyperapp"
+import { component } from "../component"
 import { box } from "../container/ui"
 import { handleValueWith } from "../utility/event"
-import { component } from "../utility/component"
 
 // freshTextbox :: String -> ControlData
 const freshTextarea = (value: string): any => ({ value })

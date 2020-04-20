@@ -1,4 +1,4 @@
-import { h } from "hyperapp"
+import { h } from "/web_modules/hyperapp.js"
 import { component } from "../component"
 import { box } from "../container/ui"
 import { handleCheckedWith } from "../utility/event"
@@ -8,8 +8,8 @@ import { ifExists } from "../utility/utility"
 const freshCheckbox = (value: boolean): any => ({ value })
 
 // rawCheckbox :: LabeledControlOptions -> Object -> VNode
-const rawCheckbox = ({ disabled, locked, label, update, ...etc }: any) => (data: any): any =>
-  box("uy-control uy-checkbox")([
+const rawCheckbox = ({ disabled, locked, label, update, ...etc }: any) => (data: any): any => {
+  return box("uy-control uy-checkbox")([
     h("label", { class: { disabled, locked } }, [
       h("input", {
         disabled,
@@ -27,6 +27,7 @@ const rawCheckbox = ({ disabled, locked, label, update, ...etc }: any) => (data:
       ifExists((x: any) => h("span", {}, [x]))(label),
     ]),
   ])
+}
 
 // checkbox :: LabeledControlOptions -> [String] -> State -> VNode
 const checkbox = component(rawCheckbox)

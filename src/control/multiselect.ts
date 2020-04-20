@@ -1,4 +1,4 @@
-import { h } from "hyperapp"
+import { h } from "/web_modules/hyperapp.js"
 import { component } from "../component"
 import { box } from "../container/ui"
 import { rawCheckbox } from "./checkbox"

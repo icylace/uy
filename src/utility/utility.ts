@@ -42,8 +42,9 @@ const delist = (key: string) => (xr: { [k: string]: any }): { [k: string]: any }
   return etc
 }
 
-const hasOwn = (prop: string) => (obj: { [k: string]: any }): boolean =>
-  Object.prototype.hasOwnProperty.call(obj, prop)
+const hasOwn = (prop: string) => (obj: { [k: string]: any }): boolean => {
+  return Object.prototype.hasOwnProperty.call(obj, prop)
+}
 
 // -----------------------------------------------------------------------------
 

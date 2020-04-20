@@ -1,10 +1,10 @@
-import { h } from "hyperapp"
+import { h } from "/web_modules/hyperapp.js"
 import { compose } from "../utility/utility"
 import { ui } from "./ui"
 
 // rawFieldset :: ComponentOptions -> [VNode] -> VNode
-const rawFieldset = ({ disabled, locked, label, ...etc }: any) => (contents: any[]): any =>
-  h("fieldset", {
+const rawFieldset = ({ disabled, locked, label, ...etc }: any) => (contents: any[]): any => {
+  return h("fieldset", {
     disabled,
     ...etc,
     class: {
@@ -14,6 +14,7 @@ const rawFieldset = ({ disabled, locked, label, ...etc }: any) => (contents: any
       [etc.class]: !!etc.class,
     },
   }, label ? [h("legend", {}, [label]), ...contents] : contents)
+}
 
 // fieldset :: ComponentOptions -> [AnyFunction] -> State -> VNode
 const fieldset = compose(ui)(rawFieldset)

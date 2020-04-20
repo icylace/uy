@@ -1,4 +1,4 @@
-import { h } from "hyperapp"
+import { h } from "/web_modules/hyperapp.js"
 import { component } from "../component"
 import { rawTable } from "../container/table"
 import { get, set } from "../utility/shadesHelper"
@@ -27,7 +27,7 @@ const removeItem = (path: string[]) => (i: number) => (state: any): any => {
 
 // rawList :: ListOptions -> Object -> VNode
 const rawList = ({ disabled, locked, headers, path, ...etc }: any) => (data: any): any => {
-  const item = (x: any, i: number): any =>
+  const item = (x: any, i: number) =>
     [
       rawTextbox({ disabled, locked, update: updateItem(path)(i) })({ value: x }),
       cancelButton({ disabled, locked, update: removeItem(path)(i) }),

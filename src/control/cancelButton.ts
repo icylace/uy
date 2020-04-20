@@ -1,9 +1,9 @@
-import { h } from "hyperapp"
+import { h } from "/web_modules/hyperapp.js"
 import { box } from "../container/ui"
 
 // cancelButton :: ButtonOptions -> VNode
-const cancelButton = ({ disabled, locked, update, ...etc }: any): any =>
-  box("uy-control uy-cancelButton")([
+const cancelButton = ({ disabled, locked, update, ...etc }: any): any => {
+  return box("uy-control uy-cancelButton")([
     h("button", {
       disabled,
       type: "button",
@@ -17,5 +17,6 @@ const cancelButton = ({ disabled, locked, update, ...etc }: any): any =>
       },
     }, ["✕"]),
   ])
+}
 
 export { cancelButton }

@@ -1,4 +1,4 @@
-import { h } from "hyperapp"
+import { h } from "/web_modules/hyperapp.js"
 import { component } from "../component"
 import { box } from "../container/ui"
 import { handleValueWith } from "../utility/event"
@@ -8,8 +8,8 @@ import { ifExists } from "../utility/utility"
 const freshRadios = (value: any) => ({ value })
 
 // rawRadios :: RadiosOptions -> Object -> VNode
-const rawRadios = ({ disabled, locked, options, update, ...etc }: any) => (data: any) =>
-  box("uy-control uy-radios")(
+const rawRadios = ({ disabled, locked, options, update, ...etc }: any) => (data: any) => {
+  return box("uy-control uy-radios")(
     Object.entries(options).map(([value, label]: any) =>
       h("label", { class: { locked, disabled } }, [
         h("input", {
@@ -28,7 +28,9 @@ const rawRadios = ({ disabled, locked, options, update, ...etc }: any) => (data:
         }),
         ifExists((x: any) => h("span", {}, [x]))(label),
       ])
-    ))
+    )
+  )
+}
 
 // radios :: RadiosOptions -> [String] -> State -> VNode
 const radios = component(rawRadios)

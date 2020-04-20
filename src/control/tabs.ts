@@ -1,4 +1,4 @@
-import { h } from "hyperapp"
+import { h } from "/web_modules/hyperapp.js"
 import { component } from "../component"
 import { box } from "../container/ui"
 import { hasOwn } from "../utility/utility"
@@ -8,10 +8,10 @@ import { scrollIntoView } from "./tabs.effect"
 const freshTabs = (value: string): any => ({ value })
 
 // isSelected :: String -> VNode -> Int -> Bool
-const isSelected = (activeTab: string) => (item: any, i: number): boolean =>
-  activeTab === String(i) || (typeof item === "object" && hasOwn("props")(item) && activeTab === item.props["data-tab-id"])
+const isSelected = (activeTab: string) => (item: any, i: number): boolean => {
+  return activeTab === String(i) || (typeof item === "object" && hasOwn("props")(item) && activeTab === item.props["data-tab-id"])
+}
 
-// TODO:
 // tab :: String -> Action -> VNode -> Int -> VNode
 const tab = (activeTab: string, update: Function) => (item: any, i: number): any => {
   const selected = isSelected(activeTab)(item, i)

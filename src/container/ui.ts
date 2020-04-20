@@ -1,15 +1,17 @@
-import { h } from "hyperapp"
+import { h } from "/web_modules/hyperapp.js"
 import { compose } from "../utility/utility"
 
 type ClassAttr = object | string
 
 // box :: ClassAttr -> [VNode] -> VNode
-const box = (classAttr: ClassAttr) => (contents: any[]): any =>
-  h("div", { class: classAttr }, contents)
+const box = (classAttr: ClassAttr) => (contents: any[]): any => {
+  return h("div", { class: classAttr }, contents)
+}
 
 // ui :: ([VNode] -> VNode) -> [(State -> VNode)] -> State -> VNode
-const ui = (f: Function) => (gs: Function[]) => (state: any): any =>
-  f(gs.map((g: Function) => g(state)))
+const ui = (f: Function) => (gs: Function[]) => (state: any): any => {
+  return f(gs.map((g: Function) => g(state)))
+}
 
 // column :: [Function] -> State -> VNode
 const column = ui(box("uy-column"))

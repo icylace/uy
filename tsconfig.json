@@ -1,5 +1,6 @@
 // https://www.typescriptlang.org/docs/handbook/tsconfig-json.html
 // https://www.typescriptlang.org/docs/handbook/compiler-options.html
+// https://github.com/pikapkg/snowpack/issues/4#issuecomment-529144878
 // $ npx tsc --init
 
 {
@@ -54,7 +55,7 @@
     "baseUrl": "./",                          /* Base directory to resolve non-absolute module names. */
     // "paths": {},                           /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
     "paths": {
-      "/web_modules/*": [
+      "/web_modules/*.js": [
         "./node_modules/@types/*",
         "./node_modules/*",
         "./web_modules/*.js"

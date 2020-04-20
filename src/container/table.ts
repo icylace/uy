@@ -1,4 +1,4 @@
-import { h } from "hyperapp"
+import { h } from "/web_modules/hyperapp.js"
 import { component } from "../component"
 import { icon } from "../display/icon"
 import { box } from "./ui"
@@ -49,8 +49,8 @@ const tableRow = (row: any[]): any => {
 // table :: TableOptions -> [TableCell] -> VNode
 
 // rawTable :: TableOptions -> Object -> VNode
-const rawTable = ({ disabled, locked, headers, orderColumn, sortDescending, ...etc }: any) => (data: any): any =>
-  box({
+const rawTable = ({ disabled, locked, headers, orderColumn, sortDescending, ...etc }: any) => (data: any): any => {
+  return box({
     disabled,
     locked,
     "uy-control": true,
@@ -63,6 +63,7 @@ const rawTable = ({ disabled, locked, headers, orderColumn, sortDescending, ...e
       h("tbody", {}, data.rows.map(tableRow)),
     ]),
   ])
+}
 
 // table :: TableOptions -> [String] -> State -> VNode
 const table = component(rawTable)

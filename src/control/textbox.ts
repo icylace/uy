@@ -1,4 +1,4 @@
-import { h } from "hyperapp"
+import { h } from "/web_modules/hyperapp.js"
 import { component } from "../component"
 import { box } from "../container/ui"
 import { handleValueWith } from "../utility/event"
@@ -7,8 +7,8 @@ import { handleValueWith } from "../utility/event"
 const freshTextbox = (value: string): any => ({ value })
 
 // rawTextbox :: ControlOptions -> Object -> VNode
-const rawTextbox = ({ disabled, locked, update, ...etc }: any) => (data: any): any =>
-  box("uy-control uy-textbox")([
+const rawTextbox = ({ disabled, locked, update, ...etc }: any) => (data: any): any => {
+  return box("uy-control uy-textbox")([
     h("input", {
       disabled,
       readonly: locked,
@@ -24,6 +24,7 @@ const rawTextbox = ({ disabled, locked, update, ...etc }: any) => (data: any): a
       },
     }),
   ])
+}
 
 // textbox :: ControlOptions -> [String] -> State -> VNode
 const textbox = component(rawTextbox)

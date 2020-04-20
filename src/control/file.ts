@@ -1,4 +1,4 @@
-import { h } from "hyperapp"
+import { h } from "/web_modules/hyperapp.js"
 import { component } from "../component"
 import { box } from "../container/ui"
 import { icon } from "../display/icon"
@@ -9,8 +9,8 @@ const freshFile = (value: string): any => ({ value })
 // https://codepen.io/adamlaki/pen/VYpewx
 
 // rawFile :: LabeledControlOptions -> Object -> VNode
-const rawFile = ({ disabled, locked, update, label = "Select your file...", ...etc }: any) => (data: any): any =>
-  box({
+const rawFile = ({ disabled, locked, update, label = "Select your file...", ...etc }: any) => (data: any): any => {
+  return box({
     disabled,
     locked,
     "uy-control": true,
@@ -41,6 +41,7 @@ const rawFile = ({ disabled, locked, update, label = "Select your file...", ...e
       ]),
     ]),
   ])
+}
 
 // file :: LabeledControlOptions -> [String] -> State -> VNode
 const file = component(rawFile)

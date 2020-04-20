@@ -10,15 +10,8 @@ export default {
     {
       file: "./dist/index.umd.js",
       format: "umd",
-      name: "uy",
+      name: "TODO:",
     },
   ],
-
-  // TODO:
-  // - try to improve `web_modules` usage
-
-  // paths: {
-  //   "/web_modules/hyperapp": "/web_modules/hyperapp",
-  // },
-  // plugins: [resolve ()],
+  // plugins: [resolve()]
 }

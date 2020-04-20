@@ -1,9 +1,9 @@
-import { h } from "hyperapp"
+import { h } from "/web_modules/hyperapp.js"
 import { box } from "./ui"
 
 // field :: (ComponentOptions -> String -> State -> VNode) -> String -> ComponentOptions -> [String] -> State -> VNode
-const field = (f: Function) => (title: String) => ({ disabled, locked, ...etc }: any) => (path: string[]) => (state: any): any =>
-  box("uy-container uy-field")([
+const field = (f: Function) => (title: String) => ({ disabled, locked, ...etc }: any) => (path: string[]) => (state: any): any => {
+  return box("uy-container uy-field")([
     h("label", {
       ...etc,
       class: {
@@ -13,5 +13,6 @@ const field = (f: Function) => (title: String) => ({ disabled, locked, ...etc }:
       },
     }, [title, ...f({ disabled, locked, ...etc })(path)(state)]),
   ])
+}
 
 export { field }

@@ -1,4 +1,4 @@
-import { h } from "hyperapp"
+import { h } from "/web_modules/hyperapp.js"
 import { component } from "../component"
 import { popup } from "../container/popup"
 import { box } from "../container/ui"
@@ -26,8 +26,8 @@ const chooseResult = (path: string[]) => (id: string) => (value: string): any =>
   ])
 
 // update :: (Action -> String -> State) -> [String] -> String -> String -> State -> State | [State, Effect]
-const update = (search: Function) => (path: string[]) => (id: string) => (value: string) => (state: any): any =>
-  get([...path, "searching"])(state)
+const update = (search: Function) => (path: string[]) => (id: string) => (value: string) => (state: any): any => {
+  return get([...path, "searching"])(state)
     ? set([...path, "value"])(value)(state)
     : [
       pipe([
@@ -36,6 +36,7 @@ const update = (search: Function) => (path: string[]) => (id: string) => (value:
       ])(state),
       search(updateResults(search)(path)(id))(value),
     ]
+}
 
 // updateResults :: AnyFunction -> [String] -> String -> Object -> State -> Any
 const updateResults = (search: Function) => (path: string[]) => (id: string) => ({ value, results }: any) => (state: any): any => {
@@ -66,8 +67,9 @@ const updateResults = (search: Function) => (path: string[]) => (id: string) => 
 // -----------------------------------------------------------------------------
 
 // searchResult :: [String] -> String -> String -> VNode
-const searchResult = (path: string[]) => (id: string) => (x: string): any =>
-  h("li", { onclick: chooseResult(path)(id)(x) }, [x])
+const searchResult = (path: string[]) => (id: string) => (x: string): any => {
+  return h("li", { onclick: chooseResult(path)(id)(x) }, [x])
+}
 
 // rawSearchbox :: ControlOptions -> Object -> VNode
 const rawSearchbox = ({ disabled, locked, path, search, ...etc }: any) => (data: any): any => {
@@ -81,7 +83,7 @@ const rawSearchbox = ({ disabled, locked, path, search, ...etc }: any) => (data:
     onfocus: set([...path, "focused"])(true),
     onblur: set([...path, "focused"])(false),
 
-    onkeyup: (state: any, { key, target: { value } }: any) => {
+    onkeyup: (state: any, { key, target: { value } }: any): any => {
       // We don't let certain keys unnecessarily affect searching.
       const noopKeys = [
         "Alt",
@@ -107,7 +109,7 @@ const rawSearchbox = ({ disabled, locked, path, search, ...etc }: any) => (data:
     // less convenient since it would conflict with how we're using
     // the `keyup` event.
     // https://stackoverflow.com/a/25569880
-    onsearch: (state: any, event: any) => update(search)(path)(id)(event.target.value)(state),
+    onsearch: (state: any, event: any): any => update(search)(path)(id)(event.target.value)(state),
 
     ...etc,
     class: {

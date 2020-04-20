@@ -1,4 +1,4 @@
-import { h } from "hyperapp"
+import { h } from "/web_modules/hyperapp.js"
 import { component } from "../component"
 import { box } from "../container/ui"
 import { handleValueWith } from "../utility/event"
@@ -8,8 +8,8 @@ import { set } from "../utility/shadesHelper"
 const freshDropdown = (value: string): any => ({ value, focused: false })
 
 // rawDropdown :: DropdownOptions -> Object -> VNode
-const rawDropdown = ({ disabled, locked, options, path, update, ...etc }: any) => (data: any): any =>
-  box("uy-control uy-dropdown")([
+const rawDropdown = ({ disabled, locked, options, path, update, ...etc }: any) => (data: any): any => {
+  return box("uy-control uy-dropdown")([
     box({
       disabled,
       locked,
@@ -38,6 +38,7 @@ const rawDropdown = ({ disabled, locked, options, path, update, ...etc }: any) =
       )),
     ]),
   ])
+}
 
 // dropdown :: DropdownOptions -> [String] -> State -> VNode
 const dropdown = component(rawDropdown)

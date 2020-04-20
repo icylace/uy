@@ -1,4 +1,4 @@
-import { h } from "hyperapp"
+import { h } from "/web_modules/hyperapp.js"
 import { component } from "../component"
 import { box } from "../container/ui"
 import { handleValueWith } from "../utility/event"
@@ -7,8 +7,8 @@ import { handleValueWith } from "../utility/event"
 const freshTextarea = (value: string): any => ({ value })
 
 // rawTextarea :: ControlOptions -> Object -> VNode
-const rawTextarea = ({ disabled, locked, update, ...etc }: any) => (data: any): any =>
-  box("uy-control uy-textarea")([
+const rawTextarea = ({ disabled, locked, update, ...etc }: any) => (data: any): any => {
+  return box("uy-control uy-textarea")([
     h("textarea", {
       disabled,
       readonly: locked,
@@ -23,6 +23,7 @@ const rawTextarea = ({ disabled, locked, update, ...etc }: any) => (data: any): 
       },
     }),
   ])
+}
 
 // textarea :: ControlOptions -> [String] -> State -> VNode
 const textarea = component(rawTextarea)

@@ -1,8 +1,8 @@
-import { h } from "hyperapp"
+import { h } from "/web_modules/hyperapp.js"
 
 // popup :: PopupOptions -> [VNode] -> VNode
-const popup = ({ disabled, id, locked, ...etc }: any): any => (contents: any[]): any =>
-  h("div", {
+const popup = ({ disabled, id, locked, ...etc }: any): any => (contents: any[]): any => {
+  return h("div", {
     id,
     ...etc,
     class: {
@@ -13,5 +13,6 @@ const popup = ({ disabled, id, locked, ...etc }: any): any => (contents: any[]):
       [etc.class]: !!etc.class,
     },
   }, contents)
+}
 
 export { popup }

@@ -1,10 +1,10 @@
-import { h } from "hyperapp"
+import { h } from "/web_modules/hyperapp.js"
 import { compose } from "../utility/utility"
 import { box, ui } from "./ui"
 
 // rawOverlay :: ComponentOptions -> [VNode] -> VNode
-const rawOverlay = ({ disabled, locked, ...etc }: any) => (contents: any[]): any =>
-  box("uy-overlay-background")([
+const rawOverlay = ({ disabled, locked, ...etc }: any) => (contents: any[]): any => {
+  return box("uy-overlay-background")([
     h("div", {
       disabled,
       ...etc,
@@ -18,6 +18,7 @@ const rawOverlay = ({ disabled, locked, ...etc }: any) => (contents: any[]): any
       },
     }, contents),
   ])
+}
 
 // overlay :: ComponentOptions -> [AnyFunction] -> State -> VNode
 const overlay = compose(ui)(rawOverlay)

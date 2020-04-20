@@ -1,4 +1,4 @@
-import { h } from "hyperapp"
+import { h } from "/web_modules/hyperapp.js"
 import { component } from "../component"
 import { box } from "../container/ui"
 import { handleValueWith } from "../utility/event"
@@ -9,14 +9,18 @@ import { asNumber, ifExists } from "../utility/utility"
 const freshNumberbox = (value: number): any => ({ value, focused: false })
 
 // sanitizedNumber :: Any -> Int
-const sanitizedNumber = (n: any): number => Math.max(0, asNumber(n))
+const sanitizedNumber = (n: any): number => {
+  return Math.max(0, asNumber(n))
+}
 
 // update :: [String] -> String -> State -> State
-const update = (path: string[]) => (value: string): any => set([...path, "value"])(sanitizedNumber(value))
+const update = (path: string[]) => (value: string): any => {
+  return set([...path, "value"])(sanitizedNumber(value))
+}
 
 // rawNumberbox :: LabeledControlOptions -> Object -> VNode
-const rawNumberbox = ({ disabled, locked, label, path, ...etc }: any): any => (data: any): any =>
-  box("uy-control uy-numberbox")([
+const rawNumberbox = ({ disabled, locked, label, path, ...etc }: any): any => (data: any): any => {
+  return box("uy-control uy-numberbox")([
     h("label", {
       class: {
         disabled,
@@ -44,6 +48,7 @@ const rawNumberbox = ({ disabled, locked, label, path, ...etc }: any): any => (d
       ifExists((x: any) => h("span", { class: { disabled, locked, "uy-input": true } }, [x]))(label),
     ]),
   ])
+}
 
 // numberbox :: ControlOptions -> [String] -> State -> VNode
 const numberbox = component(rawNumberbox)

@@ -70,7 +70,7 @@ const updateResults = (search: Function) => (path: string[]) => (id: string) => 
 
 // searchResult :: [String] -> String -> String -> VNode
 const searchResult = (path: string[]) => (id: string) => (x: string): any =>
-  h("li", { onclick: action((_: any) => chooseResult(path)(id)(x)) }, [x])
+  h("li", { onclick: chooseResult(path)(id)(x) }, [x])
 
 // rawSearchbox :: ControlOptions -> Object -> VNode
 const rawSearchbox = ({ disabled, locked, path, search, ...etc }: any) => (data: any): any => {
@@ -81,8 +81,8 @@ const rawSearchbox = ({ disabled, locked, path, search, ...etc }: any) => (data:
     readonly: locked,
     value: data.value,
     type: "search",
-    onfocus: action((_event: any) => set([...path, "focused"])(true)),
-    onblur: action((_event: any) => set([...path, "focused"])(false)),
+    onfocus: set([...path, "focused"])(true),
+    onblur: set([...path, "focused"])(false),
 
     onkeyup: action(({ key, target: { value } }: any) => (state: any): any => {
       // We don't let certain keys unnecessarily affect searching.
@@ -142,7 +142,7 @@ const rawSearchbox = ({ disabled, locked, path, search, ...etc }: any) => (data:
         inputSearch,
         h(
           "span",
-          { onclick: action((_: any) => update(search)(path)(id)(data.value)) },
+          { onclick: update(search)(path)(id)(data.value) },
           [
             icon({
               fas: true,

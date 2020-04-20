@@ -44,17 +44,25 @@
     "utility-types": "^3.10.0"
   },
   "scripts": {
-    "clean": "rm -fr ./dist && mkdir ./dist",
-    "clean:transpiled": "rm -fr ./transpiled",
-    "build": "npm run clean && tsc --build --incremental false && npm run bundle && npm run bundle:min:esm && npm run bundle:min:umd",
-    "build:dev": "tsc --build && npm run bundle",
+    "build:dev": "npm run clean && npm run transpile:full && npm run bundle",
+    "build:dev:update": "npm run transpile:update && npm run bundle",
+    "build:prod": "npm run build:dev && npm run min && npm run gzip",
     "bundle": "rollup --config",
-    "bundle:min:esm": "terser --ecma 6 --compress --mangle --module --output ./dist/index.min.js -- ./dist/index.js && gzip --best --to-stdout ./dist/index.min.js > ./dist/index.min.js.gz",
-    "bundle:min:umd": "terser --ecma 6 --compress --mangle --output ./dist/index.umd.min.js -- ./dist/index.umd.js && gzip --best --to-stdout ./dist/index.umd.min.js > ./dist/index.umd.min.js.gz",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "bundle:watch": "rollup --config --watch",
+    "check:lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "check:types": "tsc --noEmit --incremental false",
+    "clean": "npm run clean:dist && npm run clean:transpiled",
+    "clean:dist": "rm -fr ./dist && mkdir ./dist",
+    "clean:transpiled": "rm -fr ./transpiled",
+    "min": "npm run min:esm && npm run min:umd",
+    "min:esm": "terser --ecma 6 --compress --mangle --module --output ./dist/index.min.js -- ./dist/index.js",
+    "min:umd": "terser --ecma 6 --compress --mangle --output ./dist/index.umd.min.js -- ./dist/index.umd.js",
+    "gzip": "npm run gzip:esm && npm run gzip:umd",
+    "gzip:esm": "gzip --best --to-stdout ./dist/index.min.js > ./dist/index.min.js.gz",
+    "gzip:umd": "gzip --best --to-stdout ./dist/index.umd.min.js > ./dist/index.umd.min.js.gz",
     "prepare": "snowpack",
-    "typecheck": "tsc --noEmit --incremental false",
-    "watch:bundle": "rollup --config --watch",
-    "watch:ts": "tsc --watch"
+    "transpile:full": "tsc --build --incremental false",
+    "transpile:update": "tsc --build",
+    "transpile:watch": "tsc --watch"
   }
 }

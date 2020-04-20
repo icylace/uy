@@ -1,8 +1,6 @@
 import { h } from "hyperapp"
 import { ui } from "./ui"
-
-// @ts-ignore
-const { S } = window.sanctuary
+import { compose } from "../utility/utility"
 
 // rawFieldset :: ComponentOptions -> [VNode] -> VNode
 const rawFieldset = ({ disabled, locked, label, ...etc }: any) => (contents: any[]): any =>
@@ -18,6 +16,6 @@ const rawFieldset = ({ disabled, locked, label, ...etc }: any) => (contents: any
   }, label ? [h("legend", {}, [label]), ...contents] : contents)
 
 // fieldset :: ComponentOptions -> [AnyFunction] -> State -> VNode
-const fieldset = S.compose(ui)(rawFieldset)
+const fieldset = compose(ui)(rawFieldset)
 
 export { fieldset }

@@ -1,8 +1,7 @@
 import { h } from "hyperapp"
 import { box } from "../container/ui"
 import { component } from "../utility/component"
-import { action } from "../utility/event"
-import { hasOwn } from "../utility/object"
+import { hasOwn } from "../utility/utility"
 import { scrollIntoView } from "./tabs.effect"
 
 // freshTabs :: String -> ControlData
@@ -20,12 +19,11 @@ const tab = (activeTab: string, update: Function) => (item: any, i: number): any
     "div",
     {
       class: { "uy-tabs-item": true, selected },
-      onclick: action(
-        ({ target }: any) => (state: any) =>
-          selected
-            ? [update(String(i))(state), scrollIntoView(target)]
-            : update(String(i))(state)
-      ),
+      onclick: (state: any, { target }: any) =>
+        selected
+          ? [update(String(i))(state), scrollIntoView(target)]
+          : update(String(i))(state)
+      ,
     },
     [item]
   )

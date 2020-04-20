@@ -1,9 +1,6 @@
-import { has } from "shades"
-import { get, mod, set } from "./lens"
+import { get, has, mod, set } from "shades"
 import { action, handleUsing, onClick, onMouseDown, onOutside } from "./event"
-import { identity } from "./function"
-import { isSomething } from "./misc"
-import { delist } from "./object"
+import { delist, identity, isSomething } from "./utility"
 
 // @ts-ignore
 const { S } = window.sanctuary
@@ -25,12 +22,12 @@ const { S } = window.sanctuary
 // -----------------------------------------------------------------------------
 
 // addInsideEl :: String -> (State -> State) -> State -> State
-const addInsideEl = (id: string): any => set(["uy", "insideEl", id])
+const addInsideEl = (id: string): any => set("uy", "insideEl", id)
 
 // removeInsideEl :: String -> State -> State
 const removeInsideEl = (id: string): any =>
   S.ifElse(has({ uy: { popups: { [id]: isSomething } } }))
-    (mod(["uy", "insideEl"])(delist(id)))
+    (mod("uy", "insideEl")(delist(id)))
     (identity)
 
 // -----------------------------------------------------------------------------
@@ -41,7 +38,7 @@ const detectOutside = ([popup, f]: any[]) =>
 const detectOutsideOfElements = (event: any) => (state: any): any => {
   const handlers =
     S.pipe([
-      get(["uy", "insideEl"]),
+      get("uy", "insideEl"),
       S.pairs,
       S.map(detectOutside),
     ])
@@ -50,7 +47,7 @@ const detectOutsideOfElements = (event: any) => (state: any): any => {
 
 // freshState :: State -> State
 const freshState =
-  set(["uy"])({
+  set("uy")({
     insideEl: {},
     utility: {
       eventHandler: {
@@ -62,7 +59,7 @@ const freshState =
 
 const clickSubscription =
   S.pipe([
-    get(["uy", "utility", "eventHandler", "click"]),
+    get("uy", "utility", "eventHandler", "click"),
     S.values,
     handleUsing,
     onClick,
@@ -70,7 +67,7 @@ const clickSubscription =
 
 const mouseDownSubscription =
   S.pipe([
-    get(["uy", "utility", "eventHandler", "mousedown"]),
+    get("uy", "utility", "eventHandler", "mousedown"),
     S.values,
     handleUsing,
     onMouseDown,

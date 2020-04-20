@@ -3,9 +3,6 @@ import { box } from "./ui"
 import { component } from "../utility/component"
 import { icon } from "../display/icon"
 
-// @ts-ignore
-const { S } = window.sanctuary
-
 // freshTable :: [Any] -> Object
 const freshTable = (rows: any[]): any => ({ rows })
 

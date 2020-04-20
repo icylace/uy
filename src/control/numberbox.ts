@@ -2,9 +2,8 @@ import { h } from "hyperapp"
 import { box } from "../container/ui"
 import { component } from "../utility/component"
 import { action, handleValueWith } from "../utility/event"
-import { ifExists } from "../utility/function"
 import { set } from "../utility/lens"
-import { asNumber } from "../utility/utility"
+import { asNumber, ifExists } from "../utility/utility"
 
 // freshNumberbox :: Int -> ControlData
 const freshNumberbox = (value: number): any => ({ value, focused: false })

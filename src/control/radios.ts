@@ -1,8 +1,8 @@
 import { h } from "hyperapp"
 import { box } from "../container/ui"
-import { component } from "../utility/component.js"
-import { handleValueWith } from "../utility/event.js"
-import { ifExists } from "../utility/function.js"
+import { component } from "../utility/component"
+import { handleValueWith } from "../utility/event"
+import { ifExists } from "../utility/utility"
 
 // @ts-ignore
 const { S } = window.sanctuary

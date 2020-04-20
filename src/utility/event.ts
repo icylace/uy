@@ -1,6 +1,3 @@
-// @ts-ignore
-const { S } = window.sanctuary
-
 // Based on:
 // https://github.com/jorgebucaran/hyperapp/issues/752#issue-355556484
 const eventFx = (name: string): Function =>

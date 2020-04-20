@@ -2,7 +2,7 @@ import { h } from "hyperapp"
 import { box } from "../container/ui"
 import { component } from "../utility/component"
 import { handleCheckedWith } from "../utility/event"
-import { ifExists } from "../utility/function"
+import { ifExists } from "../utility/utility"
 
 // freshCheckbox :: Bool -> ControlData
 const freshCheckbox = (value: boolean): any => ({ value })

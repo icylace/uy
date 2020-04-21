@@ -1,5 +1,5 @@
 # Ignore transpiled code.
-transpiled
+transpiled/
 
 # ------------------------------------------------------------------------------
 #  https://github.com/github/gitignore/blob/master/Node.gitignore

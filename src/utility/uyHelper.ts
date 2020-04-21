@@ -1,4 +1,4 @@
-import { get, has, mod, set } from "shades"
+import { get, has, mod, set } from "/web_modules/shades.js"
 import { handleUsing, onClick, onMouseDown, onOutside } from "./event"
 import { delist, identity, ifElse, isSomething, map, pipe } from "./utility"
 

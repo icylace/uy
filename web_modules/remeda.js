@@ -1096,6 +1096,13 @@ var _lazy$5 = function (indexed) { return function (fn) {
     reject.lazyIndexed = _toLazyIndexed(_lazy$5(true));
 })(reject || (reject = {}));
 
+function reverse() {
+    return purry(_reverse, arguments);
+}
+function _reverse(array) {
+    return array.slice().reverse();
+}
+
 var __assign$2 = (undefined && undefined.__assign) || function () {
     __assign$2 = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -1280,4 +1287,29 @@ function _uniq(array) {
     uniq.lazy = lazy;
 })(uniq || (uniq = {}));
 
-export { addProp, anyPass, chunk, clamp, clone, compact, concat, createPipe, difference, drop, dropLast, equals, filter, find, findIndex, first, flatMap, flatten, flattenDeep, forEach, forEachObj, groupBy, identity, indexBy, intersection, last, map, mapKeys, merge, mergeAll, noop, objOf, omit, once, pathOr, pick, pipe, prop, purry, randomString, range, reduce, reject, set, sort, sortBy, splitAt, splitWhen, take, takeWhile, times, toPairs, type, uniq };
+function uniqBy() {
+    return purry(_uniqBy, arguments, lazyUniqBy);
+}
+function _uniqBy(array, transformer) {
+    return _reduceLazy(array, lazyUniqBy(transformer));
+}
+function lazyUniqBy(transformer) {
+    var set = new Set();
+    return function (value) {
+        var appliedItem = transformer(value);
+        if (set.has(appliedItem)) {
+            return {
+                done: false,
+                hasNext: false,
+            };
+        }
+        set.add(appliedItem);
+        return {
+            done: false,
+            hasNext: true,
+            next: value,
+        };
+    };
+}
+
+export { addProp, anyPass, chunk, clamp, clone, compact, concat, createPipe, difference, drop, dropLast, equals, filter, find, findIndex, first, flatMap, flatten, flattenDeep, forEach, forEachObj, groupBy, identity, indexBy, intersection, last, map, mapKeys, merge, mergeAll, noop, objOf, omit, once, pathOr, pick, pipe, prop, purry, randomString, range, reduce, reject, reverse, set, sort, sortBy, splitAt, splitWhen, take, takeWhile, times, toPairs, type, uniq, uniqBy };

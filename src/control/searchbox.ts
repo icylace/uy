@@ -1,4 +1,4 @@
-import { h } from "/web_modules/hyperapp.js"
+import { h } from "hyperapp"
 import { component } from "../component"
 import { popup } from "../container/popup"
 import { box } from "../container/ui"

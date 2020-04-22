@@ -1,4 +1,4 @@
-import { h } from "/web_modules/hyperapp.js"
+import { h } from "hyperapp"
 import { compose } from "../utility/utility"
 
 type ClassAttr = object | string

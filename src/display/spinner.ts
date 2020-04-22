@@ -1,4 +1,4 @@
-import { h } from "/web_modules/hyperapp.js"
+import { h } from "hyperapp"
 
 // spinner :: ComponentOptions -> VNode
 const spinner = (props: any): any => {

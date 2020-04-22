@@ -1,4 +1,4 @@
-import * as shades from "/web_modules/shades.js"
+import * as shades from "shades"
 
 const get = (path: any[]) => (state: any): any => {
   // @ts-ignore

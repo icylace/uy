@@ -1,7 +1,3 @@
-// TODO:
-// - try rollup-plugin-includepaths to solve the "/web_modules" thing
-
-
 // import resolve from "@rollup/plugin-node-resolve"
 // import typescript from "@rollup/plugin-typescript"
 

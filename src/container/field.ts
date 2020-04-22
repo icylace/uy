@@ -1,4 +1,4 @@
-import { h } from "/web_modules/hyperapp.js"
+import { h } from "hyperapp"
 import { box } from "./ui"
 
 // field :: (ComponentOptions -> String -> State -> VNode) -> String -> ComponentOptions -> [String] -> State -> VNode

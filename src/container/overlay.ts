@@ -1,4 +1,4 @@
-import { h } from "/web_modules/hyperapp.js"
+import { h } from "hyperapp"
 import { compose } from "../utility/utility"
 import { box, ui } from "./ui"
 

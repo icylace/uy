@@ -1,4 +1,4 @@
-import { h } from "/web_modules/hyperapp.js"
+import { h } from "hyperapp"
 import { component } from "../component"
 import { icon } from "../display/icon"
 import { range } from "../utility/utility"

@@ -1,4 +1,4 @@
-import { h } from "/web_modules/hyperapp.js"
+import { h } from "hyperapp"
 
 // popup :: PopupOptions -> [VNode] -> VNode
 const popup = ({ disabled, id, locked, ...etc }: any): any => (contents: any[]): any => {

@@ -1,4 +1,4 @@
-import { h } from "/web_modules/hyperapp.js"
+import { h } from "hyperapp"
 
 // icon :: Object -> VNode
 const icon = (xr: any): any => {

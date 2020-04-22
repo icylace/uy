@@ -1,4 +1,4 @@
-import { h } from "/web_modules/hyperapp.js"
+import { h } from "hyperapp"
 import { component } from "../component"
 import { box } from "../container/ui"
 import { handleCheckedWith } from "../utility/event"

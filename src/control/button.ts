@@ -1,4 +1,4 @@
-import { h } from "/web_modules/hyperapp.js"
+import { h } from "hyperapp"
 import { box } from "../container/ui"
 
 // button :: ButtonOptions -> VNode

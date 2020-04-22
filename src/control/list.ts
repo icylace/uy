@@ -1,4 +1,4 @@
-import { h } from "/web_modules/hyperapp.js"
+import { h } from "hyperapp"
 import { component } from "../component"
 import { rawTable } from "../container/table"
 import { get, set } from "../utility/shadesHelper"

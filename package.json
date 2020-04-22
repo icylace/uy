@@ -20,6 +20,9 @@
     "shades": "^2.1.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
     "@rollup/plugin-typescript": "^4.1.1",
     "@typescript-eslint/eslint-plugin": "^2.29.0",
     "@typescript-eslint/parser": "^2.29.0",
@@ -36,6 +39,7 @@
     "jest": "^25.4.0",
     "prettier": "^2.0.5",
     "rollup": "^2.6.1",
+    "rollup-plugin-includepaths": "^0.2.3",
     "snowpack": "^1.7.0",
     "terser": "^4.6.11",
     "ts-jest": "^25.4.0",
@@ -44,9 +48,10 @@
     "utility-types": "^3.10.0"
   },
   "scripts": {
+    "build:babel": "babel ./dist --out-dir ./dist",
     "build:dev": "npm run clean && npm run transpile:full && npm run bundle",
     "build:dev:update": "npm run transpile:update && npm run bundle",
-    "build:prod": "npm run build:dev && npm run min && npm run gzip",
+    "build:full": "npm run build:dev && npm run min && npm run gzip",
     "bundle": "rollup --config",
     "bundle:watch": "rollup --config --watch",
     "check:lint": "eslint . --ext .js,.jsx,.ts,.tsx",

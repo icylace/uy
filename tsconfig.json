@@ -5,7 +5,7 @@
 
 {
   "include": ["./src/**/*.ts", "./types/*.d.ts"],
-  "exclude": ["./dist", "./transpiled", "node_modules", "web_modules"],
+  "exclude": ["./dist", "./output", "node_modules", "web_modules"],
   "compilerOptions": {
     /* Basic Options */
     "incremental": true,                      /* Enable incremental compilation */
@@ -24,7 +24,7 @@
     // "outFile": "./",                       /* Concatenate and emit output to single file. */
     // "outDir": "./",                        /* Redirect output structure to the directory. */
     // "outDir": "./dist",
-    "outDir": "./transpiled",
+    "outDir": "./output/typescript",
     // "rootDir": "./",                       /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */
     // "composite": true,                     /* Enable project compilation */
     // "tsBuildInfoFile": "./",               /* Specify file to store incremental compilation information */

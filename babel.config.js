@@ -2,7 +2,7 @@
 
 // https://babeljs.io/docs/en/configuration#babelconfigjs
 // https://babeljs.io/docs/en/config-files#project-wide-configuration
-//https://www.snowpack.dev/#importing-packages-by-name
+// https://www.snowpack.dev/#importing-packages-by-name
 
 module.exports = {
   presets: [["@babel/preset-env", {

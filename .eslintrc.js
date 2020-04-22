@@ -52,7 +52,7 @@ module.exports = {
       },
     ],
     // , "comma-style": [ "error", "first" ]
-    "func-call-spacing": ["error", "never", { allowNewlines: true }],
+    "func-call-spacing": ["error", "always", { allowNewlines: true }],
     "import/no-absolute-path": ["error", { esmodule: false }],
     indent: [
       "error",

@@ -4,6 +4,8 @@
 **/node_modules/**
 !.eslintrc.js
 
+output/*
+
 *.min.js
 
 dist/*

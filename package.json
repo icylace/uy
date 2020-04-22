@@ -48,24 +48,33 @@
     "utility-types": "^3.10.0"
   },
   "scripts": {
-    "build:babel": "babel ./dist --out-dir ./dist",
-    "build:dev": "npm run clean && npm run transpile:full && npm run bundle",
-    "build:dev:update": "npm run transpile:update && npm run bundle",
-    "build:full": "npm run build:dev && npm run min && npm run gzip",
-    "bundle": "rollup --config",
+    "build:basic": "npm run clean && npm run transpile:full && npm run bundle",
+    "build:babel": "babel ./output/rollup --out-dir ./output/babel",
+    "build:dist": "cp ./output/babel/* ./dist",
+    "build:full": "npm run build:basic && npm run min && npm run gzip",
+    "build:update": "npm run transpile:update && npm run bundle",
+
+    "bundle": "npm run bundle:rollup && npm run build:babel && npm run build:dist",
+    "bundle:rollup": "rollup --config",
     "bundle:watch": "rollup --config --watch",
+
     "check:lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "check:types": "tsc --noEmit --incremental false",
-    "clean": "npm run clean:dist && npm run clean:transpiled",
+
+    "clean": "npm run clean:dist && npm run clean:output",
     "clean:dist": "rm -fr ./dist && mkdir ./dist",
-    "clean:transpiled": "rm -fr ./transpiled",
-    "min": "npm run min:esm && npm run min:umd",
-    "min:esm": "terser --ecma 6 --compress --mangle --module --output ./dist/index.min.js -- ./dist/index.js",
-    "min:umd": "terser --ecma 6 --compress --mangle --output ./dist/index.umd.min.js -- ./dist/index.umd.js",
+    "clean:output": "rm -fr ./output && mkdir ./output && mkdir ./output/terser && mkdir ./output/gzip",
+
     "gzip": "npm run gzip:esm && npm run gzip:umd",
-    "gzip:esm": "gzip --best --to-stdout ./dist/index.min.js > ./dist/index.min.js.gz",
-    "gzip:umd": "gzip --best --to-stdout ./dist/index.umd.min.js > ./dist/index.umd.min.js.gz",
+    "gzip:esm": "gzip --best --to-stdout ./output/terser/index.min.js > ./output/gzip/index.min.js.gz",
+    "gzip:umd": "gzip --best --to-stdout ./output/terser/index.umd.min.js > ./output/gzip/index.umd.min.js.gz",
+
+    "min": "npm run min:esm && npm run min:umd",
+    "min:esm": "terser --ecma 6 --compress --mangle --module --output ./output/terser/index.min.js -- ./output/rollup/index.js",
+    "min:umd": "terser --ecma 6 --compress --mangle --output ./output/terser/index.umd.min.js -- ./output/rollup/index.umd.js",
+
     "prepare": "snowpack",
+
     "transpile:full": "tsc --build --incremental false",
     "transpile:update": "tsc --build",
     "transpile:watch": "tsc --watch"

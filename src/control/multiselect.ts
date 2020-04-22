@@ -22,7 +22,7 @@ const rawMultiselect = ({ disabled, locked, update, options, usingColumnMode, ..
     },
   })([
     box("uy-multiselect-options")(
-      Object.entries(options).map(([x, label]: any) =>
+      Object.entries(options).map(([x, label]) =>
         rawCheckbox({
           disabled,
           label,

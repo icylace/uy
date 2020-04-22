@@ -10,7 +10,7 @@ const box = (classAttr: ClassAttr) => (contents: any[]): any => {
 
 // ui :: ([VNode] -> VNode) -> [(State -> VNode)] -> State -> VNode
 const ui = (f: Function) => (gs: Function[]) => (state: any): any => {
-  return f(gs.map((g: Function) => g(state)))
+  return f(gs.map(g => g(state)))
 }
 
 // column :: [Function] -> State -> VNode

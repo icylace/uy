@@ -5,7 +5,7 @@ import { handleValueWith } from "../utility/event"
 import { ifExists } from "../utility/utility"
 
 // freshRadios :: String -> ControlData
-const freshRadios = (value: any) => ({ value })
+const freshRadios = (value: any): any => ({ value })
 
 // rawRadios :: RadiosOptions -> Object -> VNode
 const rawRadios = ({ disabled, locked, options, update, ...etc }: any) => (data: any) => {
@@ -26,7 +26,7 @@ const rawRadios = ({ disabled, locked, options, update, ...etc }: any) => (data:
             [etc.class]: !!etc.class,
           },
         }),
-        ifExists((x: any) => h("span", {}, [x]))(label),
+        ifExists(x => h("span", {}, [x]))(label),
       ])
     )
   )

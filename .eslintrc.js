@@ -8,9 +8,27 @@
 // https://levelup.gitconnected.com/setting-up-eslint-with-prettier-typescript-and-visual-studio-code-d113bbec9857
 
 module.exports = {
-  extends: ["eslint:recommended", "standard", "plugin:@typescript-eslint/recommended"],
+  env: {
+    browser: true,
+    es6: true,
+  },
+  extends: [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "standard",
+  ],
+  globals: {
+    Atomics: "readonly",
+    SharedArrayBuffer: "readonly",
+  },
   parser: "@typescript-eslint/parser",
   plugins: ["@typescript-eslint", "prettier"],
+  parserOptions: {
+    ecmaVersion: 2018,
+    sourceType: "module",
+  },
   settings: {
     "import/parsers": {
       "@typescript-eslint/parser": [".ts", ".tsx"],
@@ -34,7 +52,7 @@ module.exports = {
       },
     ],
     // , "comma-style": [ "error", "first" ]
-    "func-call-spacing": ["error", "always", { allowNewlines: true }],
+    "func-call-spacing": ["error", "never", { allowNewlines: true }],
     "import/no-absolute-path": ["error", { esmodule: false }],
     indent: [
       "error",
@@ -73,6 +91,8 @@ module.exports = {
     quotes: ["error", "double"],
 
     "import/no-extraneous-dependencies": [2, { devDependencies: ["**/test.tsx", "**/test.ts"] }],
+
+    "@typescript-eslint/no-explicit-any": ["off", { "ignoreRestArgs": false }],
     "@typescript-eslint/indent": [2, 2],
   },
 }

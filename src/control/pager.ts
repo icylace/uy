@@ -13,7 +13,7 @@ const pagerNav = (handler: Function, contents: any[], active: boolean): any =>
       "uy-pager-nav": true,
       "uy-pager-nav-inactive": !active,
     },
-    ...active ? { onclick: handler } : {},
+    ...active ? { onclick: (_state: any, _event: any) => handler } : {},
   }, contents)
 
 // pagerMore :: [VNode] -> VNode
@@ -52,28 +52,28 @@ const rawPager = ({ disabled, locked, itemsPerPage, pageRange, update, ...etc }:
 
   const navFirst =
     pagerNav(
-      (_state: any, _event: any) => update(0),
+      update(0),
       [icon({ fas: true, "fa-angle-double-left": true }), " first"],
       data.value !== 0,
     )
 
   const navPrev =
     pagerNav(
-      (_state: any, _event: any) => updateToPrev,
+      updateToPrev,
       [icon({ fas: true, "fa-angle-left": true }), " prev"],
       data.value !== 0,
     )
 
   const navNext =
     pagerNav(
-      (_state: any, _event: any) => updateToNext,
+      updateToNext,
       ["next ", icon({ fas: true, "fa-angle-right": true })],
       data.value !== lastPage,
     )
 
   const navLast =
     pagerNav(
-      (_state: any, _event: any) => update(lastPage),
+      update(lastPage),
       ["last ", icon({ fas: true, "fa-angle-double-right": true })],
       data.value !== lastPage,
     )

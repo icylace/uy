@@ -24,7 +24,7 @@ const rawCheckbox = ({ disabled, locked, label, update, ...etc }: any) => (data:
           [etc.class]: !!etc.class,
         },
       }),
-      ifExists((x: any) => h("span", {}, [x]))(label),
+      ifExists(x => h("span", {}, [x]))(label),
     ]),
   ])
 }

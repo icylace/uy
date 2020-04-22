@@ -1,7 +1,12 @@
+// TODO:
+// - try rollup-plugin-includepaths to solve the "/web_modules" thing
+
+
 // import resolve from "@rollup/plugin-node-resolve"
+// import typescript from "@rollup/plugin-typescript"
 
 export default {
-  input: "./transpiled/index.js",
+  input: "./transpiled/src/index.js",
   output: [
     {
       file: "./dist/index.js",
@@ -13,5 +18,8 @@ export default {
       name: "TODO:",
     },
   ],
-  // plugins: [resolve()]
+  // plugins: [
+  // typescript(),
+  // resolve(),
+  // ]
 }

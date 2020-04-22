@@ -31,7 +31,7 @@ const rawDropdown = ({ disabled, locked, options, path, update, ...etc }: any) =
           [etc.class]: !!etc.class,
         },
       }, Object.entries(options).map(
-        ([x, content]: any) =>
+        ([x, content]) =>
           h("option", Array.isArray(x)
             ? { value: x[1], ...x[0] }
             : { value: x }, [content])

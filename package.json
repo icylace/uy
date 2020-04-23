@@ -6,7 +6,7 @@
   "author": "Ron Martinez <ramartin.net@gmail.com>",
   "license": "ISC",
   "main": "./dist/index.js",
-  "module": "./dist/index.min.mjs",
+  "module": "./dist/index.min.js",
   "unpkg": "./dist/index.umd.min.js",
   "types": "./dist/index.d.ts",
   "files": [
@@ -48,37 +48,42 @@
     "utility-types": "^3.10.0"
   },
   "scripts": {
-    "build:dev": "npm run clean && npm run output:typescript:refresh && npm run bundle && npm run dist",
-    "build:prod": "npm run clean && npm run output:typescript:full && npm run bundle && npm run min && npm run dist",
-    "build:update": "npm run output:typescript:update && npm run bundle && npm run dist",
+    "build:dev": "npm run clean && npm run output:typescript:refresh && npm run bundle:dev",
+    "build:dev:update": "npm run output:typescript:update && npm run bundle:dev",
+    "build:prod": "npm run clean && npm run output:typescript:full && npm run bundle:prod",
 
-    "bundle": "npm run output:rollup && npm run output:babel",
+    "bundle:dev": "npm run output:rollup:dev && npm run output:babel && npm run dist:dev",
+    "bundle:prod": "npm run output:rollup:prod && npm run output:babel && npm run min && npm run dist:prod",
 
     "check": "npm check:lint && npm check:types",
     "check:lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "check:types": "tsc --noEmit --incremental false",
 
-    "clean": "rm -fr ./output && rm -fr ./dist && mkdir ./dist",
+    "clean": "npm run clean:dist && npm run clean:output",
+    "clean:dist": "rm -fr ./dist && mkdir ./dist",
+    "clean:output": "rm -fr ./output && mkdir ./output",
 
-    "dist": "npm run dist:babel && npm run dist:typescript:types && npm run dist:terser && npm run dist:gzip",
+    "dist:dev": "npm run dist:babel",
+    "dist:prod": "npm run dist:babel && npm run dist:typescript:types && npm run dist:terser && npm run dist:gzip",
     "dist:babel": "cp ./output/babel/* ./dist",
     "dist:gzip": "[ -d ./output/gzip ] && cp ./output/gzip/* ./dist ;:",
-    "dist:typescript:types": "[ -f ./output/typescript/index.d.ts ] && cp ./output/typescript/index.d.ts ./dist ;:",
     "dist:terser": "[ -d ./output/terser ] && cp ./output/terser/* ./dist ;:",
+    "dist:typescript:types": "[ -f ./output/typescript/index.d.ts ] && cp ./output/typescript/index.d.ts ./dist ;:",
 
-    "min": "npm run output:terser && npm run output:gzip",
+    "min": "npm run min:esm && npm run min:umd",
+    "min:esm": "npm run output:terser:esm && npm run output:gzip:esm",
+    "min:umd": "npm run output:terser:umd && npm run output:gzip:umd",
 
     "output:babel": "babel ./output/rollup --out-dir ./output/babel",
 
-    "output:gzip": "[ ! -d ./output/gzip ] && mkdir ./output/gzip ; npm run output:gzip:esm && npm run output:gzip:umd",
-    "output:gzip:esm": "gzip --best --to-stdout ./output/terser/index.min.js > ./output/gzip/index.min.js.gz",
-    "output:gzip:umd": "gzip --best --to-stdout ./output/terser/index.umd.min.js > ./output/gzip/index.umd.min.js.gz",
+    "output:gzip:esm": "[ ! -d ./output/gzip ] && mkdir ./output/gzip ; gzip --best --to-stdout ./output/terser/index.min.js > ./output/gzip/index.min.js.gz",
+    "output:gzip:umd": "[ ! -d ./output/gzip ] && mkdir ./output/gzip ; gzip --best --to-stdout ./output/terser/index.umd.min.js > ./output/gzip/index.umd.min.js.gz",
 
-    "output:rollup": "rollup --config",
+    "output:rollup:dev": "rollup --config rollup.config.dev.js",
+    "output:rollup:prod": "rollup --config rollup.config.prod.js",
 
-    "output:terser": "[ ! -d ./output/terser ] && mkdir ./output/terser ; npm run output:terser:esm && npm run output:terser:umd",
-    "output:terser:esm": "terser --ecma 6 --compress --mangle --module --output ./output/terser/index.min.js -- ./output/rollup/index.js",
-    "output:terser:umd": "terser --ecma 6 --compress --mangle --output ./output/terser/index.umd.min.js -- ./output/rollup/index.umd.js",
+    "output:terser:esm": "[ ! -d ./output/terser ] && mkdir ./output/terser ; terser --ecma 6 --compress --mangle --module --output ./output/terser/index.min.js -- ./output/rollup/index.js",
+    "output:terser:umd": "[ ! -d ./output/terser ] && mkdir ./output/terser ; terser --ecma 6 --compress --mangle --output ./output/terser/index.umd.min.js -- ./output/rollup/index.umd.js",
 
     "output:typescript:full": "npm run output:typescript:refresh && npm run output:typescript:types",
     "output:typescript:refresh": "tsc --build --incremental false",

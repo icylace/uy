@@ -48,35 +48,46 @@
     "utility-types": "^3.10.0"
   },
   "scripts": {
-    "build:basic": "npm run clean && npm run transpile:full && npm run bundle",
-    "build:babel": "babel ./output/rollup --out-dir ./output/babel",
-    "build:dist": "cp ./output/babel/* ./dist",
-    "build:full": "npm run build:basic && npm run min && npm run gzip",
-    "build:update": "npm run transpile:update && npm run bundle",
+    "build:dev": "npm run clean && npm run output:typescript:refresh && npm run bundle && npm run dist",
+    "build:prod": "npm run clean && npm run output:typescript:full && npm run bundle && npm run min && npm run dist",
+    "build:update": "npm run output:typescript:update && npm run bundle && npm run dist",
 
-    "bundle": "npm run bundle:rollup && npm run build:babel && npm run build:dist",
-    "bundle:rollup": "rollup --config",
-    "bundle:watch": "rollup --config --watch",
+    "bundle": "npm run output:rollup && npm run output:babel",
 
+    "check": "npm check:lint && npm check:types",
     "check:lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "check:types": "tsc --noEmit --incremental false",
 
-    "clean": "npm run clean:dist && npm run clean:output",
-    "clean:dist": "rm -fr ./dist && mkdir ./dist",
-    "clean:output": "rm -fr ./output && mkdir ./output && mkdir ./output/terser && mkdir ./output/gzip",
+    "clean": "rm -fr ./output && rm -fr ./dist && mkdir ./dist",
 
-    "gzip": "npm run gzip:esm && npm run gzip:umd",
-    "gzip:esm": "gzip --best --to-stdout ./output/terser/index.min.js > ./output/gzip/index.min.js.gz",
-    "gzip:umd": "gzip --best --to-stdout ./output/terser/index.umd.min.js > ./output/gzip/index.umd.min.js.gz",
+    "dist": "npm run dist:babel && npm run dist:typescript:types && npm run dist:terser && npm run dist:gzip",
+    "dist:babel": "cp ./output/babel/* ./dist",
+    "dist:gzip": "if [ -d ./output/gzip ] ; then cp ./output/gzip/* ./dist ; fi",
+    "dist:typescript:types": "if [ -f ./output/typescript/index.d.ts ] ; then cp ./output/typescript/index.d.ts ./dist ; fi",
+    "dist:terser": "if [ -d ./output/terser ] ; then cp ./output/terser/* ./dist ; fi",
 
-    "min": "npm run min:esm && npm run min:umd",
-    "min:esm": "terser --ecma 6 --compress --mangle --module --output ./output/terser/index.min.js -- ./output/rollup/index.js",
-    "min:umd": "terser --ecma 6 --compress --mangle --output ./output/terser/index.umd.min.js -- ./output/rollup/index.umd.js",
+    "min": "npm run output:terser && npm run output:gzip",
+
+    "output:babel": "babel ./output/rollup --out-dir ./output/babel",
+
+    "output:gzip": "[ ! -d ./output/gzip ] && mkdir ./output/gzip ; npm run output:gzip:esm && npm run output:gzip:umd",
+    "output:gzip:esm": "gzip --best --to-stdout ./output/terser/index.min.js > ./output/gzip/index.min.js.gz",
+    "output:gzip:umd": "gzip --best --to-stdout ./output/terser/index.umd.min.js > ./output/gzip/index.umd.min.js.gz",
+
+    "output:rollup": "rollup --config",
+
+    "output:terser": "[ ! -d ./output/terser ] && mkdir ./output/terser ; npm run output:terser:esm && npm run output:terser:umd",
+    "output:terser:esm": "terser --ecma 6 --compress --mangle --module --output ./output/terser/index.min.js -- ./output/rollup/index.js",
+    "output:terser:umd": "terser --ecma 6 --compress --mangle --output ./output/terser/index.umd.min.js -- ./output/rollup/index.umd.js",
+
+    "output:typescript:full": "npm run output:typescript:refresh && npm run output:typescript:types",
+    "output:typescript:refresh": "tsc --build --incremental false",
+    "output:typescript:types": "tsc --declaration --emitDeclarationOnly --incremental false --module amd --outFile ./output/typescript/index.js",
+    "output:typescript:update": "tsc --build",
 
     "prepare": "snowpack",
 
-    "transpile:full": "tsc --build --incremental false",
-    "transpile:update": "tsc --build",
-    "transpile:watch": "tsc --watch"
+    "watch:typescript": "tsc --watch",
+    "watch:rollup": "rollup --config --watch"
   }
 }

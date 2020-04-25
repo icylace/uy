@@ -1,5 +1,8 @@
-# Ignore transpiled code.
+# Ignore CLI tool output.
 output/
+
+# Generated files suitable for public distribution.
+dist/
 
 # ------------------------------------------------------------------------------
 #  https://github.com/github/gitignore/blob/master/Node.gitignore

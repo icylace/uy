@@ -1,114 +1,117 @@
 #!/usr/bin/env bash
 
+_build:dev:bundle() {
+  rollup --config rollup.config.dev.js
+  sed -i '' "s/from 'hyperapp'/from \"\/web_modules\/hyperapp.js\"/g;s/from 'shades'/from \"\/web_modules\/shades.js\"/g" ./output/rollup/index.js
+  cp ./output/rollup/* ./dist
+}
+
+_build:prod:bundle() {
+  rollup --config rollup.config.prod.js
+  sed -i '' "s/from 'hyperapp'/from \"\/web_modules\/hyperapp.js\"/g;s/from 'shades'/from \"\/web_modules\/shades.js\"/g" ./output/rollup/index.js
+  cp ./output/rollup/* ./dist
+}
+
 build:dev() {
   clean
 
   echo
-  echo "Compile TypeScript for development."
+  echo "Compiling TypeScript for development..."
   tsc --build --incremental false
-  rollup --config rollup.config.dev.js
-  babel ./output/rollup --out-dir ./dist
+  _build:dev:bundle
 
   echo
-  echo "Compile CSS for development."
+  echo "Compiling CSS for development..."
   postcss ./src/index.css --output ./dist/index.css
 }
 
 build:dev:update() {
   echo
-  echo "Update compiling TypeScript for development."
+  echo "Compiling TypeScript incrementally for development..."
   tsc --build
-  rollup --config rollup.config.dev.js
-  babel ./output/rollup --out-dir ./dist
+  _build:dev:bundle
 }
 
 build:prod() {
   clean
 
   echo
-  echo "Compile TypeScript for production."
+  echo "Compiling TypeScript for production..."
   tsc --build --incremental false
-  rollup --config rollup.config.prod.js
-  babel ./output/rollup --out-dir ./dist
+  _build:prod:bundle
 
   echo
-  echo "Compile CSS for production."
+  echo "Compiling CSS for production..."
   postcss ./src/index.css --output ./dist/index.css --env prod
 
   echo
-  echo "Minimize ES modules."
+  echo "Minifying and gzipping ES modules..."
   terser --ecma 6 --compress --mangle --module --output ./dist/index.min.js -- ./output/rollup/index.js
   gzip --best --to-stdout ./dist/index.min.js > ./dist/index.min.js.gz
 
   echo
-  echo "Minimize UMD."
+  echo "Minifying and gzipping UMD modules..."
   terser --ecma 6 --compress --mangle --output ./dist/index.umd.min.js -- ./output/rollup/index.umd.js
   gzip --best --to-stdout ./dist/index.umd.min.js > ./dist/index.umd.min.js.gz
 
   echo
-  echo "Generate types."
+  echo "Generating types..."
   tsc --declaration --emitDeclarationOnly --incremental false --module amd --outFile ./output/typescript/index.js
   cp ./output/typescript/index.d.ts ./dist
 }
 
 clean() {
   echo
-  echo "Reset the output folders of generated files."
+  echo "Resetting the output folders of generated files..."
   rm -fr ./dist && mkdir ./dist
   rm -fr ./output && mkdir ./output
 }
 
 lint() {
   echo
-  echo "Lint."
+  echo "Linting..."
   eslint ./src --ext .js,.jsx,.ts,.tsx
 }
 
 lint:fix() {
   echo
-  echo "Lint and automatically fix as much as possible."
+  echo "Linting and automatically fixing as much as possible..."
   eslint ./src --ext .js,.jsx,.ts,.tsx --fix
 }
 
 lint:fix-dry-run() {
   echo
-  echo "Lint and do a dry-run of automatically fixing as much as possible."
+  echo "Linting and doing a dry-run of automatically fixing as much as possible..."
   eslint ./src --ext .js,.jsx,.ts,.tsx --fix-dry-run
 }
 
 prepare() {
   echo
-  echo "Prepare web modules."
+  echo "Preparing web modules..."
   snowpack
 }
 
 typecheck() {
   echo
-  echo "Type-check TypeScript code."
+  echo "Type-checking TypeScript code..."
   tsc --noEmit --incremental false
-}
-
-watch:babel() {
-  echo
-  echo "Watch Babel."
-  babel ./output/rollup --watch --out-dir ./dist
 }
 
 watch:postcss() {
   echo
-  echo "Watch PostCSS."
+  echo "Watching PostCSS..."
   postcss ./src/index.css --output ./dist/index.css --watch
 }
 
 watch:rollup() {
   echo
-  echo "Watch Rollup."
+  echo "Watching Rollup..."
   rollup --config --watch
 }
 
 watch:typescript() {
   echo
-  echo "Watch TypeScript."
+  echo "Watching TypeScript..."
   tsc --watch
 }
 

@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 
 task:_snowpack() {
+  if [ ! -d ./web_modules ] ; then
+    task:prepare
+  fi
+
   echo
-  echo "Use web modules created by Snowpack."
+  echo "Using web modules created by Snowpack..."
 
   local modules=($(jq --raw-output '.imports | keys_unsorted | @sh' ./web_modules/import-map.json))
 
@@ -23,7 +27,7 @@ task:_snowpack() {
 # ------------------------------------------------------------------------------
 
 task:_build:dev:bundle() {
-  npx rollup --config rollup.config.dev.js
+  npx rollup --config
   task:_snowpack
   cp ./output/rollup/* ./dist
 }
@@ -31,7 +35,7 @@ task:_build:dev:bundle() {
 # ------------------------------------------------------------------------------
 
 task:_build:prod:bundle() {
-  npx rollup --config rollup.config.prod.js
+  npx rollup --config --env prod
   task:_snowpack
   cp ./output/rollup/* ./dist
 }

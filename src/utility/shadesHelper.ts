@@ -10,7 +10,7 @@ const get = (path: any[]) => (state: any): any => {
     case 5: return shades.get (path[0], path[1], path[2], path[3], path[4]) (state)
     case 6: return shades.get (path[0], path[1], path[2], path[3], path[4], path[5]) (state)
   }
-  throw Error("`path` length is greater than 6.")
+  throw Error ("`path` length is greater than 6.")
 }
 
 const mod = (path: any[]) => (f: (a: any) => any) => (state: any): any => {
@@ -23,7 +23,7 @@ const mod = (path: any[]) => (f: (a: any) => any) => (state: any): any => {
     case 5: return shades.mod (path[0], path[1], path[2], path[3], path[4]) (f) (state)
     case 6: return shades.mod (path[0], path[1], path[2], path[3], path[4], path[5]) (f) (state)
   }
-  throw Error("`path` length is greater than 6.")
+  throw Error ("`path` length is greater than 6.")
 }
 
 const set = (path: any[]) => (value: any) => (state: any): any => {
@@ -36,7 +36,7 @@ const set = (path: any[]) => (value: any) => (state: any): any => {
     case 5: return shades.set (path[0], path[1], path[2], path[3], path[4]) (value) (state)
     case 6: return shades.set (path[0], path[1], path[2], path[3], path[4], path[5]) (value) (state)
   }
-  throw Error("`path` length is greater than 6.")
+  throw Error ("`path` length is greater than 6.")
 }
 
 export { get, mod, set }

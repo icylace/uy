@@ -15,7 +15,10 @@ task:_snowpack() {
     # Trim off the first and last characters which should be single quotes.
     local m="${module:1:-1}"
 
-    changes+=("s/'$m';$/\"\/web_modules\/$m.js\"/g")
+    # Escape slashes that would appear for scoped modules.
+    local e="${m//\//\\\/}"
+
+    changes+=("s/'$e';$/\"\/web_modules\/$e.js\"/g")
   done
 
   # https://superuser.com/a/462400/959677

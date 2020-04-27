@@ -8,20 +8,20 @@ const freshTable = (rows: any[]): any => ({ rows })
 
 // tableHeader :: Nullable String -> Bool -> Any -> VNode
 const tableHeader = (orderColumn: string | null) => (sortDescending: boolean) => (header: any): any => {
-  const props = Array.isArray(header) ? header[0] : {}
-  const content = Array.isArray(header) ? header[1] : header
+  const props = Array.isArray (header) ? header[0] : {}
+  const content = Array.isArray (header) ? header[1] : header
   const column = props["data-column"]
   const sorting = orderColumn != null && orderColumn === column
   const sortIndicator =
     sorting
-      ? icon({
+      ? icon ({
         glyphicon: true,
         "glyphicon-chevron-down": !!sortDescending,
         "glyphicon-chevron-up": !sortDescending,
         "sort-indicator": true,
       })
       : null
-  return h("th", {
+  return h ("th", {
     ...props,
     class: {
       "sort-column": sorting,
@@ -33,14 +33,14 @@ const tableHeader = (orderColumn: string | null) => (sortDescending: boolean) =>
 // tableRow :: [Any] -> VNode
 const tableRow = (row: any[]): any => {
   if (!row) return row
-  if (!Array.isArray(row)) return [row]
-  return h(
+  if (!Array.isArray (row)) return [row]
+  return h (
     "tr",
     {},
-    row.map(
-      (x: any) => Array.isArray(x)
-        ? h("td", x[0], [x[1]])
-        : h("td", {}, [x])
+    row.map (
+      (x: any) => Array.isArray (x)
+        ? h ("td", x[0], [x[1]])
+        : h ("td", {}, [x])
     )
   )
 }
@@ -50,22 +50,22 @@ const tableRow = (row: any[]): any => {
 
 // rawTable :: TableOptions -> Object -> VNode
 const rawTable = ({ disabled, locked, headers, orderColumn, sortDescending, ...etc }: any) => (data: any): any => {
-  return box({
+  return box ({
     disabled,
     locked,
     "uy-control": true,
     "uy-table": true,
-  })([
-    h("table", etc, [
+  }) ([
+    h ("table", etc, [
       headers.length
-        ? h("thead", {}, headers.map(tableHeader(orderColumn)(!!sortDescending)))
+        ? h ("thead", {}, headers.map (tableHeader (orderColumn) (!!sortDescending)))
         : null,
-      h("tbody", {}, data.rows.map(tableRow)),
+      h ("tbody", {}, data.rows.map (tableRow)),
     ]),
   ])
 }
 
 // table :: TableOptions -> [String] -> State -> VNode
-const table = component(rawTable)
+const table = component (rawTable)
 
 export { freshTable, rawTable, table }

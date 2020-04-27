@@ -3,8 +3,8 @@ import { box } from "../container/ui"
 
 // button :: ButtonOptions -> VNode
 const button = ({ disabled, locked, label, update, ...etc }: any): any => {
-  return box("uy-control uy-button")([
-    h("button", {
+  return box ("uy-control uy-button") ([
+    h ("button", {
       disabled,
       type: "button",
       onclick: update,

@@ -27,6 +27,7 @@ module.exports = {
   plugins: ["@typescript-eslint", "prettier"],
   parserOptions: {
     ecmaVersion: 2018,
+    project: "./tsconfig.eslint.json",
     sourceType: "module",
   },
   settings: {
@@ -88,11 +89,25 @@ module.exports = {
       },
     ],
     "no-unexpected-multiline": ["off"],
+    "no-unused-vars": [
+      "error",
+      {
+        argsIgnorePattern: "^_",
+        varsIgnorePattern: "^_",
+      },
+    ],
     quotes: ["error", "double"],
 
     "import/no-extraneous-dependencies": [2, { devDependencies: ["**/test.tsx", "**/test.ts"] }],
 
-    "@typescript-eslint/no-explicit-any": ["off", { "ignoreRestArgs": false }],
-    "@typescript-eslint/indent": [2, 2],
+    "@typescript-eslint/no-explicit-any": ["off", { ignoreRestArgs: false }],
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        argsIgnorePattern: "^_",
+        varsIgnorePattern: "^_",
+      },
+    ],
+    // "@typescript-eslint/indent": [2, 2],
   },
 }

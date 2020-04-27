@@ -9,13 +9,13 @@ const freshCheckbox = (value: boolean): any => ({ value })
 
 // rawCheckbox :: LabeledControlOptions -> Object -> VNode
 const rawCheckbox = ({ disabled, locked, label, update, ...etc }: any) => (data: any): any => {
-  return box("uy-control uy-checkbox")([
-    h("label", { class: { disabled, locked } }, [
-      h("input", {
+  return box ("uy-control uy-checkbox") ([
+    h ("label", { class: { disabled, locked } }, [
+      h ("input", {
         disabled,
         checked: data.value,
         type: "checkbox",
-        onchange: handleCheckedWith(update),
+        onchange: handleCheckedWith (update),
         ...etc,
         class: {
           disabled,
@@ -24,12 +24,12 @@ const rawCheckbox = ({ disabled, locked, label, update, ...etc }: any) => (data:
           [etc.class]: !!etc.class,
         },
       }),
-      ifExists(x => h("span", {}, [x]))(label),
+      ifExists (x => h ("span", {}, [x])) (label),
     ]),
   ])
 }
 
 // checkbox :: LabeledControlOptions -> [String] -> State -> VNode
-const checkbox = component(rawCheckbox)
+const checkbox = component (rawCheckbox)
 
 export { freshCheckbox, checkbox, rawCheckbox }

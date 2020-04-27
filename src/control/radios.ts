@@ -8,16 +8,16 @@ import { ifExists } from "../utility/utility"
 const freshRadios = (value: any): any => ({ value })
 
 // rawRadios :: RadiosOptions -> Object -> VNode
-const rawRadios = ({ disabled, locked, options, update, ...etc }: any) => (data: any) => {
-  return box("uy-control uy-radios")(
-    Object.entries(options).map(([value, label]: any) =>
-      h("label", { class: { locked, disabled } }, [
-        h("input", {
+const rawRadios = ({ disabled, locked, options, update, ...etc }: any) => (data: any): any => {
+  return box ("uy-control uy-radios") (
+    Object.entries (options).map (([value, label]: any) =>
+      h ("label", { class: { locked, disabled } }, [
+        h ("input", {
           disabled,
           value,
           checked: value === data.value,
           type: "radio",
-          onchange: handleValueWith(update),
+          onchange: handleValueWith (update),
           ...etc,
           class: {
             "uy-input": true,
@@ -26,13 +26,13 @@ const rawRadios = ({ disabled, locked, options, update, ...etc }: any) => (data:
             [etc.class]: !!etc.class,
           },
         }),
-        ifExists(x => h("span", {}, [x]))(label),
+        ifExists (x => h ("span", {}, [x])) (label),
       ])
     )
   )
 }
 
 // radios :: RadiosOptions -> [String] -> State -> VNode
-const radios = component(rawRadios)
+const radios = component (rawRadios)
 
 export { freshRadios, radios }

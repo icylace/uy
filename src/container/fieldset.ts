@@ -4,7 +4,7 @@ import { ui } from "./ui"
 
 // rawFieldset :: ComponentOptions -> [VNode] -> VNode
 const rawFieldset = ({ disabled, locked, label, ...etc }: any) => (contents: any[]): any => {
-  return h("fieldset", {
+  return h ("fieldset", {
     disabled,
     ...etc,
     class: {
@@ -13,10 +13,10 @@ const rawFieldset = ({ disabled, locked, label, ...etc }: any) => (contents: any
       "uy-fieldset": true,
       [etc.class]: !!etc.class,
     },
-  }, label ? [h("legend", {}, [label]), ...contents] : contents)
+  }, label ? [h ("legend", {}, [label]), ...contents] : contents)
 }
 
 // fieldset :: ComponentOptions -> [AnyFunction] -> State -> VNode
-const fieldset = compose(ui)(rawFieldset)
+const fieldset = compose (ui) (rawFieldset)
 
 export { fieldset }

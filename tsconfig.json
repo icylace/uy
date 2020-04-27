@@ -6,7 +6,7 @@
 
 {
   "include": ["./src/**/*.ts", "./types/*.d.ts"],
-  "exclude": ["./dist", "./output", "node_modules", "web_modules"],
+  "exclude": ["./dist", "./output", "./node_modules", "./web_modules"],
   "compilerOptions": {
     /* Basic Options */
     "incremental": true,                      /* Enable incremental compilation */

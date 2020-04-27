@@ -11,42 +11,42 @@ import { rawTextbox } from "./textbox"
 const freshList = (items: string[]): any => ({ items })
 
 // addItem :: [String] -> ListData -> State -> State
-const addItem = (path: string[]) => (data: any) => (state: any) => {
-  return set([...path, "items"])([...data.items, ""])(state)
+const addItem = (path: string[]) => (data: any) => (state: any): any => {
+  return set ([...path, "items"]) ([...data.items, ""]) (state)
 }
 
 // updateItem :: [String] -> Int -> State -> State -> String -> State
 const updateItem = (path: string[]) => (i: number) => (state: any, value: string): any => {
-  return set([...path, "items", i])(value)(state)
+  return set ([...path, "items", i]) (value) (state)
 }
 
 // removeItem :: [String] -> Int -> State -> State
 const removeItem = (path: string[]) => (i: number) => (state: any): any => {
-  return set([...path, "items"])(exclude(i)(get([...path, "items"])(state)))(state)
+  return set ([...path, "items"]) (exclude (i) (get ([...path, "items"]) (state))) (state)
 }
 
 // rawList :: ListOptions -> Object -> VNode
 const rawList = ({ disabled, locked, headers, path, ...etc }: any) => (data: any): any => {
-  const item = (x: any, i: number) =>
+  const item = (x: any, i: number): any =>
     [
-      rawTextbox({ disabled, locked, update: updateItem(path)(i) })({ value: x }),
-      cancelButton({ disabled, locked, update: removeItem(path)(i) }),
+      rawTextbox ({ disabled, locked, update: updateItem (path) (i) }) ({ value: x }),
+      cancelButton ({ disabled, locked, update: removeItem (path) (i) }),
     ]
 
   const grower =
     [
       [
         { class: "uy-list-adder", colspan: 2 },
-        button({
+        button ({
           disabled,
           locked,
           label: "+ Add",
-          update: addItem(path)(data),
+          update: addItem (path) (data),
         }),
       ],
     ]
 
-  return h(
+  return h (
     "div",
     {
       ...etc,
@@ -59,18 +59,18 @@ const rawList = ({ disabled, locked, headers, path, ...etc }: any) => (data: any
       },
     },
     [
-      rawTable({
+      rawTable ({
         disabled,
         headers,
         locked,
         orderColumn: null,
         sortDescending: null,
-      })({ rows: [...data.items.map(item), grower] }),
+      }) ({ rows: [...data.items.map (item), grower] }),
     ]
   )
 }
 
 // list :: ListOptions -> [String] -> State -> VNode
-const list = component(rawList)
+const list = component (rawList)
 
 export { freshList, list }

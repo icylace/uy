@@ -10,13 +10,13 @@ const freshDatePicker = (value: string): any => ({ value })
 
 // rawDatePicker :: ControlOptions -> Object -> VNode
 const rawDatePicker = ({ disabled, locked, update, ...etc }: any) => (data: any): any => {
-  return box("uy-control uy-datePicker")([
-    h("input", {
+  return box ("uy-control uy-datePicker") ([
+    h ("input", {
       disabled,
       readonly: locked,
       value: data.value,
       type: "date",
-      onchange: handleValueWith(update),
+      onchange: handleValueWith (update),
       ...etc,
       class: {
         disabled,
@@ -29,22 +29,22 @@ const rawDatePicker = ({ disabled, locked, update, ...etc }: any) => (data: any)
 }
 
 // datePicker :: ControlOptions -> [String] -> State -> VNode
-const datePicker = component(rawDatePicker)
+const datePicker = component (rawDatePicker)
 
 // -----------------------------------------------------------------------------
 
 // freshDatetimeLocalPicker :: String -> ControlData
-const freshDatetimeLocalPicker = (value: string) => ({ value })
+const freshDatetimeLocalPicker = (value: string): any => ({ value })
 
 // rawDatetimeLocalPicker :: ControlOptions -> Object -> VNode
 const rawDatetimeLocalPicker = ({ disabled, locked, update, ...etc }: any) => (data: any): any => {
-  return box("uy-control uy-datePicker")([
-    h("input", {
+  return box ("uy-control uy-datePicker") ([
+    h ("input", {
       disabled,
       readonly: locked,
       value: data.value,
       type: "datetime-local",
-      onchange: handleValueWith(update),
+      onchange: handleValueWith (update),
       ...etc,
       class: {
         disabled,
@@ -57,7 +57,7 @@ const rawDatetimeLocalPicker = ({ disabled, locked, update, ...etc }: any) => (d
 }
 
 // datetimeLocalPicker :: ControlOptions -> [String] -> State -> VNode
-const datetimeLocalPicker = component(rawDatetimeLocalPicker)
+const datetimeLocalPicker = component (rawDatetimeLocalPicker)
 
 // -----------------------------------------------------------------------------
 
@@ -66,13 +66,13 @@ const freshMonthPicker = (value: string): any => ({ value })
 
 // rawMonthPicker :: ControlOptions -> Object -> VNode
 const rawMonthPicker = ({ disabled, locked, update, ...etc }: any) => (data: any): any => {
-  return box("uy-control uy-datePicker")([
-    h("input", {
+  return box ("uy-control uy-datePicker") ([
+    h ("input", {
       disabled,
       readonly: locked,
       value: data.value,
       type: "month",
-      onchange: handleValueWith(update),
+      onchange: handleValueWith (update),
       ...etc,
       class: {
         disabled,
@@ -85,7 +85,7 @@ const rawMonthPicker = ({ disabled, locked, update, ...etc }: any) => (data: any
 }
 
 // monthPicker :: ControlOptions -> [String] -> State -> VNode
-const monthPicker = component(rawMonthPicker)
+const monthPicker = component (rawMonthPicker)
 
 // -----------------------------------------------------------------------------
 
@@ -94,13 +94,13 @@ const freshTimePicker = (value: string): any => ({ value })
 
 // rawTimePicker :: ControlOptions -> Object -> VNode
 const rawTimePicker = ({ disabled, locked, update, ...etc }: any) => (data: any): any => {
-  return box("uy-control uy-datePicker")([
-    h("input", {
+  return box ("uy-control uy-datePicker") ([
+    h ("input", {
       disabled,
       readonly: locked,
       value: data.value,
       type: "time",
-      onchange: handleValueWith(update),
+      onchange: handleValueWith (update),
       ...etc,
       class: {
         disabled,
@@ -113,7 +113,7 @@ const rawTimePicker = ({ disabled, locked, update, ...etc }: any) => (data: any)
 }
 
 // timePicker :: ControlOptions -> [String] -> State -> VNode
-const timePicker = component(rawTimePicker)
+const timePicker = component (rawTimePicker)
 
 // -----------------------------------------------------------------------------
 
@@ -122,13 +122,13 @@ const freshWeekPicker = (value: string): any => ({ value })
 
 // rawWeekPicker :: ControlOptions -> Object -> VNode
 const rawWeekPicker = ({ disabled, locked, update, ...etc }: any) => (data: any): any => {
-  return box("uy-control uy-datePicker")([
-    h("input", {
+  return box ("uy-control uy-datePicker") ([
+    h ("input", {
       disabled,
       readonly: locked,
       value: data.value,
       type: "week",
-      onchange: handleValueWith(update),
+      onchange: handleValueWith (update),
       ...etc,
       class: {
         disabled,
@@ -141,7 +141,7 @@ const rawWeekPicker = ({ disabled, locked, update, ...etc }: any) => (data: any)
 }
 
 // weekPicker :: ControlOptions -> [String] -> State -> VNode
-const weekPicker = component(rawWeekPicker)
+const weekPicker = component (rawWeekPicker)
 
 // -----------------------------------------------------------------------------
 

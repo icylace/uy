@@ -9,20 +9,20 @@ const freshDropdown = (value: string): any => ({ value, focused: false })
 
 // rawDropdown :: DropdownOptions -> Object -> VNode
 const rawDropdown = ({ disabled, locked, options, path, update, ...etc }: any) => (data: any): any => {
-  return box("uy-control uy-dropdown")([
-    box({
+  return box ("uy-control uy-dropdown") ([
+    box ({
       disabled,
       locked,
       "uy-dropdown-arrow": true,
       focus: data.focused,
-    })([
-      h("select", {
+    }) ([
+      h ("select", {
         disabled,
         readonly: locked,
         value: data.value,
-        onchange: handleValueWith(update),
-        onfocus: set([...path, "focused"])(true),
-        onblur: set([...path, "focused"])(false),
+        onchange: handleValueWith (update),
+        onfocus: set ([...path, "focused"]) (true),
+        onblur: set ([...path, "focused"]) (false),
         ...etc,
         class: {
           disabled,
@@ -30,9 +30,9 @@ const rawDropdown = ({ disabled, locked, options, path, update, ...etc }: any) =
           "uy-input": true,
           [etc.class]: !!etc.class,
         },
-      }, Object.entries(options).map(
+      }, Object.entries (options).map (
         ([x, content]) =>
-          h("option", Array.isArray(x)
+          h ("option", Array.isArray (x)
             ? { value: x[1], ...x[0] }
             : { value: x }, [content])
       )),
@@ -41,6 +41,6 @@ const rawDropdown = ({ disabled, locked, options, path, update, ...etc }: any) =
 }
 
 // dropdown :: DropdownOptions -> [String] -> State -> VNode
-const dropdown = component(rawDropdown)
+const dropdown = component (rawDropdown)
 
 export { freshDropdown, dropdown }

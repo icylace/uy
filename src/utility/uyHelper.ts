@@ -16,32 +16,32 @@ import { delist, identity, ifElse, isSomething, map, pipe } from "./utility"
 // -----------------------------------------------------------------------------
 
 // addInsideEl :: String -> (State -> State) -> State -> State
-const addInsideEl = (id: string): any => set("uy", "insideEl", id)
+const addInsideEl = (id: string): any => set ("uy", "insideEl", id)
 
 // removeInsideEl :: String -> State -> State
 const removeInsideEl = (id: string): any =>
-  ifElse(has({ uy: { popups: { [id]: isSomething } } }))
-    (mod("uy", "insideEl")(delist(id)))
-    (identity)
+  ifElse (has ({ uy: { popups: { [id]: isSomething } } }))
+  (mod ("uy", "insideEl") (delist (id)))
+  (identity)
 
 // -----------------------------------------------------------------------------
 
-const detectOutside = ([popup, f]: any[]) =>
-  onOutside(`#${popup}`)((_: any) => pipe([f, removeInsideEl(popup)]))
+const detectOutside = ([popup, f]: any[]): any =>
+  onOutside (`#${popup}`) ((_: any) => pipe ([f, removeInsideEl (popup)]))
 
 const detectOutsideOfElements = (event: any) => (state: any): any => {
   const handlers =
-    pipe([
-      get("uy", "insideEl"),
+    pipe ([
+      get ("uy", "insideEl"),
       Object.entries,
-      map(detectOutside),
+      map (detectOutside),
     ])
-  return handleUsing(handlers(state))(state, event)
+  return handleUsing (handlers (state)) (state, event)
 }
 
 // freshState :: State -> State
 const freshState =
-  set("uy")({
+  set ("uy") ({
     insideEl: {},
     utility: {
       eventHandler: {
@@ -52,23 +52,23 @@ const freshState =
   })
 
 const clickSubscription =
-  pipe([
-    get("uy", "utility", "eventHandler", "click"),
+  pipe ([
+    get ("uy", "utility", "eventHandler", "click"),
     Object.values,
     handleUsing,
     onClick,
   ])
 
 const mouseDownSubscription =
-  pipe([
-    get("uy", "utility", "eventHandler", "mousedown"),
+  pipe ([
+    get ("uy", "utility", "eventHandler", "mousedown"),
     Object.values,
     handleUsing,
     onMouseDown,
   ])
 
 // subscriptions :: State -> (State | [State])
-const subscriptions = (state: any): any => [mouseDownSubscription(state), clickSubscription(state)]
+const subscriptions = (state: any): any => [mouseDownSubscription (state), clickSubscription (state)]
 
 // -----------------------------------------------------------------------------
 
@@ -76,7 +76,7 @@ const uyAppConfig = (config: any): any => ({
   ...config,
   // TODO: account for any subscriptions from `config`
   subscriptions,
-  init: freshState(config.init),
+  init: freshState (config.init),
 })
 
 // -----------------------------------------------------------------------------

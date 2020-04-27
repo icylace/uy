@@ -2,7 +2,7 @@ import { h } from "hyperapp"
 
 // popup :: PopupOptions -> [VNode] -> VNode
 const popup = ({ disabled, id, locked, ...etc }: any): any => (contents: any[]): any => {
-  return h("div", {
+  return h ("div", {
     id,
     ...etc,
     class: {

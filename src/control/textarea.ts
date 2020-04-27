@@ -8,12 +8,12 @@ const freshTextarea = (value: string): any => ({ value })
 
 // rawTextarea :: ControlOptions -> Object -> VNode
 const rawTextarea = ({ disabled, locked, update, ...etc }: any) => (data: any): any => {
-  return box("uy-control uy-textarea")([
-    h("textarea", {
+  return box ("uy-control uy-textarea") ([
+    h ("textarea", {
       disabled,
       readonly: locked,
       value: data.value,
-      onchange: handleValueWith(update),
+      onchange: handleValueWith (update),
       ...etc,
       class: {
         disabled,
@@ -26,6 +26,6 @@ const rawTextarea = ({ disabled, locked, update, ...etc }: any) => (data: any): 
 }
 
 // textarea :: ControlOptions -> [String] -> State -> VNode
-const textarea = component(rawTextarea)
+const textarea = component (rawTextarea)
 
 export { freshTextarea, textarea }

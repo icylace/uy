@@ -8,8 +8,8 @@ const freshMultiselect = (value: string[]): any => ({ value })
 
 // rawMultiselect :: MultiselectOptions -> Object -> VNode
 const rawMultiselect = ({ disabled, locked, update, options, usingColumnMode, ...etc }: any) => (data: any): any => {
-  const selection = new Set(data.value)
-  return h("div", {
+  const selection = new Set (data.value)
+  return h ("div", {
     ...etc,
     class: {
       disabled,
@@ -20,28 +20,28 @@ const rawMultiselect = ({ disabled, locked, update, options, usingColumnMode, ..
       "uy-multiselect--grid-mode": usingColumnMode,
       [etc.class]: !!etc.class,
     },
-  })([
-    box("uy-multiselect-options")(
-      Object.entries(options).map(([x, label]) =>
-        rawCheckbox({
+  }) ([
+    box ("uy-multiselect-options") (
+      Object.entries (options).map (([x, label]) =>
+        rawCheckbox ({
           disabled,
           label,
           locked,
           update: (state: any, checked: boolean) => {
             if (checked) {
-              selection.add(x)
+              selection.add (x)
             } else {
-              selection.delete(x)
+              selection.delete (x)
             }
-            return update(Array.from(selection))(state)
+            return update (Array.from (selection)) (state)
           },
-        })({ value: selection.has(x) })
+        }) ({ value: selection.has (x) })
       )
     ),
   ])
 }
 
 // multiselect :: MultiselectOptions -> [String] -> State -> VNode
-const multiselect = component(rawMultiselect)
+const multiselect = component (rawMultiselect)
 
 export { freshMultiselect, multiselect }

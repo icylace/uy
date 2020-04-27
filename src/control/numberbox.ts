@@ -10,33 +10,33 @@ const freshNumberbox = (value: number): any => ({ value, focused: false })
 
 // sanitizedNumber :: Any -> Int
 const sanitizedNumber = (n: any): number => {
-  return Math.max(0, asNumber(n))
+  return Math.max (0, asNumber (n))
 }
 
 // update :: [String] -> String -> State -> State
 const update = (path: string[]) => (value: string): any => {
-  return set([...path, "value"])(sanitizedNumber(value))
+  return set ([...path, "value"]) (sanitizedNumber (value))
 }
 
 // rawNumberbox :: LabeledControlOptions -> Object -> VNode
 const rawNumberbox = ({ disabled, locked, label, path, ...etc }: any): any => (data: any): any => {
-  return box("uy-control uy-numberbox")([
-    h("label", {
+  return box ("uy-control uy-numberbox") ([
+    h ("label", {
       class: {
         disabled,
         locked,
         focus: data.focused,
       },
     }, [
-      h("input", {
+      h ("input", {
         disabled,
         min: 0,
         readonly: locked,
         type: "number",
         value: data.value,
-        onchange: handleValueWith(update(path)),
-        onfocus: set([...path, "focused"])(true),
-        onblur: set([...path, "focused"])(false),
+        onchange: handleValueWith (update (path)),
+        onfocus: set ([...path, "focused"]) (true),
+        onblur: set ([...path, "focused"]) (false),
         ...etc,
         class: {
           disabled,
@@ -45,12 +45,12 @@ const rawNumberbox = ({ disabled, locked, label, path, ...etc }: any): any => (d
           [etc.class]: !!etc.class,
         },
       }),
-      ifExists((x: any) => h("span", { class: { disabled, locked, "uy-input": true } }, [x]))(label),
+      ifExists ((x: any) => h ("span", { class: { disabled, locked, "uy-input": true } }, [x])) (label),
     ]),
   ])
 }
 
 // numberbox :: ControlOptions -> [String] -> State -> VNode
-const numberbox = component(rawNumberbox)
+const numberbox = component (rawNumberbox)
 
 export { freshNumberbox, numberbox }

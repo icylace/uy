@@ -9,23 +9,23 @@ const freshFile = (value: string): any => ({ value })
 // https://codepen.io/adamlaki/pen/VYpewx
 
 // rawFile :: LabeledControlOptions -> Object -> VNode
-const rawFile = ({ disabled, locked, update, label = "Select your file...", ...etc }: any) => (data: any): any => {
-  return box({
+const rawFile = ({ disabled, locked, label = "Select your file...", ...etc }: any) => (data: any): any => {
+  return box ({
     disabled,
     locked,
     "uy-control": true,
     "uy-file": true,
     "uy-input": true,
-  })([
-    h("label", { class: "uy-clicky", "data-text": label }, [
-      h("input", {
+  }) ([
+    h ("label", { class: "uy-clicky", "data-text": label }, [
+      h ("input", {
         disabled,
         value: data.value,
         type: "file",
         // TODO:
         // - probably needs to be rethought
         onchange: (state: any, { target }: any) => {
-          target.parentNode.dataset.text = target.value !== "" ? target.value.replace(/.*(\/|\\)/, "") : label
+          target.parentNode.dataset.text = target.value !== "" ? target.value.replace (/.*(\/|\\)/, "") : label
           return state
         },
         ...etc,
@@ -35,8 +35,8 @@ const rawFile = ({ disabled, locked, update, label = "Select your file...", ...e
           [etc.class]: !!etc.class,
         },
       }),
-      h("span", { class: "uy-clicky" }, [
-        icon({ fas: true, "fa-file-upload": true }),
+      h ("span", { class: "uy-clicky" }, [
+        icon ({ fas: true, "fa-file-upload": true }),
         " Upload",
       ]),
     ]),
@@ -44,6 +44,6 @@ const rawFile = ({ disabled, locked, update, label = "Select your file...", ...e
 }
 
 // file :: LabeledControlOptions -> [String] -> State -> VNode
-const file = component(rawFile)
+const file = component (rawFile)
 
 export { freshFile, file }

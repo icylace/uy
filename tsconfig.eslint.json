@@ -1,0 +1,16 @@
+// https://stackoverflow.com/a/60840108/1935675
+
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "./src/**/*.ts",
+    "./types/*.d.ts",
+    "./.eslintrc.js",
+    "./babel.config.js",
+    "./postcss.config.js",
+    "./prettier.config.js",
+    "./rollup.config.dev.js",
+    "./rollup.config.prod.js"
+  ]
+}
+

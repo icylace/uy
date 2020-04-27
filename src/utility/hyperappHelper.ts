@@ -5,9 +5,9 @@ const fx = (a: Function) => (b: any): any[] => {
 
 // glam :: { String: Bool } -> String
 const glam = (xr: any): string => {
-  return Object.entries(xr)
-    .reduce((acc: any, [cssClass, active]: any) => (active ? [...acc, cssClass] : acc), [])
-    .join(" ")
+  return Object.entries (xr)
+    .reduce ((acc: any, [cssClass, active]: any) => (active ? [...acc, cssClass] : acc), [])
+    .join (" ")
 }
 
 export { fx, glam }

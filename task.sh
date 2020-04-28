@@ -87,7 +87,11 @@ task:build:prod() {
   npx tsc --build --incremental false
   npx rollup --config --env prod
   task:_snowpack
-  cp -R ./output/typescript/ ./dist
+
+  echo
+  echo "Copying compiled JavaScript to the distribution folder..."
+  # https://stackoverflow.com/a/1313688/1935675
+  rsync --archive ./output/typescript/ ./dist --exclude=tsconfig.tsbuildinfo
 
   echo
   echo "Compiling CSS for production..."

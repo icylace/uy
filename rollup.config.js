@@ -5,7 +5,7 @@ export default ctx => ({
       file: "./dist/index.esm.js",
       format: "esm",
     },
-    ctx.env === "prod" ? {
+    ctx.environment === "prod" ? {
       file: "./dist/index.umd.js",
       format: "umd",
       name: "TODO:",

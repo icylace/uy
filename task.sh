@@ -85,7 +85,7 @@ task:build:prod() {
   echo
   echo "Compiling TypeScript for production..."
   npx tsc --build --incremental false
-  npx rollup --config --env prod
+  npx rollup --config --environment prod
   task:_snowpack
 
   echo

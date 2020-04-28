@@ -1,11 +1,29 @@
 # https://eslint.org/docs/user-guide/configuring#ignoring-files-and-directories
-# https://github.com/facebook/jest/blob/master/.eslintignore
 
-**/node_modules/**
-!.eslintrc.js
+# Generated files suitable for public distribution.
+dist/
 
+# Tool output.
+output/
+
+# Minified JavaScript code.
 *.min.js
 
-dist/*
+# ------------------------------------------------------------------------------
+#  https://github.com/facebook/jest/blob/master/.eslintignore
+# ------------------------------------------------------------------------------
 
-output/*
+**/coverage/**
+**/node_modules/**
+bin/
+flow-typed/**
+packages/*/build/**
+packages/*/build-es5/**
+packages/jest-diff/src/cleanupSemantic.ts
+website/blog
+website/build
+website/node_modules
+website/i18n/*.js
+website/translated_docs
+website/static
+!.eslintrc.js

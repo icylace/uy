@@ -1,8 +1,10 @@
-# Ignore CLI tool output.
-output/
+# https://git-scm.com/docs/gitignore
 
 # Generated files suitable for public distribution.
 dist/
+
+# Tool output.
+output/
 
 # ------------------------------------------------------------------------------
 #  https://github.com/github/gitignore/blob/master/Node.gitignore

@@ -53,23 +53,7 @@ task:_snowpack() {
   # https://superuser.com/a/462400/959677
   local completeChange=$(IFS=$';' ; echo "${changes[*]}")
 
-  sed -i '' "$completeChange" ./output/rollup/index.js
-}
-
-# ------------------------------------------------------------------------------
-
-task:_build:dev:bundle() {
-  npx rollup --config
-  task:_snowpack
-  cp ./output/rollup/* ./dist
-}
-
-# ------------------------------------------------------------------------------
-
-task:_build:prod:bundle() {
-  npx rollup --config --env prod
-  task:_snowpack
-  cp ./output/rollup/* ./dist
+  sed -i '' "$completeChange" ./dist/index.esm.js
 }
 
 # ------------------------------------------------------------------------------
@@ -79,21 +63,18 @@ task:build:dev() {
 
   echo
   echo "Compiling TypeScript for development..."
-  npx tsc --build --incremental false
-  task:_build:dev:bundle
+  npx tsc --build
+  npx rollup --config
+  task:_snowpack
+
+  echo
+  echo "Copying compiled JavaScript to the distribution folder..."
+  # https://stackoverflow.com/a/1313688/1935675
+  rsync --archive ./output/typescript/ ./dist --exclude=tsconfig.tsbuildinfo
 
   echo
   echo "Compiling CSS for development..."
   npx postcss ./src/index.css --output ./dist/index.css
-}
-
-# ------------------------------------------------------------------------------
-
-task:build:dev:update() {
-  echo
-  echo "Compiling TypeScript incrementally for development..."
-  npx tsc --build
-  task:_build:dev:bundle
 }
 
 # ------------------------------------------------------------------------------
@@ -104,7 +85,9 @@ task:build:prod() {
   echo
   echo "Compiling TypeScript for production..."
   npx tsc --build --incremental false
-  task:_build:prod:bundle
+  npx rollup --config --env prod
+  task:_snowpack
+  cp -R ./output/typescript/ ./dist
 
   echo
   echo "Compiling CSS for production..."
@@ -112,27 +95,26 @@ task:build:prod() {
 
   echo
   echo "Minifying and gzipping ES modules..."
-  npx terser --ecma 6 --compress --mangle --module --output ./dist/index.min.js -- ./output/rollup/index.js
-  gzip --best --to-stdout ./dist/index.min.js > ./dist/index.min.js.gz
+  npx terser --ecma 6 --compress --mangle --module --output ./dist/index.esm.min.js -- ./dist/index.esm.js
+  gzip --best --to-stdout ./dist/index.esm.min.js > ./dist/index.esm.min.js.gz
 
   echo
   echo "Minifying and gzipping UMD modules..."
-  npx terser --ecma 6 --compress --mangle --output ./dist/index.umd.min.js -- ./output/rollup/index.umd.js
+  npx terser --ecma 6 --compress --mangle --output ./dist/index.umd.min.js -- ./dist/index.umd.js
   gzip --best --to-stdout ./dist/index.umd.min.js > ./dist/index.umd.min.js.gz
 
-  echo
-  echo "Generating types..."
-  npx tsc --declaration --emitDeclarationOnly --incremental false --module amd --outFile ./output/typescript/index.js
-  cp ./output/typescript/index.d.ts ./dist
+  # TODO:
+  # echo
+  # echo "Generating types..."
+  # npx tsc --declaration --emitDeclarationOnly --incremental false --module amd --outFile ./dist/index.js
 }
 
 # ------------------------------------------------------------------------------
 
 task:clean() {
   echo
-  echo "Resetting the output folders of generated files..."
+  echo "Cleaning the distribution folder of generated files..."
   rm -fr ./dist && mkdir ./dist
-  rm -fr ./output && mkdir ./output
 }
 
 # ------------------------------------------------------------------------------
@@ -169,9 +151,23 @@ task:prepare() {
 
 # ------------------------------------------------------------------------------
 
+# https://github.com/sindresorhus/np#release-script
+task:release() {
+  np
+}
+
+# ------------------------------------------------------------------------------
+
+task:test() {
+  # TODO:
+  "test": "echo \"Error: no test specified\" && exit 1",
+}
+
+# ------------------------------------------------------------------------------
+
 task:typecheck() {
   echo
-  echo "Typechecking TypeScript..."
+  echo "Typechecking TypeScript code..."
   npx tsc --noEmit --incremental false
 }
 

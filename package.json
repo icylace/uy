@@ -23,17 +23,17 @@
   "main": "./dist/index.js",
   "browser": "./dist/index.js",
   "unpkg": "./dist/index.js",
-  "module": "./dist/module/index.js",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
     "build:dev": "./task.sh build:dev",
-    "build:dev:update": "./task.sh build:dev:update",
     "build:prod": "./task.sh build:prod",
     "clean": "./task.sh clean",
     "lint": "./task.sh lint",
     "lint:fix": "./task.sh lint:fix",
     "lint:fix-dry-run": "./task.sh lint:fix-dry-run",
     "prepare": "./task.sh prepare",
+    "test": "./task.sh test",
     "typecheck": "./task.sh typecheck",
     "watch:postcss": "./task.sh watch:postcss",
     "watch:rollup": "./task.sh watch:rollup",
@@ -74,5 +74,8 @@
     "typescript": "^3.8.3",
     "utility-types": "^3.10.0"
   },
-  "private": true
+  "private": true,
+  "publishConfig": {
+    "access": "restricted"
+  }
 }

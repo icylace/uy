@@ -1,56 +1,30 @@
 {
   "name": "@icylace/uy",
-  "version": "0.0.1",
-  "description": "",
-  "keywords": [],
-  "author": "Ron Martinez <ramartin.net@gmail.com>",
+  "version": "0.0.0",
+  "description": "A Hyperapp-based UI library.",
+  "keywords": [
+    "hyperapp"
+  ],
   "license": "ISC",
-  "main": "./dist/index.js",
-  "module": "./dist/index.min.js",
-  "unpkg": "./dist/index.umd.min.js",
-  "types": "./dist/index.d.ts",
+  "homepage": "https://github.com/icylace/uy",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/icylace/uy"
+  },
+  "bugs": "https://github.com/icylace/uy/issues",
+  "author": {
+    "name": "Ron Martinez",
+    "email": "ramartin.net@gmail.com",
+    "url": "https://ramartin.net/"
+  },
   "files": [
     "./dist"
   ],
-  "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.13.0",
-    "hyperapp": "^2.0.4",
-    "redaxios": "^0.2.0",
-    "remeda": "0.0.19",
-    "shades": "^2.1.0"
-  },
-  "devDependencies": {
-    "@rollup/plugin-replace": "^2.3.2",
-    "@rollup/plugin-typescript": "^4.1.1",
-    "@typescript-eslint/eslint-plugin": "^2.29.0",
-    "@typescript-eslint/parser": "^2.29.0",
-    "cssnano": "^4.1.10",
-    "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.10.1",
-    "eslint-config-standard": "^14.1.1",
-    "eslint-import-resolver-typescript": "^2.0.0",
-    "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-json": "^2.1.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^3.1.3",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1",
-    "jest": "^25.4.0",
-    "postcss": "^7.0.27",
-    "postcss-cli": "^7.1.0",
-    "postcss-import": "^12.0.1",
-    "postcss-preset-env": "^6.7.0",
-    "postcss-reporter": "^6.0.1",
-    "prettier": "^2.0.5",
-    "rollup": "^2.6.1",
-    "rollup-plugin-includepaths": "^0.2.3",
-    "snowpack": "^1.7.0",
-    "terser": "^4.6.11",
-    "ts-jest": "^25.4.0",
-    "tslib": "^1.11.1",
-    "typescript": "^3.8.3",
-    "utility-types": "^3.10.0"
-  },
+  "main": "./dist/index.js",
+  "browser": "./dist/index.js",
+  "unpkg": "./dist/index.js",
+  "module": "./dist/module/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "build:dev": "./task.sh build:dev",
     "build:dev:update": "./task.sh build:dev:update",
@@ -64,5 +38,41 @@
     "watch:postcss": "./task.sh watch:postcss",
     "watch:rollup": "./task.sh watch:rollup",
     "watch:typescript": "./task.sh watch:typescript"
-  }
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.13.0",
+    "hyperapp": "^2.0.4",
+    "redaxios": "^0.2.0",
+    "remeda": "0.0.19",
+    "shades": "^2.1.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.30.0",
+    "@typescript-eslint/parser": "^2.30.0",
+    "cssnano": "^4.1.10",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-import-resolver-typescript": "^2.0.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-json": "^2.1.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "jest": "^25.4.0",
+    "postcss": "^7.0.27",
+    "postcss-cli": "^7.1.1",
+    "postcss-import": "^12.0.1",
+    "postcss-preset-env": "^6.7.0",
+    "postcss-reporter": "^6.0.1",
+    "prettier": "^2.0.5",
+    "rollup": "^2.7.3",
+    "snowpack": "^1.7.1",
+    "terser": "^4.6.12",
+    "ts-jest": "^25.4.0",
+    "typescript": "^3.8.3",
+    "utility-types": "^3.10.0"
+  },
+  "private": true
 }

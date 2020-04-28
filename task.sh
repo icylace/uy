@@ -1,5 +1,34 @@
 #!/usr/bin/env bash
 
+task:hard-refresh() {
+  echo
+  echo "Hard-refreshing dependencies..."
+
+  rm ./package-lock.json && rm -fr ./node_modules
+
+  npm install --save hyperapp shades remeda redaxios
+  npm install --save @fortawesome/fontawesome-free
+  npm install --save-dev snowpack typescript rollup eslint terser prettier
+  npm install --save-dev eslint-plugin-import eslint-plugin-json eslint-plugin-node eslint-plugin-promise
+  npm install --save-dev eslint-config-prettier eslint-plugin-prettier
+  npm install --save-dev eslint-config-standard eslint-plugin-standard
+  npm install --save-dev eslint-import-resolver-typescript
+  npm install --save-dev @typescript-eslint/eslint-plugin @typescript-eslint/parser utility-types
+  npm install --save-dev jest ts-jest
+  npm install --save-dev postcss cssnano
+  npm install --save-dev postcss-cli postcss-import postcss-reporter postcss-preset-env
+
+  # Patch shades to pass typechecking...
+  # https://github.com/jamesmcnamara/shades/issues/37#issuecomment-594810688
+  # https://stackoverflow.com/a/42192768/1935675
+  sed -i '' '30i\
+    _val: T,\
+    _key: K
+  ' ./node_modules/shades/types/utils.ts
+}
+
+# ------------------------------------------------------------------------------
+
 task:_snowpack() {
   if [ ! -d ./web_modules ] ; then
     task:prepare
@@ -142,7 +171,7 @@ task:prepare() {
 
 task:typecheck() {
   echo
-  echo "Type-checking TypeScript code..."
+  echo "Typechecking TypeScript..."
   npx tsc --noEmit --incremental false
 }
 

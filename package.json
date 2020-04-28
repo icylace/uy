@@ -21,7 +21,7 @@
     "./dist"
   ],
   "main": "./dist/index.js",
-  "browser": "./dist/index.js",
+  "browser": "./dist/index.esm.js",
   "unpkg": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",

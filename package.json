@@ -33,6 +33,7 @@
     "lint:fix": "./task.sh lint:fix",
     "lint:fix-dry-run": "./task.sh lint:fix-dry-run",
     "prepare": "./task.sh prepare",
+    "release": "./task.sh release",
     "test": "./task.sh test",
     "typecheck": "./task.sh typecheck",
     "watch:postcss": "./task.sh watch:postcss",

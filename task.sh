@@ -147,14 +147,6 @@ task:lint:fix-dry-run() {
 
 # ------------------------------------------------------------------------------
 
-task:prepare() {
-  echo
-  echo "Preparing web modules..."
-  npx snowpack
-}
-
-# ------------------------------------------------------------------------------
-
 # https://github.com/sindresorhus/np#release-script
 task:release() {
   np

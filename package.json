@@ -18,7 +18,7 @@
     "url": "https://ramartin.net/"
   },
   "files": [
-    "./dist"
+    "dist"
   ],
   "main": "./dist/index.js",
   "browser": "./dist/index.esm.js",

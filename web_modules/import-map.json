@@ -1,0 +1,8 @@
+{
+  "imports": {
+    "hyperapp": "./hyperapp.js",
+    "redaxios": "./redaxios.js",
+    "remeda": "./remeda.js",
+    "shades": "./shades.js"
+  }
+}

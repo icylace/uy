@@ -1,7 +1,6 @@
 import { h } from "hyperapp"
 import { component } from "../component"
 import { box } from "../container/ui"
-import { handleCheckedWith } from "../utility/event"
 import { ifExists } from "../utility/utility"
 
 // freshCheckbox :: Bool -> ControlData
@@ -15,7 +14,7 @@ const rawCheckbox = ({ disabled, locked, label, update, ...etc }: any) => (data:
         disabled,
         checked: data.value,
         type: "checkbox",
-        onchange: handleCheckedWith (update),
+        onchange: (state: any, event: any): any => update (state, event.target.checked),
         ...etc,
         class: {
           disabled,

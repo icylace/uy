@@ -22,6 +22,7 @@ task:hard-refresh() {
   # https://github.com/jamesmcnamara/shades/issues/37#issuecomment-594810688
   # https://stackoverflow.com/a/42192768/1935675
   sed -i '' '30i\
+    // https://github.com/jamesmcnamara/shades/issues/37#issuecomment-594810688\
     _val: T,\
     _key: K
   ' ./node_modules/shades/types/utils.ts

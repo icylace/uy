@@ -11,10 +11,6 @@ const eventFx = (name: string): Function => {
 const onClick = eventFx ("click")
 const onMouseDown = eventFx ("mousedown")
 
-const handleCheckedWith = (f: Function): any => (state: any, event: any): any => {
-  return f (state, event.target.checked)
-}
-
 const handleValueWith = (f: Function): any => (state: any, event: any): any => {
   return f (state, event.target.value)
 }
@@ -40,7 +36,6 @@ const onOutside = (selector: string) => (outsideAction: Function) => (state: any
 
 export {
   eventFx,
-  handleCheckedWith,
   handleUsing,
   handleValueWith,
   onClick,

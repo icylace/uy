@@ -147,6 +147,12 @@ task:lint:fix-dry-run() {
 
 # ------------------------------------------------------------------------------
 
+task:prepare() {
+  snowpack
+}
+
+# ------------------------------------------------------------------------------
+
 # https://github.com/sindresorhus/np#release-script
 task:release() {
   np

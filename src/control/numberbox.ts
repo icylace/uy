@@ -14,12 +14,12 @@ const sanitizedNumber = (n: any): number => {
 }
 
 // update :: [String] -> String -> State -> State
-const update = (path: string[]) => (value: string): any => {
-  return set ([...path, "value"]) (sanitizedNumber (value))
+const update = (path: string[]) => (state: any, value: string): any => {
+  return set ([...path, "value"]) (sanitizedNumber (value)) (state)
 }
 
 // rawNumberbox :: LabeledControlOptions -> Object -> VNode
-const rawNumberbox = ({ disabled, locked, label, path, ...etc }: any): any => (data: any): any => {
+const rawNumberbox = ({ disabled, locked, label, path, ...etc }: any) => (data: any): any => {
   return box ("uy-control uy-numberbox") ([
     h ("label", {
       class: {

@@ -11,7 +11,7 @@ const field = (f: Function) => (title: string) => ({ disabled, locked, ...etc }:
         locked,
         [etc.class]: !!etc.class,
       },
-    }, [title, ...f ({ disabled, locked, ...etc }) (path) (state)]),
+    }, [title, f ({ disabled, locked, ...etc }) (path) (state)]),
   ])
 }
 

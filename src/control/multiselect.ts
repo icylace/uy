@@ -22,12 +22,12 @@ const rawMultiselect = ({ disabled, locked, update, options, usingColumnMode, ..
     },
   }) ([
     box ("uy-multiselect-options") (
-      Object.entries (options).map (([x, label]) =>
+      Object.entries (options).map (([x, label]): any =>
         rawCheckbox ({
           disabled,
           label,
           locked,
-          update: (state: any, checked: boolean) => {
+          update: (state: any, checked: boolean): any => {
             if (checked) {
               selection.add (x)
             } else {

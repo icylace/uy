@@ -1,6 +1,8 @@
-import { get, has, mod, set } from "shades"
+// import { get, has, mod, set } from "shades"
+import { get, mod, set } from "shades"
 import { handleUsing, onClick, onMouseDown, onOutside } from "./event"
-import { delist, identity, ifElse, isSomething, map, pipe } from "./utility"
+// import { delist, identity, ifElse, isSomething, map, pipe } from "./utility"
+import { delist, map, pipe } from "./utility"
 
 // -----------------------------------------------------------------------------
 
@@ -19,23 +21,21 @@ import { delist, identity, ifElse, isSomething, map, pipe } from "./utility"
 const addInsideEl = (id: string): any => set ("uy", "insideEl", id)
 
 // removeInsideEl :: String -> State -> State
-const removeInsideEl = (id: string): any =>
-  ifElse (has ({ uy: { popups: { [id]: isSomething } } }))
-         (mod ("uy", "insideEl") (delist (id)))
-         (identity)
+const removeInsideEl = (id: string): any => mod ("uy", "insideEl") (delist (id))
 
 // -----------------------------------------------------------------------------
 
 const detectOutside = ([popup, f]: any[]): any =>
-  onOutside (`#${popup}`) ((_: any) => pipe ([f, removeInsideEl (popup)]))
+  onOutside (`#${popup}`) (
+    (_state: any, _event: any): any => pipe ([f, removeInsideEl (popup)])
+  )
 
-const detectOutsideOfElements = (event: any) => (state: any): any => {
-  return handleUsing (pipe ([
+const detectOutsideOfElements = (event: any) => (state: any): any =>
+  handleUsing (pipe ([
     get ("uy", "insideEl"),
     Object.entries,
     map (detectOutside),
   ]) (state)) (state, event)
-}
 
 // freshState :: State -> State
 const freshState =

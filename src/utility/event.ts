@@ -30,10 +30,14 @@ const handleUsing = (handlers: any[]) => (state: any, event: any): any => {
 // https://stackoverflow.com/a/28432139
 // https://codesandbox.io/s/czee7
 //
-const onOutside = (selector: string) => (outsideAction: Function) => (state: any, event: any): any => {
+const onOutside = (selector: string) => (action: Function) => (state: any, event: any): any => {
   const el = document.querySelector (selector)
   if (!el || el.contains (event.target)) return state
-  return outsideAction (state, event)
+
+  // TODO:
+  console.log ("lshglsfdkjghlsdfkjhglskdfhjglksdfjhglsdfhj")
+
+  return action (state, event)
 }
 
 export {

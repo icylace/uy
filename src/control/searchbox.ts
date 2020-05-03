@@ -18,15 +18,16 @@ const freshSearchbox = (value: string): any => ({
 // -----------------------------------------------------------------------------
 
 // chooseResult :: [String] -> String -> String -> State -> State
-const chooseResult = (path: string[]) => (id: string) => (value: string): any =>
-  pipe ([
+const chooseResult = (path: string[]) => (id: string) => (value: string) => (state: any): any => {
+  return pipe ([
     set ([...path, "results"]) ([]),
     set ([...path, "value"]) (value),
     removeInsideEl (id),
-  ])
+  ]) (state)
+}
 
-// updateResults :: AnyFunction -> [String] -> String -> Object -> State -> Any
-const updateResults = (search: Function) => (path: string[]) => (id: string) => ({ value, results }: any) => (state: any): any => {
+// updateResults :: AnyFunction -> [String] -> String -> State -> Object -> Any
+const updateResults = (search: Function) => (path: string[]) => (id: string) => (state: any, { value, results }: any): any => {
   // It is possible the current value of the searchbox and the value that was
   // actually searched on could be out of sync if the user continues changing
   // the searchbox value during the search. In that case another search gets
@@ -100,7 +101,9 @@ const rawSearchbox = ({ disabled, locked, path, search, ...etc }: any) => (data:
         "Shift",
         "Super",
       ]
-      return noopKeys.includes (key) ? state : update (search) (path) (id) (value) (state)
+      return noopKeys.includes (key)
+        ? state
+        : update (search) (path) (id) (value) (state)
     },
 
     // Here we're using the non-standard `search` event because it can detect
@@ -109,9 +112,14 @@ const rawSearchbox = ({ disabled, locked, path, search, ...etc }: any) => (data:
     // less convenient since it would conflict with how we're using
     // the `keyup` event.
     // https://stackoverflow.com/a/25569880
-    onsearch: (state: any, event: any): any => update (search) (path) (id) (event.target.value) (state),
+    onsearch: (state: any, event: any): any => {
+      return update (search) (path) (id) (event.target.value) (state)
+    },
 
+    // TODO:
+    // - find a way to exclude `update` of `ControlOptions` from `etc`
     ...etc,
+
     class: {
       disabled,
       locked,
@@ -126,39 +134,29 @@ const rawSearchbox = ({ disabled, locked, path, search, ...etc }: any) => (data:
     "uy-control": true,
     "uy-searchbox": true,
   }) ([
-    h (
-      "label",
-      {
-        class: {
-          disabled,
-          locked,
-          "uy-searchbox-label": true,
-          focus: data.focused,
-          busy: data.searching,
-        },
+    h ("label", {
+      class: {
+        disabled,
+        locked,
+        "uy-searchbox-label": true,
+        focus: data.focused,
+        busy: data.searching,
       },
-      [
-        inputSearch,
-        h (
-          "span",
-          { onclick: update (search) (path) (id) (data.value) },
-          [
-            icon ({
-              fas: true,
-              "fa-spinner": data.searching,
-              "fa-pulse": data.searching,
-              "fa-search": !data.searching,
-            }),
-          ]
-        ),
-      ]
-    ),
+    }, [
+      inputSearch,
+      h ("span", { onclick: update (search) (path) (id) (data.value) }, [
+        icon ({
+          fas: true,
+          "fa-spinner": data.searching,
+          "fa-pulse": data.searching,
+          "fa-search": !data.searching,
+        }),
+      ]),
+    ]),
 
     data.results.length && !disabled
       ? popup ({ locked, disabled, id }) ([
-        h (
-          "ul",
-          { class: "uy-searchbox-results uy-scroller" },
+        h ("ul", { class: "uy-searchbox-results uy-scroller" },
           data.results.map (searchResult (path) (id))
         ),
       ])

@@ -12,8 +12,8 @@ const isSelected = (activeTab: string) => (item: any, i: number): boolean => {
   return activeTab === String (i) || (typeof item === "object" && hasOwn ("props") (item) && activeTab === item.props["data-tab-id"])
 }
 
-// tab :: String -> Action -> VNode -> Int -> VNode
-const tab = (activeTab: string, update: Function) => (item: any, i: number): any => {
+// tab :: Action -> String -> VNode -> Int -> VNode
+const tab = (update: Function) => (activeTab: string) => (item: any, i: number): any => {
   const selected = isSelected (activeTab) (item, i)
   return h (
     "div",
@@ -21,8 +21,8 @@ const tab = (activeTab: string, update: Function) => (item: any, i: number): any
       class: { "uy-tabs-item": true, selected },
       onclick: (state: any, { target }: any) =>
         selected
-          ? [update (String (i)) (state), scrollIntoView (target)]
-          : update (String (i)) (state)
+          ? [update (state, String (i)), scrollIntoView (target)]
+          : update (state, String (i))
       ,
     },
     [item]
@@ -49,7 +49,7 @@ const rawTabs = ({ disabled, locked, itemsFooter, itemsHeader, tabList, update, 
     [
       box ("uy-tabs-navigation") ([
         itemsHeader,
-        box ("uy-tabs-list uy-scroller") (headings.map (tab (data.value, update))),
+        box ("uy-tabs-list uy-scroller") (headings.map (tab (update) (data.value))),
         itemsFooter,
       ]),
       box ("uy-tabs-panels") ([panels[headings.findIndex (isSelected (data.value))]]),

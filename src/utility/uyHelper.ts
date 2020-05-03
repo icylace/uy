@@ -21,8 +21,8 @@ const addInsideEl = (id: string): any => set ("uy", "insideEl", id)
 // removeInsideEl :: String -> State -> State
 const removeInsideEl = (id: string): any =>
   ifElse (has ({ uy: { popups: { [id]: isSomething } } }))
-  (mod ("uy", "insideEl") (delist (id)))
-  (identity)
+         (mod ("uy", "insideEl") (delist (id)))
+         (identity)
 
 // -----------------------------------------------------------------------------
 
@@ -30,13 +30,11 @@ const detectOutside = ([popup, f]: any[]): any =>
   onOutside (`#${popup}`) ((_: any) => pipe ([f, removeInsideEl (popup)]))
 
 const detectOutsideOfElements = (event: any) => (state: any): any => {
-  const handlers =
-    pipe ([
-      get ("uy", "insideEl"),
-      Object.entries,
-      map (detectOutside),
-    ])
-  return handleUsing (handlers (state)) (state, event)
+  return handleUsing (pipe ([
+    get ("uy", "insideEl"),
+    Object.entries,
+    map (detectOutside),
+  ]) (state)) (state, event)
 }
 
 // freshState :: State -> State

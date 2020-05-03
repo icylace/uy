@@ -26,9 +26,6 @@ const rawPager = ({ disabled, locked, itemsPerPage, pageRange, update, ...etc }:
   const pageCount = Math.ceil (data.itemsTotal / itemsPerPage)
   const lastPage = pageCount - 1
 
-  const updateToPrev = update (Math.max (0, data.value - 1))
-  const updateToNext = update (Math.min (lastPage, data.value + 1))
-
   const rangeStartPage = Math.max (0, data.value - pageRange)
   const rangeFinishPage = Math.min (lastPage, data.value + pageRange)
 
@@ -42,7 +39,7 @@ const rawPager = ({ disabled, locked, itemsPerPage, pageRange, update, ...etc }:
           "uy-pager-page": true,
           "uy-pager-current": current,
         },
-        onclick: (_state: any, _event: any) => update (currentPage),
+        onclick: (state: any, _event: any) => update (state, currentPage),
       }, [h ("span", {}, [currentPage + 1])])
       : null
   })
@@ -52,28 +49,28 @@ const rawPager = ({ disabled, locked, itemsPerPage, pageRange, update, ...etc }:
 
   const navFirst =
     pagerNav (
-      update (0),
+      (state: any) => update (state, 0),
       [icon ({ fas: true, "fa-angle-double-left": true }), " first"],
       data.value !== 0
     )
 
   const navPrev =
     pagerNav (
-      updateToPrev,
+      (state: any) => update (state, Math.max (0, data.value - 1)),
       [icon ({ fas: true, "fa-angle-left": true }), " prev"],
       data.value !== 0
     )
 
   const navNext =
     pagerNav (
-      updateToNext,
+      (state: any) => update (state, Math.min (lastPage, data.value + 1)),
       ["next ", icon ({ fas: true, "fa-angle-right": true })],
       data.value !== lastPage
     )
 
   const navLast =
     pagerNav (
-      update (lastPage),
+      (state: any) => update (state, lastPage),
       ["last ", icon ({ fas: true, "fa-angle-double-right": true })],
       data.value !== lastPage
     )

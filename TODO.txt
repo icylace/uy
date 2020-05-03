@@ -1,3 +1,29 @@
+4/28/2020, 4:26 AM
+
+
+TODO:
+- consider replacing `build:dev:update`, `watch:postcss`, `watch:rollup`, and
+  `watch:typescript` in favor of a new command called `watch'
+  which combines them all
+
+
+TODO: future considerations
+
+- work on being able to compile CSS separately from JS
+- dev server stuff
+- image processing
+- font processing
+
+
+
+
+----
+
+
+
+
+
+
 https://github.com/jamesmcnamara/shades/issues/37#issuecomment-594810688
 
 

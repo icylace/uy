@@ -11,6 +11,8 @@ const eventFx = (name: string): Function => {
 const onClick = eventFx ("click")
 const onMouseDown = eventFx ("mousedown")
 
+// -----------------------------------------------------------------------------
+
 const handleValueWith = (f: Function): any => (state: any, event: any): any => {
   return f (state, event.target.value)
 }
@@ -31,7 +33,7 @@ const handleUsing = (handlers: any[]) => (state: any, event: any): any => {
 const onOutside = (selector: string) => (outsideAction: Function) => (state: any, event: any): any => {
   const el = document.querySelector (selector)
   if (!el || el.contains (event.target)) return state
-  return outsideAction (event) (state)
+  return outsideAction (state, event)
 }
 
 export {

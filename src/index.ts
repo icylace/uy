@@ -26,3 +26,7 @@ export * from "./display/icon"
 export * from "./display/spinner"
 
 export * from "./utility/event"
+export * from "./utility/hyperappHelper"
+export * from "./utility/shadesHelper"
+export * from "./utility/utility"
+export * from "./utility/uyHelper"

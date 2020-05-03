@@ -1,35 +1,5 @@
 #!/usr/bin/env bash
 
-task:hard-refresh() {
-  echo
-  echo "Hard-refreshing dependencies..."
-
-  rm ./package-lock.json && rm -fr ./node_modules
-
-  npm install --save hyperapp shades remeda redaxios
-  npm install --save @fortawesome/fontawesome-free
-  npm install --save-dev snowpack typescript rollup eslint terser prettier
-  npm install --save-dev eslint-plugin-import eslint-plugin-json eslint-plugin-node eslint-plugin-promise
-  npm install --save-dev eslint-config-prettier eslint-plugin-prettier
-  npm install --save-dev eslint-config-standard eslint-plugin-standard
-  npm install --save-dev eslint-import-resolver-typescript
-  npm install --save-dev @typescript-eslint/eslint-plugin @typescript-eslint/parser utility-types
-  npm install --save-dev jest ts-jest
-  npm install --save-dev postcss cssnano
-  npm install --save-dev postcss-cli postcss-import postcss-reporter postcss-preset-env
-
-  # Patch shades to pass typechecking...
-  # https://github.com/jamesmcnamara/shades/issues/37#issuecomment-594810688
-  # https://stackoverflow.com/a/42192768/1935675
-  sed -i '' '30i\
-    // https://github.com/jamesmcnamara/shades/issues/37#issuecomment-594810688\
-    _val: T,\
-    _key: K
-  ' ./node_modules/shades/types/utils.ts
-}
-
-# ------------------------------------------------------------------------------
-
 task:_snowpack() {
   if [ ! -d ./web_modules ] ; then
     task:prepare
@@ -65,6 +35,10 @@ task:build:dev() {
   echo
   echo "Compiling TypeScript for development..."
   npx tsc --build
+
+  # Exit if errors found.
+  [ $? != 0 ] && return
+
   npx rollup --config
   task:_snowpack
 
@@ -86,6 +60,10 @@ task:build:prod() {
   echo
   echo "Compiling TypeScript for production..."
   npx tsc --build --incremental false
+
+  # Exit if errors found.
+  [ $? != 0 ] && return
+
   npx rollup --config --environment prod
   task:_snowpack
 
@@ -118,8 +96,39 @@ task:build:prod() {
 
 task:clean() {
   echo
-  echo "Cleaning the distribution folder of generated files..."
+  echo "Cleaning the distribution folder..."
   rm -fr ./dist && mkdir ./dist
+}
+
+# ------------------------------------------------------------------------------
+
+task:hard-refresh() {
+  echo
+  echo "Hard-refreshing dependencies..."
+
+  rm ./package-lock.json && rm -fr ./node_modules
+
+  npm install --save hyperapp shades remeda redaxios
+  npm install --save @fortawesome/fontawesome-free
+  npm install --save-dev snowpack typescript rollup eslint terser prettier
+  npm install --save-dev eslint-plugin-import eslint-plugin-json eslint-plugin-node eslint-plugin-promise
+  npm install --save-dev eslint-config-prettier eslint-plugin-prettier
+  npm install --save-dev eslint-config-standard eslint-plugin-standard
+  npm install --save-dev eslint-import-resolver-typescript
+  npm install --save-dev @typescript-eslint/eslint-plugin @typescript-eslint/parser utility-types
+  npm install --save-dev jest ts-jest
+  npm install --save-dev postcss cssnano
+  npm install --save-dev postcss-cli postcss-import postcss-reporter postcss-preset-env
+
+  # Patch shades to pass typechecking...
+  # https://github.com/jamesmcnamara/shades/issues/37#issuecomment-594810688
+  # https://stackoverflow.com/a/42192768/1935675
+  sed -i '' '30i\
+    _val: T,\
+    _key: K
+  ' ./node_modules/shades/types/utils.ts
+
+  task:prepare
 }
 
 # ------------------------------------------------------------------------------
@@ -148,14 +157,19 @@ task:lint:fix-dry-run() {
 
 # ------------------------------------------------------------------------------
 
+# https://www.snowpack.dev/#run-after-every-install
 task:prepare() {
-  snowpack
+  echo
+  echo "Preparing web modules..."
+  npx snowpack
 }
 
 # ------------------------------------------------------------------------------
 
 # https://github.com/sindresorhus/np#release-script
 task:release() {
+  echo
+  echo "Releasing..."
   np
 }
 

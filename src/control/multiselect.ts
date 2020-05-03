@@ -20,7 +20,7 @@ const rawMultiselect = ({ disabled, locked, update, options, usingColumnMode, ..
       "uy-multiselect--grid-mode": usingColumnMode,
       [etc.class]: !!etc.class,
     },
-  }) ([
+  }, [
     box ("uy-multiselect-options") (
       Object.entries (options).map (([x, label]): any =>
         rawCheckbox ({
@@ -33,7 +33,7 @@ const rawMultiselect = ({ disabled, locked, update, options, usingColumnMode, ..
             } else {
               selection.delete (x)
             }
-            return update (Array.from (selection)) (state)
+            return update (state, Array.from (selection))
           },
         }) ({ value: selection.has (x) })
       )

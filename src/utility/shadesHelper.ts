@@ -1,5 +1,10 @@
 import * as shades from "shades"
 
+// The `shades` functions are called in a manual fashion instead of using
+// argument spreading in order to appease its type definitions.
+//
+// i.e. `shades.get (...path)` would cause elicit a type-check error.
+
 const get = (path: any[]) => (state: any): any => {
   switch (path.length) {
     case 0: return null

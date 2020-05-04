@@ -1,7 +1,7 @@
 import { h } from "hyperapp"
 import { component } from "../component"
 import { box } from "../container/ui"
-import { handleValueWith } from "../utility/event"
+import { handleValueWith } from "../utility/hyperappHelper"
 import { set } from "../utility/shadesHelper"
 import { asNumber, ifExists } from "../utility/utility"
 

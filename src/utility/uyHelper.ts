@@ -1,14 +1,14 @@
-import { get, mod, set } from "shades"
-import { handleUsing, onMouseDown, onOutside } from "./event"
+import { handleUsing, onMouseDown, onOutside } from "./hyperappHelper"
+import { get, mod, set } from "./shadesHelper"
 import { delist, map, pipe } from "./utility"
 
 // -----------------------------------------------------------------------------
 
 // addInsideEl :: String -> (State -> State) -> State -> State
-const addInsideEl = (id: string): any => set ("uy", "insiders", id)
+const addInsideEl = (id: string): any => set (["uy", "insiders", id])
 
 // removeInsideEl :: String -> State -> State
-const removeInsideEl = (id: string): any => mod ("uy", "insiders") (delist (id))
+const removeInsideEl = (id: string): any => mod (["uy", "insiders"]) (delist (id))
 
 // -----------------------------------------------------------------------------
 
@@ -25,7 +25,7 @@ const freshState = (state: any): any => ({
     mousedownHandlers: {
       detectOutsideAction: (state: any, event: any): any => {
         return handleUsing (pipe ([
-          get ("uy", "insiders"),
+          get (["uy", "insiders"]),
           Object.entries,
           map (detectOutside),
         ]) (state)) (state, event)
@@ -37,7 +37,7 @@ const freshState = (state: any): any => ({
 // mouseDownSubscription :: State -> State
 const mouseDownSubscription =
   pipe ([
-    get ("uy", "mousedownHandlers"),
+    get (["uy", "mousedownHandlers"]),
     Object.values,
     handleUsing,
     onMouseDown,

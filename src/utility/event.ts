@@ -8,7 +8,6 @@ const eventFx = (name: string): Function => {
   })
 }
 
-const onClick = eventFx ("click")
 const onMouseDown = eventFx ("mousedown")
 
 // -----------------------------------------------------------------------------
@@ -17,7 +16,7 @@ const handleValueWith = (f: Function): any => (state: any, event: any): any => {
   return f (state, event.target.value)
 }
 
-// Invokes a collection of event handlers with the same event.
+// Invokes a collection of event handlers for the same event.
 const handleUsing = (handlers: any[]) => (state: any, event: any): any => {
   return handlers.reduce ((newState: any, f: Function): any => f (newState, event), state)
 }
@@ -33,18 +32,12 @@ const handleUsing = (handlers: any[]) => (state: any, event: any): any => {
 const onOutside = (selector: string) => (action: Function) => (state: any, event: any): any => {
   const el = document.querySelector (selector)
   if (!el || el.contains (event.target)) return state
-
-  // TODO:
-  console.log ("lshglsfdkjghlsdfkjhglskdfhjglksdfjhglsdfhj")
-
   return action (state, event)
 }
 
 export {
-  eventFx,
   handleUsing,
   handleValueWith,
-  onClick,
   onMouseDown,
   onOutside,
 }

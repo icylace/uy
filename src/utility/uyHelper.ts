@@ -1,88 +1,61 @@
-// import { get, has, mod, set } from "shades"
 import { get, mod, set } from "shades"
-import { handleUsing, onClick, onMouseDown, onOutside } from "./event"
-// import { delist, identity, ifElse, isSomething, map, pipe } from "./utility"
+import { handleUsing, onMouseDown, onOutside } from "./event"
 import { delist, map, pipe } from "./utility"
 
 // -----------------------------------------------------------------------------
 
-// TODO:
-
-// // addClickHandler :: String -> Action -> State -> State
-// const addClickHandler = set ("uy", "utility", "eventHandler", "click")
-
-// // TODO:
-// removeClickHandler :: String -> State -> State
-// const removeClickHandler = set ("uy", "utility", "eventHandler", "click") (undefined)
-
-// -----------------------------------------------------------------------------
-
 // addInsideEl :: String -> (State -> State) -> State -> State
-const addInsideEl = (id: string): any => set ("uy", "insideEl", id)
+const addInsideEl = (id: string): any => set ("uy", "insiders", id)
 
 // removeInsideEl :: String -> State -> State
-const removeInsideEl = (id: string): any => mod ("uy", "insideEl") (delist (id))
+const removeInsideEl = (id: string): any => mod ("uy", "insiders") (delist (id))
 
 // -----------------------------------------------------------------------------
 
-const detectOutside = ([popup, f]: any[]): any =>
-  onOutside (`#${popup}`) (
-    (_state: any, _event: any): any => pipe ([f, removeInsideEl (popup)])
+const detectOutside = ([insider, f]: any[]): any =>
+  onOutside (`#${insider}`) (
+    (_state: any, _event: any): any => pipe ([f, removeInsideEl (insider)])
   )
 
-const detectOutsideOfElements = (event: any) => (state: any): any =>
-  handleUsing (pipe ([
-    get ("uy", "insideEl"),
-    Object.entries,
-    map (detectOutside),
-  ]) (state)) (state, event)
-
 // freshState :: State -> State
-const freshState =
-  set ("uy") ({
-    insideEl: {},
-    utility: {
-      eventHandler: {
-        click: {},
-        mousedown: { detectOutsideAction: detectOutsideOfElements },
+const freshState = (state: any): any => ({
+  ...state,
+  uy: {
+    insiders: {},
+    mousedownHandlers: {
+      detectOutsideAction: (state: any, event: any): any => {
+        return handleUsing (pipe ([
+          get ("uy", "insiders"),
+          Object.entries,
+          map (detectOutside),
+        ]) (state)) (state, event)
       },
     },
-  })
+  },
+})
 
-const clickSubscription =
-  pipe ([
-    get ("uy", "utility", "eventHandler", "click"),
-    Object.values,
-    handleUsing,
-    onClick,
-  ])
-
+// mouseDownSubscription :: State -> State
 const mouseDownSubscription =
   pipe ([
-    get ("uy", "utility", "eventHandler", "mousedown"),
+    get ("uy", "mousedownHandlers"),
     Object.values,
     handleUsing,
     onMouseDown,
   ])
-
-// subscriptions :: State -> (State | [State])
-const subscriptions = (state: any): any => [mouseDownSubscription (state), clickSubscription (state)]
 
 // -----------------------------------------------------------------------------
 
 const uyAppConfig = (config: any): any => ({
   ...config,
   // TODO: account for any subscriptions from `config`
-  subscriptions,
+  subscriptions: (state: any): any => [mouseDownSubscription (state)],
   init: freshState (config.init),
 })
 
 // -----------------------------------------------------------------------------
 
 export {
-  // addClickHandler,
   addInsideEl,
-  // removeClickHandler,
   removeInsideEl,
   uyAppConfig,
 }

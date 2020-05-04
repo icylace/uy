@@ -17,14 +17,14 @@ const range = (m: number) => (n: number): number[] => [...Array (n - m)].map ((_
 // Function utilities.
 
 // always :: a -> b -> a
-const always = (x: any) => (_: any): any => x
+const always = <T, U>(x: T) => (_: U): T => x
 
 // compose :: (a -> b) -> (c -> a) -> c -> b
 const compose = (f: (a: any) => any) => (g: (c: any) => any) => (x: any): any =>
   f (g (x))
 
 // identity :: a -> a
-const identity = (x: any): any => x
+const identity = <T>(x: T): T => x
 
 // ifElse :: (a -> Bool) -> (a -> b) -> (a -> b) -> a -> b
 const ifElse = (predicate: (a: any) => boolean) => (f: (a: any) => any) => (g: (a: any) => any) => (x: any): any =>
@@ -64,7 +64,7 @@ const hasOwn = (prop: string) => (obj: { [k: string]: any }): boolean => {
 
 // Other utilities.
 
-const isSomething = (x: any): boolean => x != null
+const isSomething = <T>(x: T): boolean => x != null
 
 const readoutReplacer = (_key: any, value: any): any => typeof value === "function" ? "function" : value
 const readout = (path: string[]) => (obj: object): any => {

@@ -2,7 +2,6 @@ import { h } from "hyperapp"
 import { component } from "../component"
 import { box } from "../container/ui"
 import { handleValueWith } from "../utility/hyperappHelper"
-import { ifExists } from "../utility/utility"
 
 // freshRadios :: String -> ControlData
 const freshRadios = (value: any): any => ({ value })
@@ -26,7 +25,7 @@ const rawRadios = ({ disabled, locked, options, update, ...etc }: any) => (data:
             [etc.class]: !!etc.class,
           },
         }),
-        ifExists (x => h ("span", {}, [x])) (label),
+        label != null ? h ("span", {}, [label]) : null,
       ])
     )
   )

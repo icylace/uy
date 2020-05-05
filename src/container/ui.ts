@@ -1,5 +1,4 @@
 import { h } from "hyperapp"
-import { compose } from "../utility/utility"
 
 type ClassAttr = object | string
 
@@ -17,7 +16,7 @@ const ui = (f: Function) => (gs: Function[]) => (state: any): any => {
 const column = ui (box ("uy-column"))
 
 // panel :: ClassAttr -> [Function] -> State -> VNode
-const panel = compose (ui) (box)
+const panel = (classAttr: any): any => ui (box (classAttr))
 
 // row :: [Function] -> State -> VNode
 const row = ui (box ("uy-row"))

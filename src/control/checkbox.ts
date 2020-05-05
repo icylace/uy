@@ -1,7 +1,6 @@
 import { h } from "hyperapp"
 import { component } from "../component"
 import { box } from "../container/ui"
-import { ifExists } from "../utility/utility"
 
 // freshCheckbox :: Bool -> ControlData
 const freshCheckbox = (value: boolean): any => ({ value })
@@ -23,7 +22,7 @@ const rawCheckbox = ({ disabled, locked, label, update, ...etc }: any) => (data:
           [etc.class]: !!etc.class,
         },
       }),
-      ifExists (x => h ("span", {}, [x])) (label),
+      label != null ? h ("span", {}, [label]) : null,
     ]),
   ])
 }

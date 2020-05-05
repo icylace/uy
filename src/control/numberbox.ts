@@ -3,14 +3,13 @@ import { component } from "../component"
 import { box } from "../container/ui"
 import { handleValueWith } from "../utility/hyperappHelper"
 import { set } from "../utility/shadesHelper"
-import { asNumber, ifExists } from "../utility/utility"
 
 // freshNumberbox :: Int -> ControlData
 const freshNumberbox = (value: number): any => ({ value, focused: false })
 
 // sanitizedNumber :: Any -> Int
 const sanitizedNumber = (n: any): number => {
-  return Math.max (0, asNumber (n))
+  return Math.max (0, Number.parseInt (n, 10))
 }
 
 // update :: [String] -> String -> State -> State
@@ -45,7 +44,9 @@ const rawNumberbox = ({ disabled, locked, label, path, ...etc }: any) => (data: 
           [etc.class]: !!etc.class,
         },
       }),
-      ifExists ((x: any) => h ("span", { class: { disabled, locked, "uy-input": true } }, [x])) (label),
+      label != null
+        ? h ("span", { class: { disabled, locked, "uy-input": true } }, [label])
+        : null,
     ]),
   ])
 }

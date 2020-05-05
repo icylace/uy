@@ -29,7 +29,7 @@ const rawPager = ({ disabled, locked, itemsPerPage, pageRange, update, ...etc }:
   const rangeStartPage = Math.max (0, data.value - pageRange)
   const rangeFinishPage = Math.min (lastPage, data.value + pageRange)
 
-  const pages = range (0) (rangeFinishPage - rangeStartPage + 1).map ((n: number) => {
+  const pages = range (0) (rangeFinishPage - rangeStartPage + 1).map ((n: number): any => {
     const currentPage = rangeStartPage + n
     const current = currentPage === data.value
     return rangeStartPage <= currentPage && currentPage <= rangeFinishPage

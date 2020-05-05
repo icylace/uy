@@ -1,5 +1,4 @@
 import { h } from "hyperapp"
-import { compose } from "../utility/utility"
 import { ui } from "./ui"
 
 // rawFieldset :: ComponentOptions -> [VNode] -> VNode
@@ -17,6 +16,6 @@ const rawFieldset = ({ disabled, locked, label, ...etc }: any) => (contents: any
 }
 
 // fieldset :: ComponentOptions -> [AnyFunction] -> State -> VNode
-const fieldset = compose (ui) (rawFieldset)
+const fieldset = (state: any): any => ui (rawFieldset (state))
 
 export { fieldset }

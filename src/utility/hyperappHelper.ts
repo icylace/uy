@@ -1,5 +1,7 @@
 // Constructs a CSS class string.
 const glam = (xr: { [k: string]: boolean }): string => {
+  // TODO:
+  // - switch to using a Map object instead in order to guarantee order
   return Object.entries (xr)
     .reduce ((acc: string[], [cssClass, active]: [string, boolean]): string[] => {
       return active ? [...acc, cssClass] : acc

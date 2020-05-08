@@ -1,8 +1,11 @@
+import { fx } from "../utility/hyperappHelper"
+
 const runScrollIntoView = (_dispatch: Function, el: any): void => {
   if (!el) return
   el.scrollIntoView ({ behavior: "smooth", block: "nearest" })
 }
 
-const scrollIntoView = (el: any): any[] => [runScrollIntoView, el]
+// scrollIntoView :: DOMElement -> [EffectRunner, Object]
+const scrollIntoView = fx (runScrollIntoView)
 
 export { scrollIntoView }

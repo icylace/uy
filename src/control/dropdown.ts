@@ -16,26 +16,31 @@ const rawDropdown = ({ disabled, locked, options, path, update, ...etc }: any) =
       "uy-dropdown-arrow": true,
       focus: data.focused,
     }) ([
-      h ("select", {
-        disabled,
-        readonly: locked,
-        value: data.value,
-        onchange: handleValueWith (update),
-        onfocus: set ([...path, "focused"]) (true),
-        onblur: set ([...path, "focused"]) (false),
-        ...etc,
-        class: {
+      h (
+        "select", {
           disabled,
-          locked,
-          "uy-input": true,
-          [etc.class]: !!etc.class,
+          readonly: locked,
+          value: data.value,
+          onchange: handleValueWith (update),
+          onfocus: set ([...path, "focused"]) (true),
+          onblur: set ([...path, "focused"]) (false),
+          ...etc,
+          class: {
+            disabled,
+            locked,
+            "uy-input": true,
+            [etc.class]: !!etc.class,
+          },
         },
-      }, Object.entries (options).map (
-        ([x, content]) =>
-          h ("option", Array.isArray (x)
-            ? { value: x[1], ...x[0] }
-            : { value: x }, [content])
-      )),
+        // TODO:
+        // - switch to using a Map object instead in order to guarantee order
+        Object.entries (options).map (
+          ([x, content]) =>
+            h ("option", Array.isArray (x)
+              ? { value: x[1], ...x[0] }
+              : { value: x }, [content])
+        )
+      ),
     ]),
   ])
 }

@@ -26,7 +26,11 @@ const freshState = (state: any): any => ({
       detectOutsideAction: (state: any, event: any): any => {
         return handleUsing (pipe ([
           get (["uy", "insiders"]),
+
+          // TODO:
+          // - switch to using a Map object instead in order to guarantee order
           Object.entries,
+
           map (detectOutside),
         ]) (state)) (state, event)
       },

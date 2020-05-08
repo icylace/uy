@@ -9,7 +9,9 @@ const freshRadios = (value: any): any => ({ value })
 // rawRadios :: RadiosOptions -> Object -> VNode
 const rawRadios = ({ disabled, locked, options, update, ...etc }: any) => (data: any): any => {
   return box ("uy-control uy-radios") (
-    Object.entries (options).map (([value, label]: any) =>
+      // TODO:
+      // - switch to using a Map object instead in order to guarantee order
+      Object.entries (options).map (([value, label]: any) =>
       h ("label", { class: { locked, disabled } }, [
         h ("input", {
           disabled,

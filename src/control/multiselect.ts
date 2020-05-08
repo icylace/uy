@@ -22,6 +22,8 @@ const rawMultiselect = ({ disabled, locked, update, options, usingColumnMode, ..
     },
   }, [
     box ("uy-multiselect-options") (
+      // TODO:
+      // - switch to using a Map object instead in order to guarantee order
       Object.entries (options).map (([x, label]): any =>
         rawCheckbox ({
           disabled,

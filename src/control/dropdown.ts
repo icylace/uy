@@ -35,7 +35,7 @@ const rawDropdown = ({ disabled, locked, options, path, update, ...etc }: any) =
         // TODO:
         // - switch to using a Map object instead in order to guarantee order
         Object.entries (options).map (
-          ([x, content]) =>
+          ([x, content]: [any, any]) =>
             h ("option", Array.isArray (x)
               ? { value: x[1], ...x[0] }
               : { value: x }, [content])

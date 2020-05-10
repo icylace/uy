@@ -1,8 +1,8 @@
-import { h } from "hyperapp"
+import { VNode, h } from "hyperapp"
 import { box } from "./ui"
 
 // field :: (ComponentOptions -> String -> State -> VNode) -> String -> ComponentOptions -> [String] -> State -> VNode
-const field = (f: Function) => (title: string) => ({ disabled, locked, ...etc }: any) => (path: string[]) => (state: any): any => {
+const field = (f: any) => (title: string) => ({ disabled, locked, ...etc }: any) => (path: string[]) => (state: any): VNode => {
   return box ("uy-container uy-field") ([
     h ("label", {
       ...etc,

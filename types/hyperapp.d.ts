@@ -14,7 +14,7 @@ declare module "hyperapp" {
     middleware?: Middleware;
   }
 
-  // A view builds a virtual node representation of the application state.
+  // A view builds a virtual DOM node representation of the application state.
   type View = <S>(state: State<S>) => VDOM
 
   // Application state is made available to every view and action.
@@ -76,18 +76,25 @@ declare module "hyperapp" {
   // An action is what's used to transform existing state.
   type Action = <S, P, D>(state: State<S>, props?: Payload<P>) => Reaction<S, D>
 
+  // TODO:
+  // - explore a potential "gotcha" of trying to use arrays for the state
+
+  // TODO:
+  // - actions should be able to return actions
+  //   - test that out and update types accordingly
+
   // An action can accept data in addition to the current state.
   type Payload<P> = P
 
   // A payload creator can customize the default payload for an action.
   type PayloadCreator = <P>(props: Payload<P>) => Payload<P>
 
-  // A reaction represents a state transformation that may cause effects.
+  // A reaction is a state transformation that may cause side effects.
   // A "chain reaction" is a series of successive dispatched actions.
   type Reaction<S, D> = State<S> | [State<S>, ...EffectDescriptor<D>[]]
 
   // An effect descriptor describes how Hyperapp should invoke an effect.
-  // A function that creates them is called an effect constructor.
+  // A function that creates this is called an effect constructor.
   type EffectDescriptor<D> = [Effect, EffectData<D>]
 
   // An effect is where side effects and any additional dispatching occur.

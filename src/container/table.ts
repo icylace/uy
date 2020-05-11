@@ -1,4 +1,5 @@
-import { h } from "hyperapp"
+import { VDOM, h } from "hyperapp"
+import { TableOptions } from "../types"
 import { component } from "../component"
 import { icon } from "../display/icon"
 import { box } from "./ui"
@@ -6,8 +7,8 @@ import { box } from "./ui"
 // freshTable :: [Any] -> Object
 const freshTable = (rows: any[]): any => ({ rows })
 
-// tableHeader :: Nullable String -> Bool -> Any -> VNode
-const tableHeader = (orderColumn: string | null) => (sortDescending: boolean) => (header: any): any => {
+// tableHeader :: Nullable String -> Bool -> Any -> VDOM
+const tableHeader = (orderColumn: string | null) => (sortDescending: boolean) => (header: any[] | any): VDOM => {
   const props = Array.isArray (header) ? header[0] : {}
   const content = Array.isArray (header) ? header[1] : header
   const column = props["data-column"]
@@ -16,7 +17,7 @@ const tableHeader = (orderColumn: string | null) => (sortDescending: boolean) =>
     sorting
       ? icon ({
         glyphicon: true,
-        "glyphicon-chevron-down": !!sortDescending,
+        "glyphicon-chevron-down": sortDescending,
         "glyphicon-chevron-up": !sortDescending,
         "sort-indicator": true,
       })
@@ -30,10 +31,10 @@ const tableHeader = (orderColumn: string | null) => (sortDescending: boolean) =>
   }, [content, sortIndicator])
 }
 
-// tableRow :: [Any] -> VNode
-const tableRow = (row: any[]): any => {
+// tableRow :: [Any] -> VDOM
+const tableRow = (row: any[]): VDOM => {
   if (!row) return row
-  if (!Array.isArray (row)) return [row]
+  if (!Array.isArray (row)) return row
   return h (
     "tr",
     {},
@@ -45,11 +46,10 @@ const tableRow = (row: any[]): any => {
   )
 }
 
-// table :: TableOptions -> [[VNode] | VNode] -> VNode
-// table :: TableOptions -> [TableCell] -> VNode
+// table :: TableOptions -> [[VDOM] | VDOM] -> VDOM
+// table :: TableOptions -> [TableCell] -> VDOM
 
-// rawTable :: TableOptions -> Object -> VNode
-const rawTable = ({ disabled, locked, headers, orderColumn, sortDescending, ...etc }: any) => (data: any): any => {
+const rawTable = ({ disabled, locked, headers, orderColumn, sortDescending, ...etc }: TableOptions) => (data: any): VDOM => {
   return box ({
     disabled,
     locked,
@@ -58,14 +58,14 @@ const rawTable = ({ disabled, locked, headers, orderColumn, sortDescending, ...e
   }) ([
     h ("table", etc, [
       headers && headers.length
-        ? h ("thead", {}, headers.map (tableHeader (orderColumn) (!!sortDescending)))
+        ? h ("thead", {}, headers.map (tableHeader (orderColumn) (sortDescending)))
         : null,
       h ("tbody", {}, data.rows.map (tableRow)),
     ]),
   ])
 }
 
-// table :: TableOptions -> [String] -> State -> VNode
+// table :: TableOptions -> [String] -> State -> VDOM
 const table = component (rawTable)
 
 export { freshTable, rawTable, table }

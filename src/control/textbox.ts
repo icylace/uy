@@ -1,4 +1,5 @@
-import { h } from "hyperapp"
+import { VDOM, h } from "hyperapp"
+import { ControlOptions } from "../types"
 import { component } from "../component"
 import { box } from "../container/ui"
 import { handleValueWith } from "../utility/hyperappHelper"
@@ -7,7 +8,7 @@ import { handleValueWith } from "../utility/hyperappHelper"
 const freshTextbox = (value: string): any => ({ value })
 
 // rawTextbox :: ControlOptions -> Object -> VNode
-const rawTextbox = ({ disabled, locked, update, ...etc }: any) => (data: any): any => {
+const rawTextbox = ({ disabled, locked, update, ...etc }: ControlOptions) => (data: any): VDOM => {
   return box ("uy-control uy-textbox") ([
     h ("input", {
       disabled,

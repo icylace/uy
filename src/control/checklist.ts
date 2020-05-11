@@ -43,7 +43,7 @@ const rawChecklist = ({ disabled, locked, path, render, ...etc }: any) => (data:
       locked,
       headers: null,
       orderColumn: null,
-      sortDescending: null,
+      sortDescending: false,
     }) ({ rows: data.items.map (item) }),
   ])
 }

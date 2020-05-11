@@ -1,7 +1,7 @@
-import { h } from "hyperapp"
+import { VDOM, VNode, h } from "hyperapp"
+import { PopupOptions } from "../types"
 
-// popup :: PopupOptions -> [VNode] -> VNode
-const popup = ({ disabled, id, locked, ...etc }: any): any => (contents: any[]): any => {
+const popup = ({ disabled, id, locked, ...etc }: PopupOptions) => (contents: VNode): VDOM => {
   return h ("div", {
     id,
     ...etc,

@@ -10,7 +10,7 @@ declare module "hyperapp" {
     init: Dispatch<S, P, D>;
     view: View;
     node: Node;
-    subscriptions?: Subscriptions;
+    subscriptions?: Subscription;
     middleware?: Middleware;
   }
 
@@ -20,11 +20,13 @@ declare module "hyperapp" {
   // Application state is made available to every view and action.
   type State<S> = S
 
-  // A virtual DOM node represents a DOM element.
+  // -----------------------------------------------------------------------------
+
+  // A virtual DOM node represents an actual DOM element.
   type VDOM = {
     name: string;
     node?: Node;
-    props: VDOMProps;
+    props: PropList;
     children: VDOM[];
     type?: VDOMType;
     key?: string;
@@ -38,21 +40,28 @@ declare module "hyperapp" {
     Text = 3,
   }
 
-  // Virtual DOM properties will often correspond to HTML attributes.
-  type VDOMProps = Record<string, any> & ElementCreationOptions
-
   // A lazy virtual DOM node stores a view along with properties available to it.
   type LazyVDOM = Partial<VDOM>
-  type LazyVDOMProps = VDOMProps & { view: LazyView }
+  type LazyVDOMProps = PropList & { view: LazyView }
 
   // A lazy view builds a virtual DOM node out of a lazy virtual DOM node.
-  type LazyView = (state: LazyVDOMProps | undefined) => VDOM
+  type LazyView = (state: LazyVDOMProps) => VDOM
+
+  // Virtual DOM properties will often correspond to HTML attributes.
+  type PropList = Record<string, Prop> & ElementCreationOptions
+  type Prop = string | number | boolean | null | Function | ClassProp | StyleProp | Prop[]
+
+  // The `class` property represents an HTML class attribute string.
+  type ClassProp = string | Record<string, boolean> | ClassProp[]
+
+  // The `style` property represents inline CSS.
+  type StyleProp = Record<string, string | number>
 
   // -----------------------------------------------------------------------------
 
   // A dispatch is a response to an event within the context of the current state.
   type Dispatch<S, P, D>
-    // A action is a standard type of response.
+    // Direct usage of an action is a common type of response.
     = Action
     // An action can be setup to use a payload or a modified payload.
     | [Action, Payload<P>]
@@ -78,6 +87,7 @@ declare module "hyperapp" {
   type Reaction<S, D> = State<S> | [State<S>, ...EffectDescriptor<D>[]]
 
   // An effect descriptor describes how Hyperapp should invoke an effect.
+  // A function that creates them is called an effect constructor.
   type EffectDescriptor<D> = [Effect, EffectData<D>]
 
   // An effect is where side effects and any additional dispatching occur.
@@ -88,10 +98,9 @@ declare module "hyperapp" {
 
   // -----------------------------------------------------------------------------
 
-  // TODO:
-  type Subscription = <S>(state: State<S>) => any
-  type SubscriptionList = <S>(state: State<S>) => Subscription[] | any
-  type Subscriptions = Subscription | SubscriptionList
+  // A subscription is a recurring dispatch that provides a way to remove itself.
+  // Multiple subscriptions can be active simultaneously.
+  type Subscription = <S>(state: State<S>) => (() => void) | Subscription[]
 
   // -----------------------------------------------------------------------------
 
@@ -105,17 +114,15 @@ declare module "hyperapp" {
   function app<S, P, D>(props: App<S, P, D>): void
 
   // The `h` function builds a virtual DOM node.
-  function h(name: string | CustomVNodeConstructor, props?: any, ...rest: VNodeList): VDOM
+  function h(name: string | CustomVDOMConstructor, props?: VNodePropList, ...rest: VNode[]): VDOM
 
   // A virtual node is a convenience layer over a virtual DOM node.
-  type VNode = VDOM | string | number | boolean | null
+  type VNode = string | number | boolean | null | VDOM | VNodePropList | VNode[]
+  type VNodePropList = Record<string, Prop> & { key?: string }
 
-  // Virtual nodes can be nested.
-  type VNodeList = (VNode | VNode[])[]
-
-  // The `h` allows customized virtual DOM node construction. Hyperapp's own
-  // `Lazy` constructor is an example of this.
-  type CustomVNodeConstructor = (props: any, children: VNodeList) => VDOM
+  // The `h` function allows customized virtual DOM node construction. Hyperapp's
+  // own `Lazy` constructor is an example of this.
+  type CustomVDOMConstructor = (props: VNodePropList, children: VNode) => VDOM
 
   // The `Lazy` function is a way of deferring the rendering of virtual DOM nodes.
   function Lazy(props: LazyVDOMProps): LazyVDOM

@@ -1,8 +1,8 @@
-import { h } from "hyperapp"
+import { VDOM, VNode, h } from "hyperapp"
+import { ComponentOptions } from "../types"
 import { ui } from "./ui"
 
-// rawFieldset :: ComponentOptions -> [VNode] -> VNode
-const rawFieldset = ({ disabled, locked, label, ...etc }: any) => (contents: any[]): any => {
+const rawFieldset = ({ disabled, locked, label, ...etc }: ComponentOptions) => (contents: VNode): VDOM => {
   return h ("fieldset", {
     disabled,
     ...etc,
@@ -12,10 +12,10 @@ const rawFieldset = ({ disabled, locked, label, ...etc }: any) => (contents: any
       "uy-fieldset": true,
       [etc.class]: !!etc.class,
     },
-  }, label ? [h ("legend", {}, [label]), ...contents] : contents)
+  }, label ? [h ("legend", {}, [label]), ...contents as VNode[]] : contents)
 }
 
 // fieldset :: ComponentOptions -> [AnyFunction] -> State -> VNode
-const fieldset = (state: any): any => ui (rawFieldset (state))
+const fieldset = (props: ComponentOptions): any => ui (rawFieldset (props))
 
 export { fieldset }

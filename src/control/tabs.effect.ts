@@ -1,6 +1,6 @@
 import { fx } from "../utility/hyperappHelper"
 
-const runScrollIntoView = (_dispatch: Function, el: any): void => {
+const runScrollIntoView = (_dispatch: Function, el: Element): void => {
   if (!el) return
   el.scrollIntoView ({ behavior: "smooth", block: "nearest" })
 }

@@ -64,7 +64,7 @@ const rawList = ({ disabled, locked, headers, path, ...etc }: any) => (data: any
         headers,
         locked,
         orderColumn: null,
-        sortDescending: null,
+        sortDescending: false,
       }) ({ rows: [...data.items.map (item), grower] }),
     ]
   )

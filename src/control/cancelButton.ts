@@ -1,8 +1,8 @@
-import { h } from "hyperapp"
+import { VDOM, h } from "hyperapp"
+import { ComponentOptions } from "../types"
 import { box } from "../container/ui"
 
-// cancelButton :: ButtonOptions -> VNode
-const cancelButton = ({ disabled, locked, update, ...etc }: any): any => {
+const cancelButton = ({ disabled, locked, update, ...etc }: ComponentOptions): VDOM => {
   return box ("uy-control uy-cancelButton") ([
     h ("button", {
       disabled,

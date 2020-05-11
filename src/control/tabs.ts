@@ -1,4 +1,4 @@
-import { h } from "hyperapp"
+import { State, Payload, Reaction, h } from "hyperapp"
 import { component } from "../component"
 import { box } from "../container/ui"
 import { hasOwn } from "../utility/utility"
@@ -19,7 +19,7 @@ const tab = (update: Function) => (activeTab: string) => (item: any, i: number):
     "div",
     {
       class: { "uy-tabs-item": true, selected },
-      onclick: (state: any, { target }: any) =>
+      onclick: (state: State<any>, { target }: Payload<Event>): Reaction<any, any> =>
         selected
           ? [update (state, String (i)), scrollIntoView (target)]
           : update (state, String (i))

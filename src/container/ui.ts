@@ -1,22 +1,18 @@
-import { VNode, h } from "hyperapp"
+import { ClassProp, State, VDOM, VNode, View, h } from "hyperapp"
 
-type ClassAttr = object | string
-
-// box :: ClassAttr -> [VNode] -> VNode
-const box = (classAttr: ClassAttr) => (contents: VNode[]): VNode => {
-  return h ("div", { class: classAttr }, contents)
+const box = (classProp: ClassProp) => (contents: VNode): VDOM => {
+  return h ("div", { class: classProp }, contents)
 }
 
-// ui :: ([VNode] -> VNode) -> [(State -> VNode)] -> State -> VNode
-const ui = (f: Function) => (gs: Function[]) => (state: any): VNode => {
+const ui = (f: (_: VNode) => VDOM) => (gs: View[]) => <S>(state: State<S>): VDOM => {
   return f (gs.map (g => g (state)))
 }
 
-// column :: [Function] -> State -> VNode
+// column :: [VDOM -> VDOM] -> State -> VDOM
 const column = ui (box ("uy-column"))
 
-// panel :: ClassAttr -> [Function] -> State -> VNode
-const panel = (classAttr: any): Function => ui (box (classAttr))
+// panel :: ClassProp -> [Function] -> State -> VDOM
+const panel = (classProp: ClassProp): Function => ui (box (classProp))
 
 // row :: [Function] -> State -> VNode
 const row = ui (box ("uy-row"))

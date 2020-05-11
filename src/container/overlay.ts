@@ -1,8 +1,8 @@
-import { h } from "hyperapp"
+import { VDOM, VNode, h } from "hyperapp"
+import { ComponentOptions } from "../types"
 import { box, ui } from "./ui"
 
-// rawOverlay :: ComponentOptions -> [VNode] -> VNode
-const rawOverlay = ({ disabled, locked, ...etc }: any) => (contents: any[]): any => {
+const rawOverlay = ({ disabled, locked, ...etc }: ComponentOptions) => (contents: VNode): VDOM => {
   return box ("uy-overlay-background") ([
     h ("div", {
       disabled,

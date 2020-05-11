@@ -1,8 +1,8 @@
 import { VNode, h } from "hyperapp"
+import { ControlOptions } from "../types"
 import { box } from "../container/ui"
 
-// button :: ButtonOptions -> VNode
-const button = ({ disabled, locked, label, update, ...etc }: any): VNode => {
+const button = ({ disabled, locked, label, update, ...etc }: ControlOptions): VNode => {
   return box ("uy-control uy-button") ([
     h ("button", {
       disabled,

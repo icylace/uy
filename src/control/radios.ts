@@ -4,10 +4,9 @@ import { component } from "../component"
 import { box } from "../container/ui"
 import { handleValueWith } from "../utility/hyperappHelper"
 
-// freshRadios :: String -> ControlData
-const freshRadios = (value: any): ControlData<any> => ({ value })
+const freshRadios = (value: string): ControlData<string> => ({ value })
 
-const rawRadios = ({ disabled, locked, options, update, ...etc }: RadiosOptions) => (data: ControlData<any>): VDOM => {
+const rawRadios = ({ disabled, locked, options, update, ...etc }: RadiosOptions) => (data: ControlData<string>): VDOM => {
   return box ("uy-control uy-radios") (
       // TODO:
       // - switch to using a Map object instead in order to guarantee order

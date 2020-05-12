@@ -1,5 +1,5 @@
 import { State, VDOM, h } from "hyperapp"
-import { Path } from "../types"
+import { ListData, ListOptions, Path } from "../types"
 import { component } from "../component"
 import { rawTable } from "../container/table"
 import { get, set } from "../utility/shadesHelper"
@@ -8,26 +8,21 @@ import { button } from "./button"
 import { cancelButton } from "./cancelButton"
 import { rawTextbox } from "./textbox"
 
-// freshList :: [String] -> Object
-const freshList = (items: string[]): any => ({ items })
+const freshList = (items: string[]): ListData<string[]> => ({ items })
 
-// addItem :: [String] -> ListData -> State -> State
-const addItem = (path: Path) => (data: any) => <S>(state: State<S>): State<S> => {
+const addItem = (path: Path) => (data: ListData<string[]>) => <S>(state: State<S>): State<S> => {
   return set ([...path, "items"]) ([...data.items, ""]) (state)
 }
 
-// updateItem :: [String] -> Int -> State -> State -> String -> State
 const updateItem = (path: Path) => (i: number) => <S>(state: State<S>, value: string): State<S> => {
   return set ([...path, "items", i]) (value) (state)
 }
 
-// removeItem :: [String] -> Int -> State -> State
 const removeItem = (path: Path) => (i: number) => <S>(state: State<S>): State<S> => {
   return set ([...path, "items"]) (exclude (i) (get ([...path, "items"]) (state))) (state)
 }
 
-// rawList :: ListOptions -> Object -> VNode
-const rawList = ({ disabled, locked, headers, path, ...etc }: any) => (data: any): VDOM => {
+const rawList = ({ disabled, locked, headers, path, ...etc }: ListOptions) => (data: ListData<string[]>): VDOM => {
   const item = (x: any, i: number): any =>
     [
       rawTextbox ({ disabled, locked, update: updateItem (path) (i) }) ({ value: x }),

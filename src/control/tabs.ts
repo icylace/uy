@@ -18,7 +18,7 @@ const tab = (update: Function) => (activeTab: string) => (item: VNode, i: number
     "div",
     {
       class: { "uy-tabs-item": true, selected },
-      onclick: <S>(state: State<S>, { target }: Payload<Event>): Reaction<S, any> =>
+      onclick: <S, D>(state: State<S>, { target }: Payload<Event>): Reaction<S, D> =>
         selected
           ? [update (state, String (i)), scrollIntoView (target)]
           : update (state, String (i))

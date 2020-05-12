@@ -1,14 +1,12 @@
 import { State, VDOM, h } from "hyperapp"
-import { ControlData, LabelledControlOptions, Path } from "../types"
+import { ControlData, NumberboxOptions, Path } from "../types"
 import { component } from "../component"
 import { box } from "../container/ui"
 import { handleValueWith } from "../utility/hyperappHelper"
 import { set } from "../utility/shadesHelper"
 
-// freshNumberbox :: Int -> ControlData
 const freshNumberbox = (value: number): ControlData<number> => ({ value, focused: false })
 
-// sanitizedNumber :: Any -> Int
 const sanitizedNumber = (n: any): number => {
   return Math.max (0, Number.parseInt (n, 10))
 }
@@ -17,7 +15,7 @@ const update = (path: Path) => <S>(state: State<S>, value: string): State<S> => 
   return set ([...path, "value"]) (sanitizedNumber (value)) (state)
 }
 
-const rawNumberbox = ({ disabled, locked, label, path, ...etc }: LabelledControlOptions) => (data: ControlData<number>): VDOM => {
+const rawNumberbox = ({ disabled, locked, label, path, ...etc }: NumberboxOptions) => (data: ControlData<number>): VDOM => {
   return box ("uy-control uy-numberbox") ([
     h ("label", {
       class: {

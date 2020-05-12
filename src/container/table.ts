@@ -4,10 +4,8 @@ import { component } from "../component"
 import { icon } from "../display/icon"
 import { box } from "./ui"
 
-// freshTable :: [Any] -> Object
 const freshTable = (rows: any[]): any => ({ rows })
 
-// tableHeader :: Nullable String -> Bool -> Any -> VDOM
 const tableHeader = (orderColumn: string | null) => (sortDescending: boolean) => (header: any[] | any): VDOM => {
   const props = Array.isArray (header) ? header[0] : {}
   const content = Array.isArray (header) ? header[1] : header
@@ -31,7 +29,6 @@ const tableHeader = (orderColumn: string | null) => (sortDescending: boolean) =>
   }, [content, sortIndicator])
 }
 
-// tableRow :: [Any] -> VDOM
 const tableRow = (row: any[]): VDOM => {
   if (!row) return row
   if (!Array.isArray (row)) return row
@@ -45,9 +42,6 @@ const tableRow = (row: any[]): VDOM => {
     )
   )
 }
-
-// table :: TableOptions -> [[VDOM] | VDOM] -> VDOM
-// table :: TableOptions -> [TableCell] -> VDOM
 
 const rawTable = ({ disabled, locked, headers, orderColumn, sortDescending, ...etc }: TableOptions) => (data: any): VDOM => {
   return box ({

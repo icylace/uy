@@ -9,6 +9,10 @@ export type ControlData<T> = {
   value: T;
 }
 
+export type ListData<T> = {
+  items: T;
+}
+
 export type SearchboxData = ControlData<string> & {
   focused: false;
   searching: false;
@@ -57,10 +61,17 @@ export type DropdownOptions = ControlOptions & {
   path: Path;
 }
 
+export type ListOptions = ControlOptions & {
+  headers: any;
+  path: any;
+}
+
 export type MultiselectOptions = ControlOptions & {
   options: Record<string, any>;
   usingColumnMode: boolean;
 }
+
+export type NumberboxOptions = ControlOptions & LabelledComponentOptions
 
 export type PagerOptions = ControlOptions & {
   itemsPerPage: any;
@@ -68,7 +79,7 @@ export type PagerOptions = ControlOptions & {
 }
 
 export type RadiosOptions = ControlOptions & {
-  options: any;
+  options: Record<string, any>;
 }
 
 export type TabsOptions = ControlOptions & {

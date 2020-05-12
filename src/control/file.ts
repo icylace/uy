@@ -1,4 +1,4 @@
-import { VDOM, h } from "hyperapp"
+import { State, VDOM, h } from "hyperapp"
 import { ControlData, ControlOptions } from "../types"
 import { component } from "../component"
 import { box } from "../container/ui"
@@ -23,7 +23,7 @@ const rawFile = ({ disabled, locked, label = "Select your file...", ...etc }: Co
         type: "file",
         // TODO:
         // - probably needs to be rethought
-        onchange: (state: any, { target }: any) => {
+        onchange: <S>(state: State<S>, { target }: any) => {
           target.parentNode.dataset.text = target.value !== "" ? target.value.replace (/.*(\/|\\)/, "") : label
           return state
         },

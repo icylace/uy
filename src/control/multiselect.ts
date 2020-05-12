@@ -1,4 +1,4 @@
-import { VDOM, h } from "hyperapp"
+import { State, VDOM, h } from "hyperapp"
 import { ControlData, MultiselectOptions } from "../types"
 import { component } from "../component"
 import { box } from "../container/ui"
@@ -6,7 +6,6 @@ import { rawCheckbox } from "./checkbox"
 
 const freshMultiselect = (value: string[]): ControlData<string[]> => ({ value })
 
-// rawMultiselect :: MultiselectOptions -> Object -> VNode
 const rawMultiselect = ({ disabled, locked, update, options, usingColumnMode, ...etc }: MultiselectOptions) => (data: ControlData<string[]>): VDOM => {
   const selection = new Set (data.value)
   return h ("div", {
@@ -24,12 +23,12 @@ const rawMultiselect = ({ disabled, locked, update, options, usingColumnMode, ..
     box ("uy-multiselect-options") (
       // TODO:
       // - switch to using a Map object instead in order to guarantee order
-      Object.entries (options).map (([x, label]): any =>
+      Object.entries (options).map (([x, label]): VDOM =>
         rawCheckbox ({
           disabled,
           label,
           locked,
-          update: (state: any, checked: boolean): any => {
+          update: <S>(state: State<S>, checked: boolean): any => {
             if (checked) {
               selection.add (x)
             } else {

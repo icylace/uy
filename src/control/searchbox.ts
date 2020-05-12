@@ -25,8 +25,8 @@ const chooseResult = (path: Path) => (id: string) => (value: string) => <S>(stat
   ]) (state)
 }
 
-// updateResults :: AnyFunction -> [String] -> String -> State -> Object -> Any
-const updateResults = (search: Function) => (path: Path) => (id: string) => <S>(state: State<S>, { value, results }: Payload<any>): Reaction<S, any> => {
+// updateResults :: AnyFunction -> Path -> String -> State -> Payload -> Reaction
+const updateResults = (search: Function) => (path: Path) => (id: string) => <S, D>(state: State<S>, { value, results }: Payload<any>): Reaction<S, D> => {
   // It is possible the current value of the searchbox and the value that was
   // actually searched on could be out of sync if the user continues changing
   // the searchbox value during the search. In that case another search gets
@@ -51,8 +51,8 @@ const updateResults = (search: Function) => (path: Path) => (id: string) => <S>(
     : removeInsideEl (id) (newState)
 }
 
-// update :: (Action -> String -> State) -> [String] -> String -> String -> State -> State | [State, Effect]
-const update = (search: Function) => (path: Path) => (id: string) => (value: string) => <S>(state: State<S>): Reaction<S, any> => {
+// update :: (Action -> String -> State) -> Path -> String -> String -> State -> Reaction
+const update = (search: Function) => (path: Path) => (id: string) => (value: string) => <S, D>(state: State<S>): Reaction<S, D> => {
   return get ([...path, "searching"]) (state)
     ? set ([...path, "value"]) (value) (state)
     : [

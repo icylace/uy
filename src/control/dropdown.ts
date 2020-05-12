@@ -1,14 +1,13 @@
-import { h } from "hyperapp"
+import { VDOM, h } from "hyperapp"
+import { ControlData, DropdownOptions } from "../types"
 import { component } from "../component"
 import { box } from "../container/ui"
 import { handleValueWith } from "../utility/hyperappHelper"
 import { set } from "../utility/shadesHelper"
 
-// freshDropDown :: String -> ControlData
-const freshDropdown = (value: string): any => ({ value, focused: false })
+const freshDropdown = (value: string): ControlData<string> => ({ value, focused: false })
 
-// rawDropdown :: DropdownOptions -> Object -> VNode
-const rawDropdown = ({ disabled, locked, options, path, update, ...etc }: any) => (data: any): any => {
+const rawDropdown = ({ disabled, locked, options, path, update, ...etc }: DropdownOptions) => (data: ControlData<string>): VDOM => {
   return box ("uy-control uy-dropdown") ([
     box ({
       disabled,

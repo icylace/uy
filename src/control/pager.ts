@@ -1,26 +1,26 @@
-import { h } from "hyperapp"
+import { State, VDOM, VNode, h } from "hyperapp"
+import { ControlData, PagerOptions } from "../types"
 import { component } from "../component"
 import { icon } from "../display/icon"
 import { range } from "../utility/utility"
 
 // freshPager :: Int -> Int -> PagerData
-const freshPager = (itemsTotal: number) => (value: number): any => ({ value, itemsTotal })
+const freshPager = (itemsTotal: number) => (value: number): ControlData<number> => ({ value, itemsTotal })
 
 // pagerNav :: AnyFunction -> [VNode] -> Bool -> VNode
-const pagerNav = (handler: Function, contents: any[], active: boolean): any =>
+const pagerNav = (handler: Function, contents: any[], active: boolean): VDOM =>
   h ("span", {
     class: {
       "uy-pager-nav": true,
       "uy-pager-nav-inactive": !active,
     },
-    ...active ? { onclick: (_state: any, _event: any): any => handler } : {},
+    ...active ? { onclick: <S>(_state: State<S>, _event: any): any => handler } : {},
   }, contents)
 
 // pagerMore :: [VNode] -> VNode
-const pagerMore = (contents: any[]): any => h ("span", { class: "uy-pager-more" }, contents)
+const pagerMore = (contents: VNode): VDOM => h ("span", { class: "uy-pager-more" }, contents)
 
-// rawPager :: PagerOptions -> Object -> VNode
-const rawPager = ({ disabled, locked, itemsPerPage, pageRange, update, ...etc }: any) => (data: any): any => {
+const rawPager = ({ disabled, locked, itemsPerPage, pageRange, update, ...etc }: PagerOptions) => (data: ControlData<number>): VDOM | null => {
   if (!data.itemsTotal) return null
 
   const pageCount = Math.ceil (data.itemsTotal / itemsPerPage)

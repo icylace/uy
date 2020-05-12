@@ -1,13 +1,13 @@
-import { h } from "hyperapp"
+import { VDOM, h } from "hyperapp"
+import { ControlData, MultiselectOptions } from "../types"
 import { component } from "../component"
 import { box } from "../container/ui"
 import { rawCheckbox } from "./checkbox"
 
-// freshMultiselect :: [String] -> ControlData
-const freshMultiselect = (value: string[]): any => ({ value })
+const freshMultiselect = (value: string[]): ControlData<string[]> => ({ value })
 
 // rawMultiselect :: MultiselectOptions -> Object -> VNode
-const rawMultiselect = ({ disabled, locked, update, options, usingColumnMode, ...etc }: any) => (data: any): any => {
+const rawMultiselect = ({ disabled, locked, update, options, usingColumnMode, ...etc }: MultiselectOptions) => (data: ControlData<string[]>): VDOM => {
   const selection = new Set (data.value)
   return h ("div", {
     ...etc,

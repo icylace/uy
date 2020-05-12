@@ -1,19 +1,18 @@
-import { h } from "hyperapp"
+import { State, VDOM, h } from "hyperapp"
+import { ControlData, LabelledControlOptions } from "../types"
 import { component } from "../component"
 import { box } from "../container/ui"
 
-// freshCheckbox :: Bool -> ControlData
-const freshCheckbox = (value: boolean): any => ({ value })
+const freshCheckbox = (value: boolean): ControlData<boolean> => ({ value })
 
-// rawCheckbox :: LabeledControlOptions -> Object -> VNode
-const rawCheckbox = ({ disabled, locked, label, update, ...etc }: any) => (data: any): any => {
+const rawCheckbox = ({ disabled, locked, label, update, ...etc }: LabelledControlOptions) => (data: ControlData<boolean>): VDOM => {
   return box ("uy-control uy-checkbox") ([
     h ("label", { class: { disabled, locked } }, [
       h ("input", {
         disabled,
         checked: data.value,
         type: "checkbox",
-        onchange: (state: any, event: any): any => update (state, event.target.checked),
+        onchange: <S>(state: State<S>, event: any): any => update (state, event.target.checked),
         ...etc,
         class: {
           disabled,
@@ -27,7 +26,7 @@ const rawCheckbox = ({ disabled, locked, label, update, ...etc }: any) => (data:
   ])
 }
 
-// checkbox :: LabeledControlOptions -> [String] -> State -> VNode
+// checkbox :: LabeledControlOptions -> Path -> State -> VNode
 const checkbox = component (rawCheckbox)
 
 export { freshCheckbox, checkbox, rawCheckbox }

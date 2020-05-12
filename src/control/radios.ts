@@ -1,13 +1,13 @@
-import { h } from "hyperapp"
+import { VDOM, h } from "hyperapp"
+import { ControlData, RadiosOptions } from "../types"
 import { component } from "../component"
 import { box } from "../container/ui"
 import { handleValueWith } from "../utility/hyperappHelper"
 
 // freshRadios :: String -> ControlData
-const freshRadios = (value: any): any => ({ value })
+const freshRadios = (value: any): ControlData<any> => ({ value })
 
-// rawRadios :: RadiosOptions -> Object -> VNode
-const rawRadios = ({ disabled, locked, options, update, ...etc }: any) => (data: any): any => {
+const rawRadios = ({ disabled, locked, options, update, ...etc }: RadiosOptions) => (data: ControlData<any>): VDOM => {
   return box ("uy-control uy-radios") (
       // TODO:
       // - switch to using a Map object instead in order to guarantee order

@@ -1,14 +1,12 @@
 import { VDOM, h } from "hyperapp"
-import { ControlOptions } from "../types"
+import { ControlData, ControlOptions } from "../types"
 import { component } from "../component"
 import { box } from "../container/ui"
 import { handleValueWith } from "../utility/hyperappHelper"
 
-// freshTextbox :: String -> ControlData
-const freshTextarea = (value: string): any => ({ value })
+const freshTextarea = (value: string): ControlData<string> => ({ value })
 
-// rawTextarea :: ControlOptions -> Object -> VNode
-const rawTextarea = ({ disabled, locked, update, ...etc }: ControlOptions) => (data: any): VDOM => {
+const rawTextarea = ({ disabled, locked, update, ...etc }: ControlOptions) => (data: ControlData<string>): VDOM => {
   return box ("uy-control uy-textarea") ([
     h ("textarea", {
       disabled,

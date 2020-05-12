@@ -1,7 +1,7 @@
-import { h } from "hyperapp"
+import { VDOM, h } from "hyperapp"
+import { ComponentOptions } from "../types"
 
-// spinner :: ComponentOptions -> VNode
-const spinner = (props: any): any => {
+const spinner = (props: ComponentOptions): VDOM => {
   return h ("span", { class: "uy-indicator uy-spinner", ...props })
 }
 

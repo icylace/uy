@@ -1,15 +1,14 @@
-import { h } from "hyperapp"
+import { VDOM, h } from "hyperapp"
+import { ControlData, ControlOptions } from "../types"
 import { component } from "../component"
 import { box } from "../container/ui"
 import { icon } from "../display/icon"
 
-// freshFile :: String -> ControlData
-const freshFile = (value: string): any => ({ value })
+const freshFile = (value: string): ControlData<string> => ({ value })
 
 // https://codepen.io/adamlaki/pen/VYpewx
 
-// rawFile :: LabeledControlOptions -> Object -> VNode
-const rawFile = ({ disabled, locked, label = "Select your file...", ...etc }: any) => (data: any): any => {
+const rawFile = ({ disabled, locked, label = "Select your file...", ...etc }: ControlOptions) => (data: ControlData<string>): VDOM => {
   return box ({
     disabled,
     locked,

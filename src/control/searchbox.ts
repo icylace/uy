@@ -1,5 +1,5 @@
 import { Payload, Reaction, State, VDOM, h } from "hyperapp"
-import { Path } from "../types"
+import { ControlOptions, Path, SearchboxData } from "../types"
 import { component } from "../component"
 import { popup } from "../container/popup"
 import { box } from "../container/ui"
@@ -8,8 +8,7 @@ import { get, set } from "../utility/shadesHelper"
 import { addInsideEl, removeInsideEl } from "../utility/uyHelper"
 import { pipe } from "../utility/utility"
 
-// freshSearchbox :: String -> SearchboxData
-const freshSearchbox = (value: string): any => ({
+const freshSearchbox = (value: string): SearchboxData => ({
   value,
   focused: false,
   searching: false,
@@ -18,8 +17,7 @@ const freshSearchbox = (value: string): any => ({
 
 // -----------------------------------------------------------------------------
 
-// chooseResult :: [String] -> String -> String -> State -> State
-const chooseResult = (path: string[]) => (id: string) => (value: string) => <S>(state: State<S>): State<S> => {
+const chooseResult = (path: Path) => (id: string) => (value: string) => <S>(state: State<S>): State<S> => {
   return pipe ([
     set ([...path, "results"]) ([]),
     set ([...path, "value"]) (value),
@@ -28,7 +26,7 @@ const chooseResult = (path: string[]) => (id: string) => (value: string) => <S>(
 }
 
 // updateResults :: AnyFunction -> [String] -> String -> State -> Object -> Any
-const updateResults = (search: Function) => (path: string[]) => (id: string) => <S>(state: State<S>, { value, results }: Payload<any>): Reaction<S, any> => {
+const updateResults = (search: Function) => (path: Path) => (id: string) => <S>(state: State<S>, { value, results }: Payload<any>): Reaction<S, any> => {
   // It is possible the current value of the searchbox and the value that was
   // actually searched on could be out of sync if the user continues changing
   // the searchbox value during the search. In that case another search gets
@@ -54,7 +52,7 @@ const updateResults = (search: Function) => (path: string[]) => (id: string) => 
 }
 
 // update :: (Action -> String -> State) -> [String] -> String -> String -> State -> State | [State, Effect]
-const update = (search: Function) => (path: string[]) => (id: string) => (value: string) => <S>(state: State<S>): Reaction<S, any> => {
+const update = (search: Function) => (path: Path) => (id: string) => (value: string) => <S>(state: State<S>): Reaction<S, any> => {
   return get ([...path, "searching"]) (state)
     ? set ([...path, "value"]) (value) (state)
     : [
@@ -72,8 +70,7 @@ const searchResult = (path: Path) => (id: string) => (x: string): VDOM => {
   return h ("li", { onclick: chooseResult (path) (id) (x) }, [x])
 }
 
-// rawSearchbox :: ControlOptions -> Object -> VNode
-const rawSearchbox = ({ disabled, locked, path, search, ...etc }: any) => (data: any): VDOM => {
+const rawSearchbox = ({ disabled, locked, path, search, ...etc }: ControlOptions) => (data: SearchboxData): VDOM => {
   const id = path.join ("-")
 
   const inputSearch = h ("input", {
@@ -114,8 +111,9 @@ const rawSearchbox = ({ disabled, locked, path, search, ...etc }: any) => (data:
     // less convenient since it would conflict with how we're using
     // the `keyup` event.
     // https://stackoverflow.com/a/25569880
-    onsearch: <S>(state: State<S>, event: any): Reaction<S, any> => {
-      return update (search) (path) (id) (event.target.value) (state)
+    onsearch: <S>(state: State<S>, { target }: Payload<Event>): Reaction<S, any> => {
+      const el = target as HTMLInputElement
+      return update (search) (path) (id) (el.value) (state)
     },
 
     // TODO:

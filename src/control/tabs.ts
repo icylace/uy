@@ -1,36 +1,34 @@
-import { State, Payload, Reaction, h } from "hyperapp"
+import { State, Payload, Reaction, VDOM, VNode, h } from "hyperapp"
+import { ControlData, TabsOptions } from "../types"
 import { component } from "../component"
 import { box } from "../container/ui"
 import { hasOwn } from "../utility/utility"
 import { scrollIntoView } from "./tabs.effect"
 
-// freshTabs :: String -> ControlData
-const freshTabs = (value: string): any => ({ value })
+const freshTabs = (value: string): ControlData<string> => ({ value })
 
-// isSelected :: String -> VNode -> Int -> Bool
 const isSelected = (activeTab: string) => (item: any, i: number): boolean => {
   return activeTab === String (i) || (typeof item === "object" && hasOwn ("props") (item) && activeTab === item.props["data-tab-id"])
 }
 
 // tab :: Action -> String -> VNode -> Int -> VNode
-const tab = (update: Function) => (activeTab: string) => (item: any, i: number): any => {
+const tab = (update: Function) => (activeTab: string) => (item: VNode, i: number): VDOM => {
   const selected = isSelected (activeTab) (item, i)
   return h (
     "div",
     {
       class: { "uy-tabs-item": true, selected },
-      onclick: (state: State<any>, { target }: Payload<Event>): Reaction<any, any> =>
+      onclick: <S>(state: State<S>, { target }: Payload<Event>): Reaction<S, any> =>
         selected
           ? [update (state, String (i)), scrollIntoView (target)]
           : update (state, String (i))
       ,
     },
-    [item]
+    item
   )
 }
 
-// rawTabs :: TabsOptions -> Object -> VNode
-const rawTabs = ({ disabled, locked, itemsFooter, itemsHeader, tabList, update, ...etc }: any) => (data: any): any => {
+const rawTabs = ({ disabled, locked, itemsFooter, itemsHeader, tabList, update, ...etc }: TabsOptions) => (data: ControlData<string>): VDOM => {
   const headings = tabList.map ((x: any) => x.heading)
   const panels = tabList.map ((x: any) => x.panel)
   return h (

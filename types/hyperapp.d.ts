@@ -17,7 +17,7 @@ declare module "hyperapp" {
   // A view builds a virtual DOM node representation of the application state.
   type View = <S>(state: State<S>) => VDOM
 
-  // Application state is made available to every view and action.
+  // Application state is accessible in every view, action, and subscription.
   type State<S> = S
 
   // -----------------------------------------------------------------------------

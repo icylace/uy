@@ -1,5 +1,7 @@
-import { State, VDOM, h } from "hyperapp"
-import { ChecklistOptions } from "../types"
+import type { State, VDOM } from "hyperapp"
+import type { ChecklistOptions } from "../types"
+
+import { h } from "hyperapp"
 import { component } from "../component"
 import { rawTable } from "../container/table"
 import { set } from "../utility/shadesHelper"

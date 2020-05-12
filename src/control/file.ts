@@ -1,5 +1,7 @@
-import { State, VDOM, h } from "hyperapp"
-import { ControlData, ControlOptions } from "../types"
+import type { State, VDOM } from "hyperapp"
+import type { ControlData, ControlOptions } from "../types"
+
+import { h } from "hyperapp"
 import { component } from "../component"
 import { box } from "../container/ui"
 import { icon } from "../display/icon"

@@ -1,5 +1,7 @@
-import { VDOM, h } from "hyperapp"
-import { ComponentOptions } from "../types"
+import type { VDOM } from "hyperapp"
+import type { ComponentOptions } from "../types"
+
+import { h } from "hyperapp"
 import { box } from "../container/ui"
 
 const cancelButton = ({ disabled, locked, update, ...etc }: ComponentOptions): VDOM => {

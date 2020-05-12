@@ -1,5 +1,7 @@
-import { State, VDOM, h } from "hyperapp"
-import { ComponentOptions, Path } from "../types"
+import type { State, VDOM } from "hyperapp"
+import type { ComponentOptions, Path } from "../types"
+
+import { h } from "hyperapp"
 import { box } from "./ui"
 
 type Component = (_: ComponentOptions) => (_: Path) => <S>(_: State<S>) => VDOM

@@ -1,5 +1,7 @@
-import { VDOM, VNode, h } from "hyperapp"
-import { ComponentOptions } from "../types"
+import type { VDOM, VNode } from "hyperapp"
+import type { ComponentOptions } from "../types"
+
+import { h } from "hyperapp"
 import { box, ui } from "./ui"
 
 const rawOverlay = ({ disabled, locked, ...etc }: ComponentOptions) => (contents: VNode): VDOM => {

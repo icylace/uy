@@ -1,5 +1,7 @@
-import { State, VDOM, h } from "hyperapp"
-import { ListData, ListOptions, Path } from "../types"
+import type { State, VDOM } from "hyperapp"
+import type { ListData, ListOptions, Path } from "../types"
+
+import { h } from "hyperapp"
 import { component } from "../component"
 import { rawTable } from "../container/table"
 import { get, set } from "../utility/shadesHelper"

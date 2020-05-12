@@ -1,4 +1,4 @@
-import { VDOM } from "hyperapp"
+import { VDOM, VNode, View } from "hyperapp"
 
 export type Path = string[]
 
@@ -17,6 +17,10 @@ export type SearchboxData = ControlData<string> & {
   focused: false;
   searching: false;
   results: [];
+}
+
+export type TableData = {
+  rows: any[];
 }
 
 // -----------------------------------------------------------------------------
@@ -87,3 +91,8 @@ export type TabsOptions = ControlOptions & {
   itemsHeader: any;
   tabList: any;
 }
+
+// -----------------------------------------------------------------------------
+
+export type Renderer = (content: VNode) => VDOM
+export type ContainerView = (views: View[]) => View

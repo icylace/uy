@@ -1,5 +1,7 @@
-import { Payload, Reaction, State, VDOM, h } from "hyperapp"
-import { ControlOptions, Path, SearchboxData } from "../types"
+import type { Payload, Reaction, State, VDOM } from "hyperapp"
+import type { ControlOptions, Path, SearchboxData } from "../types"
+
+import { h } from "hyperapp"
 import { component } from "../component"
 import { popup } from "../container/popup"
 import { box } from "../container/ui"

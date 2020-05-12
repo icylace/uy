@@ -1,5 +1,7 @@
-import { VDOM, h } from "hyperapp"
-import { ControlData, ControlOptions } from "../types"
+import type { VDOM } from "hyperapp"
+import type { ControlData, ControlOptions } from "../types"
+
+import { h } from "hyperapp"
 import { component } from "../component"
 import { box } from "../container/ui"
 import { handleValueWith } from "../utility/hyperappHelper"

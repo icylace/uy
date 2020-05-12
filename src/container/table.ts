@@ -1,10 +1,12 @@
-import { VDOM, h } from "hyperapp"
-import { TableOptions } from "../types"
+import type { VDOM } from "hyperapp"
+import type { TableData, TableOptions } from "../types"
+
+import { h } from "hyperapp"
 import { component } from "../component"
 import { icon } from "../display/icon"
 import { box } from "./ui"
 
-const freshTable = (rows: any[]): any => ({ rows })
+const freshTable = (rows: any[]): TableData => ({ rows })
 
 const tableHeader = (orderColumn: string | null) => (sortDescending: boolean) => (header: any[] | any): VDOM => {
   const props = Array.isArray (header) ? header[0] : {}
@@ -43,7 +45,7 @@ const tableRow = (row: any[]): VDOM => {
   )
 }
 
-const rawTable = ({ disabled, locked, headers, orderColumn, sortDescending, ...etc }: TableOptions) => (data: any): VDOM => {
+const rawTable = ({ disabled, locked, headers, orderColumn, sortDescending, ...etc }: TableOptions) => (data: TableData): VDOM => {
   return box ({
     disabled,
     locked,

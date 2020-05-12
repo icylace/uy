@@ -1,5 +1,7 @@
-import { State, VDOM, VNode, h } from "hyperapp"
-import { ControlData, PagerOptions } from "../types"
+import type { State, VDOM, VNode } from "hyperapp"
+import type { ControlData, PagerOptions } from "../types"
+
+import { h } from "hyperapp"
 import { component } from "../component"
 import { icon } from "../display/icon"
 import { range } from "../utility/utility"

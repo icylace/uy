@@ -1,5 +1,7 @@
-import { VDOM, h } from "hyperapp"
-import { ControlOptions } from "../types"
+import type { VDOM } from "hyperapp"
+import type { ControlOptions } from "../types"
+
+import { h } from "hyperapp"
 import { box } from "../container/ui"
 
 const button = ({ disabled, locked, label, update, ...etc }: ControlOptions): VDOM => {

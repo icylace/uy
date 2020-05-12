@@ -1,5 +1,7 @@
-import { State, Payload, Reaction, VDOM, VNode, h } from "hyperapp"
-import { ControlData, TabsOptions } from "../types"
+import type { State, Payload, Reaction, VDOM, VNode } from "hyperapp"
+import type { ControlData, TabsOptions } from "../types"
+
+import { h } from "hyperapp"
 import { component } from "../component"
 import { box } from "../container/ui"
 import { hasOwn } from "../utility/utility"

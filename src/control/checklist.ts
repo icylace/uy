@@ -1,5 +1,5 @@
 import type { State, VDOM } from "hyperapp"
-import type { ChecklistOptions } from "../types"
+import type { Control, ChecklistOptions } from "../types"
 
 import { h } from "hyperapp"
 import { component } from "../component"
@@ -7,15 +7,12 @@ import { rawTable } from "../container/table"
 import { set } from "../utility/shadesHelper"
 import { rawCheckbox } from "./checkbox"
 
-// freshList :: [String] -> Object
 const freshChecklist = (items: string[]): any => ({ items })
 
-// updateItem :: [String] -> Int -> State -> String -> State
 const updateItem = (path: string[]) => (i: number) => <S>(state: State<S>, value: string): State<S> => {
   return set ([...path, "items", i]) (value) (state)
 }
 
-// rawChecklist :: ChecklistOptions -> Object -> VNode
 const rawChecklist = ({ disabled, locked, path, render, ...etc }: ChecklistOptions) => (data: any): VDOM => {
   const item = (x: any, i: number): any =>
     [
@@ -51,7 +48,6 @@ const rawChecklist = ({ disabled, locked, path, render, ...etc }: ChecklistOptio
   ])
 }
 
-// checklist :: ChecklistOptions -> [String] -> State -> VNode
-const checklist = component (rawChecklist)
+const checklist: Control = component (rawChecklist)
 
 export { checklist, freshChecklist, rawChecklist }

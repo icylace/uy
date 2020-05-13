@@ -2,8 +2,8 @@ import { State, VDOM } from "hyperapp"
 import { ComponentOptions, Path } from "./types"
 import { get, set } from "./utility/shadesHelper"
 
-// TODO:
-// type Component = (_: ComponentOptions) => (path: Path) => <S>(state: State<S>) => VDOM
+// // TODO:
+// type Component = (_: ComponentOptions) => (_: Path) => <S>(_: State<S>) => VDOM
 
 // component :: (ComponentOptions -> Path -> Object -> VDOM) -> ComponentOptions -> Path -> State -> VDOM
 const component = (f: Function) => (options: ComponentOptions) => (path: Path) => <S>(state: State<S>): VDOM => {

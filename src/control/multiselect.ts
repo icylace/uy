@@ -1,5 +1,5 @@
 import type { State, VDOM } from "hyperapp"
-import type { ControlData, MultiselectOptions } from "../types"
+import type { Control, ControlData, MultiselectOptions } from "../types"
 
 import { h } from "hyperapp"
 import { component } from "../component"
@@ -44,7 +44,6 @@ const rawMultiselect = ({ disabled, locked, update, options, usingColumnMode, ..
   ])
 }
 
-// multiselect :: MultiselectOptions -> [String] -> State -> VNode
-const multiselect = component (rawMultiselect)
+const multiselect: Control = component (rawMultiselect)
 
 export { freshMultiselect, multiselect }

@@ -1,5 +1,5 @@
 import type { State, VDOM, VNode } from "hyperapp"
-import type { ControlData, PagerOptions } from "../types"
+import type { Control, ControlData, PagerOptions } from "../types"
 
 import { h } from "hyperapp"
 import { component } from "../component"
@@ -99,7 +99,6 @@ const rawPager = ({ disabled, locked, itemsPerPage, pageRange, update, ...etc }:
   ])
 }
 
-// pager :: ControlOptions -> [String] -> State -> VNode
-const pager = component (rawPager)
+const pager: Control = component (rawPager)
 
 export { freshPager, pager }

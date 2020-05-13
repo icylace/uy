@@ -1,5 +1,5 @@
 import type { VDOM } from "hyperapp"
-import type { ControlData, ControlOptions } from "../types"
+import type { Control, ControlData, ControlOptions } from "../types"
 
 import { h } from "hyperapp"
 import { component } from "../component"
@@ -27,7 +27,6 @@ const rawTextbox = ({ disabled, locked, update, ...etc }: ControlOptions) => (da
   ])
 }
 
-// textbox :: ControlOptions -> [String] -> State -> VNode
-const textbox = component (rawTextbox)
+const textbox: Control = component (rawTextbox)
 
 export { freshTextbox, rawTextbox, textbox }

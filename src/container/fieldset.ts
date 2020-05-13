@@ -4,6 +4,10 @@ import type { ComponentOptions } from "../types"
 import { h } from "hyperapp"
 import { ui } from "./ui"
 
+// TODO:
+// type Label = VNode
+// type FieldsetOptions = Label | ComponentOptions
+
 const rawFieldset = ({ disabled, locked, label, ...etc }: ComponentOptions) => (contents: VNode): VDOM => {
   return h ("fieldset", {
     disabled,

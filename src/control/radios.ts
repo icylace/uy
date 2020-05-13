@@ -1,5 +1,5 @@
 import type { VDOM } from "hyperapp"
-import type { ControlData, RadiosOptions } from "../types"
+import type { Control, ControlData, RadiosOptions } from "../types"
 
 import { h } from "hyperapp"
 import { component } from "../component"
@@ -34,7 +34,6 @@ const rawRadios = ({ disabled, locked, options, update, ...etc }: RadiosOptions)
   )
 }
 
-// radios :: RadiosOptions -> [String] -> State -> VNode
-const radios = component (rawRadios)
+const radios: Control = component (rawRadios)
 
 export { freshRadios, radios }

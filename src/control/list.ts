@@ -1,5 +1,5 @@
 import type { State, VDOM } from "hyperapp"
-import type { ListData, ListOptions, Path } from "../types"
+import type { Control, ListData, ListOptions, Path } from "../types"
 
 import { h } from "hyperapp"
 import { component } from "../component"
@@ -68,7 +68,6 @@ const rawList = ({ disabled, locked, headers, path, ...etc }: ListOptions) => (d
   )
 }
 
-// list :: ListOptions -> [String] -> State -> VNode
-const list = component (rawList)
+const list: Control = component (rawList)
 
 export { freshList, list }

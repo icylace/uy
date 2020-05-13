@@ -1,5 +1,5 @@
 import type { Payload, Reaction, State, VDOM } from "hyperapp"
-import type { ControlOptions, Path, SearchboxData } from "../types"
+import type { Control, ControlOptions, Path, SearchboxData } from "../types"
 
 import { h } from "hyperapp"
 import { component } from "../component"
@@ -166,7 +166,6 @@ const rawSearchbox = ({ disabled, locked, path, search, ...etc }: ControlOptions
   ])
 }
 
-// searchbox :: SearchboxOptions -> [String] -> State -> VNode
-const searchbox = component (rawSearchbox)
+const searchbox: Control = component (rawSearchbox)
 
 export { freshSearchbox, searchbox }

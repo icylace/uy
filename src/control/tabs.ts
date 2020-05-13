@@ -1,5 +1,5 @@
 import type { State, Payload, Reaction, VDOM, VNode } from "hyperapp"
-import type { ControlData, TabsOptions } from "../types"
+import type { Control, ControlData, TabsOptions } from "../types"
 
 import { h } from "hyperapp"
 import { component } from "../component"
@@ -57,7 +57,6 @@ const rawTabs = ({ disabled, locked, itemsFooter, itemsHeader, tabList, update, 
   )
 }
 
-// tabs :: TabsOptions -> [String] -> State -> VNode
-const tabs = component (rawTabs)
+const tabs: Control = component (rawTabs)
 
 export { freshTabs, tabs }

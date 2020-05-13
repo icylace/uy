@@ -1,5 +1,5 @@
 import type { VDOM } from "hyperapp"
-import type { ControlData, ControlOptions } from "../types"
+import type { Control, ControlData, ControlOptions } from "../types"
 
 import { h } from "hyperapp"
 import { component } from "../component"
@@ -26,7 +26,6 @@ const rawTextarea = ({ disabled, locked, update, ...etc }: ControlOptions) => (d
   ])
 }
 
-// textarea :: ControlOptions -> [String] -> State -> VNode
-const textarea = component (rawTextarea)
+const textarea: Control = component (rawTextarea)
 
 export { freshTextarea, textarea }

@@ -1,5 +1,5 @@
 import type { VDOM } from "hyperapp"
-import type { ControlData, ControlOptions } from "../types"
+import type { Control, ControlData, ControlOptions } from "../types"
 
 import { h } from "hyperapp"
 import { component } from "../component"
@@ -29,8 +29,7 @@ const rawDatePicker = ({ disabled, locked, update, ...etc }: ControlOptions) => 
   ])
 }
 
-// datePicker :: ControlOptions -> [String] -> State -> VNode
-const datePicker = component (rawDatePicker)
+const datePicker: Control = component (rawDatePicker)
 
 // -----------------------------------------------------------------------------
 
@@ -55,8 +54,7 @@ const rawDatetimeLocalPicker = ({ disabled, locked, update, ...etc }: ControlOpt
   ])
 }
 
-// datetimeLocalPicker :: ControlOptions -> [String] -> State -> VNode
-const datetimeLocalPicker = component (rawDatetimeLocalPicker)
+const datetimeLocalPicker: Control = component (rawDatetimeLocalPicker)
 
 // -----------------------------------------------------------------------------
 
@@ -81,8 +79,7 @@ const rawMonthPicker = ({ disabled, locked, update, ...etc }: ControlOptions) =>
   ])
 }
 
-// monthPicker :: ControlOptions -> [String] -> State -> VNode
-const monthPicker = component (rawMonthPicker)
+const monthPicker: Control = component (rawMonthPicker)
 
 // -----------------------------------------------------------------------------
 
@@ -107,8 +104,7 @@ const rawTimePicker = ({ disabled, locked, update, ...etc }: ControlOptions) => 
   ])
 }
 
-// timePicker :: ControlOptions -> [String] -> State -> VNode
-const timePicker = component (rawTimePicker)
+const timePicker: Control = component (rawTimePicker)
 
 // -----------------------------------------------------------------------------
 
@@ -133,8 +129,7 @@ const rawWeekPicker = ({ disabled, locked, update, ...etc }: ControlOptions) => 
   ])
 }
 
-// weekPicker :: ControlOptions -> [String] -> State -> VNode
-const weekPicker = component (rawWeekPicker)
+const weekPicker: Control = component (rawWeekPicker)
 
 // -----------------------------------------------------------------------------
 

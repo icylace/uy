@@ -1,5 +1,5 @@
 import type { VDOM } from "hyperapp"
-import type { ControlData, DropdownOptions } from "../types"
+import type { Control, ControlData, DropdownOptions } from "../types"
 
 import { h } from "hyperapp"
 import { component } from "../component"
@@ -46,7 +46,6 @@ const rawDropdown = ({ disabled, locked, options, path, update, ...etc }: Dropdo
   ])
 }
 
-// dropdown :: DropdownOptions -> [String] -> State -> VNode
-const dropdown = component (rawDropdown)
+const dropdown: Control = component (rawDropdown)
 
 export { freshDropdown, dropdown }

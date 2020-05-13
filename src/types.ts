@@ -1,11 +1,14 @@
-import { VDOM, VNode, View } from "hyperapp"
+import { State, VDOM, VNode, View } from "hyperapp"
 
+export type ContainerView = (_: View[]) => View
+export type Control = (_: ControlOptions) => (_: Path) => <S>(_: State<S>) => VDOM
 export type Path = string[]
+export type Renderer = (_: VNode) => VDOM
 
 // -----------------------------------------------------------------------------
 
 export type ControlData<T> = {
-  [k: string]: any;
+  [_: string]: any;
   value: T;
 }
 
@@ -26,7 +29,7 @@ export type TableData = {
 // -----------------------------------------------------------------------------
 
 export type ComponentOptions = {
-  [k: string]: any;
+  [_: string]: any;
   disabled: boolean;
   locked: boolean;
 }
@@ -91,8 +94,3 @@ export type TabsOptions = ControlOptions & {
   itemsHeader: any;
   tabList: any;
 }
-
-// -----------------------------------------------------------------------------
-
-export type Renderer = (content: VNode) => VDOM
-export type ContainerView = (views: View[]) => View

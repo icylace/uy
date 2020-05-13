@@ -1,11 +1,23 @@
 import type { State, VDOM } from "hyperapp"
-import type { ControlData, LabelledControlOptions } from "../types"
+import type { Control, ControlData, LabelledControlOptions } from "../types"
 
 import { h } from "hyperapp"
 import { component } from "../component"
 import { box } from "../container/ui"
 
+// TODO: support indeterminate state
+// setTimeout(() => {
+//   const el = document.querySelectorAll("input[type='checkbox']")
+//   if (el) {
+//     el.indeterminate = true
+//   }
+//   console.log(el)
+// }, 1000)
+
 const freshCheckbox = (value: boolean): ControlData<boolean> => ({ value })
+
+// // TODO:
+// type CheckboxOptions = LabelledControlOptions
 
 const rawCheckbox = ({ disabled, locked, label, update, ...etc }: LabelledControlOptions) => (data: ControlData<boolean>): VDOM => {
   return box ("uy-control uy-checkbox") ([
@@ -28,7 +40,6 @@ const rawCheckbox = ({ disabled, locked, label, update, ...etc }: LabelledContro
   ])
 }
 
-// checkbox :: LabeledControlOptions -> Path -> State -> VNode
-const checkbox = component (rawCheckbox)
+const checkbox: Control = component (rawCheckbox)
 
 export { freshCheckbox, checkbox, rawCheckbox }

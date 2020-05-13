@@ -1,5 +1,5 @@
 import type { State, VDOM } from "hyperapp"
-import type { ControlData, NumberboxOptions, Path } from "../types"
+import type { Control, ControlData, NumberboxOptions, Path } from "../types"
 
 import { h } from "hyperapp"
 import { component } from "../component"
@@ -50,7 +50,6 @@ const rawNumberbox = ({ disabled, locked, label, path, ...etc }: NumberboxOption
   ])
 }
 
-// numberbox :: ControlOptions -> [String] -> State -> VNode
-const numberbox = component (rawNumberbox)
+const numberbox: Control = component (rawNumberbox)
 
 export { freshNumberbox, numberbox }

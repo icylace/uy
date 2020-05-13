@@ -1,5 +1,5 @@
 import type { State, VDOM } from "hyperapp"
-import type { ControlData, ControlOptions } from "../types"
+import type { Control, ControlData, ControlOptions } from "../types"
 
 import { h } from "hyperapp"
 import { component } from "../component"
@@ -44,7 +44,6 @@ const rawFile = ({ disabled, locked, label = "Select your file...", ...etc }: Co
   ])
 }
 
-// file :: LabeledControlOptions -> [String] -> State -> VNode
-const file = component (rawFile)
+const file: Control = component (rawFile)
 
 export { freshFile, file }

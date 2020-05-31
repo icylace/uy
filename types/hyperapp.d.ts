@@ -62,7 +62,9 @@ declare module "hyperapp" {
 
   // -----------------------------------------------------------------------------
 
-  // A virtual DOM node represents an actual DOM element.
+  /**
+   * A virtual DOM node represents an actual DOM element.
+   */
   type VDOM = {
     type: string | VDOMConstructor;
     props: PropList;

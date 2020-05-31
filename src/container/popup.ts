@@ -3,7 +3,7 @@ import type { PopupOptions } from "../types"
 
 import { h } from "hyperapp"
 
-const popup = ({ disabled, id, locked, ...etc }: PopupOptions) => (contents: VNode): VDOM => {
+const popup = ({ disabled, id, locked, ...etc }: PopupOptions) => (contents: VNode[]): VDOM => {
   return h ("div", {
     id,
     ...etc,

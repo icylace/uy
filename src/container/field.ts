@@ -1,7 +1,7 @@
 import type { State, VDOM } from "hyperapp"
 import type { ComponentOptions, Path } from "../types"
 
-import { h } from "hyperapp"
+import { h, text } from "hyperapp"
 import { box } from "./ui"
 
 type Component = (_: ComponentOptions) => (_: Path) => <S>(_: State<S>) => VDOM
@@ -15,7 +15,7 @@ const field = (f: Component) => (title: string) => ({ disabled, locked, ...etc }
         locked,
         [etc.class]: !!etc.class,
       },
-    }, [title, f ({ disabled, locked, ...etc }) (path) (state)]),
+    }, [text (title), f ({ disabled, locked, ...etc }) (path) (state)]),
   ])
 }
 

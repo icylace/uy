@@ -1,11 +1,13 @@
 import type { State, VDOM } from "hyperapp"
 import type { Control, ControlData, LabelledControlOptions } from "../types"
 
-import { h } from "hyperapp"
+import { h, text } from "hyperapp"
 import { component } from "../component"
 import { box } from "../container/ui"
 
-// TODO: support indeterminate state
+// TODO:
+// - support indeterminate state
+//
 // setTimeout(() => {
 //   const el = document.querySelectorAll("input[type='checkbox']")
 //   if (el) {
@@ -13,6 +15,8 @@ import { box } from "../container/ui"
 //   }
 //   console.log(el)
 // }, 1000)
+//
+// const freshCheckbox = (value: boolean, indeterminate?: boolean): ControlData<boolean> => ({ indeterminate, value })
 
 const freshCheckbox = (value: boolean): ControlData<boolean> => ({ value })
 
@@ -35,7 +39,7 @@ const rawCheckbox = ({ disabled, locked, label, update, ...etc }: LabelledContro
           [etc.class]: !!etc.class,
         },
       }),
-      label != null ? h ("span", {}, [label]) : null,
+      label != null ? h ("span", {}, [typeof label === "string" ? text (label) : label]) : null,
     ]),
   ])
 }

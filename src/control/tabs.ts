@@ -1,4 +1,4 @@
-import type { State, Payload, Reaction, VDOM, VNode } from "hyperapp"
+import type { Action, State, Payload, VDOM, VNode } from "hyperapp"
 import type { Control, ControlData, TabsOptions } from "../types"
 
 import { h } from "hyperapp"
@@ -20,7 +20,7 @@ const tab = (update: Function) => (activeTab: string) => (item: VNode, i: number
     "div",
     {
       class: { "uy-tabs-item": true, selected },
-      onclick: <S, D>(state: State<S>, { target }: Payload<Event>): Reaction<S, D> =>
+      onclick: <S, D>(state: State<S>, { target }: Payload<Event>): Action<S, Event, D> =>
         selected
           ? [update (state, String (i)), scrollIntoView (target)]
           : update (state, String (i))

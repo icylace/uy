@@ -1,7 +1,7 @@
 import type { State, VDOM } from "hyperapp"
 import type { Control, ControlData, ControlOptions } from "../types"
 
-import { h } from "hyperapp"
+import { h, text } from "hyperapp"
 import { component } from "../component"
 import { box } from "../container/ui"
 import { icon } from "../display/icon"
@@ -38,7 +38,7 @@ const rawFile = ({ disabled, locked, label = "Select your file...", ...etc }: Co
       }),
       h ("span", { class: "uy-clicky" }, [
         icon ({ fas: true, "fa-file-upload": true }),
-        " Upload",
+        text (" Upload"),
       ]),
     ]),
   ])

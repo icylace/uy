@@ -1,7 +1,7 @@
 import type { State, VDOM } from "hyperapp"
 import type { Control, ControlData, NumberboxOptions, Path } from "../types"
 
-import { h } from "hyperapp"
+import { h, text } from "hyperapp"
 import { component } from "../component"
 import { box } from "../container/ui"
 import { handleValueWith } from "../utility/hyperappHelper"
@@ -44,7 +44,7 @@ const rawNumberbox = ({ disabled, locked, label, path, ...etc }: NumberboxOption
         },
       }),
       label != null
-        ? h ("span", { class: { disabled, locked, "uy-input": true } }, [label])
+        ? h ("span", { class: { disabled, locked, "uy-input": true } }, [typeof label === "string" ? text (label) : label])
         : null,
     ]),
   ])

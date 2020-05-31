@@ -1,10 +1,10 @@
 import type { VDOM, VNode } from "hyperapp"
-import type { ComponentOptions } from "../types"
+import type { ComponentOptions, ContainerView } from "../types"
 
 import { h } from "hyperapp"
 import { box, ui } from "./ui"
 
-const rawOverlay = ({ disabled, locked, ...etc }: ComponentOptions) => (contents: VNode): VDOM => {
+const rawOverlay = ({ disabled, locked, ...etc }: ComponentOptions) => (contents: VNode[]): VDOM => {
   return box ("uy-overlay-background") ([
     h ("div", {
       disabled,
@@ -21,7 +21,6 @@ const rawOverlay = ({ disabled, locked, ...etc }: ComponentOptions) => (contents
   ])
 }
 
-// overlay :: ComponentOptions -> [AnyFunction] -> State -> VNode
-const overlay = (state: any): any => ui (rawOverlay (state))
+const overlay = (props: ComponentOptions): ContainerView => ui (rawOverlay (props))
 
 export { overlay }

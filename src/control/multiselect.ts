@@ -6,9 +6,13 @@ import { component } from "../component"
 import { box } from "../container/ui"
 import { rawCheckbox } from "./checkbox"
 
+// TODO:
+// - maybe use Set here instead?
 const freshMultiselect = (value: string[]): ControlData<string[]> => ({ value })
 
 const rawMultiselect = ({ disabled, locked, update, options, usingColumnMode, ...etc }: MultiselectOptions) => (data: ControlData<string[]>): VDOM => {
+  // TODO:
+  // - should order matter? is Set the right way to do this?
   const selection = new Set (data.value)
   return h ("div", {
     ...etc,
@@ -36,7 +40,10 @@ const rawMultiselect = ({ disabled, locked, update, options, usingColumnMode, ..
             } else {
               selection.delete (x)
             }
+            // TODO:
+            // - maybe return Set directly and maybe also find a way to ensure order?
             return update (state, Array.from (selection))
+            // const update = (state: State<S>, value: any): any => set ([...path, "value"]) (value) (state)
           },
         }) ({ value: selection.has (x) })
       )

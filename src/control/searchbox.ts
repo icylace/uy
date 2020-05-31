@@ -1,7 +1,7 @@
-import type { Payload, Reaction, State, VDOM } from "hyperapp"
+import type { Action, Payload, State, VDOM } from "hyperapp"
 import type { Control, ControlOptions, Path, SearchboxData } from "../types"
 
-import { h } from "hyperapp"
+import { h, text } from "hyperapp"
 import { component } from "../component"
 import { popup } from "../container/popup"
 import { box } from "../container/ui"
@@ -27,8 +27,8 @@ const chooseResult = (path: Path) => (id: string) => (value: string) => <S>(stat
   ]) (state)
 }
 
-// updateResults :: AnyFunction -> Path -> String -> State -> Payload -> Reaction
-const updateResults = (search: Function) => (path: Path) => (id: string) => <S, D>(state: State<S>, { value, results }: Payload<any>): Reaction<S, D> => {
+// updateResults :: AnyFunction -> Path -> String -> State -> Payload -> Action
+const updateResults = (search: Function) => (path: Path) => (id: string) => <S, D>(state: State<S>, { value, results }: Payload<any>): Action<S, any, D> => {
   // It is possible the current value of the searchbox and the value that was
   // actually searched on could be out of sync if the user continues changing
   // the searchbox value during the search. In that case another search gets
@@ -53,8 +53,8 @@ const updateResults = (search: Function) => (path: Path) => (id: string) => <S, 
     : removeInsideEl (id) (newState)
 }
 
-// update :: (Action -> String -> State) -> Path -> String -> String -> State -> Reaction
-const update = (search: Function) => (path: Path) => (id: string) => (value: string) => <S, D>(state: State<S>): Reaction<S, D> => {
+// update :: (Action -> String -> State) -> Path -> String -> String -> State -> Action
+const update = (search: Function) => (path: Path) => (id: string) => (value: string) => <S, P, D>(state: State<S>): Action<S, P, D> => {
   return get ([...path, "searching"]) (state)
     ? set ([...path, "value"]) (value) (state)
     : [
@@ -69,7 +69,7 @@ const update = (search: Function) => (path: Path) => (id: string) => (value: str
 // -----------------------------------------------------------------------------
 
 const searchResult = (path: Path) => (id: string) => (x: string): VDOM => {
-  return h ("li", { onclick: chooseResult (path) (id) (x) }, [x])
+  return h ("li", { onclick: chooseResult (path) (id) (x) }, [text (x)])
 }
 
 const rawSearchbox = ({ disabled, locked, path, search, ...etc }: ControlOptions) => (data: SearchboxData): VDOM => {
@@ -83,7 +83,7 @@ const rawSearchbox = ({ disabled, locked, path, search, ...etc }: ControlOptions
     onfocus: set ([...path, "focused"]) (true),
     onblur: set ([...path, "focused"]) (false),
 
-    onkeyup: <S>(state: State<S>, { key, target }: Payload<KeyboardEvent>): Reaction<S, any> => {
+    onkeyup: <S>(state: State<S>, { key, target }: Payload<KeyboardEvent>): Action<S, KeyboardEvent, any> => {
       // We don't let certain keys unnecessarily affect searching.
       const noopKeys = [
         "Alt",
@@ -113,7 +113,7 @@ const rawSearchbox = ({ disabled, locked, path, search, ...etc }: ControlOptions
     // less convenient since it would conflict with how we're using
     // the `keyup` event.
     // https://stackoverflow.com/a/25569880
-    onsearch: <S>(state: State<S>, { target }: Payload<Event>): Reaction<S, any> => {
+    onsearch: <S>(state: State<S>, { target }: Payload<Event>): Action<S, Event, any> => {
       const el = target as HTMLInputElement
       return update (search) (path) (id) (el.value) (state)
     },

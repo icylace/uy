@@ -1,13 +1,13 @@
-import type { ClassProp, VDOM, VNode } from "hyperapp"
+import type { ClassProp, State, VDOM, View, VNode } from "hyperapp"
 import type { ContainerView, Renderer } from "../types"
 
 import { h } from "hyperapp"
 
-const box = (classProp: ClassProp) => (contents: VNode): VDOM => {
+const box = (classProp: ClassProp) => (contents: VNode[]): VDOM => {
   return h ("div", { class: classProp }, contents)
 }
 
-const ui = (f: Renderer): ContainerView => views => (state): VDOM => f (views.map (g => g (state)))
+const ui = (f: Renderer) => (views: View[]) => <S>(state: State<S>): VDOM => f (views.map (g => g (state)))
 
 const column: ContainerView = ui (box ("uy-column"))
 

@@ -20,11 +20,11 @@ const freshSearchbox = (value: string): SearchboxData => ({
 // -----------------------------------------------------------------------------
 
 const chooseResult = (path: Path) => (id: string) => (value: string) => <S>(state: State<S>): State<S> => {
-  return pipe ([
+  return pipe (
     set ([...path, "results"]) ([]),
     set ([...path, "value"]) (value),
     removeInsideEl (id),
-  ]) (state)
+  ) (state)
 }
 
 // updateResults :: AnyFunction -> Path -> String -> State -> Payload -> Action
@@ -43,10 +43,10 @@ const updateResults = (search: Function) => (path: Path) => (id: string) => <S, 
     ]
   }
 
-  const newState = pipe ([
+  const newState = pipe (
     set ([...path, "searching"]) (false),
     set ([...path, "results"]) (results),
-  ]) (state)
+  ) (state)
 
   return results.length
     ? addInsideEl (id) (set ([...path, "results"]) ([])) (newState)
@@ -58,10 +58,10 @@ const update = (search: Function) => (path: Path) => (id: string) => (value: str
   return get ([...path, "searching"]) (state)
     ? set ([...path, "value"]) (value) (state)
     : [
-      pipe ([
+      pipe (
         set ([...path, "searching"]) (true),
         set ([...path, "value"]) (value),
-      ]) (state),
+      ) (state),
       search (updateResults (search) (path) (id)) (value),
     ]
 }
@@ -159,7 +159,7 @@ const rawSearchbox = ({ disabled, locked, path, search, ...etc }: ControlOptions
     data.results.length && !disabled
       ? popup ({ locked, disabled, id }) ([
         h ("ul", { class: "uy-searchbox-results uy-scroller" },
-          data.results.map (searchResult (path) (id))
+          data.results.map (searchResult (path) (id)),
         ),
       ])
       : null,

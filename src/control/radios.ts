@@ -29,8 +29,8 @@ const rawRadios = ({ disabled, locked, options, update, ...etc }: RadiosOptions)
           },
         }),
         label != null ? h ("span", {}, [label]) : null,
-      ])
-    )
+      ]),
+    ),
   )
 }
 

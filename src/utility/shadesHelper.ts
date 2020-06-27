@@ -5,41 +5,45 @@ import * as shades from "shades"
 //
 // i.e. `shades.get (...path)` would cause elicit a type-check error.
 
-const get = (path: any[]) => (state: any): any => {
-  switch (path.length) {
-    case 0: return null
-    case 1: return shades.get (path[0]) (state)
-    case 2: return shades.get (path[0], path[1]) (state)
-    case 3: return shades.get (path[0], path[1], path[2]) (state)
-    case 4: return shades.get (path[0], path[1], path[2], path[3]) (state)
-    case 5: return shades.get (path[0], path[1], path[2], path[3], path[4]) (state)
-    case 6: return shades.get (path[0], path[1], path[2], path[3], path[4], path[5]) (state)
+const get = (path: any[]) => (obj: any): any => {
+  if (!path.length) return null
+  const p = path.reduce ((acc, x) => Array.isArray (x) ? [...acc, ...x] : [...acc, x], [])
+  switch (p.length) {
+    case 1: return shades.get (p[0]) (obj)
+    case 2: return shades.get (p[0], p[1]) (obj)
+    case 3: return shades.get (p[0], p[1], p[2]) (obj)
+    case 4: return shades.get (p[0], p[1], p[2], p[3]) (obj)
+    case 5: return shades.get (p[0], p[1], p[2], p[3], p[4]) (obj)
+    case 6: return shades.get (p[0], p[1], p[2], p[3], p[4], p[5]) (obj)
   }
   throw Error ("`path` length is greater than 6.")
 }
 
-const mod = (path: any[]) => (f: (a: any) => any) => (state: any): any => {
-  switch (path.length) {
-    case 0: return null
-    case 1: return shades.mod (path[0]) (f) (state)
-    case 2: return shades.mod (path[0], path[1]) (f) (state)
-    case 3: return shades.mod (path[0], path[1], path[2]) (f) (state)
-    case 4: return shades.mod (path[0], path[1], path[2], path[3]) (f) (state)
-    case 5: return shades.mod (path[0], path[1], path[2], path[3], path[4]) (f) (state)
-    case 6: return shades.mod (path[0], path[1], path[2], path[3], path[4], path[5]) (f) (state)
+const mod = (path: any[]) => (f: (a: any) => any) => (obj: any): any => {
+  if (!path.length) return null
+  const p = path.reduce ((acc, x) => Array.isArray (x) ? [...acc, ...x] : [...acc, x], [])
+  switch (p.length) {
+    case 1: return shades.mod (p[0]) (f) (obj)
+    case 2: return shades.mod (p[0], p[1]) (f) (obj)
+    case 3: return shades.mod (p[0], p[1], p[2]) (f) (obj)
+    case 4: return shades.mod (p[0], p[1], p[2], p[3]) (f) (obj)
+    case 5: return shades.mod (p[0], p[1], p[2], p[3], p[4]) (f) (obj)
+    case 6: return shades.mod (p[0], p[1], p[2], p[3], p[4], p[5]) (f) (obj)
   }
   throw Error ("`path` length is greater than 6.")
 }
 
-const set = (path: any[]) => (value: any) => (state: any): any => {
-  switch (path.length) {
+const set = (path: any[]) => (value: any) => (obj: any): any => {
+  if (!path.length) return null
+  const p = path.reduce ((acc, x) => Array.isArray (x) ? [...acc, ...x] : [...acc, x], [])
+  switch (p.length) {
     case 0: return null
-    case 1: return shades.set (path[0]) (value) (state)
-    case 2: return shades.set (path[0], path[1]) (value) (state)
-    case 3: return shades.set (path[0], path[1], path[2]) (value) (state)
-    case 4: return shades.set (path[0], path[1], path[2], path[3]) (value) (state)
-    case 5: return shades.set (path[0], path[1], path[2], path[3], path[4]) (value) (state)
-    case 6: return shades.set (path[0], path[1], path[2], path[3], path[4], path[5]) (value) (state)
+    case 1: return shades.set (p[0]) (value) (obj)
+    case 2: return shades.set (p[0], p[1]) (value) (obj)
+    case 3: return shades.set (p[0], p[1], p[2]) (value) (obj)
+    case 4: return shades.set (p[0], p[1], p[2], p[3]) (value) (obj)
+    case 5: return shades.set (p[0], p[1], p[2], p[3], p[4]) (value) (obj)
+    case 6: return shades.set (p[0], p[1], p[2], p[3], p[4], p[5]) (value) (obj)
   }
   throw Error ("`path` length is greater than 6.")
 }

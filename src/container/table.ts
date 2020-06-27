@@ -32,17 +32,12 @@ const tableHeader = (orderColumn: string | null) => (sortDescending: boolean) =>
 }
 
 const tableRow = (row: any[]): VDOM => {
-  if (!row) return row
-  if (!Array.isArray (row)) return row
-  return h (
-    "tr",
-    {},
-    row.map (
-      (x: any) => Array.isArray (x)
-        ? h ("td", x[0], [x[1]])
-        : h ("td", {}, [x])
-    )
-  )
+  if (!row || !Array.isArray (row)) return row
+  return h ("tr", {}, row.map (
+    (x: any) => Array.isArray (x)
+      ? h ("td", x[0], [x[1]])
+      : h ("td", {}, [x]),
+  ))
 }
 
 const rawTable = ({ disabled, locked, headers, orderColumn, sortDescending, ...etc }: TableOptions) => (data: TableData): VDOM => {

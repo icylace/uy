@@ -39,7 +39,7 @@ const rawPager = ({ disabled, locked, itemsPerPage, pageRange, update, ...etc }:
           "uy-pager-page": true,
           "uy-pager-current": current,
         },
-        onclick: (state: any, _event: any) => update (state, currentPage),
+        onclick: <S>(state: State<S>, _event: any) => update (state, currentPage),
       }, [h ("span", {}, [text (currentPage + 1)])])
       : null
   })
@@ -49,30 +49,30 @@ const rawPager = ({ disabled, locked, itemsPerPage, pageRange, update, ...etc }:
 
   const navFirst =
     pagerNav (
-      (state: any) => update (state, 0),
+      <S>(state: State<S>) => update (state, 0),
       [icon ({ fas: true, "fa-angle-double-left": true }), text (" first")],
-      data.value !== 0
+      data.value !== 0,
     )
 
   const navPrev =
     pagerNav (
-      (state: any) => update (state, Math.max (0, data.value - 1)),
+      <S>(state: State<S>) => update (state, Math.max (0, data.value - 1)),
       [icon ({ fas: true, "fa-angle-left": true }), text (" prev")],
-      data.value !== 0
+      data.value !== 0,
     )
 
   const navNext =
     pagerNav (
-      (state: any) => update (state, Math.min (lastPage, data.value + 1)),
+      <S>(state: State<S>) => update (state, Math.min (lastPage, data.value + 1)),
       [text ("next "), icon ({ fas: true, "fa-angle-right": true })],
-      data.value !== lastPage
+      data.value !== lastPage,
     )
 
   const navLast =
     pagerNav (
-      (state: any) => update (state, lastPage),
+      <S>(state: State<S>) => update (state, lastPage),
       [text ("last "), icon ({ fas: true, "fa-angle-double-right": true })],
-      data.value !== lastPage
+      data.value !== lastPage,
     )
 
   return h ("div", {

@@ -18,7 +18,8 @@ const rawDropdown = ({ disabled, locked, options, path, update, ...etc }: Dropdo
       focus: data.focused,
     }) ([
       h (
-        "select", {
+        "select",
+        {
           disabled,
           readonly: locked,
           value: data.value,
@@ -39,8 +40,8 @@ const rawDropdown = ({ disabled, locked, options, path, update, ...etc }: Dropdo
           ([x, content]: [any, any]) =>
             h ("option", Array.isArray (x)
               ? { value: x[1], ...x[0] }
-              : { value: x }, [content])
-        )
+              : { value: x }, [content]),
+        ),
       ),
     ]),
   ])

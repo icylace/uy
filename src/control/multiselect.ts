@@ -45,8 +45,8 @@ const rawMultiselect = ({ disabled, locked, update, options, usingColumnMode, ..
             return update (state, Array.from (selection))
             // const update = (state: State<S>, value: any): any => set ([...path, "value"]) (value) (state)
           },
-        }) ({ value: selection.has (x) })
-      )
+        }) ({ value: selection.has (x) }),
+      ),
     ),
   ])
 }

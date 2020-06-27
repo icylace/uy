@@ -15,7 +15,7 @@ const map = <T, U>(f: (a: T) => U) => (xs: T[]): U[] => {
   return xs.map (f)
 }
 
-const pipe = (fs: Function[]) => (x: any): any => {
+const pipe = (...fs: Function[]) => (x: any): any => {
   return fs.reduce ((acc: any, f: Function) => f (acc), x)
 }
 

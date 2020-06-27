@@ -14,7 +14,7 @@ const removeInsideEl = (id: string): any => mod (["uy", "insiders"]) (delist (id
 
 const detectOutside = ([insider, f]: any[]): any =>
   onOutside (`#${insider}`) (
-    (_state: any, _event: any): any => pipe ([f, removeInsideEl (insider)])
+    (_state: any, _event: any): any => pipe (f, removeInsideEl (insider)),
   )
 
 // freshState :: State -> State
@@ -24,7 +24,7 @@ const freshState = (state: any): any => ({
     insiders: {},
     mousedownHandlers: {
       detectOutsideAction: (state: any, event: any): any => {
-        return handleUsing (pipe ([
+        return handleUsing (pipe (
           get (["uy", "insiders"]),
 
           // TODO:
@@ -32,7 +32,7 @@ const freshState = (state: any): any => ({
           Object.entries,
 
           map (detectOutside),
-        ]) (state)) (state, event)
+        ) (state)) (state, event)
       },
     },
   },
@@ -40,12 +40,12 @@ const freshState = (state: any): any => ({
 
 // mouseDownSubscription :: State -> State
 const mouseDownSubscription =
-  pipe ([
+  pipe (
     get (["uy", "mousedownHandlers"]),
     Object.values,
     handleUsing,
     onMouseDown,
-  ])
+  )
 
 // -----------------------------------------------------------------------------
 

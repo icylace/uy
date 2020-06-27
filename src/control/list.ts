@@ -64,7 +64,7 @@ const rawList = ({ disabled, locked, headers, path, ...etc }: ListOptions) => (d
         orderColumn: null,
         sortDescending: false,
       }) ({ rows: [...data.items.map (item), grower] }),
-    ]
+    ],
   )
 }
 

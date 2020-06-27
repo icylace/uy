@@ -26,7 +26,7 @@ const tab = (update: Function) => (activeTab: string) => (item: VNode, i: number
           : update (state, String (i))
       ,
     },
-    item
+    item,
   )
 }
 
@@ -53,7 +53,7 @@ const rawTabs = ({ disabled, locked, itemsFooter, itemsHeader, tabList, update, 
         itemsFooter,
       ]),
       box ("uy-tabs-panels") ([panels[headings.findIndex (isSelected (data.value))]]),
-    ]
+    ],
   )
 }
 

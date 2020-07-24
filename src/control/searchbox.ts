@@ -82,8 +82,7 @@ const rawSearchbox = ({ disabled, locked, path, search, ...etc }: ControlOptions
     type: "search",
     onfocus: set ([...path, "focused"]) (true),
     onblur: set ([...path, "focused"]) (false),
-
-    onkeyup: <S>(state: State<S>, { key, target }: Payload<KeyboardEvent>): Action<S, KeyboardEvent, any> => {
+    onkeyup: <S>(state: State<S>, { key, target }: Payload<KeyboardEvent>): State<S> | Action<S, KeyboardEvent, any> => {
       // We don't let certain keys unnecessarily affect searching.
       const noopKeys = [
         "Alt",

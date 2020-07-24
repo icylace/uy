@@ -39,7 +39,9 @@ const rawCheckbox = ({ disabled, locked, label, update, ...etc }: LabelledContro
           [etc.class]: !!etc.class,
         },
       }),
-      label != null ? h ("span", {}, [typeof label === "string" ? text (label) : label]) : null,
+      label
+        ? h ("span", {}, [typeof label === "string" ? text (label) : label])
+        : null,
     ]),
   ])
 }

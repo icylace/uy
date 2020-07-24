@@ -1,5 +1,34 @@
 #!/usr/bin/env bash
 
+task:index() {
+  local tasks=(
+    '_snowpack'
+    'build:dev'
+    'build:prod'
+    'clean'
+    'hard-refresh'
+    'lint'
+    'lint:fix'
+    'lint:fix-dry-run'
+    'prepare'
+    'release'
+    'test'
+    'typecheck'
+    'watch'
+    'watch:postcss'
+    'watch:rollup'
+    'watch:typescript'
+  )
+
+  echo "Available tasks:"
+
+  for task in ${tasks[@]} ; do
+    echo -e "\t$task"
+  done
+}
+
+# ------------------------------------------------------------------------------
+
 task:_snowpack() {
   if [ ! -d ./web_modules ] ; then
     task:prepare
@@ -224,7 +253,7 @@ task:watch:typescript() {
 # ------------------------------------------------------------------------------
 
 if [ -z "$1" ] ; then
-  echo "Task name required!"
+  task:index
   exit 1
 fi
 

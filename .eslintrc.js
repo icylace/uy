@@ -41,7 +41,7 @@ module.exports = {
   rules: {
     "array-bracket-newline": ["error", "consistent"],
     // "array-bracket-spacing": [ "error", "always" ],
-    "arrow-parens": ["error", "as-needed"],
+    "arrow-parens": ["error", "always"],
     "comma-dangle": [
       "error",
       {

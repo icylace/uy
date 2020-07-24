@@ -1,4 +1,4 @@
-import { State, VDOM, VNode, View } from "hyperapp"
+import type { State, VDOM, VNode, View } from "hyperapp"
 
 export type ContainerView = (_: View[]) => View
 export type Control = (_: ControlOptions) => (_: Path) => <S>(_: State<S>) => VDOM

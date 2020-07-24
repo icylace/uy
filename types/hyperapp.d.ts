@@ -2,12 +2,18 @@ declare module "hyperapp" {
   // A Hyperapp application instance has an initial state and a base view.
   // It must also be mounted over an available DOM element.
   type App<S, P, D> = Readonly<{
-    init: Action<S, P, D>;
+    init: Initiator<S, P, D>;
     view: View;
     node: Node;
     subscriptions?: Subscription;
     middleware?: Middleware;
   }>
+
+  // Initially, a state is set with any effects to run, or an action is taken.
+  type Initiator<S, P, D>
+    = State<S>
+    | [State<S>, ...EffectDescriptor<D>[]]
+    | Action<S, P, D>
 
   // A view builds a virtual DOM node representation of the application state.
   type View = <S>(state: State<S>) => VDOM
@@ -27,23 +33,21 @@ declare module "hyperapp" {
   // Middleware allows for custom processing during dispatching.
   type Middleware = (dispatch: Dispatch) => Dispatch
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
-  // A dispatch is a response to an event within the context of the current state.
+  // A dispatched action handles an event in the context of the current state.
   type Dispatch = <S, P, D>(action: Action<S, P, D>, props?: Payload<P>) => void
 
-  // An action transforms existing state while possibly invoking effects.
+  // An action transforms existing state while possibly invoking effects and it
+  // can be wrapped by another action.
   type Action<S, P, D>
-    // An action can wrap another action.
-    = ((state: State<S>, props?: Payload<P>) => Action<S, P, D>)
-    // An action can be given a payload.
-    | [Action<S, P, D>, Payload<P>]
-    // State can be set directly along with any effects to run.
-    // This is particularly when setting the initial state.
-    | [State<S>, ...EffectDescriptor<D>[]]
-    | State<S>
+    = [Action<S, P, D>, Payload<P>]
+    | ((state: State<S>, props?: Payload<P>)
+      => State<S>
+      | [State<S>, ...EffectDescriptor<D>[]]
+      | Action<S, P, D>)
 
-  // A payload allows data not within the state to be given to a dispatch.
+  // A payload is data external to state that is given to a dispatched action.
   type Payload<P> = P
 
   // An effect descriptor describes how an effect should be invoked.
@@ -56,7 +60,7 @@ declare module "hyperapp" {
   // An effect is generally given additional data.
   type EffectData<D> = D
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   // A virtual DOM node represents an actual DOM element.
   type VDOM = {
@@ -93,22 +97,18 @@ declare module "hyperapp" {
   // Actual DOM nodes will be manipulated depending on how property patching goes.
   type MaybeNode = null | undefined | Node
 
-  // A virtual DOM node's tag has metadata relevant to it.
-  type Tag
-    // Virtual DOM nodes are tagged by their type to assist rendering.
-    = VDOMNodeType
-    // Only memoized virtual DOM nodes are tagged with a view.
-    | View
+  // A virtual DOM node's tag has metadata relevant to it. Virtual DOM nodes are
+  // tagged by their type to assist rendering.
+  type Tag = VDOMNodeType | View
 
-  // Types 1 and 3 are based on actual DOM node types but 2 is Hyperapp-specific.
+  // These are based on actual DOM node types:
   // https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
   const enum VDOMNodeType {
-    Recycled = 1,
-    Lazy = 2,
+    SSR = 1,
     Text = 3,
   }
 
-  // -----------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   // The `app` function initiates a Hyperapp application. `app` along with effects
   // should be the only places you need to worry about side effects.

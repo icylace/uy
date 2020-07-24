@@ -2,6 +2,7 @@ import type { State, VDOM } from "hyperapp"
 import type { Control, ControlData, ControlOptions } from "../types"
 
 import { h, text } from "hyperapp"
+
 import { component } from "../component"
 import { box } from "../container/ui"
 import { icon } from "../display/icon"

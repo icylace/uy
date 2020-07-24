@@ -2,9 +2,10 @@ import type { State, VDOM } from "hyperapp"
 import type { Control, ChecklistOptions } from "../types"
 
 import { h } from "hyperapp"
+
+import { set } from "../utility/shadesHelper"
 import { component } from "../component"
 import { rawTable } from "../container/table"
-import { set } from "../utility/shadesHelper"
 import { rawCheckbox } from "./checkbox"
 
 const freshChecklist = (items: string[]): any => ({ items })
@@ -28,24 +29,28 @@ const rawChecklist = ({ disabled, locked, path, render, ...etc }: ChecklistOptio
         ],
       ],
     ]
-  return h ("div", {
-    ...etc,
-    class: {
-      disabled,
-      locked,
-      "uy-container": true,
-      "uy-checklist": true,
-      [etc.class]: !!etc.class,
+  return h (
+    "div",
+    {
+      ...etc,
+      class: {
+        disabled,
+        locked,
+        "uy-container": true,
+        "uy-checklist": true,
+        [etc.class]: !!etc.class,
+      },
     },
-  }, [
-    rawTable ({
-      disabled,
-      locked,
-      headers: null,
-      orderColumn: null,
-      sortDescending: false,
-    }) ({ rows: data.items.map (item) }),
-  ])
+    [
+      rawTable ({
+        disabled,
+        locked,
+        headers: null,
+        orderColumn: null,
+        sortDescending: false,
+      }) ({ rows: data.items.map (item) }),
+    ]
+  )
 }
 
 const checklist: Control = component (rawChecklist)

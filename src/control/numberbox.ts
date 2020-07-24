@@ -1,11 +1,12 @@
 import type { State, VDOM } from "hyperapp"
 import type { Control, ControlData, NumberboxOptions, Path } from "../types"
 
-import { h, text } from "hyperapp"
+import { h } from "hyperapp"
+
+import { content, handleValueWith } from "../utility/hyperappHelper"
+import { set } from "../utility/shadesHelper"
 import { component } from "../component"
 import { box } from "../container/ui"
-import { handleValueWith } from "../utility/hyperappHelper"
-import { set } from "../utility/shadesHelper"
 
 const freshNumberbox = (value: number): ControlData<number> => ({ value, focused: false })
 
@@ -44,7 +45,7 @@ const rawNumberbox = ({ disabled, locked, label, path, ...etc }: NumberboxOption
         },
       }),
       label != null
-        ? h ("span", { class: { disabled, locked, "uy-input": true } }, [typeof label === "string" ? text (label) : label])
+        ? h ("span", { class: { disabled, locked, "uy-input": true } }, content (label))
         : null,
     ]),
   ])

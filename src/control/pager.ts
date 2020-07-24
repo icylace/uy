@@ -2,9 +2,10 @@ import type { State, VDOM, VNode } from "hyperapp"
 import type { Control, ControlData, PagerOptions } from "../types"
 
 import { h, text } from "hyperapp"
+
+import { range } from "../utility/utility"
 import { component } from "../component"
 import { icon } from "../display/icon"
-import { range } from "../utility/utility"
 
 // freshPager :: Int -> Int -> PagerData
 const freshPager = (itemsTotal: number) => (value: number): ControlData<number> => ({ value, itemsTotal })

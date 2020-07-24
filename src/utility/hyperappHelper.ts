@@ -1,3 +1,13 @@
+import type { VNode } from "hyperapp"
+
+import { text } from "hyperapp"
+
+const content = (x: string | VNode | readonly VNode[]): VNode | readonly VNode[] => {
+  return typeof x === "string" ? [text (x)] : x
+}
+
+// -----------------------------------------------------------------------------
+
 // Constructs a CSS class string.
 const glam = (xr: { [k: string]: boolean }): string => {
   // TODO:
@@ -12,7 +22,7 @@ const glam = (xr: { [k: string]: boolean }): string => {
 // -----------------------------------------------------------------------------
 
 // https://github.com/jorgebucaran/hyperapp/blob/f30e70e77513948d2a1286ea6509b4e0c1de8999/lib/dom/src/index.js
-const fx = (a: Function) => (b: any): any[] => {
+const fx = (a: Function) => (b: any): [Function, any] => {
   return [a, b]
 }
 
@@ -35,7 +45,7 @@ const onMouseDown = eventFx ("mousedown")
 
 // -----------------------------------------------------------------------------
 
-const handleValueWith = (f: Function): any => (state: any, event: any): any => {
+const handleValueWith = (f: Function) => (state: any, event: any): any => {
   return f (state, event.target.value)
 }
 
@@ -61,6 +71,7 @@ const onOutside = (selector: string) => (action: Function) => (state: any, event
 // -----------------------------------------------------------------------------
 
 export {
+  content,
   fx,
   glam,
   handleUsing,

@@ -2,10 +2,11 @@ import type { State, VDOM } from "hyperapp"
 import type { Control, ListData, ListOptions, Path } from "../types"
 
 import { h } from "hyperapp"
+
+import { exclude } from "../utility/utility"
+import { get, set } from "../utility/shadesHelper"
 import { component } from "../component"
 import { rawTable } from "../container/table"
-import { get, set } from "../utility/shadesHelper"
-import { exclude } from "../utility/utility"
 import { button } from "./button"
 import { cancelButton } from "./cancelButton"
 import { rawTextbox } from "./textbox"

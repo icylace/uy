@@ -2,9 +2,10 @@ import type { VDOM } from "hyperapp"
 import type { Control, ControlData, ControlOptions } from "../types"
 
 import { h } from "hyperapp"
+
+import { handleValueWith } from "../utility/hyperappHelper"
 import { component } from "../component"
 import { box } from "../container/ui"
-import { handleValueWith } from "../utility/hyperappHelper"
 
 const freshTextbox = (value: string): ControlData<string> => ({ value })
 

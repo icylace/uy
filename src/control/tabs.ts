@@ -2,9 +2,11 @@ import type { Action, State, Payload, VDOM, VNode } from "hyperapp"
 import type { Control, ControlData, TabsOptions } from "../types"
 
 import { h } from "hyperapp"
+
+import { content } from "../utility/hyperappHelper"
+import { hasOwn } from "../utility/utility"
 import { component } from "../component"
 import { box } from "../container/ui"
-import { hasOwn } from "../utility/utility"
 import { scrollIntoView } from "./tabs.effect"
 
 const freshTabs = (value: string): ControlData<string> => ({ value })
@@ -26,7 +28,7 @@ const tab = (update: Function) => (activeTab: string) => (item: VNode, i: number
           : update (state, String (i))
       ,
     },
-    item,
+    content (item),
   )
 }
 

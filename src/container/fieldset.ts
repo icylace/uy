@@ -1,7 +1,9 @@
 import type { VDOM, VNode } from "hyperapp"
 import type { ComponentOptions, ContainerView } from "../types"
 
-import { h, text } from "hyperapp"
+import { h } from "hyperapp"
+
+import { content } from "../utility/hyperappHelper"
 import { ui } from "./ui"
 
 // TODO:
@@ -23,7 +25,7 @@ const rawFieldset = ({ disabled, locked, label, ...etc }: ComponentOptions) => (
     },
     label
       ? [
-          h ("legend", {}, [typeof label === "string" ? text (label) : label]),
+          h ("legend", {}, content (label)),
           ...contents,
         ]
       : contents

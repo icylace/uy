@@ -1,7 +1,9 @@
 import type { State, VDOM } from "hyperapp"
 import type { Control, ControlData, LabelledControlOptions } from "../types"
 
-import { h, text } from "hyperapp"
+import { h } from "hyperapp"
+
+import { content } from "../utility/hyperappHelper"
 import { component } from "../component"
 import { box } from "../container/ui"
 
@@ -40,7 +42,7 @@ const rawCheckbox = ({ disabled, locked, label, update, ...etc }: LabelledContro
         },
       }),
       label
-        ? h ("span", {}, [typeof label === "string" ? text (label) : label])
+        ? h ("span", {}, content (label))
         : null,
     ]),
   ])

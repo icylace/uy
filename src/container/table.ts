@@ -1,7 +1,9 @@
 import type { VDOM } from "hyperapp"
 import type { TableData, TableOptions } from "../types"
 
-import { h } from "hyperapp"
+import { h, text } from "hyperapp"
+
+import { content } from "../utility/hyperappHelper"
 import { component } from "../component"
 import { icon } from "../display/icon"
 import { box } from "./ui"
@@ -10,7 +12,7 @@ const freshTable = (rows: any[]): TableData => ({ rows })
 
 const tableHeader = (orderColumn: string | null) => (sortDescending: boolean) => (header: any[] | any): VDOM => {
   const props = Array.isArray (header) ? header[0] : {}
-  const content = Array.isArray (header) ? header[1] : header
+  const headerContent = Array.isArray (header) ? header[1] : header
   const column = props["data-column"]
   const sorting = orderColumn != null && orderColumn === column
   const sortIndicator =
@@ -22,25 +24,41 @@ const tableHeader = (orderColumn: string | null) => (sortDescending: boolean) =>
         "sort-indicator": true,
       })
       : null
-  return h ("th", {
-    ...props,
-    class: {
-      "sort-column": sorting,
-      [props.class]: !!props.class,
+  return h (
+    "th",
+    {
+      ...props,
+      class: {
+        "sort-column": sorting,
+        [props.class]: !!props.class,
+      },
     },
-  }, [content, sortIndicator])
+    [
+      typeof headerContent === "string" ? text (headerContent) : headerContent,
+      sortIndicator,
+    ]
+  )
 }
 
 const tableRow = (row: any[]): VDOM => {
   if (!row || !Array.isArray (row)) return row
   return h ("tr", {}, row.map (
     (x: any) => Array.isArray (x)
-      ? h ("td", x[0], [x[1]])
-      : h ("td", {}, [x]),
+      ? h ("td", x[0], content (x[1]))
+      : h ("td", {}, content (x)),
   ))
 }
 
-const rawTable = ({ disabled, locked, headers, orderColumn, sortDescending, ...etc }: TableOptions) => (data: TableData): VDOM => {
+const rawTable = (
+  {
+    disabled,
+    locked,
+    headers,
+    orderColumn,
+    sortDescending,
+    ...etc
+  }: TableOptions
+) => (data: TableData): VDOM => {
   return box ({
     disabled,
     locked,

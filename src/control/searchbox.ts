@@ -2,13 +2,14 @@ import type { Action, Payload, State, VDOM } from "hyperapp"
 import type { Control, ControlOptions, Path, SearchboxData } from "../types"
 
 import { h, text } from "hyperapp"
+
+import { pipe } from "../utility/utility"
+import { get, set } from "../utility/shadesHelper"
+import { addInsideEl, removeInsideEl } from "../utility/uyHelper"
 import { component } from "../component"
 import { popup } from "../container/popup"
 import { box } from "../container/ui"
 import { icon } from "../display/icon"
-import { get, set } from "../utility/shadesHelper"
-import { addInsideEl, removeInsideEl } from "../utility/uyHelper"
-import { pipe } from "../utility/utility"
 
 const freshSearchbox = (value: string): SearchboxData => ({
   value,

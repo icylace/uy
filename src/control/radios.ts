@@ -2,17 +2,18 @@ import type { VDOM } from "hyperapp"
 import type { Control, ControlData, RadiosOptions } from "../types"
 
 import { h } from "hyperapp"
+
+import { content, handleValueWith } from "../utility/hyperappHelper"
 import { component } from "../component"
 import { box } from "../container/ui"
-import { handleValueWith } from "../utility/hyperappHelper"
 
 const freshRadios = (value: string): ControlData<string> => ({ value })
 
 const rawRadios = ({ disabled, locked, options, update, ...etc }: RadiosOptions) => (data: ControlData<string>): VDOM => {
   return box ("uy-control uy-radios") (
-      // TODO:
-      // - switch to using a Map object instead in order to guarantee order
-      Object.entries (options).map (([value, label]: any) =>
+    // TODO:
+    // - switch to using a Map object instead in order to guarantee order
+    Object.entries (options).map (([value, label]: any) =>
       h ("label", { class: { locked, disabled } }, [
         h ("input", {
           disabled,
@@ -28,7 +29,7 @@ const rawRadios = ({ disabled, locked, options, update, ...etc }: RadiosOptions)
             [etc.class]: !!etc.class,
           },
         }),
-        label != null ? h ("span", {}, [label]) : null,
+        label != null ? h ("span", {}, content (label)) : null,
       ]),
     ),
   )

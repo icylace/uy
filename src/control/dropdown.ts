@@ -2,10 +2,11 @@ import type { VDOM } from "hyperapp"
 import type { Control, ControlData, DropdownOptions } from "../types"
 
 import { h } from "hyperapp"
+
+import { content, handleValueWith } from "../utility/hyperappHelper"
+import { set } from "../utility/shadesHelper"
 import { component } from "../component"
 import { box } from "../container/ui"
-import { handleValueWith } from "../utility/hyperappHelper"
-import { set } from "../utility/shadesHelper"
 
 const freshDropdown = (value: string): ControlData<string> => ({ value, focused: false })
 
@@ -37,10 +38,14 @@ const rawDropdown = ({ disabled, locked, options, path, update, ...etc }: Dropdo
         // TODO:
         // - switch to using a Map object instead in order to guarantee order
         Object.entries (options).map (
-          ([x, content]: [any, any]) =>
-            h ("option", Array.isArray (x)
-              ? { value: x[1], ...x[0] }
-              : { value: x }, [content]),
+          ([x, value]: [any, any]) =>
+            h (
+              "option",
+              Array.isArray (x)
+                ? { value: x[1], ...x[0] }
+                : { value: x },
+              content (value)
+            ),
         ),
       ),
     ]),

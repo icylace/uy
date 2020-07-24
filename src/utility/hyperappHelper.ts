@@ -1,9 +1,19 @@
-import type { VNode } from "hyperapp"
+import type { State, VNode } from "hyperapp"
 
 import { text } from "hyperapp"
 
 const content = (x: string | VNode | readonly VNode[]): VNode | readonly VNode[] => {
   return typeof x === "string" ? [text (x)] : x
+}
+
+// -----------------------------------------------------------------------------
+
+const toggle = <T>(x: T) => (cond: boolean): T | null => {
+  return cond ? x : null
+}
+
+const toggleBetween = <T>(x: T) => <U>(y: U) => (cond: boolean): T | U => {
+  return cond ? x : y
 }
 
 // -----------------------------------------------------------------------------
@@ -22,7 +32,7 @@ const glam = (xr: { [k: string]: boolean }): string => {
 // -----------------------------------------------------------------------------
 
 // https://github.com/jorgebucaran/hyperapp/blob/f30e70e77513948d2a1286ea6509b4e0c1de8999/lib/dom/src/index.js
-const fx = (a: Function) => (b: any): [Function, any] => {
+const fx = (a: Function) => <T>(b: T): [Function, any] => {
   return [a, b]
 }
 
@@ -45,13 +55,17 @@ const onMouseDown = eventFx ("mousedown")
 
 // -----------------------------------------------------------------------------
 
-const handleValueWith = (f: Function) => (state: any, event: any): any => {
+// TODO:
+// const handleValueWith = <S>(f: (a: State<S>, b: string) => any) => <E>(state: State<S>, event: E): any => {
+//   return f (state, event.target.value)
+// }
+const handleValueWith = (f: Function) => <S>(state: State<S>, event: any): any => {
   return f (state, event.target.value)
 }
 
 // Invokes a collection of event handlers for the same event.
-const handleUsing = (handlers: any[]) => (state: any, event: any): any => {
-  return handlers.reduce ((newState: any, f: Function): any => f (newState, event), state)
+const handleUsing = (handlers: Function[]) => <S, E>(state: State<S>, event: E): any => {
+  return handlers.reduce ((newState: State<S>, f: Function): any => f (newState, event), state)
 }
 
 // -----------------------------------------------------------------------------
@@ -62,7 +76,7 @@ const handleUsing = (handlers: any[]) => (state: any, event: any): any => {
 // https://stackoverflow.com/a/28432139
 // https://codesandbox.io/s/czee7
 //
-const onOutside = (selector: string) => (action: Function) => (state: any, event: any): any => {
+const onOutside = (selector: string) => (action: Function) => <S>(state: State<S>, event: any): any => {
   const el = document.querySelector (selector)
   if (!el || el.contains (event.target)) return state
   return action (state, event)
@@ -78,4 +92,6 @@ export {
   handleValueWith,
   onMouseDown,
   onOutside,
+  toggle,
+  toggleBetween,
 }

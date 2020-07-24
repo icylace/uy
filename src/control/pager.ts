@@ -19,7 +19,8 @@ const pagerNav = (handler: Function, contents: VNode[], active: boolean): VDOM =
     ...active ? { onclick: <S>(_state: State<S>, _event: any): any => handler } : {},
   }, contents)
 
-const pagerMore = (contents: VNode[]): VDOM => h ("span", { class: "uy-pager-more" }, contents)
+const pagerMore = (contents: VNode[]): VDOM =>
+  h ("span", { class: "uy-pager-more" }, contents)
 
 const rawPager = ({ disabled, locked, itemsPerPage, pageRange, update, ...etc }: PagerOptions) => (data: ControlData<number>): VDOM | null => {
   if (!data.itemsTotal) return null

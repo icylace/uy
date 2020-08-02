@@ -1,7 +1,7 @@
 import type { State, VDOM } from "hyperapp"
 import type { Control, ListData, ListOptions, Path } from "../types"
 
-import { h } from "hyperapp"
+import { div } from "../utility/html"
 
 import { exclude } from "../utility/utility"
 import { get, set } from "../utility/shadesHelper"
@@ -45,8 +45,7 @@ const rawList = ({ disabled, locked, headers, path, ...etc }: ListOptions) => (d
       ],
     ]
 
-  return h (
-    "div",
+  return div (
     {
       ...etc,
       class: {

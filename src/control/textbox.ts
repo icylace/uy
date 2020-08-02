@@ -1,7 +1,7 @@
 import type { VDOM } from "hyperapp"
 import type { Control, ControlData, ControlOptions } from "../types"
 
-import { h } from "hyperapp"
+import { input } from "../utility/html"
 
 import { handleValueWith } from "../utility/hyperappHelper"
 import { component } from "../component"
@@ -11,7 +11,7 @@ const freshTextbox = (value: string): ControlData<string> => ({ value })
 
 const rawTextbox = ({ disabled, locked, update, ...etc }: ControlOptions) => (data: ControlData<string>): VDOM => {
   return box ("uy-control uy-textbox") ([
-    h ("input", {
+    input ({
       disabled,
       readonly: locked,
       value: data.value,

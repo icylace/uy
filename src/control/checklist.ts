@@ -1,7 +1,7 @@
 import type { State, VDOM } from "hyperapp"
 import type { Control, ChecklistOptions } from "../types"
 
-import { h } from "hyperapp"
+import { div } from "../utility/html"
 
 import { set } from "../utility/shadesHelper"
 import { component } from "../component"
@@ -29,8 +29,7 @@ const rawChecklist = ({ disabled, locked, path, render, ...etc }: ChecklistOptio
         ],
       ],
     ]
-  return h (
-    "div",
+  return div (
     {
       ...etc,
       class: {
@@ -49,7 +48,7 @@ const rawChecklist = ({ disabled, locked, path, render, ...etc }: ChecklistOptio
         orderColumn: null,
         sortDescending: false,
       }) ({ rows: data.items.map (item) }),
-    ]
+    ],
   )
 }
 

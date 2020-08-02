@@ -1,7 +1,7 @@
 import type { State, VDOM } from "hyperapp"
 import type { Control, ControlData, ControlOptions } from "../types"
 
-import { h, text } from "hyperapp"
+import * as html from "../utility/html"
 
 import { component } from "../component"
 import { box } from "../container/ui"
@@ -19,8 +19,8 @@ const rawFile = ({ disabled, locked, label = "Select your file...", ...etc }: Co
     "uy-file": true,
     "uy-input": true,
   }) ([
-    h ("label", { class: "uy-clicky", "data-text": label }, [
-      h ("input", {
+    html.label ({ class: "uy-clicky", "data-text": label }, [
+      html.input ({
         disabled,
         value: data.value,
         type: "file",
@@ -37,9 +37,9 @@ const rawFile = ({ disabled, locked, label = "Select your file...", ...etc }: Co
           [etc.class]: !!etc.class,
         },
       }),
-      h ("span", { class: "uy-clicky" }, [
+      html.span ({ class: "uy-clicky" }, [
         icon ({ fas: true, "fa-file-upload": true }),
-        text (" Upload"),
+        " Upload",
       ]),
     ]),
   ])

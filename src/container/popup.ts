@@ -1,10 +1,10 @@
 import type { VDOM, VNode } from "hyperapp"
 import type { PopupOptions } from "../types"
 
-import { h } from "hyperapp"
+import { div } from "../utility/html"
 
 const popup = ({ disabled, id, locked, ...etc }: PopupOptions) => (contents: VNode[]): VDOM => {
-  return h ("div", {
+  return div ({
     id,
     ...etc,
     class: {

@@ -1,7 +1,7 @@
 import type { Action, Payload, State, VDOM } from "hyperapp"
 import type { Control, ControlOptions, Path, SearchboxData } from "../types"
 
-import { h, text } from "hyperapp"
+import { input, label, li, span, ul } from "../utility/html"
 
 import { pipe } from "../utility/utility"
 import { get, set } from "../utility/shadesHelper"
@@ -70,13 +70,13 @@ const update = (search: Function) => (path: Path) => (id: string) => (value: str
 // -----------------------------------------------------------------------------
 
 const searchResult = (path: Path) => (id: string) => (x: string): VDOM => {
-  return h ("li", { onclick: chooseResult (path) (id) (x) }, [text (x)])
+  return li ({ onclick: chooseResult (path) (id) (x) }, x)
 }
 
 const rawSearchbox = ({ disabled, locked, path, search, ...etc }: ControlOptions) => (data: SearchboxData): VDOM => {
   const id = path.join ("-")
 
-  const inputSearch = h ("input", {
+  const inputSearch = input ({
     disabled,
     readonly: locked,
     value: data.value,
@@ -136,7 +136,7 @@ const rawSearchbox = ({ disabled, locked, path, search, ...etc }: ControlOptions
     "uy-control": true,
     "uy-searchbox": true,
   }) ([
-    h ("label", {
+    label ({
       class: {
         disabled,
         locked,
@@ -146,7 +146,7 @@ const rawSearchbox = ({ disabled, locked, path, search, ...etc }: ControlOptions
       },
     }, [
       inputSearch,
-      h ("span", { onclick: update (search) (path) (id) (data.value) }, [
+      span ({ onclick: update (search) (path) (id) (data.value) }, [
         icon ({
           fas: true,
           "fa-spinner": data.searching,
@@ -158,7 +158,7 @@ const rawSearchbox = ({ disabled, locked, path, search, ...etc }: ControlOptions
 
     data.results.length && !disabled
       ? popup ({ locked, disabled, id }) ([
-        h ("ul", { class: "uy-searchbox-results uy-scroller" },
+        ul ({ class: "uy-searchbox-results uy-scroller" },
           data.results.map (searchResult (path) (id)),
         ),
       ])

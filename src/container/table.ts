@@ -1,9 +1,10 @@
 import type { VDOM } from "hyperapp"
 import type { TableData, TableOptions } from "../types"
 
-import { h, text } from "hyperapp"
+// import { h, text } from "hyperapp"
 
-import { content } from "../utility/hyperappHelper"
+import * as html from "../utility/html"
+
 import { component } from "../component"
 import { icon } from "../display/icon"
 import { box } from "./ui"
@@ -24,28 +25,21 @@ const tableHeader = (orderColumn: string | null) => (sortDescending: boolean) =>
         "sort-indicator": true,
       })
       : null
-  return h (
-    "th",
-    {
-      ...props,
-      class: {
-        "sort-column": sorting,
-        [props.class]: !!props.class,
-      },
+  return html.th ({
+    ...props,
+    class: {
+      "sort-column": sorting,
+      [props.class]: !!props.class,
     },
-    [
-      typeof headerContent === "string" ? text (headerContent) : headerContent,
-      sortIndicator,
-    ]
-  )
+  }, [headerContent, sortIndicator])
 }
 
 const tableRow = (row: any[]): VDOM => {
   if (!row || !Array.isArray (row)) return row
-  return h ("tr", {}, row.map (
+  return html.tr (row.map (
     (x: any) => Array.isArray (x)
-      ? h ("td", x[0], content (x[1]))
-      : h ("td", {}, content (x)),
+      ? html.td (x[0], x[1])
+      : html.td (x),
   ))
 }
 
@@ -57,7 +51,7 @@ const rawTable = (
     orderColumn,
     sortDescending,
     ...etc
-  }: TableOptions
+  }: TableOptions,
 ) => (data: TableData): VDOM => {
   return box ({
     disabled,
@@ -65,11 +59,11 @@ const rawTable = (
     "uy-control": true,
     "uy-table": true,
   }) ([
-    h ("table", etc, [
+    html.table (etc, [
       headers && headers.length
-        ? h ("thead", {}, headers.map (tableHeader (orderColumn) (sortDescending)))
+        ? html.thead (headers.map (tableHeader (orderColumn) (sortDescending)))
         : null,
-      h ("tbody", {}, data.rows.map (tableRow)),
+        html.tbody (data.rows.map (tableRow)),
     ]),
   ])
 }

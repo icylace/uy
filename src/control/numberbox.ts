@@ -1,9 +1,9 @@
 import type { State, VDOM } from "hyperapp"
 import type { Control, ControlData, NumberboxOptions, Path } from "../types"
 
-import { h } from "hyperapp"
+import * as html from "../utility/html"
 
-import { content, handleValueWith } from "../utility/hyperappHelper"
+import { handleValueWith } from "../utility/hyperappHelper"
 import { set } from "../utility/shadesHelper"
 import { component } from "../component"
 import { box } from "../container/ui"
@@ -20,14 +20,14 @@ const update = (path: Path) => <S>(state: State<S>, value: string): State<S> => 
 
 const rawNumberbox = ({ disabled, locked, label, path, ...etc }: NumberboxOptions) => (data: ControlData<number>): VDOM => {
   return box ("uy-control uy-numberbox") ([
-    h ("label", {
+    html.label ({
       class: {
         disabled,
         locked,
         focus: data.focused,
       },
     }, [
-      h ("input", {
+      html.input ({
         disabled,
         min: 0,
         readonly: locked,
@@ -45,7 +45,7 @@ const rawNumberbox = ({ disabled, locked, label, path, ...etc }: NumberboxOption
         },
       }),
       label != null
-        ? h ("span", { class: { disabled, locked, "uy-input": true } }, content (label))
+        ? html.span ({ class: { disabled, locked, "uy-input": true } }, label)
         : null,
     ]),
   ])

@@ -1,7 +1,7 @@
 import type { VDOM } from "hyperapp"
 import type { Control, ControlData, ControlOptions } from "../types"
 
-import { h } from "hyperapp"
+import { input } from "../utility/html"
 
 import { handleValueWith } from "../utility/hyperappHelper"
 import { component } from "../component"
@@ -13,7 +13,7 @@ const freshDatePicker = (value: string): ControlData<string> => ({ value })
 
 const rawDatePicker = ({ disabled, locked, update, ...etc }: ControlOptions) => (data: ControlData<string>): VDOM => {
   return box ("uy-control uy-datePicker") ([
-    h ("input", {
+    input ({
       disabled,
       readonly: locked,
       value: data.value,
@@ -38,7 +38,7 @@ const freshDatetimeLocalPicker = (value: string): ControlData<string> => ({ valu
 
 const rawDatetimeLocalPicker = ({ disabled, locked, update, ...etc }: ControlOptions) => (data: ControlData<string>): VDOM => {
   return box ("uy-control uy-datePicker") ([
-    h ("input", {
+    input ({
       disabled,
       readonly: locked,
       value: data.value,
@@ -63,7 +63,7 @@ const freshMonthPicker = (value: string): ControlData<string> => ({ value })
 
 const rawMonthPicker = ({ disabled, locked, update, ...etc }: ControlOptions) => (data: ControlData<string>): VDOM => {
   return box ("uy-control uy-datePicker") ([
-    h ("input", {
+    input ({
       disabled,
       readonly: locked,
       value: data.value,
@@ -88,7 +88,7 @@ const freshTimePicker = (value: string): ControlData<string> => ({ value })
 
 const rawTimePicker = ({ disabled, locked, update, ...etc }: ControlOptions) => (data: ControlData<string>): VDOM => {
   return box ("uy-control uy-datePicker") ([
-    h ("input", {
+    input ({
       disabled,
       readonly: locked,
       value: data.value,
@@ -113,7 +113,7 @@ const freshWeekPicker = (value: string): ControlData<string> => ({ value })
 
 const rawWeekPicker = ({ disabled, locked, update, ...etc }: ControlOptions) => (data: ControlData<string>): VDOM => {
   return box ("uy-control uy-datePicker") ([
-    h ("input", {
+    input ({
       disabled,
       readonly: locked,
       value: data.value,

@@ -1,13 +1,13 @@
 import type { VDOM } from "hyperapp"
 import type { ComponentOptions } from "../types"
 
-import { h, text } from "hyperapp"
+import * as html from "../utility/html"
 
 import { box } from "../container/ui"
 
 const cancelButton = ({ disabled, locked, update, ...etc }: ComponentOptions): VDOM => {
   return box ("uy-control uy-cancelButton") ([
-    h ("button", {
+    html.button ({
       disabled,
       type: "button",
       onclick: update,
@@ -18,7 +18,7 @@ const cancelButton = ({ disabled, locked, update, ...etc }: ComponentOptions): V
         "uy-clicky": true,
         [etc.class]: !!etc.class,
       },
-    }, [text ("✕")]),
+    }, "✕"),
   ])
 }
 

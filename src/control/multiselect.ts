@@ -1,7 +1,7 @@
 import type { State, VDOM } from "hyperapp"
 import type { Control, ControlData, MultiselectOptions } from "../types"
 
-import { h } from "hyperapp"
+import { div } from "../utility/html"
 
 import { component } from "../component"
 import { box } from "../container/ui"
@@ -15,7 +15,7 @@ const rawMultiselect = ({ disabled, locked, update, options, usingColumnMode, ..
   // TODO:
   // - should order matter? is Set the right way to do this?
   const selection = new Set (data.value)
-  return h ("div", {
+  return div ({
     ...etc,
     class: {
       disabled,

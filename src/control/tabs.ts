@@ -1,9 +1,8 @@
 import type { Action, State, Payload, VDOM, VNode } from "hyperapp"
 import type { Control, ControlData, TabsOptions } from "../types"
 
-import { h } from "hyperapp"
+import { div } from "../utility/html"
 
-import { content } from "../utility/hyperappHelper"
 import { hasOwn } from "../utility/utility"
 import { component } from "../component"
 import { box } from "../container/ui"
@@ -18,25 +17,20 @@ const isSelected = (activeTab: string) => (item: any, i: number): boolean => {
 // tab :: Action -> String -> VNode -> Int -> VNode
 const tab = (update: Function) => (activeTab: string) => (item: VNode, i: number): VDOM => {
   const selected = isSelected (activeTab) (item, i)
-  return h (
-    "div",
-    {
-      class: { "uy-tabs-item": true, selected },
-      onclick: <S, D>(state: State<S>, { target }: Payload<Event>): Action<S, Event, D> =>
-        selected
-          ? [update (state, String (i)), scrollIntoView (target)]
-          : update (state, String (i))
-      ,
-    },
-    content (item),
-  )
+  return div ({
+    class: { "uy-tabs-item": true, selected },
+    onclick: <S, D>(state: State<S>, { target }: Payload<Event>): Action<S, Event, D> =>
+      selected
+        ? [update (state, String (i)), scrollIntoView (target)]
+        : update (state, String (i))
+    ,
+  }, item)
 }
 
 const rawTabs = ({ disabled, locked, itemsFooter, itemsHeader, tabList, update, ...etc }: TabsOptions) => (data: ControlData<string>): VDOM => {
   const headings = tabList.map ((x: any) => x.heading)
   const panels = tabList.map ((x: any) => x.panel)
-  return h (
-    "div",
+  return div (
     {
       ...etc,
       class: {

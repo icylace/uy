@@ -1,10 +1,10 @@
 import type { VDOM } from "hyperapp"
 import type { ComponentOptions } from "../types"
 
-import { h } from "hyperapp"
+import { span } from "../utility/html"
 
 const spinner = (props: ComponentOptions): VDOM => {
-  return h ("span", { class: "uy-indicator uy-spinner", ...props })
+  return span ({ class: "uy-indicator uy-spinner", ...props })
 }
 
 export { spinner }

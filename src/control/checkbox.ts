@@ -1,9 +1,8 @@
 import type { State, VDOM } from "hyperapp"
 import type { Control, ControlData, LabelledControlOptions } from "../types"
 
-import { h } from "hyperapp"
+import * as html from "../utility/html"
 
-import { content } from "../utility/hyperappHelper"
 import { component } from "../component"
 import { box } from "../container/ui"
 
@@ -27,8 +26,8 @@ const freshCheckbox = (value: boolean): ControlData<boolean> => ({ value })
 
 const rawCheckbox = ({ disabled, locked, label, update, ...etc }: LabelledControlOptions) => (data: ControlData<boolean>): VDOM => {
   return box ("uy-control uy-checkbox") ([
-    h ("label", { class: { disabled, locked } }, [
-      h ("input", {
+    html.label ({ class: { disabled, locked } }, [
+      html.input ({
         disabled,
         checked: data.value,
         type: "checkbox",
@@ -41,9 +40,7 @@ const rawCheckbox = ({ disabled, locked, label, update, ...etc }: LabelledContro
           [etc.class]: !!etc.class,
         },
       }),
-      label
-        ? h ("span", {}, content (label))
-        : null,
+      label ? html.span (label) : null,
     ]),
   ])
 }

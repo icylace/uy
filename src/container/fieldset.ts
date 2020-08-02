@@ -1,9 +1,7 @@
 import type { VDOM, VNode } from "hyperapp"
 import type { ComponentOptions, ContainerView } from "../types"
 
-import { h } from "hyperapp"
-
-import { content } from "../utility/hyperappHelper"
+import * as html from "../utility/html"
 import { ui } from "./ui"
 
 // TODO:
@@ -11,8 +9,7 @@ import { ui } from "./ui"
 // type FieldsetOptions = Label | ComponentOptions
 
 const rawFieldset = ({ disabled, locked, label, ...etc }: ComponentOptions) => (contents: VNode[]): VDOM => {
-  return h (
-    "fieldset",
+  return html.fieldset (
     {
       disabled,
       ...etc,
@@ -24,11 +21,8 @@ const rawFieldset = ({ disabled, locked, label, ...etc }: ComponentOptions) => (
       },
     },
     label
-      ? [
-          h ("legend", {}, content (label)),
-          ...contents,
-        ]
-      : contents
+      ? [html.legend (label), ...contents]
+      : contents,
   )
 }
 

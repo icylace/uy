@@ -1,7 +1,9 @@
 import type { State, VDOM, VNode } from "hyperapp"
 import type { Control, ControlData, PagerOptions } from "../types"
 
-import { h, text } from "hyperapp"
+import { text } from "hyperapp"
+
+import { div, li, span, ul } from "../utility/html"
 
 import { range } from "../utility/utility"
 import { component } from "../component"
@@ -11,7 +13,7 @@ import { icon } from "../display/icon"
 const freshPager = (itemsTotal: number) => (value: number): ControlData<number> => ({ value, itemsTotal })
 
 const pagerNav = (handler: Function, contents: VNode[], active: boolean): VDOM =>
-  h ("span", {
+  span ({
     class: {
       "uy-pager-nav": true,
       "uy-pager-nav-inactive": !active,
@@ -20,7 +22,7 @@ const pagerNav = (handler: Function, contents: VNode[], active: boolean): VDOM =
   }, contents)
 
 const pagerMore = (contents: VNode[]): VDOM =>
-  h ("span", { class: "uy-pager-more" }, contents)
+  span ({ class: "uy-pager-more" }, contents)
 
 const rawPager = ({ disabled, locked, itemsPerPage, pageRange, update, ...etc }: PagerOptions) => (data: ControlData<number>): VDOM | null => {
   if (!data.itemsTotal) return null
@@ -35,14 +37,14 @@ const rawPager = ({ disabled, locked, itemsPerPage, pageRange, update, ...etc }:
     const currentPage = rangeStartPage + n
     const current = currentPage === data.value
     return rangeStartPage <= currentPage && currentPage <= rangeFinishPage
-      ? h ("li", {
+      ? li ({
         class: {
           "uy-pager-nav": true,
           "uy-pager-page": true,
           "uy-pager-current": current,
         },
         onclick: <S>(state: State<S>, _event: any) => update (state, currentPage),
-      }, [h ("span", {}, [text (currentPage + 1)])])
+      }, span (currentPage + 1))
       : null
   })
 
@@ -77,7 +79,7 @@ const rawPager = ({ disabled, locked, itemsPerPage, pageRange, update, ...etc }:
       data.value !== lastPage,
     )
 
-  return h ("div", {
+  return div ({
     ...etc,
     class: {
       disabled,
@@ -87,14 +89,14 @@ const rawPager = ({ disabled, locked, itemsPerPage, pageRange, update, ...etc }:
       [etc.class]: !!etc.class,
     },
   }, [
-    h ("ul", {}, [
-      h ("li", {}, [navFirst]),
-      h ("li", {}, [navPrev]),
-      h ("li", {}, [morePrev]),
+    ul ([
+      li (navFirst),
+      li (navPrev),
+      li (morePrev),
       ...pages,
-      h ("li", {}, [moreNext]),
-      h ("li", {}, [navNext]),
-      h ("li", {}, [navLast]),
+      li (moreNext),
+      li (navNext),
+      li (navLast),
     ]),
   ])
 }

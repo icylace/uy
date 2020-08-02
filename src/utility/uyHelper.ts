@@ -1,3 +1,5 @@
+import type { App, State, Subscriber } from "hyperapp"
+
 import { handleUsing, onMouseDown, onOutside } from "./hyperappHelper"
 import { get, mod, set } from "./shadesHelper"
 import { delist, map, pipe } from "./utility"
@@ -12,18 +14,18 @@ const removeInsideEl = (id: string): any => mod (["uy", "insiders"]) (delist (id
 
 // -----------------------------------------------------------------------------
 
-const detectOutside = ([insider, f]: any[]): any =>
+const detectOutside = ([insider, f]: [string, Function]): any =>
   onOutside (`#${insider}`) (
-    (_state: any, _event: any): any => pipe (f, removeInsideEl (insider)),
+    <S>(_state: State<S>, _event: any): any => pipe (f, removeInsideEl (insider)),
   )
 
 // freshState :: State -> State
-const freshState = (state: any): any => ({
+const freshState = <S>(state: State<S>): State<S> => ({
   ...state,
   uy: {
     insiders: {},
     mousedownHandlers: {
-      detectOutsideAction: (state: any, event: any): any => {
+      detectOutsideAction: <S>(state: State<S>, event: any): State<S> => {
         return handleUsing (pipe (
           get (["uy", "insiders"]),
 
@@ -49,10 +51,13 @@ const mouseDownSubscription =
 
 // -----------------------------------------------------------------------------
 
-const uyAppConfig = (config: any): any => ({
+// // TODO:
+// const uy = (path: Path)
+
+const uyAppConfig = <S, P, D>(config: App<S, P, D>): App<S, P, D> => ({
   ...config,
   // TODO: account for any subscriptions from `config`
-  subscriptions: (state: any): any => [mouseDownSubscription (state)],
+  subscriptions: <S>(state: State<S>): Subscriber[] => [mouseDownSubscription (state)],
   init: freshState (config.init),
 })
 

@@ -14,7 +14,7 @@ const removeInsideEl = (id: string): any => mod (["uy", "insiders"]) (delist (id
 
 // -----------------------------------------------------------------------------
 
-const detectOutside = ([insider, f]: [string, Function]): any =>
+const detectOutside = ([insider, f]: [string, (a: any) => any]): any =>
   onOutside (`#${insider}`) (
     <S>(_state: State<S>, _event: any): any => pipe (f, removeInsideEl (insider)),
   )

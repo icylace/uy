@@ -15,12 +15,12 @@ const map = <T, U>(f: (a: T) => U) => (xs: T[]): U[] => {
   return xs.map (f)
 }
 
-const pipe = (...fs: Function[]) => (x: any): any => {
+const pipe = (...fs: ((a: any) => any)[]) => (x: any): any => {
   return fs.reduce ((acc: any, f: Function) => f (acc), x)
 }
 
 const range = (m: number) => (n: number): number[] => {
-  return [...Array (n - m)].map ((_, i) => m + i)
+  return [...Array (n - m) as undefined[]].map ((_, i) => m + i)
 }
 
 export {

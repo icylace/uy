@@ -24,7 +24,7 @@
   "browser": "./dist/index.esm.js",
   "unpkg": "./dist/index.js",
   "module": "./dist/index.js",
-  "types": "./dist/index.d",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "build:dev": "./task.sh build:dev",
     "build:prod": "./task.sh build:prod",

@@ -6,14 +6,19 @@ const textual = (x: string | VNode): VNode => {
   return typeof x === "string" ? text (x) : x
 }
 
-const stuff = (x: string | VNode | readonly VNode[]): VNode | readonly VNode[] => {
+const stuff = (
+  x: string | VNode | readonly VNode[],
+): VNode | readonly VNode[] => {
   return Array.isArray (x) ? x.map (textual) : [textual (x as string | VNode)]
 }
 
-const n = (tag: string) => (...args: readonly any[]): VDOM =>
-  Array.isArray (args[0]) || typeof args[0] !== "object" || "node" in args[0]
-    ? h (tag, {}, stuff (args[0]))
-    : h (tag, args[0], stuff (args[1]))
+const n = (tag: string) =>
+  (...args: readonly any[]): VDOM => {
+    return Array.isArray (args[0]) || typeof args[0] !== "object" ||
+        "node" in args[0]
+      ? h (tag, {}, stuff (args[0]))
+      : h (tag, args[0], stuff (args[1]))
+  }
 
 export const a = n ("a")
 export const abbr = n ("abbr")

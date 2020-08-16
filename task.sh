@@ -98,7 +98,7 @@ task:build:prod() {
 
   echo
   echo "Copying compiled JavaScript to the distribution folder..."
-  # https://stackoverflow.com/a/1313688/1935675
+  # https://stackoverflow.com/a/1313688
   rsync --archive ./output/typescript/ ./dist --exclude=tsconfig.tsbuildinfo
 
   echo
@@ -140,6 +140,7 @@ task:hard-refresh() {
   npm install --save hyperapp shades remeda redaxios
   npm install --save @fortawesome/fontawesome-free
   npm install --save-dev snowpack typescript rollup eslint terser prettier
+  # npm install --save-dev deno_ls_plugin
   npm install --save-dev eslint-plugin-import eslint-plugin-json eslint-plugin-node eslint-plugin-promise
   npm install --save-dev eslint-config-prettier eslint-plugin-prettier
   npm install --save-dev eslint-config-standard eslint-plugin-standard

@@ -2,7 +2,6 @@ import type { VDOM } from "hyperapp"
 import type { ComponentOptions } from "../types"
 
 import * as html from "../utility/html"
-
 import { box } from "../container/ui"
 
 const cancelButton = ({ disabled, locked, update, ...etc }: ComponentOptions): VDOM => {

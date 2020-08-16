@@ -32,7 +32,7 @@ module.exports = {
   },
   settings: {
     "import/parsers": {
-      "@typescript-eslint/parser": [".ts", ".tsx"],
+      "@typescript-eslint/parser": ["", ".tsx"],
     },
     "import/resolver": {
       typescript: {},
@@ -98,9 +98,14 @@ module.exports = {
     ],
     quotes: ["error", "double"],
 
-    "import/no-extraneous-dependencies": ["error", { devDependencies: ["**/test.tsx", "**/test.ts"] }],
+    "import/no-extraneous-dependencies": ["error", { devDependencies: ["**/test.tsx", "**/test"] }],
 
-    "@typescript-eslint/no-explicit-any": ["off", { ignoreRestArgs: false }],
+    "@typescript-eslint/ban-types": ["warn"],
+    "@typescript-eslint/no-explicit-any": ["warn", { ignoreRestArgs: false }],
+    "@typescript-eslint/no-unsafe-assignment": ["warn"],
+    "@typescript-eslint/no-unsafe-call": ["warn"],
+    "@typescript-eslint/no-unsafe-member-access": ["warn"],
+    "@typescript-eslint/no-unsafe-return": ["warn"],
     "@typescript-eslint/no-unused-vars": [
       "error",
       {

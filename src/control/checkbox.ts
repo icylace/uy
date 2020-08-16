@@ -2,7 +2,6 @@ import type { State, VDOM } from "hyperapp"
 import type { Control, ControlData, LabelledControlOptions } from "../types"
 
 import * as html from "../utility/html"
-
 import { component } from "../component"
 import { box } from "../container/ui"
 

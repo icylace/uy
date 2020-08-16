@@ -3,13 +3,16 @@ import type { ContainerView, Renderer } from "../types"
 
 import { div } from "../utility/html"
 
-const box = (classProp: ClassProp) => (contents: VNode[]): VDOM => {
-  return div ({ class: classProp }, contents)
-}
+const box = (classProp: ClassProp) =>
+  (contents: VNode[]): VDOM => {
+    return div ({ class: classProp }, contents)
+  }
 
-const ui = (f: Renderer) => (views: View[]) => <S>(state: State<S>): VDOM => {
-  return f (views.map ((g) => g (state)))
-}
+const ui = (f: Renderer) =>
+  (views: View[]) =>
+    <S>(state: State<S>): VDOM => {
+      return f (views.map ((g) => g (state)))
+    }
 
 const column: ContainerView = ui (box ("uy-column"))
 const panel = (classProp: ClassProp): ContainerView => ui (box (classProp))

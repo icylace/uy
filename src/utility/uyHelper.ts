@@ -15,8 +15,8 @@ const removeInsideEl = (id: string): any => mod (["uy", "insiders"]) (delist (id
 // -----------------------------------------------------------------------------
 
 const detectOutside = ([insider, f]: [string, (a: any) => any]): any =>
-  onOutside (`#${insider}`) (
-    <S>(_state: State<S>, _event: any): any => pipe (f, removeInsideEl (insider)),
+  onOutside (`#${insider}`) (<S>(_state: State<S>, _event: any): any =>
+    pipe (f, removeInsideEl (insider)),
   )
 
 // freshState :: State -> State
@@ -26,28 +26,27 @@ const freshState = <S>(state: State<S>): State<S> => ({
     insiders: {},
     mousedownHandlers: {
       detectOutsideAction: <S>(state: State<S>, event: any): State<S> => {
-        return handleUsing (pipe (
-          get (["uy", "insiders"]),
-
-          // TODO:
-          // - switch to using a Map object instead in order to guarantee order
-          Object.entries,
-
-          map (detectOutside),
-        ) (state)) (state, event)
+        return handleUsing (
+          pipe (
+            get (["uy", "insiders"]),
+            // TODO:
+            // - switch to using a Map object instead in order to guarantee order
+            Object.entries,
+            map (detectOutside),
+          ) (state),
+        ) (state, event)
       },
     },
   },
 })
 
 // mouseDownSubscription :: State -> State
-const mouseDownSubscription =
-  pipe (
-    get (["uy", "mousedownHandlers"]),
-    Object.values,
-    handleUsing,
-    onMouseDown,
-  )
+const mouseDownSubscription = pipe (
+  get (["uy", "mousedownHandlers"]),
+  Object.values,
+  handleUsing,
+  onMouseDown,
+)
 
 // -----------------------------------------------------------------------------
 
@@ -57,7 +56,9 @@ const mouseDownSubscription =
 const uyAppConfig = <S, P, D>(config: App<S, P, D>): App<S, P, D> => ({
   ...config,
   // TODO: account for any subscriptions from `config`
-  subscriptions: <S>(state: State<S>): Subscriber[] => [mouseDownSubscription (state)],
+  subscriptions: <S>(
+    state: State<S>,
+  ): Subscriber[] => [mouseDownSubscription (state)],
   init: freshState (config.init),
 })
 

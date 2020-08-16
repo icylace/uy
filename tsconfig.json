@@ -5,7 +5,7 @@
 // $ npx tsc --init
 
 {
-  "include": ["./src/**/*.ts", "./types/*.d.ts"],
+  "include": ["./src/**/*"],
   "exclude": ["./dist", "./output", "./node_modules", "./web_modules"],
   "compilerOptions": {
     /* Basic Options */
@@ -86,5 +86,9 @@
     "assumeChangesOnlyAffectDirectDependencies": true,    /* https://www.typescriptlang.org/v2/en/tsconfig#assumeChangesOnlyAffectDirectDependencies */
     "noEmitOnError": true,                    /* https://www.typescriptlang.org/tsconfig#noEmitOnError */
     "resolveJsonModule": true                 /* https://www.typescriptlang.org/tsconfig#resolveJsonModule */
+
+    // "plugins": [
+    //   { "name": "deno_ls_plugin" }
+    // ]
   }
 }

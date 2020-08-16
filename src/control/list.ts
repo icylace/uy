@@ -1,7 +1,7 @@
 import type { State, VDOM } from "hyperapp"
 import type { Control, ListData, ListOptions, Path } from "../types"
 
-import { div } from "../utility/html"
+import { div } from "ntml"
 import { exclude } from "../utility/utility"
 import { get, set } from "../utility/shadesHelper"
 import { component } from "../component"

@@ -1,7 +1,7 @@
 import type { VDOM, VNode } from "hyperapp"
 import type { ComponentOptions, ContainerView } from "../types"
 
-import * as html from "../utility/html"
+import * as html from "ntml"
 import { ui } from "./ui"
 
 // TODO:

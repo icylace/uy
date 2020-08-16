@@ -1,7 +1,7 @@
 import type { Action, Payload, State, VDOM } from "hyperapp"
 import type { Control, ControlOptions, Path, SearchboxData } from "../types"
 
-import { input, label, li, span, ul } from "../utility/html"
+import { input, label, li, span, ul } from "ntml"
 import { pipe } from "../utility/utility"
 import { get, set } from "../utility/shadesHelper"
 import { addInsideEl, removeInsideEl } from "../utility/uyHelper"

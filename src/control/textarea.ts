@@ -1,7 +1,7 @@
 import type { VDOM } from "hyperapp"
 import type { Control, ControlData, ControlOptions } from "../types"
 
-import * as html from "../utility/html"
+import * as html from "ntml"
 import { handleValueWith } from "../utility/hyperappHelper"
 import { component } from "../component"
 import { box } from "../container/ui"

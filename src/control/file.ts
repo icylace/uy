@@ -1,7 +1,7 @@
 import type { State, VDOM } from "hyperapp"
 import type { Control, ControlData, ControlOptions } from "../types"
 
-import * as html from "../utility/html"
+import * as html from "ntml"
 import { component } from "../component"
 import { box } from "../container/ui"
 import { icon } from "../display/icon"

@@ -3,7 +3,7 @@ import type { TableData, TableOptions } from "../types"
 
 // import { h, text } from "hyperapp"
 
-import * as html from "../utility/html"
+import * as html from "ntml"
 import { component } from "../component"
 import { icon } from "../display/icon"
 import { box } from "./ui"

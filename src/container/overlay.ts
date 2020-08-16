@@ -1,7 +1,7 @@
 import type { VDOM, VNode } from "hyperapp"
 import type { ComponentOptions, ContainerView } from "../types"
 
-import { div } from "../utility/html"
+import { div } from "ntml"
 import { box, ui } from "./ui"
 
 const rawOverlay = ({ disabled, locked, ...etc }: ComponentOptions) =>

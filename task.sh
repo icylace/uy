@@ -135,10 +135,11 @@ task:hard-refresh() {
   echo
   echo "Hard-refreshing dependencies..."
 
-  rm ./package-lock.json && rm -fr ./node_modules
+  rm ./package-lock.json && rm -fr ./node_modules && rm -fr ./output
 
   npm install --save hyperapp shades remeda redaxios
   npm install --save @fortawesome/fontawesome-free
+  npm install --save ntml
   npm install --save-dev snowpack typescript rollup eslint terser prettier
   # npm install --save-dev deno_ls_plugin
   npm install --save-dev eslint-plugin-import eslint-plugin-json eslint-plugin-node eslint-plugin-promise

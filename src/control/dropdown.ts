@@ -1,7 +1,7 @@
 import type { VDOM } from "hyperapp"
 import type { Control, ControlData, DropdownOptions } from "../types"
 
-import { option, select } from "../utility/html"
+import { option, select } from "ntml"
 import { handleValueWith } from "../utility/hyperappHelper"
 import { set } from "../utility/shadesHelper"
 import { component } from "../component"

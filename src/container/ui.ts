@@ -1,7 +1,7 @@
 import type { ClassProp, State, VDOM, View, VNode } from "hyperapp"
 import type { ContainerView, Renderer } from "../types"
 
-import { div } from "../utility/html"
+import { div } from "ntml"
 
 const box = (classProp: ClassProp) =>
   (contents: VNode[]): VDOM => {

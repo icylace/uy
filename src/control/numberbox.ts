@@ -1,7 +1,7 @@
 import type { State, VDOM } from "hyperapp"
 import type { Control, ControlData, NumberboxOptions, Path } from "../types"
 
-import * as html from "../utility/html"
+import * as html from "ntml"
 import { handleValueWith } from "../utility/hyperappHelper"
 import { set } from "../utility/shadesHelper"
 import { component } from "../component"

@@ -1,3 +1,6 @@
+// Borrowed from:
+// https://github.com/jorgebucaran/pull/969
+
 declare module "hyperapp" {
   // A Hyperapp application instance has an initial state and a base view.
   // It must also be mounted over an available DOM element.

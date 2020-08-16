@@ -1,7 +1,7 @@
 import type { State, VDOM } from "hyperapp"
 import type { Control, ChecklistOptions } from "../types"
 
-import { div } from "../utility/html"
+import { div } from "ntml"
 import { set } from "../utility/shadesHelper"
 import { component } from "../component"
 import { rawTable } from "../container/table"

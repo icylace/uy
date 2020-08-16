@@ -3,7 +3,7 @@ import type { Control, ControlData, PagerOptions } from "../types"
 
 import { text } from "hyperapp"
 
-import { div, li, span, ul } from "../utility/html"
+import { div, li, span, ul } from "ntml"
 import { range } from "../utility/utility"
 import { component } from "../component"
 import { icon } from "../display/icon"

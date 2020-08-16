@@ -1,7 +1,7 @@
 import type { Action, State, Payload, VDOM, VNode } from "hyperapp"
 import type { Control, ControlData, TabsOptions } from "../types"
 
-import { div } from "../utility/html"
+import { div } from "ntml"
 import { hasOwn } from "../utility/utility"
 import { component } from "../component"
 import { box } from "../container/ui"

@@ -1,7 +1,7 @@
 import type { State, VDOM } from "hyperapp"
 import type { ComponentOptions, Path } from "../types"
 
-import { label } from "../utility/html"
+import { label } from "ntml"
 import { box } from "./ui"
 
 type Component = (_: ComponentOptions) => (_: Path) => <S>(_: State<S>) => VDOM;

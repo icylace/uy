@@ -1,7 +1,7 @@
 import type { State, VDOM } from "hyperapp"
 import type { Control, ControlData, MultiselectOptions } from "../types"
 
-import { div } from "../utility/html"
+import { div } from "ntml"
 import { component } from "../component"
 import { box } from "../container/ui"
 import { rawCheckbox } from "./checkbox"

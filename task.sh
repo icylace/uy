@@ -201,7 +201,7 @@ task:lint:fix-dry-run() {
 task:release() {
   echo
   echo "Releasing..."
-  np
+  np --no-2fa
 }
 
 # ------------------------------------------------------------------------------

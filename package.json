@@ -1,7 +1,7 @@
 {
   "name": "@icylace/uy",
   "version": "0.0.1-6",
-  "description": "A Hyperapp-based UI library.",
+  "description": "uy is a UI library for Hyperapp.",
   "keywords": [
     "hyperapp"
   ],
@@ -76,7 +76,6 @@
     "utility-types": "^3.10.0"
   },
   "publishConfig": {
-    "access": "restricted",
-    "registry": "https://npm.pkg.github.com/"
+    "access": "public"
   }
 }

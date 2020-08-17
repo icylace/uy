@@ -1,5 +1,5 @@
 // Borrowed from:
-// https://github.com/jorgebucaran/pull/969
+// https://github.com/jorgebucaran/hyperapp/pull/969
 
 declare module "hyperapp" {
   // A Hyperapp application instance has an initial state and a base view.
@@ -89,13 +89,13 @@ declare module "hyperapp" {
   type Key = null | string | undefined
 
   // The `class` property represents an HTML class attribute string.
-  type ClassProp = string | Record<string, boolean> | ClassProp[]
+  type ClassProp = false | string | Record<string, boolean> | ClassProp[]
 
   // The `style` property represents inline CSS.
   type StyleProp = Record<string, null | number | string>
 
   // A virtual node is a convenience layer over a virtual DOM node.
-  type VNode = null | undefined | VDOM
+  type VNode = boolean | null | undefined | VDOM
 
   // Actual DOM nodes will be manipulated depending on how property patching goes.
   type MaybeNode = null | undefined | Node

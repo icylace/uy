@@ -1,6 +1,6 @@
 {
   "name": "@icylace/uy",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "uy is a UI library for Hyperapp.",
   "keywords": [
     "hyperapp"

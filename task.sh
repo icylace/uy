@@ -10,7 +10,7 @@ task:index() {
     'lint'
     'lint:fix'
     'lint:fix-dry-run'
-    # 'prepare'
+    'prepare'
     'release'
     'test'
     'typecheck'
@@ -151,15 +151,7 @@ task:hard-refresh() {
   npm install --save-dev postcss cssnano
   npm install --save-dev postcss-cli postcss-import postcss-reporter postcss-preset-env
 
-  # Patch shades to pass typechecking...
-  # https://github.com/jamesmcnamara/shades/issues/37#issuecomment-594810688
-  # https://stackoverflow.com/a/42192768/1935675
-  sed -i '' '30i\
-    _val: T\
-    _key: K
-  ' ./node_modules/shades/types/utils.ts
-
-  # task:prepare
+  task:prepare
 }
 
 # ------------------------------------------------------------------------------
@@ -188,12 +180,20 @@ task:lint:fix-dry-run() {
 
 # ------------------------------------------------------------------------------
 
-# # https://www.snowpack.dev/#run-after-every-install
-# task:prepare() {
-#   echo
-#   echo "Preparing web modules..."
-#   npx snowpack
-# }
+task:prepare() {
+  echo
+  echo "Patching `shades` to pass typechecking..."
+  # https://github.com/jamesmcnamara/shades/issues/37#issuecomment-594810688
+  # https://stackoverflow.com/a/42192768/1935675
+  sed -i '' '30i\
+    _val: T\
+    _key: K
+  ' ./node_modules/shades/types/utils.ts
+
+  # # https://www.snowpack.dev/#run-after-every-install
+  # echo "Preparing web modules..."
+  # npx snowpack
+}
 
 # ------------------------------------------------------------------------------
 

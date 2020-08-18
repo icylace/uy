@@ -23,26 +23,27 @@ const freshCheckbox = (value: boolean): ControlData<boolean> => ({ value })
 // // TODO:
 // type CheckboxOptions = LabelledControlOptions
 
-const rawCheckbox = ({ disabled, locked, label, update, ...etc }: LabelledControlOptions) => (data: ControlData<boolean>): VDOM => {
-  return box ("uy-control uy-checkbox") ([
-    html.label ({ class: { disabled, locked } }, [
-      html.input ({
-        disabled,
-        checked: data.value,
-        type: "checkbox",
-        onchange: <S>(state: State<S>, event: any): any => update (state, event.target.checked),
-        ...etc,
-        class: {
+const rawCheckbox = ({ disabled, locked, label, update, ...etc }: LabelledControlOptions) =>
+  (data: ControlData<boolean>): VDOM => {
+    return box ("uy-control uy-checkbox") ([
+      html.label ({ class: { disabled, locked } }, [
+        html.input ({
           disabled,
-          locked,
-          "uy-input": true,
-          [etc.class]: !!etc.class,
-        },
-      }),
-      label ? html.span (label) : null,
-    ]),
-  ])
-}
+          checked: data.value,
+          type: "checkbox",
+          onchange: <S>(state: State<S>, event: any): any => update (state, event.target.checked),
+          ...etc,
+          class: {
+            disabled,
+            locked,
+            "uy-input": true,
+            [etc.class]: !!etc.class,
+          },
+        }),
+        label ? html.span (label) : null,
+      ]),
+    ])
+  }
 
 const checkbox: Control = component (rawCheckbox)
 

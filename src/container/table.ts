@@ -1,5 +1,5 @@
-import type { VDOM } from "hyperapp"
-import type { TableData, TableOptions } from "../types"
+import type { VDOM, VNode } from "hyperapp"
+import type { Content, TableData, TableOptions } from "../types"
 
 // import { h, text } from "hyperapp"
 
@@ -12,12 +12,12 @@ const freshTable = (rows: any[]): TableData => ({ rows })
 
 const tableHeader = (orderColumn: string | null) =>
   (sortDescending: boolean) =>
-    (header: any[] | any): VDOM => {
+    (header: any | any[]): VDOM => {
       const props = Array.isArray (header) ? header[0] : {}
-      const headerContent = Array.isArray (header) ? header[1] : header
+      const headerContent: Content = Array.isArray (header) ? header[1] : header
       const column = props["data-column"]
       const sorting = orderColumn != null && orderColumn === column
-      const sortIndicator = sorting
+      const sortIndicator: VNode = sorting
         ? icon ({
           glyphicon: true,
           "glyphicon-chevron-down": sortDescending,
@@ -34,12 +34,15 @@ const tableHeader = (orderColumn: string | null) =>
       }, [headerContent, sortIndicator])
     }
 
-const tableRow = (row: any[]): VDOM => {
-  if (!row || !Array.isArray (row)) return row
-  return html.tr (row.map (
-    (x: any) => Array.isArray (x) ? html.td (x[0], x[1]) : html.td (x),
-  ))
-}
+const tableRow = (row: any[]): VDOM =>
+  !row || !Array.isArray (row)
+    ? row
+    : html.tr (row.map (
+      (x: Content) =>
+        Array.isArray (x)
+          ? html.td (x[0], x[1])
+          : html.td (x),
+    ))
 
 const rawTable = (
   {
@@ -51,8 +54,8 @@ const rawTable = (
     ...etc
   }: TableOptions,
 ) =>
-  (data: TableData): VDOM => {
-    return box ({
+  (data: TableData): VDOM =>
+    box ({
       disabled,
       locked,
       "uy-control": true,
@@ -65,7 +68,6 @@ const rawTable = (
         html.tbody (data.rows.map (tableRow)),
       ]),
     ])
-  }
 
 // table :: TableOptions -> [String] -> State -> VDOM
 const table = component (rawTable)

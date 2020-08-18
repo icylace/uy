@@ -1,6 +1,7 @@
 import type { State, VDOM, VNode, View } from "hyperapp"
 
 export type ContainerView = (_: View[]) => View
+export type Content = string | string[] | VNode | VNode[]
 export type Control = (_: ControlOptions) => (_: Path) => <S>(_: State<S>) => VDOM
 export type Path = string[]
 export type Renderer = (_: VNode[]) => VDOM
@@ -39,7 +40,7 @@ export type ControlOptions = ComponentOptions & {
 }
 
 export type LabelledComponentOptions = ComponentOptions & {
-  label?: string | VDOM;
+  label?: Content;
 }
 
 export type LabelledControlOptions = ControlOptions & LabelledComponentOptions

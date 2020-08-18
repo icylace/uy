@@ -1,10 +1,10 @@
-import type { VDOM, VNode } from "hyperapp"
-import type { PopupOptions } from "../types"
+import type { VDOM } from "hyperapp"
+import type { Content, PopupOptions } from "../types"
 
 import { div } from "ntml"
 
 const popup = ({ disabled, id, locked, ...etc }: PopupOptions) =>
-  (contents: VNode[]): VDOM => {
+  (content: Content): VDOM => {
     return div ({
       id,
       ...etc,
@@ -15,7 +15,7 @@ const popup = ({ disabled, id, locked, ...etc }: PopupOptions) =>
         "uy-popup": true,
         [etc.class]: !!etc.class,
       },
-    }, contents)
+    }, content)
   }
 
 export { popup }

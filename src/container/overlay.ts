@@ -1,11 +1,11 @@
-import type { VDOM, VNode } from "hyperapp"
-import type { ComponentOptions, ContainerView } from "../types"
+import type { VDOM } from "hyperapp"
+import type { ComponentOptions, ContainerView, Content } from "../types"
 
 import { div } from "ntml"
 import { box, ui } from "./ui"
 
 const rawOverlay = ({ disabled, locked, ...etc }: ComponentOptions) =>
-  (contents: VNode[]): VDOM => {
+  (content: Content): VDOM => {
     return box ("uy-overlay-background") ([
       div ({
         disabled,
@@ -18,7 +18,7 @@ const rawOverlay = ({ disabled, locked, ...etc }: ComponentOptions) =>
           "uy-overlay": true,
           [etc.class]: !!etc.class,
         },
-      }, contents),
+      }, content),
     ])
   }
 

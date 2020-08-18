@@ -1,13 +1,13 @@
 import type { State, VDOM } from "hyperapp"
-import type { ComponentOptions, Path } from "../types"
+import type { ComponentOptions, Content, Path } from "../types"
 
 import { label } from "ntml"
 import { box } from "./ui"
 
-type Component = (_: ComponentOptions) => (_: Path) => <S>(_: State<S>) => VDOM;
+type Component = (_: ComponentOptions) => (_: Path) => <S>(_: State<S>) => VDOM
 
 const field = (f: Component) =>
-  (title: string) =>
+  (title: Content) =>
     ({ disabled, locked, ...etc }: ComponentOptions) =>
       (path: Path) =>
         <S>(state: State<S>): VDOM => {

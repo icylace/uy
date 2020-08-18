@@ -28,7 +28,7 @@ const rawFile = (
           type: "file",
           // TODO:
           // - probably needs to be rethought
-          onchange: <S>(state: State<S>, { target }: any) => {
+          onchange: <S>(state: State<S>, { target }: any): any => {
             target.parentNode.dataset.text = target.value !== ""
               ? target.value.replace (/.*(\/|\\)/, "")
               : label

@@ -1,6 +1,3 @@
-// Borrowed from:
-// https://github.com/jorgebucaran/hyperapp/pull/969
-
 declare module "hyperapp" {
   // A Hyperapp application instance has an initial state and a base view.
   // It must also be mounted over an available DOM element.
@@ -55,7 +52,8 @@ declare module "hyperapp" {
   type EffectDescriptor<D> = [Effect, EffectData<D>]
 
   // An effect is where side effects and any additional dispatching occur.
-  type Effect = <D>(dispatch: Dispatch, props?: EffectData<D>) => void
+  // An effect used in a subscription should be able to unsubscribe.
+  type Effect = <D>(dispatch: Dispatch, props?: EffectData<D>) => void | Unsubscribe
 
   // An effect is generally given additional data.
   type EffectData<D> = D

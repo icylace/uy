@@ -24,9 +24,8 @@ export const glam = (xr: { [_: string]: boolean }): string =>
   // - switch to using a Map object instead in order to guarantee order
   Object.entries (xr)
     .reduce (
-      (acc: string[], [cssClass, active]: [string, boolean]): string[] => {
-        return active ? [...acc, cssClass] : acc
-      },
+      (acc: string[], [cssClass, active]: [string, boolean]): string[] =>
+        active ? [...acc, cssClass] : acc,
       [],
     )
     .join (" ")

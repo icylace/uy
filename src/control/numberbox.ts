@@ -12,14 +12,11 @@ const freshNumberbox = (value: number): ControlData<number> => ({
   focused: false,
 })
 
-const sanitizedNumber = (n: any): number => {
-  return Math.max (0, Number.parseInt (n, 10))
-}
+const sanitizedNumber = (n: any): number =>
+  Math.max (0, Number.parseInt (n, 10))
 
-const update = (path: Path) =>
-  <S>(state: State<S>, value: string): State<S> => {
-    return set ([...path, "value"]) (sanitizedNumber (value)) (state)
-  }
+const update = (path: Path) => <S>(state: State<S>, value: string): State<S> =>
+  set ([...path, "value"]) (sanitizedNumber (value)) (state)
 
 const rawNumberbox = (
   { disabled, locked, label, path, ...etc }: NumberboxOptions,

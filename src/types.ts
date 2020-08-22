@@ -1,10 +1,15 @@
-import type { State, VDOM, VNode, View } from "hyperapp"
+import type { Payload, State, VDOM, VNode, View } from "hyperapp"
 
 export type ContainerView = (_: View[]) => View
 export type Content = string | string[] | VNode | VNode[]
 export type Control = (_: ControlOptions) => (_: Path) => <S>(_: State<S>) => VDOM
 export type Path = string[]
 export type Renderer = (_: VNode[]) => VDOM
+
+// -----------------------------------------------------------------------------
+
+// TODO:
+export type Handler = <S, P>(state: State<S>, payload?: Payload<P>) => State<S>
 
 // -----------------------------------------------------------------------------
 
@@ -36,7 +41,7 @@ export type ComponentOptions = {
 }
 
 export type ControlOptions = ComponentOptions & {
-  update: Function;
+  update: Handler;
 }
 
 export type LabelledComponentOptions = ComponentOptions & {

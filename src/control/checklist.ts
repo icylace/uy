@@ -1,5 +1,5 @@
-import type { State, VDOM } from "hyperapp"
-import type { Control, ChecklistOptions } from "../types"
+import type { Payload, PropList, State, VDOM, VNode } from "hyperapp"
+import type { Control, ChecklistOptions, Path } from "../types"
 
 import { div } from "ntml"
 import { set } from "../utility/shadesHelper"
@@ -7,14 +7,24 @@ import { component } from "../component"
 import { rawTable } from "../container/table"
 import { rawCheckbox } from "./checkbox"
 
-const freshChecklist = (items: string[]): any => ({ items })
-
-const updateItem = (path: string[]) => (i: number) => <S>(state: State<S>, value: string): State<S> => {
-  return set ([...path, "items", i]) (value) (state)
+type ChecklistItem = {
+  id: string
+  selected: boolean
 }
 
-const rawChecklist = ({ disabled, locked, path, render, ...etc }: ChecklistOptions) => (data: any): VDOM => {
-  const item = (x: any, i: number): any =>
+type Checklist = {
+  items: ChecklistItem[]
+}
+
+// TODO:
+const freshChecklist = (items: ChecklistItem[]): Checklist => ({ items })
+// const freshChecklist = (items: string[]): any => ({ items })
+
+const updateItem = (path: Path) => (i: number) => <S, P>(state: State<S>, value: Payload<P>): State<S> =>
+  set ([...path, "items", i]) (value) (state)
+
+const rawChecklist = ({ disabled, locked, path, render, ...etc }: ChecklistOptions) => (data: Checklist): VDOM => {
+  const item = (x: ChecklistItem, i: number): [[PropList, readonly VNode[]]] =>
     [
       [
         { class: { "uy-horizontal": x.id === "other" } },
@@ -28,6 +38,7 @@ const rawChecklist = ({ disabled, locked, path, render, ...etc }: ChecklistOptio
         ],
       ],
     ]
+
   return div (
     {
       ...etc,

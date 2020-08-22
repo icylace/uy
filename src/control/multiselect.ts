@@ -40,7 +40,7 @@ const rawMultiselect = (
             disabled,
             label,
             locked,
-            update: <S>(state: State<S>, checked: boolean): any => {
+            update: <S>(state: State<S>, checked: boolean): State<S> => {
               if (checked) {
                 selection.add (x)
               } else {

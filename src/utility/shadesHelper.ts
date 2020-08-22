@@ -5,9 +5,11 @@ import * as shades from "shades"
 //
 // i.e. `shades.get (...path)` would cause elicit a type-check error.
 
-const get = (path: (number | string)[]) => <T>(obj: T): any => {
+type Path = (number | string | Path)[]
+
+const get = (path: Path) => <T, U>(obj: T): U | null => {
   if (!path.length) return null
-  const p: any[] = path.reduce ((acc, x) => Array.isArray (x) ? [...acc, ...x] : [...acc, x], [])
+  const p: Path = path.reduce ((acc, x) => Array.isArray (x) ? [...acc, ...x] : [...acc, x], [])
   switch (p.length) {
     case 1: return shades.get (p[0]) (obj)
     case 2: return shades.get (p[0], p[1]) (obj)
@@ -19,9 +21,9 @@ const get = (path: (number | string)[]) => <T>(obj: T): any => {
   throw Error ("`path` length is greater than 6.")
 }
 
-const mod = (path: (number | string)[]) => (f: (_: any) => any) => <T>(obj: T): any => {
+const mod = (path: Path) => <U>(f: (_: U) => U) => <T>(obj: T): T | null => {
   if (!path.length) return null
-  const p: any[] = path.reduce ((acc, x) => Array.isArray (x) ? [...acc, ...x] : [...acc, x], [])
+  const p: Path = path.reduce ((acc, x) => Array.isArray (x) ? [...acc, ...x] : [...acc, x], [])
   switch (p.length) {
     case 1: return shades.mod (p[0]) (f) (obj)
     case 2: return shades.mod (p[0], p[1]) (f) (obj)
@@ -33,9 +35,9 @@ const mod = (path: (number | string)[]) => (f: (_: any) => any) => <T>(obj: T): 
   throw Error ("`path` length is greater than 6.")
 }
 
-const set = (path: (number | string)[]) => (value: any) => <T>(obj: T): any => {
+const set = (path: Path) => <V>(value: V) => <T>(obj: T): T | null => {
   if (!path.length) return null
-  const p: any[] = path.reduce ((acc, x) => Array.isArray (x) ? [...acc, ...x] : [...acc, x], [])
+  const p: Path = path.reduce ((acc, x) => Array.isArray (x) ? [...acc, ...x] : [...acc, x], [])
   switch (p.length) {
     case 0: return null
     case 1: return shades.set (p[0]) (value) (obj)

@@ -5,8 +5,11 @@ import type {
   EffectData,
   EffectDescriptor,
   State,
+  Transition,
   Unsubscribe,
 } from "hyperapp"
+
+import type { Handler } from "../types"
 
 // -----------------------------------------------------------------------------
 
@@ -42,14 +45,16 @@ export const fx = (f: Effect) => <D>(x: EffectData<D>): EffectDescriptor<D> =>
 // Based on:
 // https://github.com/jorgebucaran/hyperapp/issues/752#issue-355556484
 
-const windowListener = (name: string) => <S, P, D>(dispatch: Dispatch, action: Action<S, P, D>): Unsubscribe => {
+type FxListenerData<S, P, D> = { action: Action<S, P, D> }
+
+const windowListener = (name: string) => <S, D>(dispatch: Dispatch, { action }: FxListenerData<S, Event, D>): Unsubscribe => {
   const listener = (event: Event): void => dispatch (action, event)
   window.addEventListener (name, listener)
   return (): void => window.removeEventListener (name, listener)
 }
 
-const eventFx = (name: string) => <S, P, D>(action: Action<S, P, D>): EffectDescriptor<D> =>
-  fx (windowListener (name)) (action)
+const eventFx = (name: string) => <S, P, D>(action: Action<S, P, D>): EffectDescriptor<FxListenerData<S, P, D>> =>
+  fx (windowListener (name) as Effect) ({ action })
 
 export const onMouseDown = eventFx ("mousedown")
 
@@ -59,13 +64,13 @@ export const onMouseDown = eventFx ("mousedown")
 // const handleValueWith = <S>(f: (a: State<S>, b: string) => any) => <E>(state: State<S>, event: E): any => {
 //   return f (state, event.target.value)
 // }
-export const handleValueWith = (f: Function) => <S>(state: State<S>, event: any): any =>
-  f (state, event.target.value)
+export const handleValueWith = (f: Handler) => <S>(state: State<S>, event: Event): State<S> =>
+  f (state, (event.target as HTMLInputElement).value)
 
 // Invokes a collection of event handlers for the same event.
-export const handleUsing = (handlers: Function[]) => <S, E>(state: State<S>, event: E): any =>
+export const handleUsing = (handlers: Handler[]) => <S>(state: State<S>, event: Event): State<S> =>
   handlers.reduce (
-    (newState: State<S>, f: Function): any => f (newState, event),
+    (newState: State<S>, handler: Handler): State<S> => handler (newState, event),
     state,
   )
 
@@ -77,8 +82,9 @@ export const handleUsing = (handlers: Function[]) => <S, E>(state: State<S>, eve
 // https://stackoverflow.com/a/28432139
 // https://codesandbox.io/s/czee7
 //
-export const onOutside = (selector: string) => <S, P, D>(action: Action<S, P, D>) => <S>(state: State<S>, event: any): any => {
+// TODO:
+export const onOutside = (selector: string) => <S, P, D>(action: Action<S, P, D>) => (state: State<S>, event: Event): Transition<S, P, D> => {
   const el = document.querySelector (selector)
-  if (!el || el.contains (event.target)) return state
+  if (!el || el.contains (event.target as Node)) return state
   return action (state, event)
 }

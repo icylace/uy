@@ -34,10 +34,10 @@ const chooseResult = (path: Path) =>
 const updateResults = (search: Function) =>
   (path: Path) =>
     (id: string) =>
-      <S, D>(
+      <S, P, D>(
         state: State<S>,
-        { value, results }: Payload<any>,
-      ): Action<S, any, D> => {
+        { value, results }: Payload<P>,
+      ): Action<S, P, D> => {
         // It is possible the current value of the searchbox and the value that was
         // actually searched on could be out of sync if the user continues changing
         // the searchbox value during the search. In that case another search gets
@@ -67,8 +67,8 @@ const update = (search: Function) =>
   (path: Path) =>
     (id: string) =>
       (value: string) =>
-        <S, P, D>(state: State<S>): Action<S, P, D> => {
-          return get ([...path, "searching"]) (state)
+        <S, P, D>(state: State<S>): Action<S, P, D> =>
+          get ([...path, "searching"]) (state)
             ? set ([...path, "value"]) (value) (state)
             : [
               pipe (
@@ -77,15 +77,11 @@ const update = (search: Function) =>
               ) (state),
               search (updateResults (search) (path) (id)) (value),
             ]
-        }
 
 // -----------------------------------------------------------------------------
 
-const searchResult = (path: Path) =>
-  (id: string) =>
-    (x: string): VDOM => {
-      return li ({ onclick: chooseResult (path) (id) (x) }, x)
-    }
+const searchResult = (path: Path) => (id: string) => (x: string): VDOM =>
+  li ({ onclick: chooseResult (path) (id) (x) }, x)
 
 const rawSearchbox = (
   { disabled, locked, path, search, ...etc }: ControlOptions,
@@ -100,10 +96,10 @@ const rawSearchbox = (
       type: "search",
       onfocus: set ([...path, "focused"]) (true),
       onblur: set ([...path, "focused"]) (false),
-      onkeyup: <S>(
+      onkeyup: <S, P extends KeyboardEvent, D>(
         state: State<S>,
         { key, target }: Payload<KeyboardEvent>,
-      ): State<S> | Action<S, KeyboardEvent, any> => {
+      ): State<S> | Action<S, P, D> => {
         // We don't let certain keys unnecessarily affect searching.
         const noopKeys = [
           "Alt",
@@ -133,10 +129,10 @@ const rawSearchbox = (
       // less convenient since it would conflict with how we're using
       // the `keyup` event.
       // https://stackoverflow.com/a/25569880
-      onsearch: <S>(
+      onsearch: <S, P extends Event, D>(
         state: State<S>,
-        { target }: Payload<Event>,
-      ): Action<S, Event, any> => {
+        { target }: Payload<P>,
+      ): Action<S, P, D> => {
         const el = target as HTMLInputElement
         return update (search) (path) (id) (el.value) (state)
       },

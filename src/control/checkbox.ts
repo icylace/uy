@@ -31,7 +31,8 @@ const rawCheckbox = ({ disabled, locked, label, update, ...etc }: LabelledContro
           disabled,
           checked: data.value,
           type: "checkbox",
-          onchange: <S>(state: State<S>, event: any): any => update (state, event.target.checked),
+          onchange: <S>(state: State<S>, event: Event): State<S> =>
+            update (state, (event.target as HTMLInputElement).checked),
           ...etc,
           class: {
             disabled,

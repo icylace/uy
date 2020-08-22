@@ -10,11 +10,10 @@ import { scrollIntoView } from "./tabs.effect"
 const freshTabs = (value: string): ControlData<string> => ({ value })
 
 const isSelected = (activeTab: string) =>
-  (item: any, i: number): boolean => {
-    return activeTab === String (i) ||
+  (item: any, i: number): boolean =>
+    activeTab === String (i) ||
       (typeof item === "object" && hasOwn ("props") (item) &&
         activeTab === item.props["data-tab-id"])
-  }
 
 // tab :: Action -> String -> VNode -> Int -> VNode
 const tab = (update: Function) =>
@@ -23,10 +22,10 @@ const tab = (update: Function) =>
       const selected = isSelected (activeTab) (item, i)
       return div ({
         class: { "uy-tabs-item": true, selected },
-        onclick: <S, D>(
+        onclick: <S, P extends Event, D>(
           state: State<S>,
-          { target }: Payload<Event>,
-        ): Action<S, Event, D> =>
+          { target }: Payload<P>,
+        ): Action<S, P, D> =>
           selected
             ? [update (state, String (i)), scrollIntoView (target)]
             : update (state, String (i)),
@@ -34,8 +33,15 @@ const tab = (update: Function) =>
     }
 
 const rawTabs = (
-  { disabled, locked, itemsFooter, itemsHeader, tabList, update, ...etc }:
-    TabsOptions,
+  {
+    disabled,
+    locked,
+    itemsFooter,
+    itemsHeader,
+    tabList,
+    update,
+    ...etc
+  }: TabsOptions,
 ) =>
   (data: ControlData<string>): VDOM => {
     const headings = tabList.map ((x: any) => x.heading)

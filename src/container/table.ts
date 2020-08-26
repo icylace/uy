@@ -1,40 +1,49 @@
-import type { VDOM, VNode } from "hyperapp"
-import type { Content, TableData, TableOptions } from "../types"
-
-// import { h, text } from "hyperapp"
+import type { PropList, VDOM, VNode } from "hyperapp"
+import type { ComponentOptions, Content } from "../types"
 
 import * as html from "ntml"
 import { component } from "../component"
 import { icon } from "../display/icon"
-import { box } from "./ui"
+import { box } from "./box"
 
-const freshTable = (rows: any[]): TableData => ({ rows })
+export type TableOptions = ComponentOptions & {
+  headers?: Content[]
+  orderColumn: string | null
+  sortDescending: boolean
+}
 
-const tableHeader = (orderColumn: string | null) =>
-  (sortDescending: boolean) =>
-    (header: any | any[]): VDOM => {
-      const props = Array.isArray (header) ? header[0] : {}
-      const headerContent: Content = Array.isArray (header) ? header[1] : header
-      const column = props["data-column"]
-      const sorting = orderColumn != null && orderColumn === column
-      const sortIndicator: VNode = sorting
-        ? icon ({
-          glyphicon: true,
-          "glyphicon-chevron-down": sortDescending,
-          "glyphicon-chevron-up": !sortDescending,
-          "sort-indicator": true,
-        })
-        : null
-      return html.th ({
-        ...props,
-        class: {
-          "sort-column": sorting,
-          [props.class]: !!props.class,
-        },
-      }, [headerContent, sortIndicator])
-    }
+export type TableCell = Content | [PropList, Content]
 
-const tableRow = (row: any[]): VDOM =>
+export type TableData = {
+  rows: TableCell[]
+}
+
+const freshTable = (rows: VNode[]): TableData => ({ rows })
+
+const tableHeader = (orderColumn: string | null) => (sortDescending: boolean) => (header: any | any[]): VDOM => {
+  const props = Array.isArray (header) ? header[0] : {}
+  const headerContent: Content = Array.isArray (header) ? header[1] : header
+  const column = props["data-column"]
+  const sorting = orderColumn != null && orderColumn === column
+  const sortIndicator: VNode =
+    sorting
+      ? icon ({
+        glyphicon: true,
+        "glyphicon-chevron-down": sortDescending,
+        "glyphicon-chevron-up": !sortDescending,
+        "sort-indicator": true,
+      })
+      : null
+  return html.th ({
+    ...props,
+    class: {
+      "sort-column": sorting,
+      [props.class]: !!props.class,
+    },
+  }, [headerContent, sortIndicator])
+}
+
+const tableRow = (row: VNode[]): VDOM =>
   !row || !Array.isArray (row)
     ? row
     : html.tr (row.map (

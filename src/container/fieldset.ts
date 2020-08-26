@@ -8,26 +8,24 @@ import { ui } from "./ui"
 // type Label = VNode
 // type FieldsetOptions = Label | ComponentOptions
 
-const rawFieldset = ({ disabled, locked, label, ...etc }: ComponentOptions) =>
-  (content: Content): VDOM => {
-    return html.fieldset (
-      {
+const rawFieldset = ({ disabled, locked, label, ...etc }: ComponentOptions) => (content: Content): VDOM =>
+  html.fieldset (
+    {
+      disabled,
+      ...etc,
+      class: {
         disabled,
-        ...etc,
-        class: {
-          disabled,
-          locked,
-          "uy-fieldset": true,
-          [etc.class]: !!etc.class,
-        },
+        locked,
+        "uy-fieldset": true,
+        [etc.class]: !!etc.class,
       },
-      label
-        ? Array.isArray(content)
-          ? [html.legend (label), ...content]
-          : [html.legend (label), content]
-        : content,
-    )
-  }
+    },
+    label
+      ? Array.isArray(content)
+        ? [html.legend (label), ...content]
+        : [html.legend (label), content]
+      : content,
+  )
 
 const fieldset = (props: ComponentOptions): ContainerView =>
   ui (rawFieldset (props))

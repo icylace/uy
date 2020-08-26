@@ -14,38 +14,34 @@ export type Handler = <S, P>(state: State<S>, payload?: Payload<P>) => State<S>
 // -----------------------------------------------------------------------------
 
 export type ControlData<T> = {
-  [_: string]: any;
-  value: T;
+  [_: string]: unknown
+  value: T
 }
 
 export type ListData<T> = {
-  items: T;
+  items: T
 }
 
 export type SearchboxData = ControlData<string> & {
-  focused: false;
-  searching: false;
-  results: [];
-}
-
-export type TableData = {
-  rows: any[];
+  focused: boolean
+  searching: boolean
+  results: string[]
 }
 
 // -----------------------------------------------------------------------------
 
 export type ComponentOptions = {
-  [_: string]: any;
-  disabled: boolean;
-  locked: boolean;
+  [_: string]: unknown
+  disabled: boolean
+  locked: boolean
 }
 
 export type ControlOptions = ComponentOptions & {
-  update: Handler;
+  update: Handler
 }
 
 export type LabelledComponentOptions = ComponentOptions & {
-  label?: Content;
+  label?: Content
 }
 
 export type LabelledControlOptions = ControlOptions & LabelledComponentOptions
@@ -53,50 +49,38 @@ export type LabelledControlOptions = ControlOptions & LabelledComponentOptions
 // -----------------------------------------------------------------------------
 
 export type PopupOptions = ComponentOptions & {
-  id: string;
-}
-
-export type TableOptions = ComponentOptions & {
-  headers: any[] | any;
-  orderColumn: string | null;
-  sortDescending: boolean;
+  id: string
 }
 
 // -----------------------------------------------------------------------------
 
 export type ChecklistOptions = ComponentOptions & {
-  path: Path;
-  render: (_: any) => VDOM;
+  path: Path
+  render: (_: any) => VDOM
 }
 
 export type DropdownOptions = ControlOptions & {
-  options: any;
-  path: Path;
+  options: any
+  path: Path
 }
 
 export type ListOptions = ControlOptions & {
-  headers: any;
-  path: any;
+  headers: any
+  path: any
 }
 
 export type MultiselectOptions = ControlOptions & {
-  options: Record<string, any>;
-  usingColumnMode: boolean;
+  options: Record<string, any>
+  usingColumnMode: boolean
 }
 
 export type NumberboxOptions = ControlOptions & LabelledComponentOptions
 
 export type PagerOptions = ControlOptions & {
-  itemsPerPage: any;
-  pageRange: any;
+  itemsPerPage: number
+  pageRange: number
 }
 
 export type RadiosOptions = ControlOptions & {
-  options: Record<string, any>;
-}
-
-export type TabsOptions = ControlOptions & {
-  itemsFooter: any;
-  itemsHeader: any;
-  tabList: any;
+  options: Record<string, any>
 }

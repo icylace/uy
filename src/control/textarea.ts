@@ -4,7 +4,7 @@ import type { Control, ControlData, ControlOptions } from "../types"
 import * as html from "ntml"
 import { handleValueWith } from "../utility/hyperappHelper"
 import { component } from "../component"
-import { box } from "../container/ui"
+import { box } from "../container/box"
 
 const freshTextarea = (value: string): ControlData<string> => ({ value })
 

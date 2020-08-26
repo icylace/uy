@@ -3,7 +3,7 @@ import type { Control, ControlData, ControlOptions } from "../types"
 
 import * as html from "ntml"
 import { component } from "../component"
-import { box } from "../container/ui"
+import { box } from "../container/box"
 import { icon } from "../display/icon"
 
 const freshFile = (value: string): ControlData<string> => ({ value })

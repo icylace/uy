@@ -2,7 +2,7 @@ import type { VDOM } from "hyperapp"
 import type { LabelledControlOptions } from "../types"
 
 import * as html from "ntml"
-import { box } from "../container/ui"
+import { box } from "../container/box"
 
 const button = ({ disabled, locked, label, update, ...etc }: LabelledControlOptions): VDOM => {
   return box ("uy-control uy-button") ([

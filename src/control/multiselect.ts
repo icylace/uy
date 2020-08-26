@@ -3,7 +3,7 @@ import type { Control, ControlData, MultiselectOptions } from "../types"
 
 import { div } from "ntml"
 import { component } from "../component"
-import { box } from "../container/ui"
+import { box } from "../container/box"
 import { rawCheckbox } from "./checkbox"
 
 // TODO:

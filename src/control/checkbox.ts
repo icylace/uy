@@ -3,7 +3,7 @@ import type { Control, ControlData, LabelledControlOptions } from "../types"
 
 import * as html from "ntml"
 import { component } from "../component"
-import { box } from "../container/ui"
+import { box } from "../container/box"
 
 // TODO:
 // - support indeterminate state
@@ -31,8 +31,10 @@ const rawCheckbox = ({ disabled, locked, label, update, ...etc }: LabelledContro
           disabled,
           checked: data.value,
           type: "checkbox",
-          onchange: <S>(state: State<S>, event: Event): State<S> =>
-            update (state, (event.target as HTMLInputElement).checked),
+          onchange: <S>(state: State<S>, event: Event): State<S> => {
+            const target = event.target as HTMLInputElement
+            return update (state, target.checked)
+          },
           ...etc,
           class: {
             disabled,

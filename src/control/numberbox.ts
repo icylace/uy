@@ -5,7 +5,7 @@ import * as html from "ntml"
 import { handleValueWith } from "../utility/hyperappHelper"
 import { set } from "../utility/shadesHelper"
 import { component } from "../component"
-import { box } from "../container/ui"
+import { box } from "../container/box"
 
 const freshNumberbox = (value: number): ControlData<number> => ({
   value,

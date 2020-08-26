@@ -2,7 +2,7 @@ import type { State, VDOM } from "hyperapp"
 import type { ComponentOptions, Content, Path } from "../types"
 
 import { label } from "ntml"
-import { box } from "./ui"
+import { box } from "./box"
 
 type Component = (_: ComponentOptions) => (_: Path) => <S>(_: State<S>) => VDOM
 
@@ -10,8 +10,8 @@ const field = (f: Component) =>
   (title: Content) =>
     ({ disabled, locked, ...etc }: ComponentOptions) =>
       (path: Path) =>
-        <S>(state: State<S>): VDOM => {
-          return box ("uy-container uy-field") ([
+        <S>(state: State<S>): VDOM =>
+          box ("uy-container uy-field") ([
             label ({
               ...etc,
               class: {
@@ -24,6 +24,5 @@ const field = (f: Component) =>
               f ({ disabled, locked, ...etc }) (path) (state),
             ]),
           ])
-        }
 
 export { field }

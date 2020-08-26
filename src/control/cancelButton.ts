@@ -2,7 +2,7 @@ import type { VDOM } from "hyperapp"
 import type { ControlOptions } from "../types"
 
 import * as html from "ntml"
-import { box } from "../container/ui"
+import { box } from "../container/box"
 
 const cancelButton = ({ disabled, locked, update, ...etc }: ControlOptions): VDOM => {
   return box ("uy-control uy-cancelButton") ([

@@ -5,7 +5,7 @@ import { option, select } from "ntml"
 import { handleValueWith } from "../utility/hyperappHelper"
 import { set } from "../utility/shadesHelper"
 import { component } from "../component"
-import { box } from "../container/ui"
+import { box } from "../container/box"
 
 const freshDropdown = (value: string): ControlData<string> => {
   return { value, focused: false }

@@ -15,7 +15,9 @@ const button = ({ disabled, locked, label, update, ...etc }: LabelledControlOpti
         disabled,
         locked,
         "uy-clicky": true,
-        [etc.class]: !!etc.class,
+        // TODO:
+        // - handle all class prop variations
+        [etc.class as string]: !!etc.class,
       },
     }, label),
   ])

@@ -1,4 +1,4 @@
-import type { Payload, State, VDOM, VNode, View } from "hyperapp"
+import type { ClassProp, Payload, State, VDOM, VNode, View } from "hyperapp"
 
 export type ContainerView = (_: View[]) => View
 export type Content = string | string[] | VNode | VNode[]
@@ -18,10 +18,6 @@ export type ControlData<T> = {
   value: T
 }
 
-export type ListData<T> = {
-  items: T
-}
-
 export type SearchboxData = ControlData<string> & {
   focused: boolean
   searching: boolean
@@ -32,6 +28,7 @@ export type SearchboxData = ControlData<string> & {
 
 export type ComponentOptions = {
   [_: string]: unknown
+  class?: ClassProp
   disabled: boolean
   locked: boolean
 }
@@ -48,12 +45,6 @@ export type LabelledControlOptions = ControlOptions & LabelledComponentOptions
 
 // -----------------------------------------------------------------------------
 
-export type PopupOptions = ComponentOptions & {
-  id: string
-}
-
-// -----------------------------------------------------------------------------
-
 export type ChecklistOptions = ComponentOptions & {
   path: Path
   render: (_: any) => VDOM
@@ -64,13 +55,8 @@ export type DropdownOptions = ControlOptions & {
   path: Path
 }
 
-export type ListOptions = ControlOptions & {
-  headers: any
-  path: any
-}
-
 export type MultiselectOptions = ControlOptions & {
-  options: Record<string, any>
+  options: Record<string, unknown>
   usingColumnMode: boolean
 }
 
@@ -82,5 +68,5 @@ export type PagerOptions = ControlOptions & {
 }
 
 export type RadiosOptions = ControlOptions & {
-  options: Record<string, any>
+  options: Record<string, unknown>
 }

@@ -8,22 +8,22 @@ import { box } from "./box"
 
 export type TableOptions = ComponentOptions & {
   headers?: Content[]
-  orderColumn: string | null
-  sortDescending: boolean
+  orderColumn?: string | null
+  sortDescending?: boolean
 }
 
 export type TableCell = Content | [PropList, Content]
 
 export type TableData = {
-  rows: TableCell[]
+  rows: TableCell[][]
 }
 
-const freshTable = (rows: VNode[]): TableData => ({ rows })
+const freshTable = (rows: TableCell[][]): TableData => ({ rows })
 
-const tableHeader = (orderColumn: string | null) => (sortDescending: boolean) => (header: any | any[]): VDOM => {
-  const props = Array.isArray (header) ? header[0] : {}
+const tableHeader = (orderColumn?: string | null) => (sortDescending: boolean) => (header: Content): VDOM => {
+  const props = (Array.isArray (header) ? header[0] : {}) as PropList
   const headerContent: Content = Array.isArray (header) ? header[1] : header
-  const column = props["data-column"]
+  const column = props && "data-column" in props && props["data-column"] as string
   const sorting = orderColumn != null && orderColumn === column
   const sortIndicator: VNode =
     sorting
@@ -38,16 +38,18 @@ const tableHeader = (orderColumn: string | null) => (sortDescending: boolean) =>
     ...props,
     class: {
       "sort-column": sorting,
-      [props.class]: !!props.class,
+      // TODO:
+      // - handle all class prop variations
+      [props.class as string]: !!props.class,
     },
   }, [headerContent, sortIndicator])
 }
 
-const tableRow = (row: VNode[]): VDOM =>
+const tableRow = (row: TableCell[]): VDOM =>
   !row || !Array.isArray (row)
     ? row
     : html.tr (row.map (
-      (x: Content) =>
+      (x: TableCell): VDOM =>
         Array.isArray (x)
           ? html.td (x[0], x[1])
           : html.td (x),
@@ -72,7 +74,7 @@ const rawTable = (
     }) ([
       html.table (etc, [
         headers && headers.length
-          ? html.thead (headers.map (tableHeader (orderColumn) (sortDescending)))
+          ? html.thead (headers.map (tableHeader (orderColumn) (!!sortDescending)))
           : null,
         html.tbody (data.rows.map (tableRow)),
       ]),

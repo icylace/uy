@@ -23,7 +23,9 @@ const rawDatePicker = ({ disabled, locked, update, ...etc }: ControlOptions) => 
         disabled,
         locked,
         "uy-input": true,
-        [etc.class]: !!etc.class,
+        // TODO:
+        // - handle all class prop variations
+        [etc.class as string]: !!etc.class,
       },
     }),
   ])

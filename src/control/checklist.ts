@@ -47,15 +47,15 @@ const rawChecklist = ({ disabled, locked, path, render, ...etc }: ChecklistOptio
         locked,
         "uy-container": true,
         "uy-checklist": true,
-        [etc.class]: !!etc.class,
+        // TODO:
+        // - handle all class prop variations
+        [etc.class as string]: !!etc.class,
       },
     },
     [
       rawTable ({
         disabled,
         locked,
-        headers: null,
-        orderColumn: null,
         sortDescending: false,
       }) ({ rows: data.items.map (item) }),
     ],

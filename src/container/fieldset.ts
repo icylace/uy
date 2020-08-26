@@ -17,7 +17,9 @@ const rawFieldset = ({ disabled, locked, label, ...etc }: ComponentOptions) => (
         disabled,
         locked,
         "uy-fieldset": true,
-        [etc.class]: !!etc.class,
+        // TODO:
+        // - handle all class prop variations
+        [etc.class as string]: !!etc.class,
       },
     },
     label

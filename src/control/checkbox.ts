@@ -40,7 +40,9 @@ const rawCheckbox = ({ disabled, locked, label, update, ...etc }: LabelledContro
             disabled,
             locked,
             "uy-input": true,
-            [etc.class]: !!etc.class,
+            // TODO:
+            // - handle all class prop variations
+            [etc.class as string]: !!etc.class,
           },
         }),
         label ? html.span (label) : null,

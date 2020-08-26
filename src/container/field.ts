@@ -17,7 +17,9 @@ const field = (f: Component) =>
               class: {
                 disabled,
                 locked,
-                [etc.class]: !!etc.class,
+                // TODO:
+                // - handle all class prop variations
+                [etc.class as string]: !!etc.class,
               },
             }, [
               title,

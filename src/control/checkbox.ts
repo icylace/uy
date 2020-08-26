@@ -1,6 +1,7 @@
 import type { State, VDOM } from "hyperapp"
 import type { Control, ControlData, LabelledControlOptions } from "../types"
 
+import cc from "classcat"
 import * as html from "ntml"
 import { component } from "../component"
 import { box } from "../container/box"
@@ -23,7 +24,9 @@ const freshCheckbox = (value: boolean): ControlData<boolean> => ({ value })
 // // TODO:
 // type CheckboxOptions = LabelledControlOptions
 
-const rawCheckbox = ({ disabled, locked, label, update, ...etc }: LabelledControlOptions) =>
+const rawCheckbox = (
+  { disabled, locked, label, update, ...etc }: LabelledControlOptions,
+) =>
   (data: ControlData<boolean>): VDOM => {
     return box ("uy-control uy-checkbox") ([
       html.label ({ class: { disabled, locked } }, [
@@ -36,14 +39,7 @@ const rawCheckbox = ({ disabled, locked, label, update, ...etc }: LabelledContro
             return update (state, target.checked)
           },
           ...etc,
-          class: {
-            disabled,
-            locked,
-            "uy-input": true,
-            // TODO:
-            // - handle all class prop variations
-            [etc.class as string]: !!etc.class,
-          },
+          class: cc ([{ "uy-input": true, locked, disabled }, etc.class]),
         }),
         label ? html.span (label) : null,
       ]),

@@ -1,6 +1,7 @@
 import type { VDOM } from "hyperapp"
 import type { Control, ControlData, DropdownOptions } from "../types"
 
+import cc from "classcat"
 import { option, select } from "ntml"
 import { handleValueWith } from "../utility/hyperappHelper"
 import { set } from "../utility/shadesHelper"
@@ -31,12 +32,7 @@ const rawDropdown = (
             onfocus: set ([...path, "focused"]) (true),
             onblur: set ([...path, "focused"]) (false),
             ...etc,
-            class: {
-              disabled,
-              locked,
-              "uy-input": true,
-              [etc.class]: !!etc.class,
-            },
+            class: cc ([{ "uy-input": true, locked, disabled }, etc.class]),
           },
           // TODO:
           // - switch to using a Map object instead in order to guarantee order

@@ -1,6 +1,7 @@
 import type { VDOM } from "hyperapp"
 import type { ComponentOptions, ContainerView, Content } from "../types"
 
+import cc from "classcat"
 import { div } from "ntml"
 import { box } from "./box"
 import { ui } from "./ui"
@@ -10,16 +11,16 @@ const rawOverlay = ({ disabled, locked, ...etc }: ComponentOptions) => (content:
     div ({
       disabled,
       ...etc,
-      class: {
-        disabled,
-        locked,
-        // TODO:
-        // "uy-container": true,
-        "uy-overlay": true,
-        // TODO:
-        // - handle all class prop variations
-        [etc.class as string]: !!etc.class,
-      },
+      class: cc ([
+        {
+          disabled,
+          locked,
+          // TODO:
+          // "uy-container": true,
+          "uy-overlay": true,
+        },
+        etc.class,
+      ]),
     }, content),
   ])
 

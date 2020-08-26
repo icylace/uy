@@ -1,6 +1,7 @@
 import type { VDOM } from "hyperapp"
 import type { Content, Control, ControlData, RadiosOptions } from "../types"
 
+import cc from "classcat"
 import * as html from "ntml"
 import { handleValueWith } from "../utility/hyperappHelper"
 import { component } from "../component"
@@ -24,12 +25,7 @@ const rawRadios = (
             type: "radio",
             onchange: handleValueWith (update),
             ...etc,
-            class: {
-              "uy-input": true,
-              locked,
-              disabled,
-              [etc.class]: !!etc.class,
-            },
+            class: cc ([{ "uy-input": true, locked, disabled }, etc.class]),
           }),
           label != null ? html.span (label) : null,
         ]),

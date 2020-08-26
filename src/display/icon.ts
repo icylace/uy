@@ -1,8 +1,9 @@
-import type { VDOM } from "hyperapp"
+import type { ClassProp, VDOM } from "hyperapp"
 
+import cc from "classcat"
 import { i } from "ntml"
 
-const icon = (xr: Record<string, boolean>): VDOM =>
-  i ({ class: { "uy-indicator": true, "uy-icon": true, ...xr } })
+const icon = (classProp: ClassProp): VDOM =>
+  i ({ class: cc ([{ "uy-indicator": true, "uy-icon": true }, classProp]) })
 
 export { icon }

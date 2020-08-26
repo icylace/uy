@@ -1,6 +1,7 @@
 import type { VDOM } from "hyperapp"
 import type { LabelledControlOptions } from "../types"
 
+import cc from "classcat"
 import * as html from "ntml"
 import { box } from "../container/box"
 
@@ -11,14 +12,7 @@ const button = ({ disabled, locked, label, update, ...etc }: LabelledControlOpti
       type: "button",
       onclick: update,
       ...etc,
-      class: {
-        disabled,
-        locked,
-        "uy-clicky": true,
-        // TODO:
-        // - handle all class prop variations
-        [etc.class as string]: !!etc.class,
-      },
+      class: cc ([{ disabled, locked, "uy-clicky": true }, etc.class]),
     }, label),
   ])
 }

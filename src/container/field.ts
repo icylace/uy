@@ -1,6 +1,7 @@
 import type { State, VDOM } from "hyperapp"
 import type { ComponentOptions, Content, Path } from "../types"
 
+import cc from "classcat"
 import { label } from "ntml"
 import { box } from "./box"
 
@@ -14,13 +15,7 @@ const field = (f: Component) =>
           box ("uy-container uy-field") ([
             label ({
               ...etc,
-              class: {
-                disabled,
-                locked,
-                // TODO:
-                // - handle all class prop variations
-                [etc.class as string]: !!etc.class,
-              },
+              class: cc ([{ disabled, locked }, etc.class]),
             }, [
               title,
               f ({ disabled, locked, ...etc }) (path) (state),

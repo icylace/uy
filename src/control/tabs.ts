@@ -1,6 +1,7 @@
 import type { Action, State, Payload, VDOM, VNode } from "hyperapp"
 import type { Content, Control, ControlData, ControlOptions } from "../types"
 
+import cc from "classcat"
 import { div } from "ntml"
 import { hasOwn } from "../utility/utility"
 import { component } from "../component"
@@ -57,14 +58,16 @@ const rawTabs = (
     return div (
       {
         ...etc,
-        class: {
-          disabled,
-          locked,
-          "uy-control": true,
-          "uy-container": true,
-          "uy-tabs": true,
-          [etc.class]: !!etc.class,
-        },
+        class: cc ([
+          {
+            "uy-control": true,
+            "uy-container": true,
+            "uy-tabs": true,
+            locked,
+            disabled,
+          },
+          etc.class,
+        ]),
       },
       [
         box ("uy-tabs-navigation") ([

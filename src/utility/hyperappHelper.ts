@@ -1,6 +1,6 @@
 import type {
   Action,
-  ClassProp,
+  // ClassProp,
   Dispatch,
   Effect,
   EffectData,
@@ -14,79 +14,86 @@ import type { Handler } from "../types"
 
 // -----------------------------------------------------------------------------
 
-// The `class` property for Hyperapp virtual DOM elements can take multiple
-// forms. This function is able to merge two such values using the form
-// of the initial value if possible.
-export const mergeClasses = (a: ClassProp, b: ClassProp): ClassProp => {
-  if (typeof a === "boolean") {
-    return b
-  }
+// // The `class` property for Hyperapp virtual DOM elements can take multiple
+// // forms. This function is able to merge two such values using the form
+// // of the initial value if possible.
+// export const mergeClasses = (a: ClassProp, b: ClassProp): ClassProp => {
+//   if (typeof a === "boolean") {
+//     return b
+//   }
 
-  if (typeof a === "string") {
-    if (typeof b === "boolean") {
-      return a
-    }
-    if (typeof b === "string") {
-      return b ? a + " " + b : a
-    }
-    if (Array.isArray (b)) {
-      return [a, ...b].join (" ")
-    }
-    if (typeof b === "object") {
-      return Object.entries (b).reduce ((xs, [k, v]) => v ? [...xs, k] : xs, [a]).join (" ")
-    }
-  }
+//   if (typeof a === "string") {
+//     if (typeof b === "boolean") {
+//       return a
+//     }
+//     if (typeof b === "string") {
+//       return b ? a + " " + b : a
+//     }
+//     if (Array.isArray (b)) {
+//       return [a, ...b].join (" ")
+//     }
+//     if (typeof b === "object") {
+//       return Object.entries (b).reduce ((xs, [k, v]) => v ? [...xs, k] : xs, [a]).join (" ")
+//     }
+//   }
 
-  if (Array.isArray (a)) {
-    if (typeof b === "boolean" || typeof b === "string") {
-      return [...a, b]
-    }
-    if (Array.isArray (b)) {
-      return [...a, ...b]
-    }
-    if (typeof b === "object") {
-      return Object.entries (b).reduce ((xs, [k, v]) => v ? [...xs, k] : xs, a)
-    }
-  }
+//   if (Array.isArray (a)) {
+//     if (typeof b === "boolean" || typeof b === "string") {
+//       return [...a, b]
+//     }
+//     if (Array.isArray (b)) {
+//       return [...a, ...b]
+//     }
+//     if (typeof b === "object") {
+//       return Object.entries (b).reduce ((xs, [k, v]) => v ? [...xs, k] : xs, a)
+//     }
+//   }
 
-  if (typeof a === "object") {
-    if (typeof b === "boolean") {
-      return a
-    }
-    if (typeof b === "string") {
-      return { ...a, b: true }
-    }
-    if (Array.isArray (b)) {
-      return b.reduce (
-        (r: ClassProp, x: ClassProp): ClassProp =>
-          x ? { ...r as Record<string, boolean>, [x as string]: true } : r,
-        a,
-      )
-    }
-    if (typeof b === "object") {
-      return { ...a, ...b }
-    }
-  }
+//   if (typeof a === "object") {
+//     if (typeof b === "boolean") {
+//       return a
+//     }
+//     if (typeof b === "string") {
+//       return { ...a, b: true }
+//     }
+//     if (Array.isArray (b)) {
+//       return b.reduce (
+//         (r: ClassProp, x: ClassProp): ClassProp =>
+//           x ? { ...r as Record<string, boolean>, [x as string]: true } : r,
+//         a,
+//       )
+//     }
+//     if (typeof b === "object") {
+//       return { ...a, ...b }
+//     }
+//   }
 
-  return a
-}
+//   return a
+// }
 
-// // Example usage:
+/*
 
-// const haze = true
-// const foggy = false
+// Example usage:
 
-// console.log(mergeClasses("hello", "world"))
-// // "hello world"
+const haze = true
+const foggy = false
 
-// console.log(mergeClasses("hello", { mars: false, world: true }))
-// // "hello world"
+console.log(mergeClasses("hello", "world"))
+// "hello world"
 
-// console.log(mergeClasses(["purple", haze && "haze"], "violet"))
-// // ["purple", "haze", "violet"]
+console.log(mergeClasses("hello", { mars: false, world: true }))
+// "hello world"
 
-// console.log(mergeClasses({ common: true, active: false }, ["purple", haze && "haze", foggy && "foggy"]))
-// // { common: true, active: false, purple: true, haze: true }
+console.log(mergeClasses(["purple", haze && "haze"], "violet"))
+// ["purple", "haze", "violet"]
+
+console.log(mergeClasses({ common: true, active: false }, ["purple", haze && "haze", foggy && "foggy"]))
+// { common: true, active: false, purple: true, haze: true }
+
+console.log(mergeClasses(["purple", haze && "haze", foggy && "foggy"], { common: true, active: false }))
+// ["purple", "haze", false, "common"]
+
+*/
 
 // -----------------------------------------------------------------------------
 

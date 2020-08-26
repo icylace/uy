@@ -1,6 +1,7 @@
 import type { State, VDOM } from "hyperapp"
 import type { Control, ControlData, MultiselectOptions } from "../types"
 
+import cc from "classcat"
 import { div } from "ntml"
 import { component } from "../component"
 import { box } from "../container/box"
@@ -22,15 +23,17 @@ const rawMultiselect = (
     const selection = new Set (data.value)
     return div ({
       ...etc,
-      class: {
-        disabled,
-        locked,
-        "uy-control": true,
-        "uy-scroller": true,
-        "uy-multiselect": true,
-        "uy-multiselect--grid-mode": usingColumnMode,
-        [etc.class]: !!etc.class,
-      },
+      class: cc ([
+        {
+          "uy-control": true,
+          "uy-scroller": true,
+          "uy-multiselect": true,
+          "uy-multiselect--grid-mode": usingColumnMode,
+          locked,
+          disabled,
+        },
+        etc.class,
+      ]),
     }, [
       box ("uy-multiselect-options") (
         // TODO:

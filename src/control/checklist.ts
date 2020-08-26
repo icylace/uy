@@ -1,6 +1,7 @@
 import type { Payload, PropList, State, VDOM, VNode } from "hyperapp"
 import type { Control, ChecklistOptions, Path } from "../types"
 
+import cc from "classcat"
 import { div } from "ntml"
 import { set } from "../utility/shadesHelper"
 import { component } from "../component"
@@ -42,15 +43,15 @@ const rawChecklist = ({ disabled, locked, path, render, ...etc }: ChecklistOptio
   return div (
     {
       ...etc,
-      class: {
-        disabled,
-        locked,
-        "uy-container": true,
-        "uy-checklist": true,
-        // TODO:
-        // - handle all class prop variations
-        [etc.class as string]: !!etc.class,
-      },
+      class: cc ([
+        {
+          disabled,
+          locked,
+          "uy-container": true,
+          "uy-checklist": true,
+        },
+        etc.class,
+      ]),
     },
     [
       rawTable ({

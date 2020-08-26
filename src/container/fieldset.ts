@@ -1,6 +1,7 @@
 import type { VDOM } from "hyperapp"
 import type { ComponentOptions, ContainerView, Content } from "../types"
 
+import cc from "classcat"
 import * as html from "ntml"
 import { ui } from "./ui"
 
@@ -13,17 +14,17 @@ const rawFieldset = ({ disabled, locked, label, ...etc }: ComponentOptions) => (
     {
       disabled,
       ...etc,
-      class: {
-        disabled,
-        locked,
-        "uy-fieldset": true,
-        // TODO:
-        // - handle all class prop variations
-        [etc.class as string]: !!etc.class,
-      },
+      class: cc ([
+        {
+          disabled,
+          locked,
+          "uy-fieldset": true,
+        },
+        etc.class,
+      ]),
     },
     label
-      ? Array.isArray(content)
+      ? Array.isArray (content)
         ? [html.legend (label), ...content]
         : [html.legend (label), content]
       : content,

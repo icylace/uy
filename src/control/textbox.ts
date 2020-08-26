@@ -1,6 +1,7 @@
 import type { VDOM } from "hyperapp"
 import type { Control, ControlData, ControlOptions } from "../types"
 
+import cc from "classcat"
 import { input } from "ntml"
 import { handleValueWith } from "../utility/hyperappHelper"
 import { component } from "../component"
@@ -18,12 +19,7 @@ const rawTextbox = ({ disabled, locked, update, ...etc }: ControlOptions) =>
         type: "text",
         onchange: handleValueWith (update),
         ...etc,
-        class: {
-          disabled,
-          locked,
-          "uy-input": true,
-          [etc.class]: !!etc.class,
-        },
+        class: cc ([{ "uy-input": true, locked, disabled }, etc.class]),
       }),
     ])
   }

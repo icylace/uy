@@ -1,6 +1,7 @@
 import type { State, VDOM } from "hyperapp"
 import type { Control, ControlData, ControlOptions } from "../types"
 
+import cc from "classcat"
 import * as html from "ntml"
 import { component } from "../component"
 import { box } from "../container/box"
@@ -35,11 +36,7 @@ const rawFile = (
             return state
           },
           ...etc,
-          class: {
-            disabled,
-            locked,
-            [etc.class]: !!etc.class,
-          },
+          class: cc ([{ disabled, locked }, etc.class]),
         }),
         html.span ({ class: "uy-clicky" }, [
           icon ({ fas: true, "fa-file-upload": true }),

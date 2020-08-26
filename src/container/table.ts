@@ -1,6 +1,7 @@
 import type { PropList, VDOM, VNode } from "hyperapp"
 import type { ComponentOptions, Content } from "../types"
 
+import cc from "classcat"
 import * as html from "ntml"
 import { component } from "../component"
 import { icon } from "../display/icon"
@@ -36,12 +37,7 @@ const tableHeader = (orderColumn?: string | null) => (sortDescending: boolean) =
       : null
   return html.th ({
     ...props,
-    class: {
-      "sort-column": sorting,
-      // TODO:
-      // - handle all class prop variations
-      [props.class as string]: !!props.class,
-    },
+    class: cc ([{ "sort-column": sorting }, props.class]),
   }, [headerContent, sortIndicator])
 }
 

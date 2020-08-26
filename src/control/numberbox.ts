@@ -1,6 +1,7 @@
 import type { State, VDOM } from "hyperapp"
 import type { Control, ControlData, NumberboxOptions, Path } from "../types"
 
+import cc from "classcat"
 import * as html from "ntml"
 import { handleValueWith } from "../utility/hyperappHelper"
 import { set } from "../utility/shadesHelper"
@@ -12,11 +13,11 @@ const freshNumberbox = (value: number): ControlData<number> => ({
   focused: false,
 })
 
-const sanitizedNumber = (n: any): number =>
-  Math.max (0, Number.parseInt (n, 10))
+const sanitizedNumber = (n: any): number => Math.max (0, Number.parseInt (n, 10))
 
-const update = (path: Path) => <S>(state: State<S>, value: string): State<S> =>
-  set ([...path, "value"]) (sanitizedNumber (value)) (state)
+const update = (path: Path) =>
+  <S>(state: State<S>, value: string): State<S> =>
+    set ([...path, "value"]) (sanitizedNumber (value)) (state)
 
 const rawNumberbox = (
   { disabled, locked, label, path, ...etc }: NumberboxOptions,
@@ -25,9 +26,9 @@ const rawNumberbox = (
     return box ("uy-control uy-numberbox") ([
       html.label ({
         class: {
-          disabled,
-          locked,
           focus: data.focused,
+          locked,
+          disabled,
         },
       }, [
         html.input ({
@@ -40,12 +41,7 @@ const rawNumberbox = (
           onfocus: set ([...path, "focused"]) (true),
           onblur: set ([...path, "focused"]) (false),
           ...etc,
-          class: {
-            disabled,
-            locked,
-            "uy-input": true,
-            [etc.class]: !!etc.class,
-          },
+          class: cc ([{ "uy-input": true, locked, disabled }, etc.class]),
         }),
         label != null
           ? html.span ({ class: { disabled, locked, "uy-input": true } }, label)

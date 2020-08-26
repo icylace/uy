@@ -1,6 +1,7 @@
 import type { State, VDOM } from "hyperapp"
 import type { Content, Control, ControlOptions, Path } from "../types"
 
+import cc from "classcat"
 import { div } from "ntml"
 import { exclude } from "../utility/utility"
 import { get, set } from "../utility/shadesHelper"
@@ -55,13 +56,15 @@ const rawList = ({ disabled, locked, headers, path, ...etc }: ListOptions) => (d
   return div (
     {
       ...etc,
-      class: {
-        disabled,
-        locked,
-        "uy-control": true,
-        "uy-list": true,
-        [etc.class]: !!etc.class,
-      },
+      class: cc ([
+        {
+          "uy-control": true,
+          "uy-list": true,
+          locked,
+          disabled,
+        },
+        etc.class,
+      ]),
     },
     [
       rawTable ({

@@ -1,8 +1,8 @@
-import type { ClassProp, Payload, State, VDOM, VNode, View } from "hyperapp"
+import type { ClassProp, Payload, State, VDOM, View } from "hyperapp"
+import type { Content } from "ntml"
 
 export type Component = (_: ComponentOptions) => (_: Path) => <S>(_: State<S>) => VDOM
 export type ContainerView = (_: View[]) => View
-export type Content = string | VNode | (string | VNode)[]
 export type Control = (_: ControlOptions) => (_: Path) => <S>(_: State<S>) => VDOM
 export type Path = string[]
 export type Renderer = (_: Content) => VDOM

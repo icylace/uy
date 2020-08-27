@@ -1,4 +1,4 @@
-import type { Payload, PropList, State, VDOM, VNode } from "hyperapp"
+import type { Payload, State, VDOM } from "hyperapp"
 import type { ComponentOptions, Control, Path, Renderer } from "../types"
 import type { TableCell } from "../container/table"
 

@@ -1,5 +1,6 @@
 import type { State, VDOM } from "hyperapp"
-import type { Content, Control, ControlOptions, Path } from "../types"
+import type { Content } from "ntml"
+import type { Control, ControlOptions, Path } from "../types"
 
 import cc from "classcat"
 import { div } from "ntml"

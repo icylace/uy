@@ -1,5 +1,6 @@
 import type { VDOM } from "hyperapp"
-import type { ComponentOptions, ContainerView, Content } from "../types"
+import type { Content } from "ntml"
+import type { ComponentOptions, ContainerView } from "../types"
 
 import cc from "classcat"
 import * as html from "ntml"

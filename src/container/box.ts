@@ -1,5 +1,5 @@
 import type { ClassProp, VDOM } from "hyperapp"
-import type { Content } from "../types"
+import type { Content } from "ntml"
 
 import { div } from "ntml"
 

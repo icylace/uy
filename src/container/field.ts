@@ -1,5 +1,6 @@
 import type { State, VDOM } from "hyperapp"
-import type { Component, ComponentOptions, Content, Path } from "../types"
+import type { Content } from "ntml"
+import type { Component, ComponentOptions, Path } from "../types"
 
 import cc from "classcat"
 import { label } from "ntml"

@@ -1,5 +1,6 @@
 import type { Action, State, Payload, VDOM, VNode } from "hyperapp"
-import type { Content, Control, ControlData, ControlOptions } from "../types"
+import type { Content } from "ntml"
+import type { Control, ControlData, ControlOptions } from "../types"
 
 import cc from "classcat"
 import { div } from "ntml"

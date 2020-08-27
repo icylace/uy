@@ -1,5 +1,6 @@
 import type { PropList, VDOM, VNode } from "hyperapp"
-import type { ComponentOptions, Content } from "../types"
+import type { Content } from "ntml"
+import type { ComponentOptions } from "../types"
 
 import cc from "classcat"
 import * as html from "ntml"

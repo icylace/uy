@@ -8,10 +8,10 @@ import { delist, map, pipe } from "./utility"
 // -----------------------------------------------------------------------------
 
 // addInsideEl :: String -> (State -> State) -> State -> State
-const addInsideEl = (id: string): any => set (["uy", "insiders", id])
+export const addInsideEl = (id: string): any => set (["uy", "insiders", id])
 
 // removeInsideEl :: String -> State -> State
-const removeInsideEl = (id: string): any => mod (["uy", "insiders"]) (delist (id))
+export const removeInsideEl = (id: string): any => mod (["uy", "insiders"]) (delist (id))
 
 // -----------------------------------------------------------------------------
 
@@ -54,7 +54,7 @@ const mouseDownSubscription = pipe (
 // // TODO:
 // const uy = (path: Path)
 
-const uyAppConfig = <S, P, D>(config: App<S, P, D>): App<S, P, D> => ({
+export const uyAppConfig = <S, P, D>(config: App<S, P, D>): App<S, P, D> => ({
   ...config,
   // TODO: account for any subscriptions from `config`
   subscriptions: <S>(
@@ -62,11 +62,3 @@ const uyAppConfig = <S, P, D>(config: App<S, P, D>): App<S, P, D> => ({
   ): Subscriber[] => [mouseDownSubscription (state)],
   init: freshState (config.init),
 })
-
-// -----------------------------------------------------------------------------
-
-export {
-  addInsideEl,
-  removeInsideEl,
-  uyAppConfig,
-}

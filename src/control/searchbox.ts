@@ -1,8 +1,9 @@
 import type { Action, Payload, State, VDOM } from "hyperapp"
-import type { Control, ControlOptions, Path, SearchboxData } from "../types"
+import type { Control, ControlData, ControlOptions, Path } from "../types"
 
 import cc from "classcat"
 import { input, label, li, span, ul } from "ntml"
+// import { get, set } from "shades"
 import { pipe } from "../utility/utility"
 import { get, set } from "../utility/shadesHelper"
 import { addInsideEl, removeInsideEl } from "../utility/uyHelper"
@@ -11,7 +12,13 @@ import { popup } from "../container/popup"
 import { box } from "../container/box"
 import { icon } from "../display/icon"
 
-const freshSearchbox = (value: string): SearchboxData => ({
+export type SearchboxData = ControlData<string> & {
+  focused: boolean
+  searching: boolean
+  results: string[]
+}
+
+export const freshSearchbox = (value: string): SearchboxData => ({
   value,
   focused: false,
   searching: false,
@@ -80,77 +87,73 @@ const update = (search: Function) =>
 
 // -----------------------------------------------------------------------------
 
-const searchResult = (path: Path) =>
-  (id: string) =>
-    (x: string): VDOM => li ({ onclick: chooseResult (path) (id) (x) }, x)
+const searchResult = (path: Path) => (id: string) => (x: string): VDOM =>
+  li ({ onclick: chooseResult (path) (id) (x) }, x)
 
-const rawSearchbox = (
-  { disabled, locked, path, search, ...etc }: ControlOptions,
-) =>
-  (data: SearchboxData): VDOM => {
-    const id = path.join ("-")
+const rawSearchbox = ({ disabled, locked, path, search, ...etc }: ControlOptions) => (data: SearchboxData): VDOM => {
+  const id = path.join ("-")
 
-    const inputSearch = input ({
-      disabled,
-      readonly: locked,
-      value: data.value,
-      type: "search",
-      onfocus: set ([...path, "focused"]) (true),
-      onblur: set ([...path, "focused"]) (false),
-      onkeyup: <S, P extends KeyboardEvent, D>(
-        state: State<S>,
-        { key, target }: Payload<KeyboardEvent>,
-      ): State<S> | Action<S, P, D> => {
-        // We don't let certain keys unnecessarily affect searching.
-        const noopKeys = [
-          "Alt",
-          "ArrowLeft",
-          "ArrowRight",
-          "CapsLock",
-          "Control",
-          "End",
-          "Home",
-          "Hyper",
-          "Meta",
-          "NumLock",
-          "ScrollLock",
-          "Shift",
-          "Super",
-        ]
-        if (noopKeys.includes (key)) {
-          return state
-        }
-        const el = target as HTMLInputElement
-        return update (search) (path) (id) (el.value) (state)
-      },
+  const inputSearch = input ({
+    disabled,
+    readonly: locked,
+    value: data.value,
+    type: "search",
+    onfocus: set ([...path, "focused"]) (true),
+    onblur: set ([...path, "focused"]) (false),
+    onkeyup: <S, P extends KeyboardEvent, D>(
+      state: State<S>,
+      { key, target }: Payload<KeyboardEvent>,
+    ): State<S> | Action<S, P, D> => {
+      // We don't let certain keys unnecessarily affect searching.
+      const noopKeys = [
+        "Alt",
+        "ArrowLeft",
+        "ArrowRight",
+        "CapsLock",
+        "Control",
+        "End",
+        "Home",
+        "Hyper",
+        "Meta",
+        "NumLock",
+        "ScrollLock",
+        "Shift",
+        "Super",
+      ]
+      if (noopKeys.includes (key)) {
+        return state
+      }
+      const el = target as HTMLInputElement
+      return update (search) (path) (id) (el.value) (state)
+    },
 
-      // Here we're using the non-standard `search` event because it can detect
-      // when a searchbox's clear button is used. The `input` event can also
-      // detect it but it will also detect keypresses which makes things
-      // less convenient since it would conflict with how we're using
-      // the `keyup` event.
-      // https://stackoverflow.com/a/25569880
-      onsearch: <S, P extends Event, D>(
-        state: State<S>,
-        { target }: Payload<P>,
-      ): Action<S, P, D> => {
-        const el = target as HTMLInputElement
-        return update (search) (path) (id) (el.value) (state)
-      },
+    // Here we're using the non-standard `search` event because it can detect
+    // when a searchbox's clear button is used. The `input` event can also
+    // detect it but it will also detect keypresses which makes things
+    // less convenient since it would conflict with how we're using
+    // the `keyup` event.
+    // https://stackoverflow.com/a/25569880
+    onsearch: <S, P extends Event, D>(
+      state: State<S>,
+      { target }: Payload<P>,
+    ): Action<S, P, D> => {
+      const el = target as HTMLInputElement
+      return update (search) (path) (id) (el.value) (state)
+    },
 
-      // TODO:
-      // - find a way to exclude `update` of `ControlOptions` from `etc`
-      ...etc,
+    // TODO:
+    // - find a way to exclude `update` of `ControlOptions` from `etc`
+    ...etc,
 
-      class: cc ([{ "uy-input": true, locked, disabled }, etc.class]),
-    })
+    class: cc (["uy-input", { locked, disabled }, etc.class]),
+  })
 
-    return box ({
-      disabled,
-      locked,
-      "uy-control": true,
-      "uy-searchbox": true,
-    }) ([
+  return box ({
+    disabled,
+    locked,
+    "uy-control": true,
+    "uy-searchbox": true,
+  }) ([
       label ({
         class: {
           "uy-searchbox-label": true,
@@ -179,9 +182,7 @@ const rawSearchbox = (
           ),
         ])
         : null,
-    ])
-  }
+  ])
+}
 
-const searchbox: Control = component (rawSearchbox)
-
-export { freshSearchbox, searchbox }
+export const searchbox: Control = component (rawSearchbox)

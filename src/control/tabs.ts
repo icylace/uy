@@ -19,7 +19,9 @@ export type TabsOptions = ControlOptions & {
   tabList: Tab[]
 }
 
-const freshTabs = (value: string): ControlData<string> => ({ value })
+export type TabsData = ControlData<string>
+
+export const freshTabs = (value: string): TabsData => ({ value })
 
 const isSelected = (activeTab: string) => (item: any, i: number): boolean =>
   activeTab === String (i) ||
@@ -52,22 +54,13 @@ const rawTabs = (
     ...etc
   }: TabsOptions,
 ) =>
-  (data: ControlData<string>): VDOM => {
+  (data: TabsData): VDOM => {
     const headings = tabList.map ((x: Tab): Content => x.heading)
     const panels = tabList.map ((x: Tab): Content => x.panel)
     return div (
       {
         ...etc,
-        class: cc ([
-          {
-            "uy-control": true,
-            "uy-container": true,
-            "uy-tabs": true,
-            locked,
-            disabled,
-          },
-          etc.class,
-        ]),
+        class: cc (["uy-control uy-container uy-tabs", { locked, disabled }, etc.class]),
       },
       [
         box ("uy-tabs-navigation") ([
@@ -84,6 +77,4 @@ const rawTabs = (
     )
   }
 
-const tabs: Control = component (rawTabs)
-
-export { freshTabs, tabs }
+export const tabs: Control = component (rawTabs)

@@ -12,15 +12,7 @@ const popup = ({ disabled, id, locked, ...etc }: PopupOptions) => (content: Cont
   div ({
     id,
     ...etc,
-    class: cc ([
-      {
-        disabled,
-        locked,
-        "uy-container": true,
-        "uy-popup": true,
-      },
-      etc.class,
-    ]),
+    class: cc (["uy-container uy-popup", { locked, disabled }, etc.class]),
   }, content)
 
 export { popup }

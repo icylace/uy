@@ -16,9 +16,7 @@ export type ListOptions = ControlOptions & {
   path: Path
 }
 
-export type ListData = {
-  items: string[]
-}
+export type ListData = { items: string[] }
 
 const freshList = (items: string[]): ListData => ({ items })
 
@@ -56,15 +54,7 @@ const rawList = ({ disabled, locked, headers, path, ...etc }: ListOptions) => (d
   return div (
     {
       ...etc,
-      class: cc ([
-        {
-          "uy-control": true,
-          "uy-list": true,
-          locked,
-          disabled,
-        },
-        etc.class,
-      ]),
+      class: cc (["uy-control uy-list", { locked, disabled }, etc.class]),
     },
     [
       rawTable ({

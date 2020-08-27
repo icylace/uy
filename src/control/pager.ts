@@ -1,38 +1,41 @@
 import type { State, VDOM, VNode } from "hyperapp"
-import type { Control, ControlData, PagerOptions } from "../types"
+import type { Content, Control, ControlData, ControlOptions } from "../types"
 
 import cc from "classcat"
-import { text } from "hyperapp"
 import { div, li, span, ul } from "ntml"
 import { range } from "../utility/utility"
 import { component } from "../component"
 import { icon } from "../display/icon"
 
+export type PagerOptions = ControlOptions & {
+  itemsPerPage: number
+  pageRange: number
+}
+
+export type PagerData = ControlData<number> & { itemsTotal: number }
+
 // freshPager :: Int -> Int -> PagerData
-const freshPager = (itemsTotal: number) =>
-  (value: number): ControlData<number> => ({ value, itemsTotal })
+export const freshPager = (itemsTotal: number) => (value: number): PagerData =>
+  ({ value, itemsTotal })
 
 const pagerNav = (
   handler: Function,
-  contents: VNode[],
+  content: Content,
   active: boolean,
 ): VDOM =>
   span ({
-    class: {
-      "uy-pager-nav": true,
-      "uy-pager-nav-inactive": !active,
-    },
+    class: ["uy-pager-nav", !active && "uy-pager-nav-inactive"],
     ...active
       ? { onclick: <S>(_state: State<S>, _event: any): any => handler }
       : {},
-  }, contents)
+  }, content)
 
-const pagerMore = (contents: VNode[]): VDOM =>
-  span ({ class: "uy-pager-more" }, contents)
+const pagerMore = (content: Content): VDOM =>
+  span ({ class: "uy-pager-more" }, content)
 
 const rawPager =
   ({ disabled, locked, itemsPerPage, pageRange, update, ...etc }: PagerOptions) =>
-    (data: ControlData<number>): VDOM | null => {
+    (data: PagerData): VDOM | null => {
       if (!data.itemsTotal) return null
 
       const pageCount = Math.ceil (data.itemsTotal / itemsPerPage)
@@ -59,44 +62,36 @@ const rawPager =
         },
       )
 
-      const morePrev = pagerMore ([text (rangeStartPage > 0 ? "..." : "")])
-      const moreNext = pagerMore ([text (rangeFinishPage < lastPage ? "..." : "")])
+      const morePrev = pagerMore (rangeStartPage > 0 ? "..." : "")
+      const moreNext = pagerMore (rangeFinishPage < lastPage ? "..." : "")
 
       const navFirst = pagerNav (
         <S>(state: State<S>): State<S> => update (state, 0),
-        [icon ({ fas: true, "fa-angle-double-left": true }), text (" first")],
+        [icon ("fas fa-angle-double-left"), " first"],
         data.value !== 0,
       )
 
       const navPrev = pagerNav (
         <S>(state: State<S>): State<S> => update (state, Math.max (0, data.value - 1)),
-        [icon ({ fas: true, "fa-angle-left": true }), text (" prev")],
+        [icon ("fas fa-angle-left"), " prev"],
         data.value !== 0,
       )
 
       const navNext = pagerNav (
         <S>(state: State<S>): State<S> => update (state, Math.min (lastPage, data.value + 1)),
-        [text ("next "), icon ({ fas: true, "fa-angle-right": true })],
+        ["next ", icon ("fas fa-angle-right")],
         data.value !== lastPage,
       )
 
       const navLast = pagerNav (
         <S>(state: State<S>): State<S> => update (state, lastPage),
-        [text ("last "), icon ({ fas: true, "fa-angle-double-right": true })],
+        ["last ", icon ("fas fa-angle-double-right")],
         data.value !== lastPage,
       )
 
       return div ({
         ...etc,
-        class: cc ([
-          {
-            "uy-control": true,
-            "uy-pager": true,
-            locked,
-            disabled,
-          },
-          etc.class,
-        ]),
+        class: cc (["uy-control uy-pager", { locked, disabled }, etc.class]),
       }, [
         ul ([
           li (navFirst),
@@ -110,6 +105,4 @@ const rawPager =
       ])
     }
 
-const pager: Control = component (rawPager)
-
-export { freshPager, pager }
+export const pager: Control = component (rawPager)

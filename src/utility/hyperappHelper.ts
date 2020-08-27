@@ -148,7 +148,7 @@ export const onMouseDown = eventFx ("mousedown")
 // const handleValueWith = <S>(f: (a: State<S>, b: string) => any) => <E>(state: State<S>, event: E): any => {
 //   return f (state, event.target.value)
 // }
-export const handleValueWith = (f: Handler) => <S>(state: State<S>, event: Event): State<S> => {
+export const handleValueWith = (f: Handler) => <S, P, D>(state: State<S>, event: Event): Transition<S, P, D> => {
   const target = event.target as HTMLInputElement
   return f (state, target.value)
 }

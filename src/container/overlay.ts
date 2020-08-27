@@ -11,16 +11,7 @@ const rawOverlay = ({ disabled, locked, ...etc }: ComponentOptions) => (content:
     div ({
       disabled,
       ...etc,
-      class: cc ([
-        {
-          disabled,
-          locked,
-          // TODO:
-          // "uy-container": true,
-          "uy-overlay": true,
-        },
-        etc.class,
-      ]),
+      class: cc (["uy-overlay", { locked, disabled }, etc.class]),
     }, content),
   ])
 

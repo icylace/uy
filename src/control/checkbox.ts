@@ -21,11 +21,10 @@ import { box } from "../container/box"
 
 const freshCheckbox = (value: boolean): ControlData<boolean> => ({ value })
 
-// // TODO:
-// type CheckboxOptions = LabelledControlOptions
+type CheckboxOptions = LabelledControlOptions
 
 const rawCheckbox = (
-  { disabled, locked, label, update, ...etc }: LabelledControlOptions,
+  { disabled, locked, label, update, ...etc }: CheckboxOptions,
 ) =>
   (data: ControlData<boolean>): VDOM => {
     return box ("uy-control uy-checkbox") ([
@@ -39,7 +38,7 @@ const rawCheckbox = (
             return update (state, target.checked)
           },
           ...etc,
-          class: cc ([{ "uy-input": true, locked, disabled }, etc.class]),
+          class: cc (["uy-input", { locked, disabled }, etc.class]),
         }),
         label ? html.span (label) : null,
       ]),

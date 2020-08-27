@@ -7,23 +7,21 @@ import { handleValueWith } from "../utility/hyperappHelper"
 import { component } from "../component"
 import { box } from "../container/box"
 
-const freshTextbox = (value: string): ControlData<string> => ({ value })
+export type TextboxData = ControlData<string>
 
-const rawTextbox = ({ disabled, locked, update, ...etc }: ControlOptions) =>
-  (data: ControlData<string>): VDOM => {
-    return box ("uy-control uy-textbox") ([
-      input ({
-        disabled,
-        readonly: locked,
-        value: data.value,
-        type: "text",
-        onchange: handleValueWith (update),
-        ...etc,
-        class: cc ([{ "uy-input": true, locked, disabled }, etc.class]),
-      }),
-    ])
-  }
+export const freshTextbox = (value: string): TextboxData => ({ value })
 
-const textbox: Control = component (rawTextbox)
+export const rawTextbox = ({ disabled, locked, update, ...etc }: ControlOptions) => (data: TextboxData): VDOM =>
+  box ("uy-control uy-textbox") ([
+    input ({
+      disabled,
+      readonly: locked,
+      value: data.value,
+      type: "text",
+      onchange: handleValueWith (update),
+      ...etc,
+      class: cc (["uy-input", { locked, disabled }, etc.class]),
+    }),
+  ])
 
-export { freshTextbox, rawTextbox, textbox }
+export const textbox: Control = component (rawTextbox)

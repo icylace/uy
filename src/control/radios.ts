@@ -1,5 +1,5 @@
 import type { VDOM } from "hyperapp"
-import type { Content, Control, ControlData, RadiosOptions } from "../types"
+import type { Content, Control, ControlData, ControlOptions } from "../types"
 
 import cc from "classcat"
 import * as html from "ntml"
@@ -7,32 +7,32 @@ import { handleValueWith } from "../utility/hyperappHelper"
 import { component } from "../component"
 import { box } from "../container/box"
 
-const freshRadios = (value: string): ControlData<string> => ({ value })
+export type RadiosOptions = ControlOptions & {
+  options: Record<string, Content>
+}
 
-const rawRadios = (
-  { disabled, locked, options, update, ...etc }: RadiosOptions,
-) =>
-  (data: ControlData<string>): VDOM => {
-    return box ("uy-control uy-radios") (
-      // TODO:
-      // - switch to using a Map object instead in order to guarantee order
-      Object.entries (options).map (([value, label]: [string, Content]) =>
-        html.label ({ class: { locked, disabled } }, [
-          html.input ({
-            disabled,
-            value,
-            checked: value === data.value,
-            type: "radio",
-            onchange: handleValueWith (update),
-            ...etc,
-            class: cc ([{ "uy-input": true, locked, disabled }, etc.class]),
-          }),
-          label != null ? html.span (label) : null,
-        ]),
-      ),
-    )
-  }
+export type RadiosData = ControlData<string>
 
-const radios: Control = component (rawRadios)
+export const freshRadios = (value: string): RadiosData => ({ value })
 
-export { freshRadios, radios }
+const rawRadios = ({ disabled, locked, options, update, ...etc }: RadiosOptions) => (data: RadiosData): VDOM =>
+  box ("uy-control uy-radios") (
+    // TODO:
+    // - switch to using a Map object instead in order to guarantee order
+    Object.entries (options).map (([value, label]: [string, Content]): VDOM =>
+      html.label ({ class: { locked, disabled } }, [
+        html.input ({
+          disabled,
+          value,
+          checked: value === data.value,
+          type: "radio",
+          onchange: handleValueWith (update),
+          ...etc,
+          class: cc (["uy-input", { locked, disabled }, etc.class]),
+        }),
+        label != null ? html.span (label) : null,
+      ]),
+    ),
+  )
+
+export const radios: Control = component (rawRadios)

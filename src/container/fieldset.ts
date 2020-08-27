@@ -14,14 +14,7 @@ const rawFieldset = ({ disabled, locked, label, ...etc }: ComponentOptions) => (
     {
       disabled,
       ...etc,
-      class: cc ([
-        {
-          disabled,
-          locked,
-          "uy-fieldset": true,
-        },
-        etc.class,
-      ]),
+      class: cc (["uy-fieldset", { locked, disabled }, etc.class]),
     },
     label
       ? Array.isArray (content)

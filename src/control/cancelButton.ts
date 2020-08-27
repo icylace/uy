@@ -12,7 +12,7 @@ const cancelButton = ({ disabled, locked, update, ...etc }: ControlOptions): VDO
       type: "button",
       onclick: update,
       ...etc,
-      class: cc ([{ disabled, locked, "uy-clicky": true }, etc.class]),
+      class: cc (["uy-clicky", { locked, disabled }, etc.class]),
     }, "✕"),
   ])
 }

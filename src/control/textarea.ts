@@ -7,22 +7,20 @@ import { handleValueWith } from "../utility/hyperappHelper"
 import { component } from "../component"
 import { box } from "../container/box"
 
-const freshTextarea = (value: string): ControlData<string> => ({ value })
+export type TextareaData = ControlData<string>
 
-const rawTextarea = ({ disabled, locked, update, ...etc }: ControlOptions) =>
-  (data: ControlData<string>): VDOM => {
-    return box ("uy-control uy-textarea") ([
-      html.textarea ({
-        disabled,
-        readonly: locked,
-        value: data.value,
-        onchange: handleValueWith (update),
-        ...etc,
-        class: cc ([{ "uy-input": true, locked, disabled }, etc.class]),
-      }),
-    ])
-  }
+export const freshTextarea = (value: string): TextareaData => ({ value })
 
-const textarea: Control = component (rawTextarea)
+const rawTextarea = ({ disabled, locked, update, ...etc }: ControlOptions) => (data: TextareaData): VDOM =>
+  box ("uy-control uy-textarea") ([
+    html.textarea ({
+      disabled,
+      readonly: locked,
+      value: data.value,
+      onchange: handleValueWith (update),
+      ...etc,
+      class: cc (["uy-input", { locked, disabled }, etc.class]),
+    }),
+  ])
 
-export { freshTextarea, textarea }
+export const textarea: Control = component (rawTextarea)

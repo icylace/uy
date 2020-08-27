@@ -1,4 +1,5 @@
 import type { App, State, Subscriber } from "hyperapp"
+import type { Handler } from "../types"
 
 import { handleUsing, onMouseDown, onOutside } from "./hyperappHelper"
 import { get, mod, set } from "./shadesHelper"
@@ -25,7 +26,7 @@ const freshState = <S>(state: State<S>): State<S> => ({
   uy: {
     insiders: {},
     mousedownHandlers: {
-      detectOutsideAction: <S>(state: State<S>, event: any): State<S> => {
+      detectOutsideAction: <S>(state: State<S>, event: Event): State<S> => {
         return handleUsing (
           pipe (
             get (["uy", "insiders"]),

@@ -63,10 +63,10 @@ const rawTable = (
 ) =>
   (data: TableData): VDOM =>
     box ({
-      disabled,
-      locked,
       "uy-control": true,
       "uy-table": true,
+      locked,
+      disabled,
     }) ([
       html.table (etc, [
         headers && headers.length

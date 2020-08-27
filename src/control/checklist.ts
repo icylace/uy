@@ -1,5 +1,6 @@
 import type { Payload, PropList, State, VDOM, VNode } from "hyperapp"
-import type { Control, ChecklistOptions, Path } from "../types"
+import type { ComponentOptions, Control, Path, Renderer } from "../types"
+import type { TableCell } from "../container/table"
 
 import cc from "classcat"
 import { div } from "ntml"
@@ -7,6 +8,11 @@ import { set } from "../utility/shadesHelper"
 import { component } from "../component"
 import { rawTable } from "../container/table"
 import { rawCheckbox } from "./checkbox"
+
+export type ChecklistOptions = ComponentOptions & {
+  path: Path
+  render: Renderer
+}
 
 type ChecklistItem = {
   id: string
@@ -25,7 +31,7 @@ const updateItem = (path: Path) => (i: number) => <S, P>(state: State<S>, value:
   set ([...path, "items", i]) (value) (state)
 
 const rawChecklist = ({ disabled, locked, path, render, ...etc }: ChecklistOptions) => (data: Checklist): VDOM => {
-  const item = (x: ChecklistItem, i: number): [[PropList, readonly VNode[]]] =>
+  const item = (x: ChecklistItem, i: number): TableCell[] =>
     [
       [
         { class: { "uy-horizontal": x.id === "other" } },
@@ -43,23 +49,9 @@ const rawChecklist = ({ disabled, locked, path, render, ...etc }: ChecklistOptio
   return div (
     {
       ...etc,
-      class: cc ([
-        {
-          disabled,
-          locked,
-          "uy-container": true,
-          "uy-checklist": true,
-        },
-        etc.class,
-      ]),
+      class: cc (["uy-container uy-checklist", { locked, disabled }, etc.class]),
     },
-    [
-      rawTable ({
-        disabled,
-        locked,
-        sortDescending: false,
-      }) ({ rows: data.items.map (item) }),
-    ],
+    [rawTable ({ disabled, locked }) ({ rows: data.items.map (item) })],
   )
 }
 

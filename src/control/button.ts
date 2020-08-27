@@ -12,7 +12,7 @@ const button = ({ disabled, locked, label, update, ...etc }: LabelledControlOpti
       type: "button",
       onclick: update,
       ...etc,
-      class: cc ([{ disabled, locked, "uy-clicky": true }, etc.class]),
+      class: cc (["uy-clicky", { locked, disabled }, etc.class]),
     }, label),
   ])
 }

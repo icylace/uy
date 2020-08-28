@@ -43,7 +43,7 @@
     "@fortawesome/fontawesome-free": "^5.14.0",
     "classcat": "^4.1.0",
     "hyperapp": "^2.0.8",
-    "ntml": "^0.1.5",
+    "ntml": "^0.1.6",
     "redaxios": "^0.3.0",
     "remeda": "0.0.20",
     "shades": "^2.1.0"

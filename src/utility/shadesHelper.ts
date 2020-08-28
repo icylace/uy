@@ -9,7 +9,11 @@ type Path = (number | string | Path)[]
 
 const get = (path: Path) => <T, U>(obj: T): U | null => {
   if (!path.length) return null
-  const p: Path = path.reduce ((acc, x) => Array.isArray (x) ? [...acc, ...x] : [...acc, x], [])
+  const p: Path = path.reduce (
+    (acc: Path, x) =>
+      Array.isArray (x) ? [...acc, ...x] : [...acc, x],
+    [],
+  )
   switch (p.length) {
     case 1: return shades.get (p[0]) (obj)
     case 2: return shades.get (p[0], p[1]) (obj)
@@ -23,7 +27,11 @@ const get = (path: Path) => <T, U>(obj: T): U | null => {
 
 const mod = (path: Path) => <U>(f: (_: U) => U) => <T>(obj: T): T | null => {
   if (!path.length) return null
-  const p: Path = path.reduce ((acc, x) => Array.isArray (x) ? [...acc, ...x] : [...acc, x], [])
+  const p: Path = path.reduce (
+    (acc: Path, x) =>
+      Array.isArray (x) ? [...acc, ...x] : [...acc, x],
+    [],
+  )
   switch (p.length) {
     case 1: return shades.mod (p[0]) (f) (obj)
     case 2: return shades.mod (p[0], p[1]) (f) (obj)
@@ -37,7 +45,11 @@ const mod = (path: Path) => <U>(f: (_: U) => U) => <T>(obj: T): T | null => {
 
 const set = (path: Path) => <V>(value: V) => <T>(obj: T): T | null => {
   if (!path.length) return null
-  const p: Path = path.reduce ((acc, x) => Array.isArray (x) ? [...acc, ...x] : [...acc, x], [])
+  const p: Path = path.reduce (
+    (acc: Path, x) =>
+      Array.isArray (x) ? [...acc, ...x] : [...acc, x],
+    [],
+  )
   switch (p.length) {
     case 0: return null
     case 1: return shades.set (p[0]) (value) (obj)

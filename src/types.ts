@@ -7,19 +7,13 @@ export type Control = (_: ControlOptions) => (_: Path) => <S>(_: State<S>) => VD
 export type Path = string[]
 export type Renderer = (_: Content) => VDOM
 
-// -----------------------------------------------------------------------------
-
 // TODO:
 export type Handler = <S, P>(state: State<S>, payload?: Payload<P>) => State<S>
-
-// -----------------------------------------------------------------------------
 
 export type ControlData<T> = {
   [_: string]: unknown
   value: T
 }
-
-// -----------------------------------------------------------------------------
 
 export type ComponentOptions = {
   [_: string]: unknown

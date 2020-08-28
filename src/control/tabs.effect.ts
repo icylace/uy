@@ -1,14 +1,12 @@
-import type { Dispatch, Effect, EffectDescriptor } from "hyperapp"
+import type { Dispatch, Effect, EffectData, EffectDescriptor } from "hyperapp"
 
 import { fx } from "../utility/hyperappHelper"
 
-type FxData = { el: Element }
+export type FxData = { el: Element }
 
-const runScrollIntoView = (_dispatch: Dispatch, props: FxData): void => {
+const runScrollIntoView = <D extends FxData>(_dispatch: Dispatch, props: EffectData<D>): void => {
   props.el.scrollIntoView ({ behavior: "smooth", block: "nearest" })
 }
 
-const scrollIntoView = (el: Element): EffectDescriptor<FxData> =>
-  fx (runScrollIntoView as Effect) ({ el })
-
-export { scrollIntoView }
+export const scrollIntoView = <D extends FxData>(el: Element): EffectDescriptor<D> =>
+  fx (runScrollIntoView as Effect) ({ el } as D)

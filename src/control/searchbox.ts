@@ -1,5 +1,5 @@
 import type { Action, Payload, State, VDOM } from "hyperapp"
-import type { Control, ControlData, ControlOptions, Path } from "../types"
+import type { Control, ControlOptions, Path } from "../types"
 
 import cc from "classcat"
 import { input, label, li, span, ul } from "ntml"
@@ -12,10 +12,12 @@ import { popup } from "../container/popup"
 import { box } from "../container/box"
 import { icon } from "../display/icon"
 
-export type SearchboxData = ControlData<string> & {
+export type SearchboxData = {
+  [_: string]: unknown
   focused: boolean
-  searching: boolean
   results: string[]
+  searching: boolean
+  value: string
 }
 
 export const freshSearchbox = (value: string): SearchboxData => ({
@@ -27,15 +29,12 @@ export const freshSearchbox = (value: string): SearchboxData => ({
 
 // -----------------------------------------------------------------------------
 
-const chooseResult = (path: Path) =>
-  (id: string) =>
-    (value: string) =>
-      <S>(state: State<S>): State<S> =>
-        pipe (
-          set ([...path, "results"]) ([]),
-          set ([...path, "value"]) (value),
-          removeInsideEl (id),
-        ) (state)
+const chooseResult = (path: Path) => (id: string) => (value: string) => <S>(state: State<S>): State<S> =>
+  pipe (
+    set ([...path, "results"]) ([]),
+    set ([...path, "value"]) (value),
+    removeInsideEl (id),
+  ) (state)
 
 // updateResults :: AnyFunction -> Path -> String -> State -> Payload -> Action
 const updateResults = (search: Function) =>

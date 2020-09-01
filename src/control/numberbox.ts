@@ -1,5 +1,6 @@
 import type { State, VDOM } from "hyperapp"
-import type { Control, ControlData, ControlOptions, LabelledComponentOptions, Path } from "../types"
+import type { Content } from "ntml"
+import type { ComponentOptions, Control, ControlData, Handler, Path } from "../types"
 
 import cc from "classcat"
 import * as html from "ntml"
@@ -8,7 +9,10 @@ import { set } from "../utility/shadesHelper"
 import { component } from "../component"
 import { box } from "../container/box"
 
-export type NumberboxOptions = ControlOptions & LabelledComponentOptions
+export type NumberboxOptions = ComponentOptions & {
+  label?: Content
+  update: Handler
+}
 
 export type NumberboxData = ControlData<number>
 
@@ -17,7 +21,7 @@ export const freshNumberbox = (value: number): NumberboxData => ({
   focused: false,
 })
 
-const sanitizedNumber = (n: any): number => Math.max (0, Number.parseInt (n, 10))
+const sanitizedNumber = (n: string): number => Math.max (0, Number.parseInt (n, 10))
 
 const update = (path: Path) =>
   <S>(state: State<S>, value: string): State<S> =>

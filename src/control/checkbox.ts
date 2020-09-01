@@ -1,5 +1,6 @@
 import type { State, VDOM } from "hyperapp"
-import type { Control, ControlData, LabelledControlOptions } from "../types"
+import type { Content } from "ntml"
+import type { ComponentOptions, Control, ControlData, Handler } from "../types"
 
 import cc from "classcat"
 import * as html from "ntml"
@@ -19,11 +20,14 @@ import { box } from "../container/box"
 //
 // const freshCheckbox = (value: boolean, indeterminate?: boolean): ControlData<boolean> => ({ indeterminate, value })
 
-const freshCheckbox = (value: boolean): ControlData<boolean> => ({ value })
+export type CheckboxOptions = ComponentOptions & {
+  label?: Content
+  update: Handler
+}
 
-type CheckboxOptions = LabelledControlOptions
+export const freshCheckbox = (value: boolean): ControlData<boolean> => ({ value })
 
-const rawCheckbox = (
+export const rawCheckbox = (
   { disabled, locked, label, update, ...etc }: CheckboxOptions,
 ) =>
   (data: ControlData<boolean>): VDOM => {
@@ -45,6 +49,4 @@ const rawCheckbox = (
     ])
   }
 
-const checkbox: Control = component (rawCheckbox)
-
-export { freshCheckbox, checkbox, rawCheckbox }
+export const checkbox: Control = component (rawCheckbox)

@@ -7,7 +7,9 @@ import { div } from "ntml"
 import { box } from "./box"
 import { ui } from "./ui"
 
-const rawOverlay = ({ disabled, locked, ...etc }: ComponentOptions) => (content: Content): VDOM =>
+export type OverlayOptions = ComponentOptions
+
+const rawOverlay = ({ disabled, locked, ...etc }: OverlayOptions) => (content: Content): VDOM =>
   box ("uy-overlay-background") ([
     div ({
       disabled,
@@ -16,7 +18,5 @@ const rawOverlay = ({ disabled, locked, ...etc }: ComponentOptions) => (content:
     }, content),
   ])
 
-const overlay = (props: ComponentOptions): ContainerView =>
+export const overlay = (props: OverlayOptions): ContainerView =>
   ui (rawOverlay (props))
-
-export { overlay }

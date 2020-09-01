@@ -6,11 +6,11 @@ import cc from "classcat"
 import * as html from "ntml"
 import { ui } from "./ui"
 
-// TODO:
-// type Label = VNode
-// type FieldsetOptions = Label | ComponentOptions
+export type FieldsetOptions = ComponentOptions & {
+  label: Content
+}
 
-const rawFieldset = ({ disabled, locked, label, ...etc }: ComponentOptions) => (content: Content): VDOM =>
+const rawFieldset = ({ disabled, locked, label, ...etc }: FieldsetOptions) => (content: Content): VDOM =>
   html.fieldset (
     {
       disabled,
@@ -24,7 +24,5 @@ const rawFieldset = ({ disabled, locked, label, ...etc }: ComponentOptions) => (
       : content,
   )
 
-const fieldset = (props: ComponentOptions): ContainerView =>
+export const fieldset = (props: FieldsetOptions): ContainerView =>
   ui (rawFieldset (props))
-
-export { fieldset }

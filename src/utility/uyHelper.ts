@@ -1,5 +1,5 @@
 import type { App, State, Subscriber } from "hyperapp"
-import type { Handler } from "../types"
+// import type { Handler } from "../types"
 
 import { handleUsing, onMouseDown, onOutside } from "./hyperappHelper"
 import { get, mod, set } from "./shadesHelper"
@@ -57,8 +57,6 @@ const mouseDownSubscription = pipe (
 export const uyAppConfig = <S, P, D>(config: App<S, P, D>): App<S, P, D> => ({
   ...config,
   // TODO: account for any subscriptions from `config`
-  subscriptions: <S>(
-    state: State<S>,
-  ): Subscriber[] => [mouseDownSubscription (state)],
+  subscriptions: <S>(state: State<S>): Subscriber[] => [mouseDownSubscription (state)],
   init: freshState (config.init),
 })

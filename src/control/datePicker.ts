@@ -1,11 +1,19 @@
-import type { VDOM } from "hyperapp"
-import type { Control, ControlData, ControlOptions } from "../types"
+import type { ClassProp, VDOM } from "hyperapp"
+import type { Control, ControlData, Handler } from "../types"
 
 import cc from "classcat"
 import { input } from "ntml"
 import { handleValueWith } from "../utility/hyperappHelper"
 import { component } from "../component"
 import { box } from "../container/box"
+
+export type DatePickerOptions = {
+  [_: string]: unknown
+  class?: ClassProp
+  disabled: boolean
+  locked: boolean
+  update: Handler
+}
 
 export type DatePickerData = ControlData<string>
 
@@ -14,7 +22,7 @@ export type DatePickerData = ControlData<string>
 export const freshDatePicker = (value: string): DatePickerData =>
   ({ value })
 
-const rawDatePicker = ({ disabled, locked, update, ...etc }: ControlOptions) => (data: DatePickerData): VDOM =>
+const rawDatePicker = ({ disabled, locked, update, ...etc }: DatePickerOptions) => (data: DatePickerData): VDOM =>
   box ("uy-control uy-datePicker") ([
     input ({
       disabled,
@@ -35,7 +43,7 @@ export const freshDatetimeLocalPicker = (value: string): DatePickerData =>
   ({ value })
 
 const rawDatetimeLocalPicker =
-  ({ disabled, locked, update, ...etc }: ControlOptions) =>
+  ({ disabled, locked, update, ...etc }: DatePickerOptions) =>
     (data: DatePickerData): VDOM =>
       box ("uy-control uy-datePicker") ([
         input ({
@@ -56,7 +64,7 @@ export const datetimeLocalPicker: Control = component (rawDatetimeLocalPicker)
 export const freshMonthPicker = (value: string): DatePickerData =>
   ({ value })
 
-const rawMonthPicker = ({ disabled, locked, update, ...etc }: ControlOptions) => (data: DatePickerData): VDOM =>
+const rawMonthPicker = ({ disabled, locked, update, ...etc }: DatePickerOptions) => (data: DatePickerData): VDOM =>
   box ("uy-control uy-datePicker") ([
     input ({
       disabled,
@@ -76,7 +84,7 @@ export const monthPicker: Control = component (rawMonthPicker)
 export const freshTimePicker = (value: string): DatePickerData =>
   ({ value })
 
-const rawTimePicker = ({ disabled, locked, update, ...etc }: ControlOptions) => (data: DatePickerData): VDOM =>
+const rawTimePicker = ({ disabled, locked, update, ...etc }: DatePickerOptions) => (data: DatePickerData): VDOM =>
   box ("uy-control uy-datePicker") ([
     input ({
       disabled,
@@ -95,7 +103,7 @@ export const timePicker: Control = component (rawTimePicker)
 
 export const freshWeekPicker = (value: string): DatePickerData => ({ value })
 
-const rawWeekPicker = ({ disabled, locked, update, ...etc }: ControlOptions) => (data: DatePickerData): VDOM =>
+const rawWeekPicker = ({ disabled, locked, update, ...etc }: DatePickerOptions) => (data: DatePickerData): VDOM =>
   box ("uy-control uy-datePicker") ([
     input ({
       disabled,

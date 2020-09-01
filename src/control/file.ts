@@ -1,5 +1,5 @@
 import type { State, VDOM } from "hyperapp"
-import type { Control, ControlData, LabelledControlOptions } from "../types"
+import type { ComponentOptions, Control, ControlData, Handler } from "../types"
 
 import cc from "classcat"
 import * as html from "ntml"
@@ -7,13 +7,18 @@ import { component } from "../component"
 import { box } from "../container/box"
 import { icon } from "../display/icon"
 
+export type FileOptions = ComponentOptions & {
+  label?: string
+  update: Handler
+}
+
 export type FileData = ControlData<string>
 
 export const freshFile = (value: string): FileData => ({ value })
 
 // https://codepen.io/adamlaki/pen/VYpewx
 
-const rawFile = ({ disabled, locked, label = "Select your file...", ...etc }: LabelledControlOptions) => (data: FileData): VDOM =>
+const rawFile = ({ disabled, locked, label = "Select your file...", ...etc }: FileOptions) => (data: FileData): VDOM =>
   box ({
     disabled,
     locked,
@@ -34,7 +39,7 @@ const rawFile = ({ disabled, locked, label = "Select your file...", ...etc }: La
           parent.dataset.text =
             target.value !== ""
               ? target.value.replace (/.*(\/|\\)/, "")
-              : label as string
+              : label
           return state
         },
         ...etc,

@@ -6,9 +6,11 @@ import cc from "classcat"
 import { label } from "ntml"
 import { box } from "./box"
 
+export type FieldOptions = ComponentOptions
+
 export const field = (f: Component) =>
   (title: Content) =>
-    ({ disabled, locked, ...etc }: ComponentOptions) =>
+    ({ disabled, locked, ...etc }: FieldOptions) =>
       (path: Path) =>
         <S>(state: State<S>): VDOM =>
           box ("uy-container uy-field") ([

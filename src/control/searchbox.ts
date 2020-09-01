@@ -1,5 +1,5 @@
-import type { Action, Payload, State, VDOM } from "hyperapp"
-import type { Control, ControlOptions, Path } from "../types"
+import type { Payload, State, Transition, VDOM } from "hyperapp"
+import type { ComponentOptions, Control, Path } from "../types"
 
 import cc from "classcat"
 import { input, label, li, span, ul } from "ntml"
@@ -11,6 +11,11 @@ import { component } from "../component"
 import { popup } from "../container/popup"
 import { box } from "../container/box"
 import { icon } from "../display/icon"
+
+export type SearchboxOptions = ComponentOptions & {
+  path: Path
+  search: Function
+}
 
 export type SearchboxData = {
   [_: string]: unknown
@@ -40,10 +45,10 @@ const chooseResult = (path: Path) => (id: string) => (value: string) => <S>(stat
 const updateResults = (search: Function) =>
   (path: Path) =>
     (id: string) =>
-      <S, P, D>(
+      <S, P extends SearchboxData, D>(
         state: State<S>,
         { value, results }: Payload<P>,
-      ): Action<S, P, D> => {
+      ): Transition<S, P, D> => {
         // It is possible the current value of the searchbox and the value that was
         // actually searched on could be out of sync if the user continues changing
         // the searchbox value during the search. In that case another search gets
@@ -73,7 +78,7 @@ const update = (search: Function) =>
   (path: Path) =>
     (id: string) =>
       (value: string) =>
-        <S, P, D>(state: State<S>): Action<S, P, D> =>
+        <S, P, D>(state: State<S>): Transition<S, P, D> =>
           get ([...path, "searching"]) (state)
             ? set ([...path, "value"]) (value) (state)
             : [
@@ -89,7 +94,7 @@ const update = (search: Function) =>
 const searchResult = (path: Path) => (id: string) => (x: string): VDOM =>
   li ({ onclick: chooseResult (path) (id) (x) }, x)
 
-const rawSearchbox = ({ disabled, locked, path, search, ...etc }: ControlOptions) => (data: SearchboxData): VDOM => {
+const rawSearchbox = ({ disabled, locked, path, search, ...etc }: SearchboxOptions) => (data: SearchboxData): VDOM => {
   const id = path.join ("-")
 
   const inputSearch = input ({
@@ -101,8 +106,8 @@ const rawSearchbox = ({ disabled, locked, path, search, ...etc }: ControlOptions
     onblur: set ([...path, "focused"]) (false),
     onkeyup: <S, P extends KeyboardEvent, D>(
       state: State<S>,
-      { key, target }: Payload<KeyboardEvent>,
-    ): State<S> | Action<S, P, D> => {
+      { key, target }: Payload<P>,
+    ): Transition<S, P, D> => {
       // We don't let certain keys unnecessarily affect searching.
       const noopKeys = [
         "Alt",
@@ -135,13 +140,11 @@ const rawSearchbox = ({ disabled, locked, path, search, ...etc }: ControlOptions
     onsearch: <S, P extends Event, D>(
       state: State<S>,
       { target }: Payload<P>,
-    ): Action<S, P, D> => {
+    ): Transition<S, P, D> => {
       const el = target as HTMLInputElement
       return update (search) (path) (id) (el.value) (state)
     },
 
-    // TODO:
-    // - find a way to exclude `update` of `ControlOptions` from `etc`
     ...etc,
 
     class: cc (["uy-input", { locked, disabled }, etc.class]),

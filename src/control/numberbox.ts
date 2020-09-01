@@ -11,17 +11,21 @@ import { box } from "../container/box"
 
 export type NumberboxOptions = ComponentOptions & {
   label?: Content
+  path: Path
   update: Handler
 }
 
-export type NumberboxData = ControlData<number>
+export type NumberboxData = ControlData<number> & {
+  focused?: boolean
+}
 
 export const freshNumberbox = (value: number): NumberboxData => ({
   value,
   focused: false,
 })
 
-const sanitizedNumber = (n: string): number => Math.max (0, Number.parseInt (n, 10))
+const sanitizedNumber = (n: string): number =>
+  Math.max (0, Number.parseInt (n, 10))
 
 const update = (path: Path) =>
   <S>(state: State<S>, value: string): State<S> =>
@@ -29,7 +33,7 @@ const update = (path: Path) =>
 
 const rawNumberbox = ({ disabled, locked, label, path, ...etc }: NumberboxOptions) => (data: NumberboxData): VDOM =>
   box ("uy-control uy-numberbox") ([
-    html.label ({ class: { focus: data.focused, locked, disabled } }, [
+    html.label ({ class: { focus: !!data.focused, locked, disabled } }, [
       html.input ({
         disabled,
         min: 0,

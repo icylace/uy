@@ -1,5 +1,5 @@
 import type { State, VDOM, VNode } from "hyperapp"
-import type { Content } from "ntml"
+import type { Contents } from "ntml"
 import type { Control, ControlData, ControlOptions } from "../types"
 
 import cc from "classcat"
@@ -21,7 +21,7 @@ export const freshPager = (itemsTotal: number) => (value: number): PagerData =>
 
 const pagerNav = (
   handler: Function,
-  content: Content,
+  content: Contents,
   active: boolean,
 ): VDOM =>
   span ({
@@ -31,7 +31,7 @@ const pagerNav = (
       : {},
   }, content)
 
-const pagerMore = (content: Content): VDOM =>
+const pagerMore = (content: Contents): VDOM =>
   span ({ class: "uy-pager-more" }, content)
 
 const rawPager =

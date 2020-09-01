@@ -137,7 +137,7 @@ task:hard-refresh() {
 
   rm ./package-lock.json && rm -fr ./node_modules && rm -fr ./output
 
-  npm install --save hyperapp shades remeda redaxios
+  npm install --save classcat hyperapp shades remeda redaxios
   npm install --save @fortawesome/fontawesome-free
   npm install --save ntml
   npm install --save-dev snowpack typescript@4.0 rollup terser prettier

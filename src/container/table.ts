@@ -1,5 +1,5 @@
-import type { PropList, VDOM, VNode } from "hyperapp"
-import type { Contents } from "ntml"
+import type { PropList, VDOM } from "hyperapp"
+import type { Content, Contents } from "ntml"
 import type { ComponentOptions } from "../types"
 
 import cc from "classcat"
@@ -9,7 +9,7 @@ import { icon } from "../display/icon"
 import { box } from "./box"
 
 export type TableOptions = ComponentOptions & {
-  headers?: Contents
+  headers?: Content[]
   orderColumn?: string | null
   sortDescending?: boolean
 }
@@ -24,10 +24,10 @@ const freshTable = (rows: TableCell[][]): TableData => ({ rows })
 
 const tableHeader = (orderColumn?: string | null) => (sortDescending: boolean) => (header: Contents): VDOM => {
   const props = (Array.isArray (header) ? header[0] : {}) as PropList
-  const headerContent: Content = Array.isArray (header) ? header[1] : header
+  const headerContent = Array.isArray (header) ? header[1] as Content : header as Content
   const column = props && "data-column" in props && props["data-column"] as string
   const sorting = orderColumn != null && orderColumn === column
-  const sortIndicator: VNode =
+  const sortIndicator =
     sorting
       ? icon ({
         glyphicon: true,

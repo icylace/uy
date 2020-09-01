@@ -1,4 +1,4 @@
-import type { State, VDOM } from "hyperapp"
+import type { Payload, State, VDOM } from "hyperapp"
 import type { Content } from "ntml"
 import type { Control, ControlOptions, Path } from "../types"
 
@@ -26,7 +26,7 @@ const freshList = (items: string[]): ListData => ({ items })
 const addItem = (path: Path) => (data: ListData) => <S>(state: State<S>): State<S> =>
   set ([...path, "items"]) ([...data.items, ""]) (state)
 
-const updateItem = (path: Path) => (i: number) => <S>(state: State<S>, value: string): State<S> =>
+const updateItem = (path: Path) => (i: number) => <S, P = string>(state: State<S>, value: Payload<P>): State<S> =>
   set ([...path, "items", i]) (value) (state)
 
 const removeItem = (path: Path) => (i: number) => <S>(state: State<S>): State<S> =>

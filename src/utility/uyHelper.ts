@@ -26,8 +26,8 @@ const freshState = <S>(state: State<S>): State<S> => ({
   uy: {
     insiders: {},
     mousedownHandlers: {
-      detectOutsideAction: <S>(state: State<S>, event: Event): State<S> => {
-        return handleUsing (
+      detectOutsideAction: <S>(state: State<S>, event: Event): State<S> =>
+        handleUsing (
           pipe (
             get (["uy", "insiders"]),
             // TODO:
@@ -35,8 +35,7 @@ const freshState = <S>(state: State<S>): State<S> => ({
             Object.entries,
             map (detectOutside),
           ) (state),
-        ) (state, event)
-      },
+        ) (state, event),
     },
   },
 })

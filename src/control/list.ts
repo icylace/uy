@@ -17,7 +17,9 @@ export type ListOptions = ControlOptions & {
   path: Path
 }
 
-export type ListData = { items: string[] }
+export type ListData = {
+  items: string[]
+}
 
 const freshList = (items: string[]): ListData => ({ items })
 
@@ -29,7 +31,7 @@ const updateItem = (path: Path) => (i: number) => <S>(state: State<S>, value: st
 
 const removeItem = (path: Path) => (i: number) => <S>(state: State<S>): State<S> =>
   set ([...path, "items"]) (
-    exclude (i) (get ([...path, "items"]) (state)),
+    exclude (i) (get ([...path, "items"]) (state) as string[]),
   ) (state)
 
 const rawList = ({ disabled, locked, headers, path, ...etc }: ListOptions) => (data: ListData): VDOM => {

@@ -1,5 +1,5 @@
 import type { VDOM } from "hyperapp"
-import type { Content } from "ntml"
+import type { Contents } from "ntml"
 import type { ComponentOptions, ContainerView } from "../types"
 
 import cc from "classcat"
@@ -7,10 +7,10 @@ import * as html from "ntml"
 import { ui } from "./ui"
 
 export type FieldsetOptions = ComponentOptions & {
-  label: Content
+  label: Contents
 }
 
-const rawFieldset = ({ disabled, locked, label, ...etc }: FieldsetOptions) => (content: Content): VDOM =>
+const rawFieldset = ({ disabled, locked, label, ...etc }: FieldsetOptions) => (contents: Contents): VDOM =>
   html.fieldset (
     {
       disabled,
@@ -18,10 +18,10 @@ const rawFieldset = ({ disabled, locked, label, ...etc }: FieldsetOptions) => (c
       class: cc (["uy-fieldset", { locked, disabled }, etc.class]),
     },
     label
-      ? Array.isArray (content)
-        ? [html.legend (label), ...content]
-        : [html.legend (label), content]
-      : content,
+      ? Array.isArray (contents)
+        ? [html.legend (label), ...contents]
+        : [html.legend (label), contents]
+      : contents,
   )
 
 export const fieldset = (props: FieldsetOptions): ContainerView =>

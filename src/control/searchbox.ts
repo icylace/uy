@@ -34,44 +34,49 @@ export const freshSearchbox = (value: string): SearchboxData => ({
 
 // -----------------------------------------------------------------------------
 
-const chooseResult = (path: Path) => (id: string) => (value: string) => <S>(state: State<S>): State<S> =>
-  pipe (
-    set ([...path, "results"]) ([]),
-    set ([...path, "value"]) (value),
-    removeInsideEl (id),
-  ) (state)
-
-// updateResults :: AnyFunction -> Path -> String -> State -> Payload -> Action
-const updateResults = (search: Function) =>
+const chooseResult =
   (path: Path) =>
     (id: string) =>
-      <S, P extends SearchboxData, D>(
-        state: State<S>,
-        { value, results }: Payload<P>,
-      ): Transition<S, P, D> => {
-        // It is possible the current value of the searchbox and the value that was
-        // actually searched on could be out of sync if the user continues changing
-        // the searchbox value during the search. In that case another search gets
-        // triggered using the new current searchbox value.
+      (value: string) =>
+        <S>(state: State<S>): State<S> =>
+          pipe (
+            set ([...path, "results"]) ([]),
+            set ([...path, "value"]) (value),
+            removeInsideEl (id),
+          ) (state)
 
-        const curValue = get ([...path, "value"]) (state)
+// updateResults :: AnyFunction -> Path -> String -> State -> Payload -> Action
+const updateResults =
+  (search: Function) =>
+    (path: Path) =>
+      (id: string) =>
+        <S, P extends SearchboxData, D>(
+          state: State<S>,
+          { value, results }: Payload<P>,
+        ): Transition<S, P, D> => {
+          // It is possible the current value of the searchbox and the value that was
+          // actually searched on could be out of sync if the user continues changing
+          // the searchbox value during the search. In that case another search gets
+          // triggered using the new current searchbox value.
 
-        if (curValue !== value) {
-          return [
-            set ([...path, "searching"]) (true) (state),
-            search (updateResults (search) (path) (id)) (curValue),
-          ]
+          const curValue = get ([...path, "value"]) (state)
+
+          if (curValue !== value) {
+            return [
+              set ([...path, "searching"]) (true) (state),
+              search (updateResults (search) (path) (id)) (curValue),
+            ]
+          }
+
+          const newState = pipe (
+            set ([...path, "searching"]) (false),
+            set ([...path, "results"]) (results),
+          ) (state)
+
+          return results.length
+            ? addInsideEl (id) (set ([...path, "results"]) ([])) (newState)
+            : removeInsideEl (id) (newState)
         }
-
-        const newState = pipe (
-          set ([...path, "searching"]) (false),
-          set ([...path, "results"]) (results),
-        ) (state)
-
-        return results.length
-          ? addInsideEl (id) (set ([...path, "results"]) ([])) (newState)
-          : removeInsideEl (id) (newState)
-      }
 
 // update :: (Action -> String -> State) -> Path -> String -> String -> State -> Action
 const update = (search: Function) =>

@@ -3,7 +3,7 @@ export const delist = (key: string) => (xr: { [_: string]: any }): { [k: string]
   return etc
 }
 
-export const exclude = (i: number) => <T>(xs: T[]): T[] =>
+export const exclude = (i: number) => (xs: unknown[]): unknown[] =>
   [...xs.slice (0, i), ...xs.slice (i + 1)]
 
 export const map = <T, U>(f: (_: T) => U) => (xs: T[]): U[] =>

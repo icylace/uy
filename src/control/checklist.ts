@@ -14,18 +14,20 @@ export type ChecklistOptions = ComponentOptions & {
   render: Renderer
 }
 
-type ChecklistItem = {
+export type ChecklistItem = {
   id: string
   selected: boolean
 }
 
-type Checklist = {
+export type Checklist = {
   items: ChecklistItem[]
 }
 
 // TODO:
-const freshChecklist = (items: ChecklistItem[]): Checklist => ({ items })
-// const freshChecklist = (items: string[]): any => ({ items })
+const freshChecklist = (items: ChecklistItem[]): Checklist =>
+  ({ items })
+// const freshChecklist = (items: string[]): any =>
+//   ({ items })
 
 const updateItem = (path: Path) => (i: number) => <S, P>(state: State<S>, value: Payload<P>): State<S> =>
   set ([...path, "items", i]) (value) (state)

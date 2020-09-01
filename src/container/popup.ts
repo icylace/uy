@@ -9,9 +9,9 @@ export type PopupOptions = ComponentOptions & {
   id: string
 }
 
-export const popup = ({ disabled, id, locked, ...etc }: PopupOptions) => (content: Contents): VDOM =>
+export const popup = ({ disabled, id, locked, ...etc }: PopupOptions) => (contents: Contents): VDOM =>
   div ({
     id,
     ...etc,
     class: cc (["uy-container uy-popup", { locked, disabled }, etc.class]),
-  }, content)
+  }, contents)

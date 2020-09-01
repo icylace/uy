@@ -1,6 +1,5 @@
 import type {
   Action,
-  // ClassProp,
   Dispatch,
   Effect,
   EffectData,
@@ -148,17 +147,22 @@ export const onMouseDown = eventFx ("mousedown")
 // const handleValueWith = <S>(f: (a: State<S>, b: string) => any) => <E>(state: State<S>, event: E): any => {
 //   return f (state, event.target.value)
 // }
-export const handleValueWith = (f: Handler) => <S, P, D>(state: State<S>, event: Event): Transition<S, P, D> => {
-  const target = event.target as HTMLInputElement
-  return f (state, target.value)
-}
+export const handleValueWith =
+  (f: Handler) =>
+    <S, P, D>(state: State<S>, event: Event): Transition<S, P, D> => {
+      const target = event.target as HTMLInputElement
+      return f (state, target.value)
+    }
 
 // Invokes a collection of event handlers for the same event.
-export const handleUsing = (handlers: Handler[]) => <S>(state: State<S>, event: Event): State<S> =>
-  handlers.reduce (
-    (newState: State<S>, handler: Handler): State<S> => handler (newState, event),
-    state,
-  )
+export const handleUsing =
+  (handlers: Handler[]) =>
+    <S>(state: State<S>, event: Event): State<S> =>
+      handlers.reduce (
+        (newState: State<S>, handler: Handler): State<S> =>
+          handler (newState, event),
+        state,
+      )
 
 // -----------------------------------------------------------------------------
 
@@ -169,8 +173,11 @@ export const handleUsing = (handlers: Handler[]) => <S>(state: State<S>, event: 
 // https://codesandbox.io/s/czee7
 //
 // TODO:
-export const onOutside = (selector: string) => <S, P, D>(action: Action<S, P, D>) => (state: State<S>, event: Event): Transition<S, P, D> => {
-  const el = document.querySelector (selector)
-  if (!el || el.contains (event.target as Node)) return state
-  return action (state, event)
-}
+export const onOutside =
+  (selector: string) =>
+    (action: Handler) =>
+      <S, P, D>(state: State<S>, event: Event): Transition<S, P, D> => {
+        const el = document.querySelector (selector)
+        if (!el || el.contains (event.target as Node)) return state
+        return action (state, event)
+      }

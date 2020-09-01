@@ -7,7 +7,6 @@ import * as shades from "shades"
 //
 // i.e. `shades.get (...path)` would cause elicit a type-check error.
 
-export type P = number | string
 export type Path = (number | string)[]
 
 export const get = (path: Path) => <T, U>(obj: T): U | null | undefined => {

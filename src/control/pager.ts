@@ -13,7 +13,9 @@ export type PagerOptions = ControlOptions & {
   pageRange: number
 }
 
-export type PagerData = ControlData<number> & { itemsTotal: number }
+export type PagerData = ControlData<number> & {
+  itemsTotal: number
+}
 
 // freshPager :: Int -> Int -> PagerData
 export const freshPager = (itemsTotal: number) => (value: number): PagerData =>
@@ -67,25 +69,29 @@ const rawPager =
       const moreNext = pagerMore (rangeFinishPage < lastPage ? "..." : "")
 
       const navFirst = pagerNav (
-        <S>(state: State<S>): State<S> => update (state, 0),
+        <S>(state: State<S>): State<S> =>
+          update (state, 0),
         [icon ("fas fa-angle-double-left"), " first"],
         data.value !== 0,
       )
 
       const navPrev = pagerNav (
-        <S>(state: State<S>): State<S> => update (state, Math.max (0, data.value - 1)),
+        <S>(state: State<S>): State<S> =>
+          update (state, Math.max (0, data.value - 1)),
         [icon ("fas fa-angle-left"), " prev"],
         data.value !== 0,
       )
 
       const navNext = pagerNav (
-        <S>(state: State<S>): State<S> => update (state, Math.min (lastPage, data.value + 1)),
+        <S>(state: State<S>): State<S> =>
+          update (state, Math.min (lastPage, data.value + 1)),
         ["next ", icon ("fas fa-angle-right")],
         data.value !== lastPage,
       )
 
       const navLast = pagerNav (
-        <S>(state: State<S>): State<S> => update (state, lastPage),
+        <S>(state: State<S>): State<S> =>
+          update (state, lastPage),
         ["last ", icon ("fas fa-angle-double-right")],
         data.value !== lastPage,
       )

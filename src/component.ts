@@ -1,5 +1,7 @@
 import type { State, VDOM } from "hyperapp"
-import type { ComponentOptions, Path } from "./types"
+import type { ComponentOptions } from "./types"
+import type { Path } from "./utility/shadesHelper"
+
 import { get, set } from "./utility/shadesHelper"
 
 // // TODO:

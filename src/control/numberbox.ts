@@ -1,6 +1,7 @@
-import type { State, VDOM } from "hyperapp"
+import type { Payload, State, VDOM } from "hyperapp"
 import type { Content } from "ntml"
-import type { ComponentOptions, Control, ControlData, Handler, Path } from "../types"
+import type { ComponentOptions, Control, ControlData, Handler } from "../types"
+import type { Path } from "../utility/shadesHelper"
 
 import cc from "classcat"
 import * as html from "ntml"
@@ -28,8 +29,8 @@ const sanitizedNumber = (n: string): number =>
   Math.max (0, Number.parseInt (n, 10))
 
 const update = (path: Path) =>
-  <S>(state: State<S>, value: string): State<S> =>
-    set ([...path, "value"]) (sanitizedNumber (value)) (state)
+  <S, P = string>(state: State<S>, value: Payload<P>): State<S> =>
+    set ([...path, "value"]) (sanitizedNumber (value as unknown as string)) (state)
 
 const rawNumberbox = ({ disabled, locked, label, path, ...etc }: NumberboxOptions) => (data: NumberboxData): VDOM =>
   box ("uy-control uy-numberbox") ([

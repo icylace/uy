@@ -1,5 +1,6 @@
 import type { Payload, State, VDOM } from "hyperapp"
-import type { ComponentOptions, Control, Path, Renderer } from "../types"
+import type { ComponentOptions, Control, Renderer } from "../types"
+import type { Path } from "../utility/shadesHelper"
 import type { TableCell } from "../container/table"
 
 import cc from "classcat"

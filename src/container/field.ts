@@ -1,6 +1,7 @@
 import type { State, VDOM } from "hyperapp"
 import type { Content } from "ntml"
-import type { Component, ComponentOptions, Path } from "../types"
+import type { Component, ComponentOptions } from "../types"
+import type { Path } from "../utility/shadesHelper"
 
 import cc from "classcat"
 import { label } from "ntml"

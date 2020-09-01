@@ -1,5 +1,5 @@
 import type { PropList, VDOM, VNode } from "hyperapp"
-import type { Content } from "ntml"
+import type { Contents } from "ntml"
 import type { ComponentOptions } from "../types"
 
 import cc from "classcat"
@@ -9,12 +9,12 @@ import { icon } from "../display/icon"
 import { box } from "./box"
 
 export type TableOptions = ComponentOptions & {
-  headers?: Content[]
+  headers?: Contents
   orderColumn?: string | null
   sortDescending?: boolean
 }
 
-export type TableCell = Content | [PropList, Content]
+export type TableCell = Contents | [PropList, Contents]
 
 export type TableData = {
   rows: TableCell[][]
@@ -22,7 +22,7 @@ export type TableData = {
 
 const freshTable = (rows: TableCell[][]): TableData => ({ rows })
 
-const tableHeader = (orderColumn?: string | null) => (sortDescending: boolean) => (header: Content): VDOM => {
+const tableHeader = (orderColumn?: string | null) => (sortDescending: boolean) => (header: Contents): VDOM => {
   const props = (Array.isArray (header) ? header[0] : {}) as PropList
   const headerContent: Content = Array.isArray (header) ? header[1] : header
   const column = props && "data-column" in props && props["data-column"] as string
@@ -69,7 +69,7 @@ const rawTable = (
       locked,
       disabled,
     }) ([
-      html.table (etc, [
+      html.table (etc as PropList, [
         headers && headers.length
           ? html.thead (headers.map (tableHeader (orderColumn) (!!sortDescending)))
           : null,

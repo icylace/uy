@@ -1,6 +1,7 @@
 import type { Payload, State, VDOM } from "hyperapp"
 import type { Content } from "ntml"
-import type { Control, ControlOptions, Path } from "../types"
+import type { Control, ControlOptions } from "../types"
+import type { Path } from "../utility/shadesHelper"
 
 import cc from "classcat"
 import { div } from "ntml"

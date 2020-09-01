@@ -1,5 +1,6 @@
 import type { Payload, State, Transition, VDOM } from "hyperapp"
-import type { ComponentOptions, Control, Path } from "../types"
+import type { ComponentOptions, Control } from "../types"
+import type { Path } from "../utility/shadesHelper"
 
 import cc from "classcat"
 import { input, label, li, span, ul } from "ntml"

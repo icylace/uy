@@ -1,6 +1,5 @@
-import type { PropList, VDOM } from "hyperapp"
-import type { Content, Contents } from "ntml"
-import type { ComponentOptions } from "../types"
+import type { ClassProp, PropList, VDOM } from "hyperapp"
+import type { Contents } from "ntml"
 
 import cc from "classcat"
 import * as html from "ntml"
@@ -8,13 +7,17 @@ import { component } from "../component"
 import { icon } from "../display/icon"
 import { box } from "./box"
 
-export type TableOptions = ComponentOptions & {
-  headers?: Content[]
+export type TableCell = Contents | [PropList, Contents]
+
+export type TableOptions = {
+  [_: string]: unknown
+  class?: ClassProp
+  disabled: boolean
+  headers?: TableCell[]
+  locked: boolean
   orderColumn?: string | null
   sortDescending?: boolean
 }
-
-export type TableCell = Contents | [PropList, Contents]
 
 export type TableData = {
   rows: TableCell[][]
@@ -22,25 +25,33 @@ export type TableData = {
 
 const freshTable = (rows: TableCell[][]): TableData => ({ rows })
 
-const tableHeader = (orderColumn?: string | null) => (sortDescending: boolean) => (header: Contents): VDOM => {
-  const props = (Array.isArray (header) ? header[0] : {}) as PropList
-  const headerContent = Array.isArray (header) ? header[1] as Content : header as Content
-  const column = props && "data-column" in props && props["data-column"] as string
-  const sorting = orderColumn != null && orderColumn === column
-  const sortIndicator =
-    sorting
-      ? icon ({
-        glyphicon: true,
-        "glyphicon-chevron-down": sortDescending,
-        "glyphicon-chevron-up": !sortDescending,
-        "sort-indicator": true,
-      })
-      : null
-  return html.th ({
-    ...props,
-    class: cc ([{ "sort-column": sorting }, props.class]),
-  }, [headerContent, sortIndicator])
-}
+const tableHeader =
+  (orderColumn?: string | null) =>
+    (sortDescending: boolean) =>
+      (header: Contents | [PropList, Contents]): VDOM => {
+        const props = Array.isArray (header) ? header[0] : {}
+        const headerContents = Array.isArray (header) ? header[1] : header
+        const column = props && "data-column" in props && props["data-column"]
+        const sorting = orderColumn != null && orderColumn === column
+        const sortIndicator =
+          sorting
+            ? icon ({
+              glyphicon: true,
+              "glyphicon-chevron-down": sortDescending,
+              "glyphicon-chevron-up": !sortDescending,
+              "sort-indicator": true,
+            })
+            : null
+        return html.th (
+          {
+            ...props,
+            class: cc ([{ "sort-column": sorting }, props.class]),
+          } as PropList,
+          Array.isArray (headerContents)
+            ? [...headerContents, sortIndicator]
+            : [headerContents, sortIndicator],
+        )
+      }
 
 const tableRow = (row: TableCell[]): VDOM =>
   !row || !Array.isArray (row)
@@ -70,7 +81,7 @@ const rawTable = (
       disabled,
     }) ([
       html.table (etc as PropList, [
-        headers && headers.length
+        Array.isArray (headers) && headers.length
           ? html.thead (headers.map (tableHeader (orderColumn) (!!sortDescending)))
           : null,
         html.tbody (data.rows.map (tableRow)),

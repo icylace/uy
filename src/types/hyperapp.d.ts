@@ -1,3 +1,5 @@
+// These definitions are known to work for TypeScript 4.0.
+
 declare module "hyperapp" {
   // A Hyperapp application instance has an initial state and a base view.
   // It must also be mounted over an available DOM element.
@@ -124,10 +126,10 @@ declare module "hyperapp" {
 
   // ---------------------------------------------------------------------------
 
-  // Due to current limitations with TypeScript (which will hopefully be
-  // addressed in the future: https://github.com/microsoft/TypeScript/pull/40336),
-  // modified copies of relevant event maps from TypeScript's "lib.dom.d.ts"
-  // definition file were put here to assist with defining `EventActions`.
+  // Due to current limitations with TypeScript (which should get resolved in
+  // the future: https://github.com/microsoft/TypeScript/pull/40336), here is
+  // a collection of modified copies of relevant event maps from TypeScript's
+  // "lib.dom.d.ts" definition file to assist with defining `EventActions`:
 
   type OnElementEventMap = {
     "onfullscreenchange": Event

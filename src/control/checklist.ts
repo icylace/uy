@@ -24,11 +24,8 @@ export type Checklist = {
   items: ChecklistItem[]
 }
 
-// TODO:
 const freshChecklist = (items: ChecklistItem[]): Checklist =>
   ({ items })
-// const freshChecklist = (items: string[]): any =>
-//   ({ items })
 
 const updateItem = (path: Path) => (i: number) => <S, P>(state: State<S>, value: Payload<P>): State<S> =>
   set ([...path, "items", i]) (value) (state)

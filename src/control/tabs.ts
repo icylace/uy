@@ -1,7 +1,8 @@
-import type { ClassProp, Payload, State, Transition, VDOM, VNode } from "hyperapp"
+// import type { ClassProp, EffectDescriptor, Payload, State, Transition, VDOM, VNode } from "hyperapp"
+import type { ClassProp, EffectDescriptor, VDOM, VNode } from "hyperapp"
 import type { Content } from "ntml"
 import type { Control, Handler } from "../types"
-import type { FxData } from "./tabs.effect"
+// import type { FxData } from "./tabs.effect"
 
 import cc from "classcat"
 import { div } from "ntml"
@@ -45,10 +46,15 @@ const tab = (update: Handler) => (activeTab: string) => (item: Content, i: numbe
   return div (
     {
       class: { "uy-tabs-item": true, selected },
-      onclick: <S, P extends Event, D extends FxData>(state: State<S>, event: Payload<P>): Transition<S, P, D> =>
-        selected
-          ? [update (state, String (i)), scrollIntoView (event.target as Element)]
-          : update (state, String (i)),
+      onclick: (state, event) => {
+        if (!event) return state
+        const target = event.target as Element
+        // return update (state, String (i))
+        return [update (state, String (i)), scrollIntoView (target)]
+        // return selected
+        //   ? [update (state, String (i)), scrollIntoView (target)]
+        //   : update (state, String (i))
+      },
     },
     item,
   )

@@ -5,7 +5,6 @@ import type { Path } from "../utility/shadesHelper"
 
 import cc from "classcat"
 import { option, select } from "ntml"
-import { handleValueWith } from "../utility/hyperappHelper"
 import { set } from "../utility/shadesHelper"
 import { component } from "../component"
 import { box } from "../container/box"
@@ -38,7 +37,11 @@ const rawDropdown =
               disabled,
               readonly: locked,
               value: data.value,
-              onchange: handleValueWith (update),
+              onchange: (state, event) => {
+                if (!event) return state
+                const target = event.target as HTMLInputElement
+                return update (state, target.value)
+              },
               onfocus: set ([...path, "focused"]) (true),
               onblur: set ([...path, "focused"]) (false),
               ...etc,

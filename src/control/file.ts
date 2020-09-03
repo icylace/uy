@@ -1,4 +1,4 @@
-import type { State, VDOM } from "hyperapp"
+import type { VDOM } from "hyperapp"
 import type { ComponentOptions, Control, ControlData, Handler } from "../types"
 
 import cc from "classcat"
@@ -35,7 +35,8 @@ const rawFile =
             type: "file",
             // TODO:
             // - probably needs to be rethought
-            onchange: <S>(state: State<S>, event: Event): State<S> => {
+            onchange: (state, event) => {
+              if (!event) return state
               const target = event.target as HTMLInputElement
               const parent = target.parentNode as HTMLElement
               parent.dataset.text =

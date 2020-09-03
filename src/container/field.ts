@@ -1,13 +1,17 @@
 import type { State, VDOM } from "hyperapp"
 import type { Content } from "ntml"
-import type { Component, ComponentOptions } from "../types"
+import type { Component } from "../types"
 import type { Path } from "../utility/shadesHelper"
 
 import cc from "classcat"
 import { label } from "ntml"
 import { box } from "./box"
 
-export type FieldOptions = ComponentOptions
+export type FieldOptions = {
+  [_: string]: unknown
+  disabled: boolean
+  locked: boolean
+}
 
 export const field = (f: Component) =>
   (title: Content) =>

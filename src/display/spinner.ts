@@ -1,10 +1,14 @@
-import type { VDOM } from "hyperapp"
-import type { ComponentOptions } from "../types"
+import type { ClassProp, VDOM } from "hyperapp"
 
 import cc from "classcat"
 import { span } from "ntml"
 
-const spinner = (props: ComponentOptions): VDOM =>
-  span ({ ...props, class: cc (["uy-indicator uy-spinner", props.class]) })
+export type SpinnerOptions = {
+  [_: string]: unknown
+  class?: ClassProp
+  disabled: boolean
+  locked: boolean
+}
 
-export { spinner }
+export const spinner = (props: SpinnerOptions): VDOM =>
+  span ({ ...props, class: cc (["uy-indicator uy-spinner", props.class]) })

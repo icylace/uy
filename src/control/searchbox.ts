@@ -100,6 +100,23 @@ const update = (search: Function) =>
 const searchResult = (path: Path) => (id: string) => (x: string): VDOM =>
   li ({ onclick: chooseResult (path) (id) (x) }, x)
 
+// We don't let certain keys unnecessarily affect searching.
+const noopKeys = [
+  "Alt",
+  "ArrowLeft",
+  "ArrowRight",
+  "CapsLock",
+  "Control",
+  "End",
+  "Home",
+  "Hyper",
+  "Meta",
+  "NumLock",
+  "ScrollLock",
+  "Shift",
+  "Super",
+]
+
 const rawSearchbox = ({ disabled, locked, path, search, ...etc }: SearchboxOptions) => (data: SearchboxData): VDOM => {
   const id = path.join ("-")
 
@@ -110,49 +127,24 @@ const rawSearchbox = ({ disabled, locked, path, search, ...etc }: SearchboxOptio
     type: "search",
     onfocus: set ([...path, "focused"]) (true),
     onblur: set ([...path, "focused"]) (false),
-    onkeyup: <S, P extends KeyboardEvent, D>(
-      state: State<S>,
-      { key, target }: Payload<P>,
-    ): Transition<S, P, D> => {
-      // We don't let certain keys unnecessarily affect searching.
-      const noopKeys = [
-        "Alt",
-        "ArrowLeft",
-        "ArrowRight",
-        "CapsLock",
-        "Control",
-        "End",
-        "Home",
-        "Hyper",
-        "Meta",
-        "NumLock",
-        "ScrollLock",
-        "Shift",
-        "Super",
-      ]
-      if (noopKeys.includes (key)) {
-        return state
-      }
-      const el = target as HTMLInputElement
-      return update (search) (path) (id) (el.value) (state)
+    onkeyup: (state, event) => {
+      if (!event) return state
+      if (noopKeys.includes (event.key)) return state
+      const target = event.target as HTMLInputElement
+      return update (search) (path) (id) (target.value) (state)
     },
-
     // Here we're using the non-standard `search` event because it can detect
     // when a searchbox's clear button is used. The `input` event can also
     // detect it but it will also detect keypresses which makes things
     // less convenient since it would conflict with how we're using
     // the `keyup` event.
     // https://stackoverflow.com/a/25569880
-    onsearch: <S, P extends Event, D>(
-      state: State<S>,
-      { target }: Payload<P>,
-    ): Transition<S, P, D> => {
-      const el = target as HTMLInputElement
-      return update (search) (path) (id) (el.value) (state)
+    onsearch: (state, event) => {
+      if (!event) return state
+      const target = event.target as HTMLInputElement
+      return update (search) (path) (id) (target.value) (state)
     },
-
     ...etc,
-
     class: cc (["uy-input", { locked, disabled }, etc.class]),
   })
 
@@ -162,34 +154,34 @@ const rawSearchbox = ({ disabled, locked, path, search, ...etc }: SearchboxOptio
     "uy-control": true,
     "uy-searchbox": true,
   }) ([
-      label ({
-        class: {
-          "uy-searchbox-label": true,
-          focus: data.focused,
-          busy: data.searching,
-          locked,
-          disabled,
-        },
-      }, [
-        inputSearch,
-        span ({ onclick: update (search) (path) (id) (data.value) }, [
-          icon ({
-            fas: true,
-            "fa-spinner": data.searching,
-            "fa-pulse": data.searching,
-            "fa-search": !data.searching,
-          }),
-        ]),
+    label ({
+      class: {
+        "uy-searchbox-label": true,
+        focus: data.focused,
+        busy: data.searching,
+        locked,
+        disabled,
+      },
+    }, [
+      inputSearch,
+      span ({ onclick: update (search) (path) (id) (data.value) }, [
+        icon ({
+          fas: true,
+          "fa-spinner": data.searching,
+          "fa-pulse": data.searching,
+          "fa-search": !data.searching,
+        }),
       ]),
+    ]),
 
-      data.results.length && !disabled
-        ? popup ({ locked, disabled, id }) ([
-          ul (
-            { class: "uy-searchbox-results uy-scroller" },
-            data.results.map (searchResult (path) (id)),
-          ),
-        ])
-        : null,
+    data.results.length && !disabled
+      ? popup ({ locked, disabled, id }) ([
+        ul (
+          { class: "uy-searchbox-results uy-scroller" },
+          data.results.map (searchResult (path) (id)),
+        ),
+      ])
+      : null,
   ])
 }
 

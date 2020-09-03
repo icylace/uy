@@ -3,7 +3,6 @@ import type { Control, ControlData, Handler } from "../types"
 
 import cc from "classcat"
 import { input } from "ntml"
-import { handleValueWith } from "../utility/hyperappHelper"
 import { component } from "../component"
 import { box } from "../container/box"
 
@@ -29,7 +28,11 @@ const rawDatePicker = ({ disabled, locked, update, ...etc }: DatePickerOptions) 
       readonly: locked,
       value: data.value,
       type: "date",
-      onchange: handleValueWith (update),
+      onchange: (state, event) => {
+        if (!event) return state
+        const target = event.target as HTMLInputElement
+        return update (state, target.value)
+      },
       ...etc,
       class: cc (["uy-input", { locked, disabled }, etc.class]),
     }),
@@ -51,7 +54,11 @@ const rawDatetimeLocalPicker =
           readonly: locked,
           value: data.value,
           type: "datetime-local",
-          onchange: handleValueWith (update),
+          onchange: (state, event) => {
+            if (!event) return state
+            const target = event.target as HTMLInputElement
+            return update (state, target.value)
+          },
           ...etc,
           class: cc (["uy-input", { locked, disabled }, etc.class]),
         }),
@@ -71,7 +78,11 @@ const rawMonthPicker = ({ disabled, locked, update, ...etc }: DatePickerOptions)
       readonly: locked,
       value: data.value,
       type: "month",
-      onchange: handleValueWith (update),
+      onchange: (state, event) => {
+        if (!event) return state
+        const target = event.target as HTMLInputElement
+        return update (state, target.value)
+      },
       ...etc,
       class: cc (["uy-input", { locked, disabled }, etc.class]),
     }),
@@ -91,7 +102,11 @@ const rawTimePicker = ({ disabled, locked, update, ...etc }: DatePickerOptions) 
       readonly: locked,
       value: data.value,
       type: "time",
-      onchange: handleValueWith (update),
+      onchange: (state, event) => {
+        if (!event) return state
+        const target = event.target as HTMLInputElement
+        return update (state, target.value)
+      },
       ...etc,
       class: cc (["uy-input", { locked, disabled }, etc.class]),
     }),
@@ -110,7 +125,11 @@ const rawWeekPicker = ({ disabled, locked, update, ...etc }: DatePickerOptions) 
       readonly: locked,
       value: data.value,
       type: "week",
-      onchange: handleValueWith (update),
+      onchange: (state, event) => {
+        if (!event) return state
+        const target = event.target as HTMLInputElement
+        return update (state, target.value)
+      },
       ...etc,
       class: cc (["uy-input", { locked, disabled }, etc.class]),
     }),

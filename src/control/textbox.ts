@@ -1,13 +1,16 @@
-import type { VDOM } from "hyperapp"
-import type { ComponentOptions, Control, ControlData, Handler } from "../types"
+import type { ClassProp, VDOM } from "hyperapp"
+import type { Control, ControlData, Handler } from "../types"
 
 import cc from "classcat"
 import { input } from "ntml"
-import { handleValueWith } from "../utility/hyperappHelper"
 import { component } from "../component"
 import { box } from "../container/box"
 
-export type TextboxOptions = ComponentOptions & {
+export type TextboxOptions = {
+  [_: string]: unknown
+  class?: ClassProp
+  disabled: boolean
+  locked: boolean
   update: Handler
 }
 
@@ -25,7 +28,11 @@ export const rawTextbox =
           readonly: locked,
           value: data.value,
           type: "text",
-          onchange: handleValueWith (update),
+          onchange: (state, event) => {
+            if (!event) return state
+            const target = event.target as HTMLInputElement
+            return update (state, target.value)
+          },
           ...etc,
           class: cc (["uy-input", { locked, disabled }, etc.class]),
         }),

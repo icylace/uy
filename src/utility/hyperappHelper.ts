@@ -4,6 +4,7 @@ import type {
   Effect,
   EffectData,
   EffectDescriptor,
+  // Payload,
   State,
   Transition,
   Unsubscribe,
@@ -128,15 +129,15 @@ export const fx = (f: Effect) => <D>(x: EffectData<D>): EffectDescriptor<D> =>
 // Based on:
 // https://github.com/jorgebucaran/hyperapp/issues/752#issue-355556484
 
-type FxListenerData<S, P, D> = { action: Action<S, P, D> }
+type FxListenerData<P> = { action: Action<P> }
 
-const windowListener = (name: string) => <S, D>(dispatch: Dispatch, { action }: FxListenerData<S, Event, D>): Unsubscribe => {
+const windowListener = (name: string) => (dispatch: Dispatch, { action }: FxListenerData<Event>): Unsubscribe => {
   const listener = (event: Event): void => dispatch (action, event)
   window.addEventListener (name, listener)
   return (): void => window.removeEventListener (name, listener)
 }
 
-const eventFx = (name: string) => <S, P, D>(action: Action<S, P, D>): EffectDescriptor<FxListenerData<S, P, D>> =>
+const eventFx = (name: string) => <P>(action: Action<P>): EffectDescriptor<FxListenerData<P>> =>
   fx (windowListener (name) as Effect) ({ action })
 
 export const onMouseDown = eventFx ("mousedown")
@@ -147,12 +148,13 @@ export const onMouseDown = eventFx ("mousedown")
 // const handleValueWith = <S>(f: (a: State<S>, b: string) => any) => <E>(state: State<S>, event: E): any => {
 //   return f (state, event.target.value)
 // }
-export const handleValueWith =
-  (f: Handler) =>
-    <S, P, D>(state: State<S>, event: Event): Transition<S, P, D> => {
-      const target = event.target as HTMLInputElement
-      return f (state, target.value)
-    }
+
+// export const handleValueWith =
+//   (f: Handler) =>
+//     <S, P extends Event, D>(state: State<S>, event: Payload<P>): Transition<S, P, D> => {
+//       const target = event.target as HTMLInputElement
+//       return f (state, target.value)
+//     }
 
 // Invokes a collection of event handlers for the same event.
 export const handleUsing =

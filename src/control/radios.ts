@@ -4,7 +4,6 @@ import type { Control, ControlData, ControlOptions } from "../types"
 
 import cc from "classcat"
 import * as html from "ntml"
-import { handleValueWith } from "../utility/hyperappHelper"
 import { component } from "../component"
 import { box } from "../container/box"
 
@@ -30,7 +29,11 @@ const rawRadios =
               value,
               checked: value === data.value,
               type: "radio",
-              onchange: handleValueWith (update),
+              onchange: (state, event) => {
+                if (!event) return state
+                const target = event.target as HTMLInputElement
+                return update (state, target.value)
+              },
               ...etc,
               class: cc (["uy-input", { locked, disabled }, etc.class]),
             }),

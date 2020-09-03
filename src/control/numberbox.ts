@@ -5,7 +5,6 @@ import type { Path } from "../utility/shadesHelper"
 
 import cc from "classcat"
 import * as html from "ntml"
-import { handleValueWith } from "../utility/hyperappHelper"
 import { set } from "../utility/shadesHelper"
 import { component } from "../component"
 import { box } from "../container/box"
@@ -29,7 +28,7 @@ const sanitizedNumber = (n: string): number =>
   Math.max (0, Number.parseInt (n, 10))
 
 const update = (path: Path) =>
-  <S, P = string>(state: State<S>, value: Payload<P>): State<S> =>
+  <S>(state: State<S>, value: Payload<string>): State<S> =>
     set ([...path, "value"]) (sanitizedNumber (value as unknown as string)) (state)
 
 const rawNumberbox = ({ disabled, locked, label, path, ...etc }: NumberboxOptions) => (data: NumberboxData): VDOM =>
@@ -41,7 +40,11 @@ const rawNumberbox = ({ disabled, locked, label, path, ...etc }: NumberboxOption
         readonly: locked,
         type: "number",
         value: data.value,
-        onchange: handleValueWith (update (path)),
+        onchange: (state, event) => {
+          if (!event) return state
+          const target = event.target as HTMLInputElement
+          return update (path) (state, target.value)
+        },
         onfocus: set ([...path, "focused"]) (true),
         onblur: set ([...path, "focused"]) (false),
         ...etc,

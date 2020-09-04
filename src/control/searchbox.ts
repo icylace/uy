@@ -54,7 +54,7 @@ const updateResults =
         <S, P extends SearchboxData, D>(
           state: State<S>,
           { value, results }: Payload<P>,
-        ): Transition<S, P, D> => {
+        ): Transition<S, D> => {
           // It is possible the current value of the searchbox and the value that was
           // actually searched on could be out of sync if the user continues changing
           // the searchbox value during the search. In that case another search gets
@@ -84,7 +84,7 @@ const update = (search: Function) =>
   (path: Path) =>
     (id: string) =>
       (value: string) =>
-        <S, P, D>(state: State<S>): Transition<S, P, D> =>
+        <S, D>(state: State<S>): Transition<S, D> =>
           get ([...path, "searching"]) (state)
             ? set ([...path, "value"]) (value) (state)
             : [

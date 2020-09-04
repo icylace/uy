@@ -178,7 +178,7 @@ export const handleUsing =
 export const onOutside =
   (selector: string) =>
     (action: Handler) =>
-      <S, P, D>(state: State<S>, event: Event): Transition<S, P, D> => {
+      <S, D>(state: State<S>, event: Event): Transition<S, D> => {
         const el = document.querySelector (selector)
         if (!el || el.contains (event.target as Node)) return state
         return action (state, event)

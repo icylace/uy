@@ -53,7 +53,7 @@ const mouseDownSubscription = pipe (
 // // TODO:
 // const uy = (path: Path)
 
-export const uyAppConfig = <S, P, D>(config: App<S, P, D>): App<S, P, D> => ({
+export const uyAppConfig = <S, D>(config: App<S, D>): App<S, D> => ({
   ...config,
   // TODO: account for any subscriptions from `config`
   subscriptions: <S>(state: State<S>): Subscriber[] => [mouseDownSubscription (state)],

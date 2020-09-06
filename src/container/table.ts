@@ -1,5 +1,5 @@
 import type { ClassProp, PropList, VDOM } from "hyperapp"
-import type { Contents } from "ntml"
+import type { Content, Contents } from "ntml"
 
 import cc from "classcat"
 import * as html from "ntml"
@@ -8,60 +8,59 @@ import { icon } from "../display/icon"
 import { box } from "./box"
 
 export type TableCell<S> = Contents<S> | [PropList<S>, Contents<S>]
+export type TableRow<S> = TableCell<S>[]
 
 export type TableOptions<S> = {
   [_: string]: unknown
   class?: ClassProp
   disabled: boolean
-  headers?: TableCell<S>[]
+  headers?: TableRow<S>
   locked: boolean
   orderColumn?: string | null
   sortDescending?: boolean
 }
 
 export type TableData<S> = {
-  rows: TableCell<S>[][]
+  rows: TableRow<S>[]
 }
 
-const freshTable = <S>(rows: TableCell<S>[][]): TableData<S> => ({ rows })
+const freshTable = <S>(rows: TableRow<S>[]): TableData<S> =>
+  ({ rows })
 
 const tableHeader =
   (orderColumn?: string | null) =>
     (sortDescending: boolean) =>
-      <S>(header: Contents<S> | [PropList<S>, Contents<S>]): VDOM<S> => {
-        const props = Array.isArray (header) ? header[0] : {}
-        const headerContents = Array.isArray (header) ? header[1] : header
+      <S>(header: TableCell<S>): VDOM<S> => {
+        const props = (Array.isArray (header) ? header[0] : {}) as PropList<S>
+        const headerContents: Content<S>[] = (Array.isArray (header) ? header[1] : [header]) as Content<S>[]
         const column = props && "data-column" in props && props["data-column"]
         const sorting = orderColumn != null && orderColumn === column
-        const sortIndicator =
-          sorting
-            ? icon ({
-              glyphicon: true,
-              "glyphicon-chevron-down": sortDescending,
-              "glyphicon-chevron-up": !sortDescending,
-              "sort-indicator": true,
-            })
-            : null
         return html.th (
           {
             ...props,
             class: cc ([{ "sort-column": sorting }, props.class]),
           },
-          Array.isArray (headerContents)
-            ? [...headerContents, sortIndicator]
-            : [headerContents, sortIndicator],
-        )
+          [
+            ...headerContents,
+            sorting
+              ? icon ({
+                glyphicon: true,
+                "glyphicon-chevron-down": sortDescending,
+                "glyphicon-chevron-up": !sortDescending,
+                "sort-indicator": true,
+              })
+              : null,
+          ],
+        ) as VDOM<S>
       }
 
-const tableRow = <S>(row: TableCell<S>[]): VDOM<S> =>
-  !row || !Array.isArray (row)
-    ? row
-    : html.tr (row.map (
-      (x: TableCell<S>): VDOM<S> =>
-        Array.isArray (x)
-          ? html.td (x[0], x[1])
-          : html.td (x),
-    ))
+const tableCell = <S>(x: TableCell<S>): VDOM<S> =>
+  (Array.isArray (x)
+    ? html.td (x[0], x[1])
+    : html.td (x)) as VDOM<S>
+
+const tableRow = <S>(row: TableRow<S>): VDOM<S> =>
+  html.tr (row.map (tableCell)) as VDOM<S>
 
 const rawTable = <S>(
   {
@@ -88,7 +87,6 @@ const rawTable = <S>(
         ]),
       ])
 
-// table :: TableOptions -> [String] -> State -> VDOM
 const table = component (rawTable)
 
 export { freshTable, rawTable, table }

@@ -22,4 +22,4 @@ export type Component<S> = (_: ComponentOptions) => (_: Path) => (_: State<S>) =
 export type ContainerView<S> = (_: View<S>[]) => View<S>
 export type Control<S, P> = (_: ControlOptions<S, P>) => (_: Path) => (_: State<S>) => VDOM<S>
 export type Renderer<S> = (_: Contents<S>) => VDOM<S>
-export type Transform<S, P> = (state: State<S>, payload?: Payload<P>) => Transition<S>
+export type Transform<S, P> = (state: State<S>, props?: Payload<P>) => Transition<S>

@@ -1,7 +1,7 @@
 import type { ClassProp, Payload, State, VDOM } from "hyperapp"
 import type { Renderer } from "../types"
 import type { Path } from "../utility/shadesHelper"
-import type { TableCell } from "../container/table"
+import type { TableData, TableRow } from "../container/table"
 
 import cc from "classcat"
 import { div } from "ntml"
@@ -37,7 +37,7 @@ const updateItem = (path: Path) => (i: number) => <S, P>(state: State<S>, value:
 const rawChecklist =
   <S>({ disabled, locked, path, render, ...etc }: ChecklistOptions<S>) =>
     (data: Checklist): VDOM<S> => {
-      const item = (x: ChecklistItem, i: number): TableCell<S>[] =>
+      const item = (x: ChecklistItem, i: number): TableRow<S> =>
         [
           [
             { class: { "uy-horizontal": x.id === "other" } },
@@ -52,12 +52,16 @@ const rawChecklist =
           ],
         ]
 
+      const tableData: TableData<S> = {
+        rows: data.items.map (item),
+      }
+
       return div (
         {
           ...etc,
           class: cc (["uy-container uy-checklist", { locked, disabled }, etc.class]),
         },
-        [rawTable ({ disabled, locked }) ({ rows: data.items.map (item) })],
+        [rawTable<S> ({ disabled, locked }) (tableData)],
       ) as VDOM<S>
     }
 

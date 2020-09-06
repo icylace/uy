@@ -14,14 +14,16 @@ export type OverlayOptions = {
   locked: boolean
 }
 
-const rawOverlay = ({ disabled, locked, ...etc }: OverlayOptions) => <S>(contents: Contents<S>): VDOM<S> =>
-  box ("uy-overlay-background") ([
-    div ({
-      disabled,
-      ...etc,
-      class: cc (["uy-overlay", { locked, disabled }, etc.class]),
-    }, contents),
-  ])
+const rawOverlay =
+  ({ disabled, locked, ...etc }: OverlayOptions) =>
+    <S>(contents: Contents<S>): VDOM<S> =>
+      box ("uy-overlay-background") ([
+        div ({
+          disabled,
+          ...etc,
+          class: cc (["uy-overlay", { locked, disabled }, etc.class]),
+        }, contents),
+      ])
 
 export const overlay = <S>(props: OverlayOptions): ContainerView<S> =>
   ui (rawOverlay (props))

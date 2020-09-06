@@ -16,19 +16,17 @@ export type FieldsetOptions<S> = {
 
 const rawFieldset =
   <S>({ disabled, locked, label, ...etc }: FieldsetOptions<S>) =>
-    (contents: Contents<S>): VDOM<S> =>
-      html.fieldset (
+    (contents: Contents<S>): VDOM<S> => {
+      const stuff = Array.isArray (contents) ? contents : [contents]
+      return html.fieldset (
         {
           disabled,
           ...etc,
           class: cc (["uy-fieldset", { locked, disabled }, etc.class]),
         },
-        label
-          ? Array.isArray (contents)
-            ? [html.legend (label), ...contents]
-            : [html.legend (label), contents]
-          : contents,
+        label ? [html.legend (label), ...stuff] : stuff,
       ) as VDOM<S>
+    }
 
 export const fieldset = <S>(props: FieldsetOptions<S>): ContainerView<S> =>
   ui (rawFieldset (props))

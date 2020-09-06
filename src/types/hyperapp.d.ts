@@ -7,8 +7,8 @@ declare module "hyperapp" {
 
   // A Hyperapp application instance has an initial state and a base view.
   // It must also be mounted over an available DOM element.
-  type App<S> = Readonly<{
-    init: Transition<S>
+  type App<S, P = unknown> = Readonly<{
+    init: Transition<S> | Action<S, P>
     view: View<S>
     node: Node
     subscriptions?: Subscription<S>

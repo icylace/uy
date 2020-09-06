@@ -13,11 +13,11 @@ export type FieldOptions = {
   locked: boolean
 }
 
-export const field = (f: Component) =>
-  (title: Content) =>
+export const field = <S>(f: Component<S>) =>
+  (title: Content<S>) =>
     ({ disabled, locked, ...etc }: FieldOptions) =>
       (path: Path) =>
-        <S>(state: State<S>): VDOM =>
+        (state: State<S>): VDOM<S> =>
           box ("uy-container uy-field") ([
             label (
               { ...etc, class: cc ([{ locked, disabled }, etc.class]) },

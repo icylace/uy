@@ -11,7 +11,7 @@ import { get, set } from "./utility/shadesHelper"
 const component = (f: Function) =>
   (options: ComponentOptions) =>
     (path: Path) =>
-      <S>(state: State<S>): VDOM => {
+      <S>(state: State<S>): VDOM<S> => {
         const data = get (path) (state)
         const update = (state: State<S>, value: any): any =>
           set ([...path, "value"]) (value) (state)

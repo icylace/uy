@@ -7,28 +7,28 @@ import { component } from "../component"
 import { icon } from "../display/icon"
 import { box } from "./box"
 
-export type TableCell = Contents | [PropList, Contents]
+export type TableCell<S> = Contents<S> | [PropList<S>, Contents<S>]
 
-export type TableOptions = {
+export type TableOptions<S> = {
   [_: string]: unknown
   class?: ClassProp
   disabled: boolean
-  headers?: TableCell[]
+  headers?: TableCell<S>[]
   locked: boolean
   orderColumn?: string | null
   sortDescending?: boolean
 }
 
-export type TableData = {
-  rows: TableCell[][]
+export type TableData<S> = {
+  rows: TableCell<S>[][]
 }
 
-const freshTable = (rows: TableCell[][]): TableData => ({ rows })
+const freshTable = <S>(rows: TableCell<S>[][]): TableData<S> => ({ rows })
 
 const tableHeader =
   (orderColumn?: string | null) =>
     (sortDescending: boolean) =>
-      (header: Contents | [PropList, Contents]): VDOM => {
+      <S>(header: Contents<S> | [PropList<S>, Contents<S>]): VDOM<S> => {
         const props = Array.isArray (header) ? header[0] : {}
         const headerContents = Array.isArray (header) ? header[1] : header
         const column = props && "data-column" in props && props["data-column"]
@@ -46,24 +46,24 @@ const tableHeader =
           {
             ...props,
             class: cc ([{ "sort-column": sorting }, props.class]),
-          } as PropList,
+          },
           Array.isArray (headerContents)
             ? [...headerContents, sortIndicator]
             : [headerContents, sortIndicator],
         )
       }
 
-const tableRow = (row: TableCell[]): VDOM =>
+const tableRow = <S>(row: TableCell<S>[]): VDOM<S> =>
   !row || !Array.isArray (row)
     ? row
     : html.tr (row.map (
-      (x: TableCell): VDOM =>
+      (x: TableCell<S>): VDOM<S> =>
         Array.isArray (x)
           ? html.td (x[0], x[1])
           : html.td (x),
     ))
 
-const rawTable = (
+const rawTable = <S>(
   {
     disabled,
     locked,
@@ -71,22 +71,22 @@ const rawTable = (
     orderColumn,
     sortDescending,
     ...etc
-  }: TableOptions,
+  }: TableOptions<S>,
 ) =>
-  (data: TableData): VDOM =>
-    box ({
-      "uy-control": true,
-      "uy-table": true,
-      locked,
-      disabled,
-    }) ([
-      html.table (etc as PropList, [
-        Array.isArray (headers) && headers.length
-          ? html.thead (headers.map (tableHeader (orderColumn) (!!sortDescending)))
-          : null,
-        html.tbody (data.rows.map (tableRow)),
-      ]),
-    ])
+    (data: TableData<S>): VDOM<S> =>
+      box ({
+        "uy-control": true,
+        "uy-table": true,
+        locked,
+        disabled,
+      }) ([
+        html.table (etc, [
+          Array.isArray (headers) && headers.length
+            ? html.thead (headers.map (tableHeader (orderColumn) (!!sortDescending)))
+            : null,
+          html.tbody (data.rows.map (tableRow)),
+        ]),
+      ])
 
 // table :: TableOptions -> [String] -> State -> VDOM
 const table = component (rawTable)

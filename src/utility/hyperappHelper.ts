@@ -4,7 +4,7 @@ import type {
   Effect,
   EffectData,
   EffectDescriptor,
-  // Payload,
+  Payload,
   State,
   Transition,
   Unsubscribe,
@@ -121,7 +121,7 @@ export const glam = (xr: { [_: string]: boolean }): string =>
 
 // Based on:
 // https://github.com/jorgebucaran/hyperapp/blob/f30e70e77513948d2a1286ea6509b4e0c1de8999/lib/dom/src/index.js
-export const fx = (f: Effect) => <D>(x: EffectData<D>): EffectDescriptor<D> =>
+export const fx = <S>(f: Effect<S>) => (x: EffectData): EffectDescriptor<S> =>
   [f, x]
 
 // -----------------------------------------------------------------------------
@@ -129,16 +129,16 @@ export const fx = (f: Effect) => <D>(x: EffectData<D>): EffectDescriptor<D> =>
 // Based on:
 // https://github.com/jorgebucaran/hyperapp/issues/752#issue-355556484
 
-type FxListenerData<P> = { action: Action<P> }
+type FxListenerData<S, P> = { action: Action<S, P> }
 
-const windowListener = (name: string) => (dispatch: Dispatch, { action }: FxListenerData<Event>): Unsubscribe => {
-  const listener = (event: Event): void => dispatch (action, event)
+const windowListener = (name: string) => <S>(dispatch: Dispatch<S>, props: FxListenerData<S, Event>): Unsubscribe => {
+  const listener = <P>(event: Payload<P>): void => dispatch (props.action, event)
   window.addEventListener (name, listener)
   return (): void => window.removeEventListener (name, listener)
 }
 
-const eventFx = (name: string) => <P>(action: Action<P>): EffectDescriptor<FxListenerData<P>> =>
-  fx (windowListener (name) as Effect) ({ action })
+const eventFx = (name: string) => <S, P>(action: Action<S, P>): EffectDescriptor<S> =>
+  fx (windowListener (name)) ({ action })
 
 export const onMouseDown = eventFx ("mousedown")
 
@@ -158,10 +158,10 @@ export const onMouseDown = eventFx ("mousedown")
 
 // Invokes a collection of event handlers for the same event.
 export const handleUsing =
-  (handlers: Handler[]) =>
-    <S>(state: State<S>, event: Event): State<S> =>
+  <S, P>(handlers: Handler<S, P>[]) =>
+    (state: State<S>, event: Payload<P>): State<S> =>
       handlers.reduce (
-        (newState: State<S>, handler: Handler): State<S> =>
+        (newState: State<S>, handler: Handler<S, P>): State<S> =>
           handler (newState, event),
         state,
       )
@@ -177,9 +177,9 @@ export const handleUsing =
 // TODO:
 export const onOutside =
   (selector: string) =>
-    (action: Handler) =>
-      <S, D>(state: State<S>, event: Event): Transition<S, D> => {
+    <S, P extends Event>(action: Handler<S, P>) =>
+      (state: State<S>, event: Payload<P>): Transition<S> => {
         const el = document.querySelector (selector)
-        if (!el || el.contains (event.target as Node)) return state
+        if (!el || el.contains (event.target as Element)) return state
         return action (state, event)
       }

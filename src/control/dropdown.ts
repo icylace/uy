@@ -1,6 +1,6 @@
-import type { VDOM } from "hyperapp"
+import type { ClassProp, VDOM } from "hyperapp"
 import type { Content } from "ntml"
-import type { Control, ControlData, ControlOptions } from "../types"
+import type { Transform } from "../types"
 import type { Path } from "../utility/shadesHelper"
 
 import cc from "classcat"
@@ -9,22 +9,28 @@ import { set } from "../utility/shadesHelper"
 import { component } from "../component"
 import { box } from "../container/box"
 
-export type DropdownOptions = ControlOptions & {
-  options: Record<string, Content>
+export type DropdownOptions<S, P> = {
+  [_: string]: unknown
+  class?: ClassProp
+  disabled: boolean
+  locked: boolean
+  update: Transform<S, P>
+  options: Record<string, Content<S>>
   path: Path
 }
 
-export type DropdownData = ControlData<string> & {
+export type DropdownData = {
   "uy-dropdown-arrow"?: boolean
   focused?: boolean
+  value: string
 }
 
 export const freshDropdown = (value: string): DropdownData =>
   ({ value, focused: false })
 
 const rawDropdown =
-  ({ disabled, locked, options, path, update, ...etc }: DropdownOptions) =>
-    (data: DropdownData): VDOM =>
+  <S, P>({ disabled, locked, options, path, update, ...etc }: DropdownOptions<S, P>) =>
+    (data: DropdownData): VDOM<S> =>
       box ("uy-control uy-dropdown") ([
         box ({
           disabled,
@@ -51,14 +57,14 @@ const rawDropdown =
             // - switch to using a Map object instead in order to guarantee order
             // - verify type of `x` is workable
             Object.entries (options).map (
-              ([x, value]: [any, Content]) =>
+              ([x, value]: [any, Content<S>]) =>
                 option (
                   Array.isArray (x) ? { value: x[1], ...x[0] } : { value: x },
                   value,
-                ),
+                ) as VDOM<S>,
             ),
           ),
         ]),
       ])
 
-export const dropdown: Control = component (rawDropdown)
+export const dropdown = component (rawDropdown)

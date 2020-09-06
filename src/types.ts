@@ -1,17 +1,6 @@
-import type { ClassProp, Payload, State, VDOM, View } from "hyperapp"
+import type { ClassProp, Payload, State, Transition, VDOM, View } from "hyperapp"
 import type { Contents } from "ntml"
 import type { Path } from "./utility/shadesHelper"
-
-export type Component = (_: ComponentOptions) => (_: Path) => <S>(_: State<S>) => VDOM
-export type ContainerView = (_: View[]) => View
-export type Control = (_: ControlOptions) => (_: Path) => <S>(_: State<S>) => VDOM
-export type Handler = <S, P>(state: State<S>, payload?: Payload<P>) => State<S>
-export type Renderer = (_: Contents) => VDOM
-
-export type ControlData<T> = {
-  [_: string]: unknown
-  value: T
-}
 
 export type ComponentOptions = {
   [_: string]: unknown
@@ -20,6 +9,17 @@ export type ComponentOptions = {
   locked: boolean
 }
 
-export type ControlOptions = ComponentOptions & {
-  update: Handler
+export type ControlOptions<S, P> = ComponentOptions & {
+  update: Transform<S, P>
 }
+
+// export type ControlData<T> = {
+//   [_: string]: unknown
+//   value: T
+// }
+
+export type Component<S> = (_: ComponentOptions) => (_: Path) => (_: State<S>) => VDOM<S>
+export type ContainerView<S> = (_: View<S>[]) => View<S>
+export type Control<S, P> = (_: ControlOptions<S, P>) => (_: Path) => (_: State<S>) => VDOM<S>
+export type Renderer<S> = (_: Contents<S>) => VDOM<S>
+export type Transform<S, P> = (state: State<S>, payload?: Payload<P>) => Transition<S>

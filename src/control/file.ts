@@ -1,5 +1,5 @@
-import type { VDOM } from "hyperapp"
-import type { ComponentOptions, Control, ControlData, Handler } from "../types"
+import type { ClassProp, VDOM } from "hyperapp"
+import type { Transform } from "../types"
 
 import cc from "classcat"
 import * as html from "ntml"
@@ -7,20 +7,27 @@ import { component } from "../component"
 import { box } from "../container/box"
 import { icon } from "../display/icon"
 
-export type FileOptions = ComponentOptions & {
+export type FileOptions<S, P> = {
+  [_: string]: unknown
+  class?: ClassProp
+  disabled: boolean
   label?: string
-  update: Handler
+  locked: boolean
+  update: Transform<S, P>
 }
 
-export type FileData = ControlData<string>
+export type FileData = {
+  value: string
+}
 
-export const freshFile = (value: string): FileData => ({ value })
+export const freshFile = (value: string): FileData =>
+  ({ value })
 
 // https://codepen.io/adamlaki/pen/VYpewx
 
 const rawFile =
-  ({ disabled, locked, label = "Select your file...", ...etc }: FileOptions) =>
-    (data: FileData): VDOM =>
+  <S, P>({ disabled, locked, label = "Select your file...", ...etc }: FileOptions<S, P>) =>
+    (data: FileData): VDOM<S> =>
       box ({
         disabled,
         locked,
@@ -52,4 +59,4 @@ const rawFile =
         ]),
       ])
 
-export const file: Control = component (rawFile)
+export const file = component (rawFile)

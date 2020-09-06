@@ -1,6 +1,6 @@
-import type { VDOM } from "hyperapp"
+import type { ClassProp, VDOM } from "hyperapp"
 import type { Contents } from "ntml"
-import type { ComponentOptions, Control, ControlData, Handler } from "../types"
+import type { Transform } from "../types"
 
 import cc from "classcat"
 import * as html from "ntml"
@@ -20,19 +20,25 @@ import { box } from "../container/box"
 //
 // const freshCheckbox = (value: boolean, indeterminate?: boolean): CheckboxData => ({ indeterminate, value })
 
-export type CheckboxOptions = ComponentOptions & {
-  label?: Contents
-  update: Handler
+export type CheckboxOptions<S, P> = {
+  [_: string]: unknown
+  class?: ClassProp
+  disabled: boolean
+  label?: Contents<S>
+  locked: boolean
+  update: Transform<S, P>
 }
 
-export type CheckboxData = ControlData<boolean>
+export type CheckboxData = {
+  value: boolean
+}
 
 export const freshCheckbox = (value: boolean): CheckboxData =>
   ({ value })
 
 export const rawCheckbox =
-  ({ disabled, locked, label, update, ...etc }: CheckboxOptions) =>
-    (data: CheckboxData): VDOM =>
+  <S, P>({ disabled, locked, label, update, ...etc }: CheckboxOptions<S, P>) =>
+    (data: CheckboxData): VDOM<S> =>
       box ("uy-control uy-checkbox") ([
         html.label ({ class: { disabled, locked } }, [
           html.input ({
@@ -51,4 +57,4 @@ export const rawCheckbox =
         ]),
       ])
 
-export const checkbox: Control = component (rawCheckbox)
+export const checkbox = component (rawCheckbox)

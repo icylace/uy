@@ -1,4 +1,4 @@
-import type { App, State, Subscriber } from "hyperapp"
+import type { App, Payload, State, Subscriber } from "hyperapp"
 // import type { Handler } from "../types"
 
 import { handleUsing, onMouseDown, onOutside } from "./hyperappHelper"
@@ -20,13 +20,12 @@ const detectOutside = ([insider, f]: [string, (a: any) => any]): any =>
     pipe (f, removeInsideEl (insider)),
   )
 
-// freshState :: State -> State
-const freshState = <S>(state: State<S>): State<S> => ({
+const freshState = <S, P>(state: State<S>): State<S> => ({
   ...state,
   uy: {
     insiders: {},
     mousedownHandlers: {
-      detectOutsideAction: <S>(state: State<S>, event: Event): State<S> =>
+      detectOutsideAction: (state: State<S>, event: Payload<P>): State<S> =>
         handleUsing (
           pipe (
             get (["uy", "insiders"]),
@@ -40,22 +39,28 @@ const freshState = <S>(state: State<S>): State<S> => ({
   },
 })
 
-// mouseDownSubscription :: State -> State
-const mouseDownSubscription = pipe (
-  get (["uy", "mousedownHandlers"]),
-  Object.values,
-  handleUsing,
-  onMouseDown,
-)
+const mouseDownSubscription = <S>(state: State<S>): State<S> =>
+  pipe (
+    get (["uy", "mousedownHandlers"]),
+    Object.values,
+    handleUsing,
+    onMouseDown,
+  ) (state)
+
+// type Subscriber<S> = boolean | undefined | Effect<S> | Unsubscribe
 
 // -----------------------------------------------------------------------------
 
 // // TODO:
 // const uy = (path: Path)
 
-export const uyAppConfig = <S, D>(config: App<S, D>): App<S, D> => ({
+export const uyAppConfig = <S>(config: App<S>): App<S> => ({
   ...config,
   // TODO: account for any subscriptions from `config`
-  subscriptions: <S>(state: State<S>): Subscriber[] => [mouseDownSubscription (state)],
+  subscriptions: (state: State<S>): Subscriber<S>[] => [mouseDownSubscription (state)],
   init: freshState (config.init),
 })
+
+
+
+// type Subscription<S> = (state: State<S>) => Subscriber<S>[]

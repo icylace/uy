@@ -1,5 +1,5 @@
-import type { Payload, State, VDOM } from "hyperapp"
-import type { Control, ControlData, ControlOptions } from "../types"
+import type { ClassProp, Payload, State, VDOM } from "hyperapp"
+import type { Transform } from "../types"
 
 import cc from "classcat"
 import { div } from "ntml"
@@ -7,12 +7,19 @@ import { component } from "../component"
 import { box } from "../container/box"
 import { rawCheckbox } from "./checkbox"
 
-export type MultiselectOptions = ControlOptions & {
+export type MultiselectOptions<S, P> = {
+  [_: string]: unknown
+  class?: ClassProp
+  disabled: boolean
+  locked: boolean
   options: Record<string, unknown>
+  update: Transform<S, P>
   usingColumnMode: boolean
 }
 
-export type MultiselectData = ControlData<string[]>
+export type MultiselectData = {
+  value: string[]
+}
 
 // TODO:
 // - maybe use Set here instead?
@@ -20,8 +27,8 @@ export const freshMultiselect = (value: string[]): MultiselectData =>
   ({ value })
 
 const rawMultiselect =
-  ({ disabled, locked, update, options, usingColumnMode, ...etc }: MultiselectOptions) =>
-    (data: MultiselectData): VDOM => {
+  <S, P>({ disabled, locked, update, options, usingColumnMode, ...etc }: MultiselectOptions<S, P>) =>
+    (data: MultiselectData): VDOM<S> => {
       // TODO:
       // - should order matter? is Set the right way to do this?
       const selection = new Set (data.value)
@@ -36,7 +43,7 @@ const rawMultiselect =
         box ("uy-multiselect-options") (
           // TODO:
           // - switch to using a Map object instead in order to guarantee order
-          Object.entries (options).map (([x, label]: [any, any]): VDOM =>
+          Object.entries (options).map (([x, label]: [any, any]): VDOM<S> =>
             rawCheckbox ({
               disabled,
               label,
@@ -55,7 +62,7 @@ const rawMultiselect =
             }) ({ value: selection.has (x) }),
           ),
         ),
-      ])
+      ]) as VDOM<S>
     }
 
-export const multiselect: Control = component (rawMultiselect)
+export const multiselect = component (rawMultiselect)

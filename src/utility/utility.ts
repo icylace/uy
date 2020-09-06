@@ -1,4 +1,4 @@
-export const delist = (key: string) => (xr: { [_: string]: any }): { [k: string]: any } => {
+export const delist = (key: string) => (xr: Record<string, unknown>): Record<string, unknown> => {
   const { [key]: _, ...etc } = xr
   return etc
 }
@@ -13,7 +13,7 @@ export const map = <T, U>(f: (_: T) => U) => (xs: T[]): U[] =>
 // export const pipe = <T extends any>(...fs: ((_: T) => T)[]) => (x: T): T =>
 //   fs.reduce ((acc: any, f: Function) => f (acc), x)
 export const pipe = (...fs: ((_: any) => any)[]) => (x: any): any =>
-  fs.reduce ((acc: any, f: Function) => f (acc), x)
+  fs.reduce ((acc: any, f: ((_: any) => any)) => f (acc), x)
 
 export const range = (m: number) => (n: number): number[] =>
   [...Array (n - m) as undefined[]].map ((_, i) => m + i)

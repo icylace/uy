@@ -1,6 +1,7 @@
-import type { Payload, State, VDOM } from "hyperapp"
+import type { ClassProp, Payload, State, VDOM } from "hyperapp"
 import type { Content } from "ntml"
-import type { Control, ControlOptions } from "../types"
+import type { Transform } from "../types"
+import type { TableCell } from "../container/table"
 import type { Path } from "../utility/shadesHelper"
 
 import cc from "classcat"
@@ -13,21 +14,27 @@ import { button } from "./button"
 import { cancelButton } from "./cancelButton"
 import { rawTextbox } from "./textbox"
 
-export type ListOptions = ControlOptions & {
-  headers?: Content[]
+export type ListOptions<S, P> = {
+  [_: string]: unknown
+  class?: ClassProp
+  disabled: boolean
+  headers?: Content<S>[]
+  locked: boolean
   path: Path
+  update: Transform<S, P>
 }
 
 export type ListData = {
   items: string[]
 }
 
-const freshList = (items: string[]): ListData => ({ items })
+const freshList = (items: string[]): ListData =>
+  ({ items })
 
 const addItem = (path: Path) => (data: ListData) => <S>(state: State<S>): State<S> =>
   set ([...path, "items"]) ([...data.items, ""]) (state)
 
-const updateItem = (path: Path) => (i: number) => <S, P = string>(state: State<S>, value: Payload<P>): State<S> =>
+const updateItem = (path: Path) => (i: number) => <S, P>(state: State<S>, value: Payload<P>): State<S> =>
   set ([...path, "items", i]) (value) (state)
 
 const removeItem = (path: Path) => (i: number) => <S>(state: State<S>): State<S> =>
@@ -35,42 +42,44 @@ const removeItem = (path: Path) => (i: number) => <S>(state: State<S>): State<S>
     exclude (i) (get ([...path, "items"]) (state) as string[]),
   ) (state)
 
-const rawList = ({ disabled, locked, headers, path, ...etc }: ListOptions) => (data: ListData): VDOM => {
-  const item = (x: any, i: number): any => [
-    rawTextbox ({ disabled, locked, update: updateItem (path) (i) }) (
-      { value: x },
-    ),
-    cancelButton ({ disabled, locked, update: removeItem (path) (i) }),
-  ]
+const rawList =
+  <S, P>({ disabled, locked, headers, path, ...etc }: ListOptions<S, P>) =>
+    (data: ListData): VDOM<S> => {
+      const item = (x: any, i: number): TableCell<S>[] => [
+        rawTextbox ({ disabled, locked, update: updateItem (path) (i) }) (
+          { value: x },
+        ),
+        cancelButton ({ disabled, locked, update: removeItem (path) (i) }),
+      ]
 
-  const grower = [
-    [
-      { class: "uy-list-adder", colspan: 2 },
-      button ({
-        disabled,
-        locked,
-        label: "+ Add",
-        update: addItem (path) (data),
-      }),
-    ],
-  ]
+      const grower = [
+        [
+          { class: "uy-list-adder", colspan: 2 },
+          button ({
+            disabled,
+            locked,
+            label: "+ Add",
+            update: addItem (path) (data),
+          }),
+        ],
+      ] as TableCell<S>
 
-  return div (
-    {
-      ...etc,
-      class: cc (["uy-control uy-list", { locked, disabled }, etc.class]),
-    },
-    [
-      rawTable ({
-        disabled,
-        headers,
-        locked,
-        sortDescending: false,
-      }) ({ rows: [...data.items.map (item), grower] }),
-    ],
-  )
-}
+      return div (
+        {
+          ...etc,
+          class: cc (["uy-control uy-list", { locked, disabled }, etc.class]),
+        },
+        [
+          rawTable ({
+            disabled,
+            headers,
+            locked,
+            sortDescending: false,
+          }) ({ rows: [...data.items.map (item), grower] }),
+        ],
+      ) as VDOM<S>
+    }
 
-const list: Control = component (rawList)
+const list = component (rawList)
 
 export { freshList, list }

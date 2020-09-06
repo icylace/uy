@@ -1,27 +1,29 @@
 import type { ClassProp, VDOM } from "hyperapp"
-import type { Control, ControlData, Handler } from "../types"
+import type { Transform } from "../types"
 
 import cc from "classcat"
 import { input } from "ntml"
 import { component } from "../component"
 import { box } from "../container/box"
 
-export type TextboxOptions = {
+export type TextboxOptions<S, P> = {
   [_: string]: unknown
   class?: ClassProp
   disabled: boolean
   locked: boolean
-  update: Handler
+  update: Transform<S, P>
 }
 
-export type TextboxData = ControlData<string>
+export type TextboxData = {
+  value: string
+}
 
 export const freshTextbox = (value: string): TextboxData =>
   ({ value })
 
 export const rawTextbox =
-  ({ disabled, locked, update, ...etc }: TextboxOptions) =>
-    (data: TextboxData): VDOM =>
+  <S, P>({ disabled, locked, update, ...etc }: TextboxOptions<S, P>) =>
+    (data: TextboxData): VDOM<S> =>
       box ("uy-control uy-textbox") ([
         input ({
           disabled,
@@ -38,4 +40,4 @@ export const rawTextbox =
         }),
       ])
 
-export const textbox: Control = component (rawTextbox)
+export const textbox = component (rawTextbox)

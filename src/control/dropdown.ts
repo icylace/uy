@@ -1,5 +1,5 @@
-import type { ClassProp, VDOM } from "hyperapp"
-import type { Content } from "ntml"
+import type { ClassProp, Payload, State, Transition, VDOM } from "hyperapp"
+import type { Contents } from "ntml"
 import type { Transform } from "../types"
 import type { Path } from "../utility/shadesHelper"
 
@@ -9,13 +9,13 @@ import { set } from "../utility/shadesHelper"
 import { component } from "../component"
 import { box } from "../container/box"
 
-export type DropdownOptions<S, P> = {
+export type DropdownOptions<S> = {
   [_: string]: unknown
   class?: ClassProp
   disabled: boolean
   locked: boolean
-  update: Transform<S, P>
-  options: Record<string, Content<S>>
+  update: Transform<S, string>
+  options: Record<string, Contents<S>>
   path: Path
 }
 
@@ -29,7 +29,7 @@ export const freshDropdown = (value: string): DropdownData =>
   ({ value, focused: false })
 
 const rawDropdown =
-  <S, P>({ disabled, locked, options, path, update, ...etc }: DropdownOptions<S, P>) =>
+  <S>({ disabled, locked, options, path, update, ...etc }: DropdownOptions<S>) =>
     (data: DropdownData): VDOM<S> =>
       box ("uy-control uy-dropdown") ([
         box ({
@@ -43,7 +43,7 @@ const rawDropdown =
               disabled,
               readonly: locked,
               value: data.value,
-              onchange: (state, event) => {
+              onchange: (state: State<S>, event?: Payload<Event>): Transition<S> => {
                 if (!event) return state
                 const target = event.target as HTMLInputElement
                 return update (state, target.value)
@@ -57,11 +57,8 @@ const rawDropdown =
             // - switch to using a Map object instead in order to guarantee order
             // - verify type of `x` is workable
             Object.entries (options).map (
-              ([x, value]: [any, Content<S>]) =>
-                option (
-                  Array.isArray (x) ? { value: x[1], ...x[0] } : { value: x },
-                  value,
-                ) as VDOM<S>,
+              ([value, label]: [string, Contents<S>]) =>
+                option ({ value }, label) as VDOM<S>,
             ),
           ),
         ]),

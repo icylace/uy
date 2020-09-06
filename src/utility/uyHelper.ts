@@ -7,7 +7,7 @@ import type {
   Subscriber,
 } from "hyperapp"
 
-import { fx, onMouseDown, onOutside } from "./hyperappHelper"
+import { fx, handleUsing, onMouseDown, onOutside } from "./hyperappHelper"
 import { get, mod, set } from "./shadesHelper"
 import { delist, map, pipe } from "./utility"
 
@@ -32,40 +32,13 @@ const freshState = <S>(state: State<S>): State<S> => ({
     insiders: {},
     mousedownHandlers: {
       detectOutsideAction: (state: State<S>, event: Payload<Event>): Transition<S> => {
+        // TODO:
+        // - switch to using a Map object instead in order to guarantee order
+        const insiders = Object.entries (get (["uy", "insiders"]) (state))
+        const detections = insiders.map (detectOutside)
+        return handleUsing (deteections)
 
-
-// Invokes a collection of event handlers for the same event.
-export const handleUsing =
-  <S, Event>(handlers: Transform<S, Event>[]) =>
-    (state: State<S>, event: Payload<Event>): State<S> =>
-      handlers.reduce (
-        (newTransition: Transition<S>, handler: Transform<S, Event>): Transition<S> => {
-          const transition = handler (newTransition, event)
-          Array.isArray(transition) ? [...transition]
-          return transition
-        },
-        state,
-      )
-
-      // TODO:
-      // - switch to using a Map object instead in order to guarantee order
-      const insiders = Object.entries (get (["uy", "insiders"]) (state))
-      const detections = insiders.map (detectOutside)
-
-      detections.
-
-
-
-      handleUsing (
-        pipe (
-          get (["uy", "insiders"]),
-          // TODO:
-          // - switch to using a Map object instead in order to guarantee order
-          Object.entries,
-          map (detectOutside),
-        ) (state),
-      ) (state, event),
-
+        // detections.reduce((acc, f) => f (acc, event), state)
 
         // handleUsing (
         //   pipe (
@@ -76,7 +49,17 @@ export const handleUsing =
         //     map (detectOutside),
         //   ) (state),
         // ) (state, event),
-      }
+
+        // handleUsing (
+        //   pipe (
+        //     get (["uy", "insiders"]),
+        //     // TODO:
+        //     // - switch to using a Map object instead in order to guarantee order
+        //     Object.entries,
+        //     map (detectOutside),
+        //   ) (state),
+        // ) (state, event),
+      },
     },
   },
 })

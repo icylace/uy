@@ -14,14 +14,13 @@ import { button } from "./button"
 import { cancelButton } from "./cancelButton"
 import { rawTextbox } from "./textbox"
 
-export type ListOptions<S, P> = {
+export type ListOptions<S> = {
   [_: string]: unknown
   class?: ClassProp
   disabled: boolean
   headers?: Content<S>[]
   locked: boolean
   path: Path
-  update: Transform<S, P>
 }
 
 export type ListData = {
@@ -43,12 +42,12 @@ const removeItem = (path: Path) => (i: number) => <S>(state: State<S>): State<S>
   ) (state)
 
 const rawList =
-  <S, P>({ disabled, locked, headers, path, ...etc }: ListOptions<S, P>) =>
+  <S>({ disabled, locked, headers, path, ...etc }: ListOptions<S>) =>
     (data: ListData): VDOM<S> => {
       const item = (x: any, i: number): TableCell<S>[] => [
-        rawTextbox ({ disabled, locked, update: updateItem (path) (i) }) (
-          { value: x },
-        ),
+        rawTextbox
+          ({ disabled, locked, update: updateItem (path) (i) })
+          ({ value: x }),
         cancelButton ({ disabled, locked, update: removeItem (path) (i) }),
       ]
 
@@ -62,7 +61,7 @@ const rawList =
             update: addItem (path) (data),
           }),
         ],
-      ] as TableCell<S>
+      ]
 
       return div (
         {

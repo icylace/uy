@@ -1,4 +1,4 @@
-import type { ClassProp, VDOM, VNode } from "hyperapp"
+import type { ClassProp, Payload, State, Transition, VDOM, VNode } from "hyperapp"
 import type { Content } from "ntml"
 import type { Transform } from "../types"
 
@@ -13,7 +13,7 @@ export type Tab<S> = {
   panel: Content<S>
 }
 
-export type TabsOptions<S, P> = {
+export type TabsOptions<S> = {
   [_: string]: unknown
   class?: ClassProp
   disabled: boolean
@@ -21,7 +21,7 @@ export type TabsOptions<S, P> = {
   itemsHeader?: string | VNode<S>
   locked: boolean
   tabList: Tab<S>[]
-  update: Transform<S, P>
+  update: Transform<S, string>
 }
 
 export type TabsData = {
@@ -39,22 +39,27 @@ const isSelected = (activeTab: string) => <S>(item: Content<S>, i: number): bool
   return activeTab === String (i)
 }
 
-const tab = <S, P>(update: Transform<S, P>) => (activeTab: string) => (item: Content<S>, i: number): VDOM<S> => {
-  const selected = isSelected (activeTab) (item, i)
-  return div ({
-    class: { "uy-tabs-item": true, selected },
-    onclick: (state, event) => {
-      if (!event) return state
-      const target = event.target
-      // const target = event.target as Element
-      return selected
-        ? [update (state, String (i)), scrollIntoView (target)]
-        : update (state, String (i))
-    },
-  }, item) as VDOM<S>
-}
+const tab =
+  <S>(update: Transform<S, string>) =>
+    (activeTab: string) =>
+      (item: Content<S>, i: number): VDOM<S> => {
+        const selected = isSelected (activeTab) (item, i)
+        return div ({
+          class: { "uy-tabs-item": true, selected },
+          onclick: (state: State<S>, event?: Payload<MouseEvent>): Transition<S> => {
+            if (!event) return state
+            const target = event.target as HTMLElement
+            const transition = update (state, String (i))
+            return selected
+              ? Array.isArray (transition)
+                ? [...transition, scrollIntoView (target)]
+                : [transition, scrollIntoView (target)]
+              : transition
+          },
+        }, item) as VDOM<S>
+      }
 
-const rawTabs = <S, P>(
+const rawTabs = <S>(
   {
     disabled,
     locked,
@@ -63,7 +68,7 @@ const rawTabs = <S, P>(
     tabList,
     update,
     ...etc
-  }: TabsOptions<S, P>,
+  }: TabsOptions<S>,
 ) =>
     (data: TabsData): VDOM<S> => {
       const headings = tabList.map ((x: Tab<S>): Content<S> => x.heading)

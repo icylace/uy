@@ -57,7 +57,7 @@ const rawDropdown =
             // - switch to using a Map object instead in order to guarantee order
             // - verify type of `x` is workable
             Object.entries (options).map (
-              ([value, label]: [string, Contents<S>]) =>
+              ([value, label]: [string, Contents<S>]): VDOM<S> =>
                 option ({ value }, label) as VDOM<S>,
             ),
           ),

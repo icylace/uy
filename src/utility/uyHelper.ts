@@ -1,17 +1,23 @@
-import type { App, Payload, State, Subscriber } from "hyperapp"
-// import type { Handler } from "../types"
+import type {
+  App,
+  Dispatch,
+  Payload,
+  State,
+  Transition,
+  Subscriber,
+} from "hyperapp"
 
-import { handleUsing, onMouseDown, onOutside } from "./hyperappHelper"
+import { fx, onMouseDown, onOutside } from "./hyperappHelper"
 import { get, mod, set } from "./shadesHelper"
 import { delist, map, pipe } from "./utility"
 
 // -----------------------------------------------------------------------------
 
-// addInsideEl :: String -> (State -> State) -> State -> State
-export const addInsideEl = (id: string): any => set (["uy", "insiders", id])
+export const addInsideEl = (id: string) => (f: Function) => <S>(state: State<S>): State<S> =>
+  set (["uy", "insiders", id]) (f) (state)
 
-// removeInsideEl :: String -> State -> State
-export const removeInsideEl = (id: string): any => mod (["uy", "insiders"]) (delist (id))
+export const removeInsideEl = (id: string) => <S>(state: State<S>): State<S> =>
+  mod (["uy", "insiders"]) (delist (id)) (state)
 
 // -----------------------------------------------------------------------------
 
@@ -20,32 +26,76 @@ const detectOutside = ([insider, f]: [string, (a: any) => any]): any =>
     pipe (f, removeInsideEl (insider)),
   )
 
-const freshState = <S, P>(state: State<S>): State<S> => ({
+const freshState = <S>(state: State<S>): State<S> => ({
   ...state,
   uy: {
     insiders: {},
     mousedownHandlers: {
-      detectOutsideAction: (state: State<S>, event: Payload<P>): State<S> =>
-        handleUsing (
-          pipe (
-            get (["uy", "insiders"]),
-            // TODO:
-            // - switch to using a Map object instead in order to guarantee order
-            Object.entries,
-            map (detectOutside),
-          ) (state),
-        ) (state, event),
+      detectOutsideAction: (state: State<S>, event: Payload<Event>): Transition<S> => {
+
+
+// Invokes a collection of event handlers for the same event.
+export const handleUsing =
+  <S, Event>(handlers: Transform<S, Event>[]) =>
+    (state: State<S>, event: Payload<Event>): State<S> =>
+      handlers.reduce (
+        (newTransition: Transition<S>, handler: Transform<S, Event>): Transition<S> => {
+          const transition = handler (newTransition, event)
+          Array.isArray(transition) ? [...transition]
+          return transition
+        },
+        state,
+      )
+
+      // TODO:
+      // - switch to using a Map object instead in order to guarantee order
+      const insiders = Object.entries (get (["uy", "insiders"]) (state))
+      const detections = insiders.map (detectOutside)
+
+      detections.
+
+
+
+      handleUsing (
+        pipe (
+          get (["uy", "insiders"]),
+          // TODO:
+          // - switch to using a Map object instead in order to guarantee order
+          Object.entries,
+          map (detectOutside),
+        ) (state),
+      ) (state, event),
+
+
+        // handleUsing (
+        //   pipe (
+        //     get (["uy", "insiders"]),
+        //     // TODO:
+        //     // - switch to using a Map object instead in order to guarantee order
+        //     Object.entries,
+        //     map (detectOutside),
+        //   ) (state),
+        // ) (state, event),
+      }
     },
   },
 })
 
-const mouseDownSubscription = <S>(state: State<S>): State<S> =>
+// -----------------------------------------------------------------------------
+
+const mouseDownSubscriptionAction = <S>(state: State<S>): State<S> =>
   pipe (
     get (["uy", "mousedownHandlers"]),
     Object.values,
     handleUsing,
     onMouseDown,
   ) (state)
+
+const runMouseDownSubscription = <S>(dispatch: Dispatch<S>): void => {
+  window.requestAnimationFrame (() => dispatch (mouseDownSubscriptionAction))
+}
+
+const mouseDownSubscription = fx (runMouseDownSubscription) (null)
 
 // type Subscriber<S> = boolean | undefined | Effect<S> | Unsubscribe
 
@@ -57,10 +107,10 @@ const mouseDownSubscription = <S>(state: State<S>): State<S> =>
 export const uyAppConfig = <S>(config: App<S>): App<S> => ({
   ...config,
   // TODO: account for any subscriptions from `config`
-  subscriptions: (state: State<S>): Subscriber<S>[] => [mouseDownSubscription (state)],
+  subscriptions: (_state: State<S>): Subscriber<S>[] => [
+    mouseDownSubscription as Subscriber<S>,
+  ],
   init: freshState (config.init),
 })
-
-
 
 // type Subscription<S> = (state: State<S>) => Subscriber<S>[]

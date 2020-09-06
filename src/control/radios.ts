@@ -1,4 +1,4 @@
-import type { ClassProp, VDOM } from "hyperapp"
+import type { ClassProp, Payload, State, Transition, VDOM } from "hyperapp"
 import type { Content } from "ntml"
 import type { Transform } from "../types"
 
@@ -7,13 +7,13 @@ import * as html from "ntml"
 import { component } from "../component"
 import { box } from "../container/box"
 
-export type RadiosOptions<S, P> = {
+export type RadiosOptions<S> = {
   [_: string]: unknown
   class?: ClassProp
   disabled: boolean
   locked: boolean
   options: Record<string, Content<S>>
-  update: Transform<S, P>
+  update: Transform<S, string>
 }
 
 export type RadiosData = {
@@ -24,7 +24,7 @@ export const freshRadios = (value: string): RadiosData =>
   ({ value })
 
 const rawRadios =
-  <S, P>({ disabled, locked, options, update, ...etc }: RadiosOptions<S, P>) =>
+  <S>({ disabled, locked, options, update, ...etc }: RadiosOptions<S>) =>
     (data: RadiosData): VDOM<S> =>
       box ("uy-control uy-radios") (
         // TODO:
@@ -36,7 +36,7 @@ const rawRadios =
               value,
               checked: value === data.value,
               type: "radio",
-              onchange: (state, event) => {
+              onchange: (state: State<S>, event?: Payload<Event>): Transition<S> => {
                 if (!event) return state
                 const target = event.target as HTMLInputElement
                 return update (state, target.value)

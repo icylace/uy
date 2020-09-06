@@ -1,6 +1,5 @@
-import type { ClassProp, Payload, State, VDOM } from "hyperapp"
+import type { ClassProp, Payload, State, Transition, VDOM } from "hyperapp"
 import type { Content } from "ntml"
-import type { Transform } from "../types"
 import type { Path } from "../utility/shadesHelper"
 
 import cc from "classcat"
@@ -9,14 +8,13 @@ import { set } from "../utility/shadesHelper"
 import { component } from "../component"
 import { box } from "../container/box"
 
-export type NumberboxOptions<S, P>= {
+export type NumberboxOptions<S>= {
   [_: string]: unknown
   class?: ClassProp
   disabled: boolean
   label?: Content<S>
   locked: boolean
   path: Path
-  update: Transform<S, P>
 }
 
 export type NumberboxData = {
@@ -34,10 +32,10 @@ const sanitizedNumber = (n: string): number =>
 
 const update = (path: Path) =>
   <S>(state: State<S>, value: Payload<string>): State<S> =>
-    set ([...path, "value"]) (sanitizedNumber (value as unknown as string)) (state)
+    set ([...path, "value"]) (sanitizedNumber (value)) (state)
 
 const rawNumberbox =
-  <S, P>({ disabled, locked, label, path, ...etc }: NumberboxOptions<S, P>) =>
+  <S>({ disabled, locked, label, path, ...etc }: NumberboxOptions<S>) =>
     (data: NumberboxData): VDOM<S> =>
       box ("uy-control uy-numberbox") ([
         html.label ({ class: { focus: !!data.focused, locked, disabled } }, [
@@ -47,7 +45,7 @@ const rawNumberbox =
             readonly: locked,
             type: "number",
             value: data.value,
-            onchange: (state, event) => {
+            onchange: (state: State<S>, event?: Payload<Event>): Transition<S> => {
               if (!event) return state
               const target = event.target as HTMLInputElement
               return update (path) (state, target.value)

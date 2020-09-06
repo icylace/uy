@@ -13,11 +13,6 @@ export type ControlOptions<S, P> = ComponentOptions & {
   update: Transform<S, P>
 }
 
-// export type ControlData<T> = {
-//   [_: string]: unknown
-//   value: T
-// }
-
 export type Component<S> = (_: ComponentOptions) => (_: Path) => (_: State<S>) => VDOM<S>
 export type ContainerView<S> = (_: View<S>[]) => View<S>
 export type Control<S, P> = (_: ControlOptions<S, P>) => (_: Path) => (_: State<S>) => VDOM<S>

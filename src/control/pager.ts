@@ -1,4 +1,4 @@
-import type { ClassProp, State, VDOM, VNode } from "hyperapp"
+import type { ClassProp, VDOM, VNode } from "hyperapp"
 import type { Contents } from "ntml"
 import type { Transform } from "../types"
 
@@ -8,14 +8,14 @@ import { range } from "../utility/utility"
 import { component } from "../component"
 import { icon } from "../display/icon"
 
-export type PagerOptions<S, P> = {
+export type PagerOptions<S> = {
   [_: string]: unknown
   class?: ClassProp
   disabled: boolean
   itemsPerPage: number
   locked: boolean
   pageRange: number
-  update: Transform<S, P>
+  update: Transform<S, number>
 }
 
 export type PagerData = {
@@ -27,14 +27,14 @@ export const freshPager = (itemsTotal: number) => (value: number): PagerData =>
   ({ value, itemsTotal })
 
 const pagerNav = <S>(
-  handler: Function,
+  handler: Transform<S, MouseEvent>,
   content: Contents<S>,
   active: boolean,
 ): VDOM<S> =>
   span ({
     class: ["uy-pager-nav", !active && "uy-pager-nav-inactive"],
     ...active
-      ? { onclick: <S>(_state: State<S>, _event: any): any => handler }
+      ? { onclick: handler }
       : {},
   }, content) as VDOM<S>
 
@@ -42,7 +42,7 @@ const pagerMore = <S>(content: Contents<S>): VDOM<S> =>
   span ({ class: "uy-pager-more" }, content) as VDOM<S>
 
 const rawPager =
-  <S, P>({ disabled, locked, itemsPerPage, pageRange, update, ...etc }: PagerOptions<S, P>) =>
+  <S>({ disabled, locked, itemsPerPage, pageRange, update, ...etc }: PagerOptions<S>) =>
     (data: PagerData): VDOM<S> | null => {
       if (!data.itemsTotal) return null
 
@@ -68,30 +68,26 @@ const rawPager =
       const morePrev = pagerMore (rangeStartPage > 0 ? "..." : "")
       const moreNext = pagerMore (rangeFinishPage < lastPage ? "..." : "")
 
-      const navFirst = pagerNav (
-        (state: State<S>): State<S> =>
-          update (state, 0),
+      const navFirst = pagerNav<S> (
+        (state) => update (state, 0),
         [icon ("fas fa-angle-double-left"), " first"],
         data.value !== 0,
       )
 
-      const navPrev = pagerNav (
-        (state: State<S>): State<S> =>
-          update (state, Math.max (0, data.value - 1)),
+      const navPrev = pagerNav<S> (
+        (state) => update (state, Math.max (0, data.value - 1)),
         [icon ("fas fa-angle-left"), " prev"],
         data.value !== 0,
       )
 
-      const navNext = pagerNav (
-        (state: State<S>): State<S> =>
-          update (state, Math.min (lastPage, data.value + 1)),
+      const navNext = pagerNav<S> (
+        (state) => update (state, Math.min (lastPage, data.value + 1)),
         ["next ", icon ("fas fa-angle-right")],
         data.value !== lastPage,
       )
 
-      const navLast = pagerNav (
-        (state: State<S>): State<S> =>
-          update (state, lastPage),
+      const navLast = pagerNav<S> (
+        (state) => update (state, lastPage),
         ["last ", icon ("fas fa-angle-double-right")],
         data.value !== lastPage,
       )
@@ -101,13 +97,13 @@ const rawPager =
         class: cc (["uy-control uy-pager", { locked, disabled }, etc.class]),
       }, [
         ul ([
-          li (navFirst),
-          li (navPrev),
-          li (morePrev),
+          li<S> (navFirst),
+          li<S> (navPrev),
+          li<S> (morePrev),
           ...pages,
-          li (moreNext),
-          li (navNext),
-          li (navLast),
+          li<S> (moreNext),
+          li<S> (navNext),
+          li<S> (navLast),
         ]),
       ]) as VDOM<S>
     }

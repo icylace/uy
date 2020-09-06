@@ -1,4 +1,5 @@
-import type { ClassProp, Payload, State, VDOM } from "hyperapp"
+import type { ClassProp, State, Transition, VDOM } from "hyperapp"
+import type { Contents } from "ntml"
 import type { Transform } from "../types"
 
 import cc from "classcat"
@@ -13,7 +14,7 @@ export type MultiselectOptions<S, P> = {
   disabled: boolean
   locked: boolean
   options: Record<string, unknown>
-  update: Transform<S, P>
+  update: Transform<S, string[]>
   usingColumnMode: boolean
 }
 
@@ -43,23 +44,23 @@ const rawMultiselect =
         box ("uy-multiselect-options") (
           // TODO:
           // - switch to using a Map object instead in order to guarantee order
-          Object.entries (options).map (([x, label]: [any, any]): VDOM<S> =>
+          Object.entries (options).map (([value, label]: [string, Contents<S>]): VDOM<S> =>
             rawCheckbox ({
               disabled,
               label,
               locked,
-              update: <S, P = boolean>(state: State<S>, checked: Payload<P>): State<S> => {
+              update: <S>(state: State<S>, checked: boolean): Transition<S> => {
                 if (checked) {
-                  selection.add (x)
+                  selection.add (value)
                 } else {
-                  selection.delete (x)
+                  selection.delete (value)
                 }
                 // TODO:
                 // - maybe return Set directly and maybe also find a way to ensure order?
                 return update (state, Array.from (selection))
                 // const update = (state: State<S>, value: any): any => set ([...path, "value"]) (value) (state)
               },
-            }) ({ value: selection.has (x) }),
+            }) ({ value: selection.has (value) }),
           ),
         ),
       ]) as VDOM<S>

@@ -1,4 +1,4 @@
-import type { ClassProp, VDOM } from "hyperapp"
+import type { ClassProp, Payload, State, Transition, VDOM } from "hyperapp"
 import type { Transform } from "../types"
 
 import cc from "classcat"
@@ -7,13 +7,13 @@ import { component } from "../component"
 import { box } from "../container/box"
 import { icon } from "../display/icon"
 
-export type FileOptions<S, P> = {
+export type FileOptions<S> = {
   [_: string]: unknown
   class?: ClassProp
   disabled: boolean
   label?: string
   locked: boolean
-  update: Transform<S, P>
+  update: Transform<S, string>
 }
 
 export type FileData = {
@@ -26,7 +26,7 @@ export const freshFile = (value: string): FileData =>
 // https://codepen.io/adamlaki/pen/VYpewx
 
 const rawFile =
-  <S, P>({ disabled, locked, label = "Select your file...", ...etc }: FileOptions<S, P>) =>
+  <S>({ disabled, locked, label = "Select your file...", update, ...etc }: FileOptions<S>) =>
     (data: FileData): VDOM<S> =>
       box ({
         disabled,
@@ -42,7 +42,7 @@ const rawFile =
             type: "file",
             // TODO:
             // - probably needs to be rethought
-            onchange: (state, event) => {
+            onchange: (state: State<S>, event?: Payload<Event>): Transition<S> => {
               if (!event) return state
               const target = event.target as HTMLInputElement
               const parent = target.parentNode as HTMLElement
@@ -50,12 +50,15 @@ const rawFile =
                 target.value !== ""
                   ? target.value.replace (/.*(\/|\\)/, "")
                   : label
-              return state
+              return update (state, target.value)
             },
             ...etc,
             class: cc ([{ disabled, locked }, etc.class]),
           }),
-          html.span ({ class: "uy-clicky" }, [icon ("fas fa-file-upload"), " Upload"]),
+          html.span ({ class: "uy-clicky" }, [
+            icon ("fas fa-file-upload"),
+            " Upload",
+          ]),
         ]),
       ])
 

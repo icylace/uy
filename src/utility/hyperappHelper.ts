@@ -10,7 +10,7 @@ import type {
   Unsubscribe,
 } from "hyperapp"
 
-import type { Handler } from "../types"
+import type { Transform } from "../types"
 
 // -----------------------------------------------------------------------------
 
@@ -129,16 +129,14 @@ export const fx = <S>(f: Effect<S>) => (x: EffectData): EffectDescriptor<S> =>
 // Based on:
 // https://github.com/jorgebucaran/hyperapp/issues/752#issue-355556484
 
-type FxListenerData<S, P> = { action: Action<S, P> }
-
-const windowListener = (name: string) => <S>(dispatch: Dispatch<S>, props: FxListenerData<S, Event>): Unsubscribe => {
-  const listener = <P>(event: Payload<P>): void => dispatch (props.action, event)
+const windowListener = (name: string) => <S>(dispatch: Dispatch<S>, action: Action<S, Event>): Unsubscribe => {
+  const listener = (event: Payload<Event>): void => dispatch (action, event)
   window.addEventListener (name, listener)
   return (): void => window.removeEventListener (name, listener)
 }
 
 const eventFx = (name: string) => <S, P>(action: Action<S, P>): EffectDescriptor<S> =>
-  fx (windowListener (name)) ({ action })
+  fx (windowListener (name) as Effect<S>) ({ action })
 
 export const onMouseDown = eventFx ("mousedown")
 
@@ -150,21 +148,32 @@ export const onMouseDown = eventFx ("mousedown")
 // }
 
 // export const handleValueWith =
-//   (f: Handler) =>
+//   (f: Transform) =>
 //     <S, P extends Event, D>(state: State<S>, event: Payload<P>): Transition<S, P, D> => {
 //       const target = event.target as HTMLInputElement
 //       return f (state, target.value)
 //     }
 
+export const actWith = <S, P>(a: Action<S, P>) => (t: Transition<S>): Transition<S> => {
+  const action = (Array.isArray (a) ? a[0] : a) as Transform<S, P>
+  const payload = Array.isArray (a) ? a[1] : undefined
+  if (Array.isArray (t)) {
+    const [state, ...effects] = t
+    const transition = action (state, payload)
+    if (Array.isArray (transition)) {
+      const [restate, ...newEffects] = transition
+      return [restate, ...effects, ...newEffects]
+    }
+    return [transition, ...effects]
+  }
+  return action (t, payload)
+}
+
 // Invokes a collection of event handlers for the same event.
 export const handleUsing =
-  <S, P>(handlers: Handler<S, P>[]) =>
-    (state: State<S>, event: Payload<P>): State<S> =>
-      handlers.reduce (
-        (newState: State<S>, handler: Handler<S, P>): State<S> =>
-          handler (newState, event),
-        state,
-      )
+  <S>(handlers: Action<S, Event>[]) =>
+    (state: Transition<S>, event: Payload<Event>): Transition<S> =>
+      handlers.reduce ((t, f) => actWith ([f, event]) (t), state)
 
 // -----------------------------------------------------------------------------
 
@@ -177,8 +186,8 @@ export const handleUsing =
 // TODO:
 export const onOutside =
   (selector: string) =>
-    <S, P extends Event>(action: Handler<S, P>) =>
-      (state: State<S>, event: Payload<P>): Transition<S> => {
+    <S>(action: Transform<S, Event>) =>
+      (state: State<S>, event: Payload<Event>): Transition<S> => {
         const el = document.querySelector (selector)
         if (!el || el.contains (event.target as Element)) return state
         return action (state, event)

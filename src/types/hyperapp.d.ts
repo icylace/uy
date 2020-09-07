@@ -1,14 +1,10 @@
 // Minimum TypeScript Version: 3.7
 
 declare module "hyperapp" {
-  // // Borrowed from SimplyTyped (https://github.com/andnp/SimplyTyped):
-  // class Tagged<N extends string> { protected _nominal_: N }
-  // type Nominal<T, N extends string> = T & Tagged<N>
-
   // A Hyperapp application instance has an initial state and a base view.
   // It must also be mounted over an available DOM element.
-  type App<S, P = unknown> = Readonly<{
-    init: Transition<S> | Action<S, P>
+  type App<S> = Readonly<{
+    init: Transition<S> | Action<S>
     view: View<S>
     node: Node
     subscriptions?: Subscription<S>
@@ -42,16 +38,15 @@ declare module "hyperapp" {
   // ---------------------------------------------------------------------------
 
   // A dispatched action handles an event in the context of the current state.
-  type Dispatch<S> = <P>(action: Action<S, P>, props?: Payload<P>) => void
+  type Dispatch<S> = (action: Action<S>, props?: Payload) => void
 
   // An action transforms existing state and can be wrapped by another action.
-  type Action<S, P>
-    = [Action<S, P>, Payload<P>]
-    | (<Q>(state: State<S>, props?: Payload<P>) => Transition<S> | Action<S, Q>)
+  type Action<S, P = Payload>
+    = [Action<S>, P]
+    | ((state: State<S>, props?: P) => Transition<S> | Action<S>)
 
   // A payload is data external to state that is given to a dispatched action.
-  type Payload<P> = P
-  // type Payload<P> = Nominal<P, "Payload">
+  type Payload = unknown
 
   // An effect descriptor describes how an effect should be invoked.
   // A function that creates this is called an effect constructor.

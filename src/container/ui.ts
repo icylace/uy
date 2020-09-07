@@ -1,7 +1,10 @@
 import type { ClassProp, State, VDOM, View } from "hyperapp"
-import type { ContainerView, Renderer } from "../types"
+import type { Contents } from "ntml"
+import type { ContainerView } from "../types"
 
 import { box } from "./box"
+
+export type Renderer<S> = (_: Contents<S>) => VDOM<S>
 
 const ui = <S>(f: Renderer<S>) => (views: View<S>[]) => (state: State<S>): VDOM<S> =>
   f (views.map ((g: View<S>): VDOM<S> => g (state)))

@@ -1,4 +1,4 @@
-import type { ClassProp, Payload, State, Transition, VDOM, VNode } from "hyperapp"
+import type { ClassProp, State, Transition, VDOM, VNode } from "hyperapp"
 import type { Content } from "ntml"
 import type { Transform } from "../types"
 
@@ -21,7 +21,7 @@ export type TabsOptions<S> = {
   itemsHeader?: string | VNode<S>
   locked: boolean
   tabList: Tab<S>[]
-  update: Transform<S, string>
+  update: Transform<S>
 }
 
 export type TabsData = {
@@ -40,13 +40,13 @@ const isSelected = (activeTab: string) => <S>(item: Content<S>, i: number): bool
 }
 
 const tab =
-  <S>(update: Transform<S, string>) =>
+  <S>(update: Transform<S>) =>
     (activeTab: string) =>
       (item: Content<S>, i: number): VDOM<S> => {
         const selected = isSelected (activeTab) (item, i)
         return div ({
           class: { "uy-tabs-item": true, selected },
-          onclick: (state: State<S>, event?: Payload<MouseEvent>): Transition<S> => {
+          onclick: (state: State<S>, event?: MouseEvent): Transition<S> => {
             if (!event) return state
             const target = event.target as HTMLElement
             const transition = update (state, String (i))

@@ -15,7 +15,7 @@ export type PagerOptions<S> = {
   itemsPerPage: number
   locked: boolean
   pageRange: number
-  update: Transform<S, number>
+  update: Transform<S>
 }
 
 export type PagerData = {
@@ -27,7 +27,7 @@ export const freshPager = (itemsTotal: number) => (value: number): PagerData =>
   ({ value, itemsTotal })
 
 const pagerNav = <S>(
-  handler: Transform<S, MouseEvent>,
+  handler: Transform<S>,
   content: Contents<S>,
   active: boolean,
 ): VDOM<S> =>

@@ -1,4 +1,4 @@
-import type { ClassProp, Payload, State, Transition, VDOM } from "hyperapp"
+import type { ClassProp, State, Transition, VDOM } from "hyperapp"
 import type { Content } from "ntml"
 import type { Transform } from "../types"
 
@@ -13,7 +13,7 @@ export type RadiosOptions<S> = {
   disabled: boolean
   locked: boolean
   options: Record<string, Content<S>>
-  update: Transform<S, string>
+  update: Transform<S>
 }
 
 export type RadiosData = {
@@ -36,7 +36,7 @@ const rawRadios =
               value,
               checked: value === data.value,
               type: "radio",
-              onchange: (state: State<S>, event?: Payload<Event>): Transition<S> => {
+              onchange: (state: State<S>, event?: Event): Transition<S> => {
                 if (!event) return state
                 const target = event.target as HTMLInputElement
                 return update (state, target.value)

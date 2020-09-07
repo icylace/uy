@@ -8,13 +8,13 @@ import { component } from "../component"
 import { box } from "../container/box"
 import { rawCheckbox } from "./checkbox"
 
-export type MultiselectOptions<S, P> = {
+export type MultiselectOptions<S> = {
   [_: string]: unknown
   class?: ClassProp
   disabled: boolean
   locked: boolean
   options: Record<string, unknown>
-  update: Transform<S, string[]>
+  update: Transform<S>
   usingColumnMode: boolean
 }
 
@@ -28,7 +28,7 @@ export const freshMultiselect = (value: string[]): MultiselectData =>
   ({ value })
 
 const rawMultiselect =
-  <S, P>({ disabled, locked, update, options, usingColumnMode, ...etc }: MultiselectOptions<S, P>) =>
+  <S>({ disabled, locked, update, options, usingColumnMode, ...etc }: MultiselectOptions<S>) =>
     (data: MultiselectData): VDOM<S> => {
       // TODO:
       // - should order matter? is Set the right way to do this?
@@ -44,23 +44,24 @@ const rawMultiselect =
         box ("uy-multiselect-options") (
           // TODO:
           // - switch to using a Map object instead in order to guarantee order
-          Object.entries (options).map (([value, label]: [string, Contents<S>]): VDOM<S> =>
-            rawCheckbox ({
-              disabled,
-              label,
-              locked,
-              update: <S>(state: State<S>, checked: boolean): Transition<S> => {
-                if (checked) {
-                  selection.add (value)
-                } else {
-                  selection.delete (value)
-                }
-                // TODO:
-                // - maybe return Set directly and maybe also find a way to ensure order?
-                return update (state, Array.from (selection))
-                // const update = (state: State<S>, value: any): any => set ([...path, "value"]) (value) (state)
-              },
-            }) ({ value: selection.has (value) }),
+          Object.entries (options).map (
+            ([value, label]: [string, Contents<S>]): VDOM<S> =>
+              rawCheckbox ({
+                disabled,
+                label,
+                locked,
+                update: (state: State<S>, checked: boolean): Transition<S> => {
+                  if (checked) {
+                    selection.add (value)
+                  } else {
+                    selection.delete (value)
+                  }
+                  // TODO:
+                  // - maybe return Set directly and maybe also find a way to ensure order?
+                  return update (state, Array.from (selection))
+                  // const update = (state: State<S>, value: any): any => set ([...path, "value"]) (value) (state)
+                },
+              }) ({ value: selection.has (value) }),
           ),
         ),
       ]) as VDOM<S>

@@ -1,4 +1,4 @@
-import type { ClassProp, Payload, State, Transition, VDOM } from "hyperapp"
+import type { ClassProp, State, Transition, VDOM } from "hyperapp"
 import type { Transform } from "../types"
 
 import cc from "classcat"
@@ -11,7 +11,7 @@ export type TextareaOptions<S> = {
   class?: ClassProp
   disabled: boolean
   locked: boolean
-  update: Transform<S, string>
+  update: Transform<S>
 }
 
 export type TextareaData = {
@@ -29,7 +29,7 @@ const rawTextarea =
           disabled,
           readonly: locked,
           value: data.value,
-          onchange: (state: State<S>, event?: Payload<Event>): Transition<S> => {
+          onchange: (state: State<S>, event?: Event): Transition<S> => {
             if (!event) return state
             const target = event.target as HTMLInputElement
             return update (state, target.value)

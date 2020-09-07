@@ -1,4 +1,4 @@
-import type { ClassProp, Payload, State, Transition, VDOM } from "hyperapp"
+import type { ClassProp, State, Transition, VDOM } from "hyperapp"
 import type { Transform } from "../types"
 
 import cc from "classcat"
@@ -13,7 +13,7 @@ export type FileOptions<S> = {
   disabled: boolean
   label?: string
   locked: boolean
-  update: Transform<S, string>
+  update: Transform<S>
 }
 
 export type FileData = {
@@ -42,14 +42,13 @@ const rawFile =
             type: "file",
             // TODO:
             // - probably needs to be rethought
-            onchange: (state: State<S>, event?: Payload<Event>): Transition<S> => {
+            onchange: (state: State<S>, event?: Event): Transition<S> => {
               if (!event) return state
               const target = event.target as HTMLInputElement
               const parent = target.parentNode as HTMLElement
-              parent.dataset.text =
-                target.value !== ""
-                  ? target.value.replace (/.*(\/|\\)/, "")
-                  : label
+              parent.dataset.text = target.value !== ""
+                ? target.value.replace (/.*(\/|\\)/, "")
+                : label
               return update (state, target.value)
             },
             ...etc,

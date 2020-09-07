@@ -1,4 +1,4 @@
-import type { ClassProp, Effect, Payload, State, Transition, VDOM } from "hyperapp"
+import type { ClassProp, Effect, State, Transition, VDOM } from "hyperapp"
 import type { Path } from "../utility/shadesHelper"
 
 import cc from "classcat"
@@ -53,7 +53,7 @@ const updateResults =
   <S>(search: Effect<S>) =>
     (path: Path) =>
       (id: string) =>
-        (state: State<S>, props: Payload<SearchboxData>): Transition<S> => {
+        (state: State<S>, props: SearchboxData): Transition<S> => {
           const { value, results } = props
 
           // It is possible the current value of the searchbox and the value that was
@@ -129,7 +129,7 @@ const rawSearchbox =
         type: "search",
         onfocus: set ([...path, "focused"]) (true),
         onblur: set ([...path, "focused"]) (false),
-        onkeyup: (state: State<S>, event?: Payload<KeyboardEvent>): Transition<S> => {
+        onkeyup: (state: State<S>, event?: KeyboardEvent): Transition<S> => {
           if (!event) return state
           if (noopKeys.includes (event.key)) return state
           const target = event.target as HTMLInputElement
@@ -141,7 +141,7 @@ const rawSearchbox =
         // less convenient since it would conflict with how we're using
         // the `keyup` event.
         // https://stackoverflow.com/a/25569880
-        onsearch: (state: State<S>, event?: Payload<Event>): Transition<S> => {
+        onsearch: (state: State<S>, event?: Event): Transition<S> => {
           if (!event) return state
           const target = event.target as HTMLInputElement
           return update (search) (path) (id) (target.value) (state)
@@ -166,14 +166,20 @@ const rawSearchbox =
           },
         }, [
           inputSearch,
-          span ({ onclick: update (search) (path) (id) (data.value) }, [
-            icon ({
-              fas: true,
-              "fa-spinner": data.searching,
-              "fa-pulse": data.searching,
-              "fa-search": !data.searching,
-            }),
-          ]) as VDOM<S>,
+          span (
+            {
+              onclick: (state: State<S>, _event: MouseEvent): Transition<S> =>
+                update (search) (path) (id) (data.value) (state),
+            },
+            [
+              icon ({
+                fas: true,
+                "fa-spinner": data.searching,
+                "fa-pulse": data.searching,
+                "fa-search": !data.searching,
+              }),
+            ],
+          ) as VDOM<S>,
         ]),
 
         data.results.length && !disabled

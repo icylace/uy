@@ -1,7 +1,6 @@
 import type {
   App,
   Dispatch,
-  Payload,
   State,
   Transition,
   Subscriber,
@@ -22,15 +21,16 @@ export const removeInsideEl = (id: string) => <S>(state: State<S>): State<S> =>
 // -----------------------------------------------------------------------------
 
 const detectOutside = ([insider, f]: [string, (a: any) => any]): any =>
-  onOutside (`#${insider}`) (<S>(_state: State<S>, _event: any) => (state: State<S>): State<S> =>
-    removeInsideEl (insider) (f (state))
+  onOutside (`#${insider}`) (<S>(_state: State<S>, _event: Event) => (state: State<S>): State<S> =>
+    removeInsideEl (insider) (f (state)),
+  )
 
 const freshState = <S>(state: State<S>): State<S> => ({
   ...state,
   uy: {
     insiders: {},
     mousedownHandlers: {
-      detectOutsideAction: (state: State<S>, event: Payload<Event>): Transition<S> => {
+      detectOutsideAction: (state: State<S>, event: Event): Transition<S> => {
         // TODO:
         // - switch to using a Map object instead in order to guarantee order
         const insiders = Object.entries (get (["uy", "insiders"]) (state) ?? {})
@@ -79,8 +79,6 @@ const runMouseDownSubscription = <S>(dispatch: Dispatch<S>): void => {
 
 const mouseDownSubscription = fx (runMouseDownSubscription) (null)
 
-// type Subscriber<S> = boolean | undefined | Effect<S> | Unsubscribe
-
 // -----------------------------------------------------------------------------
 
 // // TODO:
@@ -90,9 +88,7 @@ export const uyAppConfig = <S>(config: App<S>): App<S> => ({
   ...config,
   // TODO: account for any subscriptions from `config`
   subscriptions: (_state: State<S>): Subscriber<S>[] => [
-    mouseDownSubscription as Subscriber<S>,
+    mouseDownSubscription,
   ],
   init: freshState (config.init),
 })
-
-// type Subscription<S> = (state: State<S>) => Subscriber<S>[]

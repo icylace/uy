@@ -1,5 +1,5 @@
 import type { ClassProp, Payload, State, VDOM } from "hyperapp"
-import type { Renderer } from "../types"
+import type { Contents } from "ntml"
 import type { Path } from "../utility/shadesHelper"
 import type { TableData, TableRow } from "../container/table"
 
@@ -16,7 +16,7 @@ export type ChecklistOptions<S> = {
   disabled: boolean
   locked: boolean
   path: Path
-  render: Renderer<S>
+  render: (_: Contents<S>) => VDOM<S>
 }
 
 export type ChecklistItem = {
@@ -31,7 +31,7 @@ export type Checklist = {
 const freshChecklist = (items: ChecklistItem[]): Checklist =>
   ({ items })
 
-const updateItem = (path: Path) => (i: number) => <S, P>(state: State<S>, value: Payload<P>): State<S> =>
+const updateItem = (path: Path) => (i: number) => <S>(state: State<S>, value: Payload): State<S> =>
   set ([...path, "items", i]) (value) (state)
 
 const rawChecklist =

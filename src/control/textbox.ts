@@ -1,4 +1,4 @@
-import type { ClassProp, Payload, State, Transition, VDOM } from "hyperapp"
+import type { ClassProp, State, Transition, VDOM } from "hyperapp"
 import type { Transform } from "../types"
 
 import cc from "classcat"
@@ -11,7 +11,7 @@ export type TextboxOptions<S> = {
   class?: ClassProp
   disabled: boolean
   locked: boolean
-  update: Transform<S, string>
+  update: Transform<S>
 }
 
 export type TextboxData = {
@@ -24,20 +24,20 @@ export const freshTextbox = (value: string): TextboxData =>
 export const rawTextbox =
   <S>({ disabled, locked, update, ...etc }: TextboxOptions<S>) =>
     (data: TextboxData): VDOM<S> =>
-      box ("uy-control uy-textbox") ([
-        input ({
-          disabled,
-          readonly: locked,
-          value: data.value,
-          type: "text",
-          onchange: (state: State<S>, event?: Payload<Event>): Transition<S> => {
-            if (!event) return state
-            const target = event.target as HTMLInputElement
-            return update (state, target.value)
-          },
-          ...etc,
-          class: cc (["uy-input", { locked, disabled }, etc.class]),
-        }),
-      ])
+    box ("uy-control uy-textbox") ([
+      input ({
+        disabled,
+        readonly: locked,
+        value: data.value,
+        type: "text",
+        onchange: (state: State<S>, event?: Event): Transition<S> => {
+          if (!event) return state
+          const target = event.target as HTMLInputElement
+          return update (state, target.value)
+        },
+        ...etc,
+        class: cc (["uy-input", { locked, disabled }, etc.class]),
+      }),
+    ])
 
 export const textbox = component (rawTextbox)

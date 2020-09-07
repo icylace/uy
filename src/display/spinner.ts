@@ -4,7 +4,6 @@ import cc from "classcat"
 import { span } from "ntml"
 
 export type SpinnerOptions = {
-  [_: string]: unknown
   class?: ClassProp
   disabled: boolean
   locked: boolean

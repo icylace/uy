@@ -13,7 +13,6 @@ import { box } from "../container/box"
 import { icon } from "../display/icon"
 
 export type SearchboxOptions<S> = {
-  [_: string]: unknown
   class?: ClassProp
   disabled: boolean
   locked: boolean

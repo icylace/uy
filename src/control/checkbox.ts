@@ -21,7 +21,6 @@ import { box } from "../container/box"
 // const freshCheckbox = (value: boolean, indeterminate?: boolean): CheckboxData => ({ indeterminate, value })
 
 export type CheckboxOptions<S> = {
-  [_: string]: unknown
   class?: ClassProp
   disabled: boolean
   label?: Contents<S>

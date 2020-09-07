@@ -11,7 +11,6 @@ import { rawTable } from "../container/table"
 import { rawCheckbox } from "./checkbox"
 
 export type ChecklistOptions<S> = {
-  [_: string]: unknown
   class?: ClassProp
   disabled: boolean
   locked: boolean

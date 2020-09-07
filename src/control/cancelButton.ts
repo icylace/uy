@@ -5,7 +5,6 @@ import * as html from "ntml"
 import { box } from "../container/box"
 
 export type CancelButtonOptions<S> = {
-  [_: string]: unknown
   class?: ClassProp
   disabled: boolean
   locked: boolean

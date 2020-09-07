@@ -9,7 +9,6 @@ import { component } from "../component"
 import { box } from "../container/box"
 
 export type NumberboxOptions<S> = {
-  [_: string]: unknown
   class?: ClassProp
   disabled: boolean
   label?: Content<S>

@@ -8,7 +8,6 @@ import { box } from "../container/box"
 import { icon } from "../display/icon"
 
 export type FileOptions<S> = {
-  [_: string]: unknown
   class?: ClassProp
   disabled: boolean
   label?: string

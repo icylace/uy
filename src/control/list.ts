@@ -1,6 +1,5 @@
 import type { ClassProp, Payload, State, VDOM } from "hyperapp"
 import type { Content } from "ntml"
-import type { Transform } from "../types"
 import type { TableCell } from "../container/table"
 import type { Path } from "../utility/shadesHelper"
 
@@ -15,7 +14,6 @@ import { cancelButton } from "./cancelButton"
 import { rawTextbox } from "./textbox"
 
 export type ListOptions<S> = {
-  [_: string]: unknown
   class?: ClassProp
   disabled: boolean
   headers?: Content<S>[]
@@ -44,17 +42,17 @@ const removeItem = (path: Path) => (i: number) => <S>(state: State<S>): State<S>
 const rawList =
   <S>({ disabled, locked, headers, path, ...etc }: ListOptions<S>) =>
     (data: ListData): VDOM<S> => {
-      const item = (x: any, i: number): TableCell<S>[] => [
+      const item = (value: string, i: number): TableCell<S>[] => [
         rawTextbox
           ({ disabled, locked, update: updateItem (path) (i) })
-          ({ value: x }),
-        cancelButton ({ disabled, locked, update: removeItem (path) (i) }),
+          ({ value }),
+        cancelButton<S> ({ disabled, locked, update: removeItem (path) (i) }),
       ]
 
-      const grower = [
+      const grower: TableCell<S>[] = [
         [
           { class: "uy-list-adder", colspan: 2 },
-          button ({
+          button<S> ({
             disabled,
             locked,
             label: "+ Add",

@@ -14,7 +14,6 @@ export type Tab<S> = {
 }
 
 export type TabsOptions<S> = {
-  [_: string]: unknown
   class?: ClassProp
   disabled: boolean
   itemsFooter?: string | VNode<S>

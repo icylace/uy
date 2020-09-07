@@ -6,7 +6,6 @@ import * as html from "ntml"
 import { box } from "../container/box"
 
 export type ButtonOptions<S> = {
-  [_: string]: unknown
   class?: ClassProp
   disabled: boolean
   label?: Content<S>

@@ -9,7 +9,6 @@ import { box } from "../container/box"
 import { rawCheckbox } from "./checkbox"
 
 export type MultiselectOptions<S> = {
-  [_: string]: unknown
   class?: ClassProp
   disabled: boolean
   locked: boolean

@@ -9,7 +9,6 @@ import { component } from "../component"
 import { icon } from "../display/icon"
 
 export type PagerOptions<S> = {
-  [_: string]: unknown
   class?: ClassProp
   disabled: boolean
   itemsPerPage: number

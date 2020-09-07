@@ -10,7 +10,6 @@ import { component } from "../component"
 import { box } from "../container/box"
 
 export type DropdownOptions<S> = {
-  [_: string]: unknown
   class?: ClassProp
   disabled: boolean
   locked: boolean

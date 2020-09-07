@@ -9,7 +9,7 @@ import type {
 
 import { fx, handleUsing, onMouseDown, onOutside } from "./hyperappHelper"
 import { get, mod, set } from "./shadesHelper"
-import { delist, map, pipe } from "./utility"
+import { delist, pipe } from "./utility"
 
 // -----------------------------------------------------------------------------
 
@@ -22,9 +22,8 @@ export const removeInsideEl = (id: string) => <S>(state: State<S>): State<S> =>
 // -----------------------------------------------------------------------------
 
 const detectOutside = ([insider, f]: [string, (a: any) => any]): any =>
-  onOutside (`#${insider}`) (<S>(_state: State<S>, _event: any): any =>
-    pipe (f, removeInsideEl (insider)),
-  )
+  onOutside (`#${insider}`) (<S>(_state: State<S>, _event: any) => (state: State<S>): State<S> =>
+    removeInsideEl (insider) (f (state))
 
 const freshState = <S>(state: State<S>): State<S> => ({
   ...state,
@@ -34,9 +33,9 @@ const freshState = <S>(state: State<S>): State<S> => ({
       detectOutsideAction: (state: State<S>, event: Payload<Event>): Transition<S> => {
         // TODO:
         // - switch to using a Map object instead in order to guarantee order
-        const insiders = Object.entries (get (["uy", "insiders"]) (state))
+        const insiders = Object.entries (get (["uy", "insiders"]) (state) ?? {})
         const detections = insiders.map (detectOutside)
-        return handleUsing (deteections)
+        return handleUsing (detections)
 
         // detections.reduce((acc, f) => f (acc, event), state)
 

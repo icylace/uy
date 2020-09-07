@@ -1,4 +1,4 @@
-import type { ClassProp, Payload, State, Transition, VDOM } from "hyperapp"
+import type { ClassProp, Effect, Payload, State, Transition, VDOM } from "hyperapp"
 import type { Path } from "../utility/shadesHelper"
 
 import cc from "classcat"
@@ -12,13 +12,13 @@ import { popup } from "../container/popup"
 import { box } from "../container/box"
 import { icon } from "../display/icon"
 
-export type SearchboxOptions = {
+export type SearchboxOptions<S> = {
   [_: string]: unknown
   class?: ClassProp
   disabled: boolean
   locked: boolean
   path: Path
-  search: Function
+  search: Effect<S>
 }
 
 export type SearchboxData = {
@@ -47,17 +47,15 @@ const chooseResult =
             set ([...path, "results"]) ([]),
             set ([...path, "value"]) (value),
             removeInsideEl (id),
-          ) (state)
+          ) (state) as State<S>
 
-// updateResults :: AnyFunction -> Path -> String -> State -> Payload -> Action
 const updateResults =
-  (search: Function) =>
+  <S>(search: Effect<S>) =>
     (path: Path) =>
       (id: string) =>
-        <S, P extends SearchboxData>(
-          state: State<S>,
-          { value, results }: Payload<P>,
-        ): Transition<S> => {
+        (state: State<S>, props: Payload<SearchboxData>): Transition<S> => {
+          const { value, results } = props
+
           // It is possible the current value of the searchbox and the value that was
           // actually searched on could be out of sync if the user continues changing
           // the searchbox value during the search. In that case another search gets
@@ -75,19 +73,18 @@ const updateResults =
           const newState = pipe (
             set ([...path, "searching"]) (false),
             set ([...path, "results"]) (results),
-          ) (state)
+          ) (state) as State<S>
 
           return results.length
             ? addInsideEl (id) (set ([...path, "results"]) ([])) (newState)
             : removeInsideEl (id) (newState)
         }
 
-// update :: (Action -> String -> State) -> Path -> String -> String -> State -> Action
-const update = (search: Function) =>
+const update = <S>(search: Effect<S>) =>
   (path: Path) =>
     (id: string) =>
       (value: string) =>
-        <S>(state: State<S>): Transition<S> =>
+        (state: State<S>): Transition<S> =>
           get ([...path, "searching"]) (state)
             ? set ([...path, "value"]) (value) (state)
             : [
@@ -121,8 +118,8 @@ const noopKeys = [
 ]
 
 const rawSearchbox =
-  ({ disabled, locked, path, search, ...etc }: SearchboxOptions) =>
-    <S>(data: SearchboxData): VDOM<S> => {
+  <S>({ disabled, locked, path, search, ...etc }: SearchboxOptions<S>) =>
+    (data: SearchboxData): VDOM<S> => {
       const id = path.join ("-")
 
       const inputSearch = input ({
@@ -132,7 +129,7 @@ const rawSearchbox =
         type: "search",
         onfocus: set ([...path, "focused"]) (true),
         onblur: set ([...path, "focused"]) (false),
-        onkeyup: (state, event) => {
+        onkeyup: (state: State<S>, event?: Payload<KeyboardEvent>): Transition<S> => {
           if (!event) return state
           if (noopKeys.includes (event.key)) return state
           const target = event.target as HTMLInputElement
@@ -144,7 +141,7 @@ const rawSearchbox =
         // less convenient since it would conflict with how we're using
         // the `keyup` event.
         // https://stackoverflow.com/a/25569880
-        onsearch: (state, event) => {
+        onsearch: (state: State<S>, event?: Payload<Event>): Transition<S> => {
           if (!event) return state
           const target = event.target as HTMLInputElement
           return update (search) (path) (id) (target.value) (state)

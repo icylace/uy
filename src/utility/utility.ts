@@ -6,8 +6,8 @@ export const delist = (key: string) => (xr: Record<string, unknown>): Record<str
 export const exclude = (i: number) => (xs: unknown[]): unknown[] =>
   [...xs.slice (0, i), ...xs.slice (i + 1)]
 
-export const map = <T, U>(f: (_: T) => U) => (xs: T[]): U[] =>
-  xs.map (f)
+// export const map = <T, U>(f: (_: T) => U) => (xs: T[]): U[] =>
+//   xs.map (f)
 
 // TODO:
 // export const pipe = <T extends any>(...fs: ((_: T) => T)[]) => (x: T): T =>

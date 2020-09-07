@@ -12,7 +12,7 @@ export type MultiselectOptions<S> = {
   class?: ClassProp
   disabled: boolean
   locked: boolean
-  options: Record<string, unknown>
+  options: Record<string, Contents<S>>
   update: Transform<S>
   usingColumnMode: boolean
 }
@@ -49,7 +49,7 @@ const rawMultiselect =
                 disabled,
                 label,
                 locked,
-                update: (state: State<S>, checked: boolean): Transition<S> => {
+                update: (state: State<S>, checked?: boolean): Transition<S> => {
                   if (checked) {
                     selection.add (value)
                   } else {

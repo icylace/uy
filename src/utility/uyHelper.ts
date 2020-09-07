@@ -20,17 +20,30 @@ export const removeInsideEl = (id: string) => <S>(state: State<S>): State<S> =>
 
 // -----------------------------------------------------------------------------
 
+// TODO:
+
 const detectOutside = ([insider, f]: [string, (a: any) => any]): any =>
   onOutside (`#${insider}`) (<S>(_state: State<S>, _event: Event) => (state: State<S>): State<S> =>
     removeInsideEl (insider) (f (state)),
   )
+
+// export type Transform<S, P = Payload> = (state: State<S>, props?: P) => Transition<S>
+
+// // Invokes a collection of event handlers for the same event.
+// export const handleUsing = <S>(handlers: Action<S>[]) =>
+//   (state: Transition<S>, event: Event): Transition<S> =>
+//     handlers.reduce ((t, f) => actWith ([f, event]) (t), state)
+
+// -----------------------------------------------------------------------------
 
 const freshState = <S>(state: State<S>): State<S> => ({
   ...state,
   uy: {
     insiders: {},
     mousedownHandlers: {
-      detectOutsideAction: (state: State<S>, event: Event): Transition<S> => {
+      detectOutsideAction: (state: State<S>, _event: Event): Transition<S> => {
+        // TODO:
+
         // TODO:
         // - switch to using a Map object instead in order to guarantee order
         const insiders = Object.entries (get (["uy", "insiders"]) (state) ?? {})

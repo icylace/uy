@@ -1,38 +1,24 @@
 import type {
+  Action,
   App,
   Dispatch,
   State,
   Transition,
   Subscriber,
 } from "hyperapp"
+import type { Transform } from "../types"
 
 import { fx, handleUsing, onMouseDown, onOutside } from "./hyperappHelper"
 import { get, mod, set } from "./shadesHelper"
-import { delist, pipe } from "./utility"
+import { delist } from "./utility"
 
 // -----------------------------------------------------------------------------
 
-export const addInsideEl = (id: string) => (f: Function) => <S>(state: State<S>): State<S> =>
+export const addInsideEl = (id: string) => <S>(f: Transform<S>) => (state: State<S>): State<S> =>
   set (["uy", "insiders", id]) (f) (state)
 
 export const removeInsideEl = (id: string) => <S>(state: State<S>): State<S> =>
   mod (["uy", "insiders"]) (delist (id)) (state)
-
-// -----------------------------------------------------------------------------
-
-// TODO:
-
-const detectOutside = ([insider, f]: [string, (a: any) => any]): any =>
-  onOutside (`#${insider}`) (<S>(_state: State<S>, _event: Event) => (state: State<S>): State<S> =>
-    removeInsideEl (insider) (f (state)),
-  )
-
-// export type Transform<S, P = Payload> = (state: State<S>, props?: P) => Transition<S>
-
-// // Invokes a collection of event handlers for the same event.
-// export const handleUsing = <S>(handlers: Action<S>[]) =>
-//   (state: Transition<S>, event: Event): Transition<S> =>
-//     handlers.reduce ((t, f) => actWith ([f, event]) (t), state)
 
 // -----------------------------------------------------------------------------
 
@@ -41,36 +27,17 @@ const freshState = <S>(state: State<S>): State<S> => ({
   uy: {
     insiders: {},
     mousedownHandlers: {
-      detectOutsideAction: (state: State<S>, _event: Event): Transition<S> => {
-        // TODO:
-
+      detectOutsideAction: (state: State<S>, event: Event): Transition<S> => {
         // TODO:
         // - switch to using a Map object instead in order to guarantee order
-        const insiders = Object.entries (get (["uy", "insiders"]) (state) ?? {})
-        const detections = insiders.map (detectOutside)
-        return handleUsing (detections)
-
-        // detections.reduce((acc, f) => f (acc, event), state)
-
-        // handleUsing (
-        //   pipe (
-        //     get (["uy", "insiders"]),
-        //     // TODO:
-        //     // - switch to using a Map object instead in order to guarantee order
-        //     Object.entries,
-        //     map (detectOutside),
-        //   ) (state),
-        // ) (state, event),
-
-        // handleUsing (
-        //   pipe (
-        //     get (["uy", "insiders"]),
-        //     // TODO:
-        //     // - switch to using a Map object instead in order to guarantee order
-        //     Object.entries,
-        //     map (detectOutside),
-        //   ) (state),
-        // ) (state, event),
+        const insiders: [string, Transform<S>][] = Object.entries (
+          get (["uy", "insiders"]) (state) ?? {}
+        )
+        const detectionsOutside: Action<S, Event>[] = insiders.map (
+          ([insider, f]: [string, Transform<S>]): Action<S, Event> =>
+            onOutside (`#${insider}`) ((state) => removeInsideEl (insider) (f (state)))
+        )
+        return handleUsing (detectionsOutside) (state, event)
       },
     },
   },
@@ -78,19 +45,18 @@ const freshState = <S>(state: State<S>): State<S> => ({
 
 // -----------------------------------------------------------------------------
 
-const mouseDownSubscriptionAction = <S>(state: State<S>): State<S> =>
-  pipe (
-    get (["uy", "mousedownHandlers"]),
-    Object.values,
-    handleUsing,
-    onMouseDown,
-  ) (state)
+// TODO:
+
+const mouseDownSubscriptionAction = <S>(state: State<S>): Transition<S> => {
+  const handlerMap = get (["uy", "mousedownHandlers"]) (state) as Record<string, Action<S>>
+  const handlers = Object.values (handlerMap)
+  const transitioner = handleUsing (handlers)
+  return onMouseDown (transitioner)
+}
 
 const runMouseDownSubscription = <S>(dispatch: Dispatch<S>): void => {
   window.requestAnimationFrame (() => dispatch (mouseDownSubscriptionAction))
 }
-
-const mouseDownSubscription = fx (runMouseDownSubscription) (null)
 
 // -----------------------------------------------------------------------------
 
@@ -101,7 +67,7 @@ export const uyAppConfig = <S>(config: App<S>): App<S> => ({
   ...config,
   // TODO: account for any subscriptions from `config`
   subscriptions: (_state: State<S>): Subscriber<S>[] => [
-    mouseDownSubscription,
+    runMouseDownSubscription,
   ],
   init: freshState (config.init),
 })

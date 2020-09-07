@@ -38,31 +38,35 @@ declare module "hyperapp" {
   // ---------------------------------------------------------------------------
 
   // A dispatched action handles an event in the context of the current state.
-  type Dispatch<S> = (action: Action<S>, props?: Payload) => void
+  type Dispatch<S, P = unknown> = (action: Action<S>, props?: Payload<P>) => void
 
   // An action transforms existing state and can be wrapped by another action.
-  type Action<S, P = Payload>
-    = [Action<S>, P]
-    | ((state: State<S>, props?: P) => Transition<S> | Action<S>)
+  type Action<S, P = unknown>
+    = [Action<S>, Payload<P>]
+    | ((state: State<S>, props?: Payload<P>) => Transition<S> | Action<S>)
 
   // A payload is data external to state that is given to a dispatched action.
-  type Payload = unknown
+  type Payload<P> = P
 
   // An effect descriptor describes how an effect should be invoked.
   // A function that creates this is called an effect constructor.
-  type EffectDescriptor<S> = [Effect<S>, EffectData]
+  type EffectDescriptor<S, D = unknown> = [Effect<S>, EffectData<D>]
 
   // An effect is where side effects and any additional dispatching occur.
   // An effect used in a subscription should be able to unsubscribe.
-  type Effect<S> = (dispatch: Dispatch<S>, props?: EffectData) =>
+  type Effect<S, D = unknown> = (dispatch: Dispatch<S>, props?: EffectData<D>) =>
     void | Unsubscribe | Promise<undefined | Unsubscribe>
 
   // An effect is generally given additional data.
-  type EffectData = unknown
+  type EffectData<D> = D
 
   // ---------------------------------------------------------------------------
 
   // A virtual DOM node represents an actual DOM element.
+
+  // TODO:
+  // - consider: VDOM<S = unknown>
+
   type VDOM<S> = {
     readonly type: string
     readonly props: PropList<S>
@@ -95,10 +99,7 @@ declare module "hyperapp" {
   type StyleProp = Record<string, number | string | null>
 
   // A virtual node is a convenience layer over a virtual DOM node.
-  type VNode<S> = boolean | null | undefined | VDOM<S>
-
-  // TODO: consider
-  // type VNode<S> = false | null | undefined | VDOM<S>
+  type VNode<S> = false | null | undefined | VDOM<S>
 
   // Actual DOM nodes will be manipulated depending on how property patching goes.
   type MaybeNode = null | undefined | Node

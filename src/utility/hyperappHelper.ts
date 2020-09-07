@@ -119,7 +119,7 @@ export const glam = (xr: { [_: string]: boolean }): string =>
 
 // Based on:
 // https://github.com/jorgebucaran/hyperapp/blob/f30e70e77513948d2a1286ea6509b4e0c1de8999/lib/dom/src/index.js
-export const fx = <S>(f: Effect<S>) => (x: EffectData): EffectDescriptor<S> =>
+export const fx = <S>(f: Effect<S>) => (x: EffectData<unknown>): EffectDescriptor<S> =>
   [f, x]
 
 // -----------------------------------------------------------------------------
@@ -127,8 +127,9 @@ export const fx = <S>(f: Effect<S>) => (x: EffectData): EffectDescriptor<S> =>
 // Based on:
 // https://github.com/jorgebucaran/hyperapp/issues/752#issue-355556484
 
-const windowListener = (name: string) =>
-  <S>(dispatch: Dispatch<S>, action: Action<S>): Unsubscribe => {
+const windowListener = <S, P>(name: string): Effect<S> =>
+  (dispatch: Dispatch<S>, action?: Action<S, P>): void | Unsubscribe => {
+    if (!action) return
     const listener = (event: Event): void => dispatch (action, event)
     window.addEventListener (name, listener)
     return (): void => window.removeEventListener (name, listener)
@@ -136,7 +137,7 @@ const windowListener = (name: string) =>
 
 const eventFx = (name: string) =>
   <S>(action: Action<S>): EffectDescriptor<S> =>
-    fx (windowListener (name) as Effect<S>) ({ action })
+    fx (windowListener (name) as Effect<S>) (action)
 
 export const onMouseDown = eventFx ("mousedown")
 
@@ -154,9 +155,9 @@ export const onMouseDown = eventFx ("mousedown")
 //       return f (state, target.value)
 //     }
 
-export const actWith = <S>(a: Action<S>) =>
+export const actWith = <S, P>(a: Action<S, P>) =>
   (t: Transition<S>): Transition<S> => {
-    const action = (Array.isArray (a) ? a[0] : a) as Transform<S>
+    const action = (Array.isArray (a) ? a[0] : a) as Action<S, P>
     const payload = Array.isArray (a) ? a[1] : undefined
     if (Array.isArray (t)) {
       const [state, ...effects] = t
@@ -171,7 +172,7 @@ export const actWith = <S>(a: Action<S>) =>
   }
 
 // Invokes a collection of event handlers for the same event.
-export const handleUsing = <S>(handlers: Action<S>[]) =>
+export const handleUsing = <S, P>(handlers: Action<S, P>[]) =>
   (state: Transition<S>, event: Event): Transition<S> =>
     handlers.reduce ((t, f) => actWith ([f, event]) (t), state)
 
@@ -183,11 +184,12 @@ export const handleUsing = <S>(handlers: Action<S>[]) =>
 // https://stackoverflow.com/a/28432139
 // https://codesandbox.io/s/czee7
 //
-// TODO:
-export const onOutside = (selector: string) =>
-  <S>(action: Transform<S>) =>
-    (state: State<S>, event: Event): Transition<S> => {
-      const el = document.querySelector (selector)
-      if (!el || el.contains (event.target as Element)) return state
-      return action (state, event)
-    }
+export const onOutside =
+  (selector: string) =>
+    <S>(action: Transform<S>) =>
+      (state: State<S>, event?: Event): Transition<S> => {
+        if (!event) return state
+        const el = document.querySelector (selector)
+        if (!el || el.contains (event.target as Element)) return state
+        return action (state, event)
+      }

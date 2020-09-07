@@ -101,6 +101,7 @@ module.exports = {
     "import/no-extraneous-dependencies": ["error", { devDependencies: ["**/test.tsx", "**/test"] }],
 
     "@typescript-eslint/ban-types": ["warn"],
+    "@typescript-eslint/member-delimiter-style": ["error", { "delimiter": "none"}],
     "@typescript-eslint/no-explicit-any": ["warn", { ignoreRestArgs: false }],
     "@typescript-eslint/no-unsafe-assignment": ["warn"],
     "@typescript-eslint/no-unsafe-call": ["warn"],

@@ -4,7 +4,9 @@ import type {
   Effect,
   EffectData,
   EffectDescriptor,
+  Payload,
   State,
+  StateWithEffects,
   Transition,
   Unsubscribe,
 } from "hyperapp"
@@ -119,7 +121,7 @@ export const glam = (xr: { [_: string]: boolean }): string =>
 
 // Based on:
 // https://github.com/jorgebucaran/hyperapp/blob/f30e70e77513948d2a1286ea6509b4e0c1de8999/lib/dom/src/index.js
-export const fx = <S>(f: Effect<S>) => (x: EffectData<unknown>): EffectDescriptor<S> =>
+export const fx = <S, P>(f: Effect<S>) => (x: EffectData<P>): EffectDescriptor<S> =>
   [f, x]
 
 // -----------------------------------------------------------------------------
@@ -127,8 +129,8 @@ export const fx = <S>(f: Effect<S>) => (x: EffectData<unknown>): EffectDescripto
 // Based on:
 // https://github.com/jorgebucaran/hyperapp/issues/752#issue-355556484
 
-const windowListener = <S, P>(name: string): Effect<S> =>
-  (dispatch: Dispatch<S>, action?: Action<S, P>): void | Unsubscribe => {
+const windowListener = <S>(name: string): Effect<S> =>
+  (dispatch: Dispatch<S>, action?: any): void | Unsubscribe => {
     if (!action) return
     const listener = (event: Event): void => dispatch (action, event)
     window.addEventListener (name, listener)
@@ -136,7 +138,7 @@ const windowListener = <S, P>(name: string): Effect<S> =>
   }
 
 const eventFx = (name: string) =>
-  <S>(action: Action<S>): EffectDescriptor<S> =>
+  <S, P>(action: Action<S, P>): EffectDescriptor<S> =>
     fx (windowListener (name) as Effect<S>) (action)
 
 export const onMouseDown = eventFx ("mousedown")
@@ -155,26 +157,79 @@ export const onMouseDown = eventFx ("mousedown")
 //       return f (state, target.value)
 //     }
 
-export const actWith = <S, P>(a: Action<S, P>) =>
-  (t: Transition<S>): Transition<S> => {
-    const action = (Array.isArray (a) ? a[0] : a) as Action<S, P>
-    const payload = Array.isArray (a) ? a[1] : undefined
-    if (Array.isArray (t)) {
-      const [state, ...effects] = t
-      const transition = action (state, payload)
-      if (Array.isArray (transition)) {
-        const [restate, ...newEffects] = transition
-        return [restate, ...effects, ...newEffects]
-      }
+// export const actWith = <S, P>(a: Action<S, P>) =>
+//   (t: Transition<S>): Transition<S> => {
+//     let action: Transform<S, P>
+//     let payload: Payload<P> | undefined
+//     let transition: Transition<S>
+
+//     if (Array.isArray (a)) {
+//       action = a[0] as Transform<S, P>
+//       payload = a[1]
+//       transition = actWith (a[0]) (t)
+//       return transition
+//     } else {
+//       action = a as Transform<S, P>
+//       payload = undefined
+//       transition = t
+//     }
+
+//     if (Array.isArray (t)) {
+//       const [state, ...effects] = t
+//       const transition = action (state, payload)
+//       if (Array.isArray (transition)) {
+//         const [restate, ...newEffects] = transition
+//         return [restate, ...effects, ...newEffects]
+//       }
+//       return [transition, ...effects]
+//     }
+
+//     return action (t, payload)
+//   }
+
+// TODO:
+export const actWith = <S, P>(a: Action<S, P>) => (t: Transition<S>): Transition<S> => {
+  if (!Array.isArray (a)) {
+    const action: Action<S, P> = a
+    if (!Array.isArray (t)) {
+      return action (t) as Transition<S>
+    }
+    const [state, ...effects]: StateWithEffects<S> = t
+    const transition: Transition<S> = action (state) as Transition<S>
+    if (!Array.isArray (transition)) {
       return [transition, ...effects]
     }
-    return action (t, payload)
+    const [restate, ...newEffects] = transition
+    return [restate, ...effects, ...newEffects]
+  } else {
+    const action: Action<S, P> = a[0] as Transform<S, P>
+    const payload: Payload<P> = a[1]
+    const nextTransition = actWith (a[0]) (t)
+    if (!Array.isArray (nextTransition)) {
+      return action (nextTransition, payload) as Transition<S>
+    }
+    const [state, ...effects]: StateWithEffects<S> = nextTransition
+    const transition: Transition<S> = action (state, payload) as Transition<S>
+    if (!Array.isArray (transition)) {
+      return [transition, ...effects]
+    }
+    const [restate, ...newEffects] = transition
+    return [restate, ...effects, ...newEffects]
   }
+}
 
 // Invokes a collection of event handlers for the same event.
-export const handleUsing = <S, P>(handlers: Action<S, P>[]) =>
-  (state: Transition<S>, event: Event): Transition<S> =>
-    handlers.reduce ((t, f) => actWith ([f, event]) (t), state)
+export const handleUsing =
+  <S>(handlers: Action<S, Event>[]) =>
+    (state: Transition<S>, event?: Event): Transition<S> =>
+      handlers.reduce ((t, a) => {
+        if (Array.isArray (a)) {
+          // TODO:
+          // - reconsider discarding original payload?
+          return actWith ([a[0], event]) (t)
+        }
+        return actWith ([a as Action<S, unknown>, event]) (t)
+      }, state)
 
 // -----------------------------------------------------------------------------
 

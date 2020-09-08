@@ -30,7 +30,7 @@ export type Checklist = {
 const freshChecklist = (items: ChecklistItem[]): Checklist =>
   ({ items })
 
-const updateItem = (path: Path) => (i: number) => <S>(state: State<S>, value: Payload): State<S> =>
+const updateItem = (path: Path) => (i: number) => <S, P>(state: State<S>, value: Payload<P>): State<S> =>
   set ([...path, "items", i]) (value) (state)
 
 const rawChecklist =

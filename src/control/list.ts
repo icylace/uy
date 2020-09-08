@@ -31,7 +31,7 @@ const freshList = (items: string[]): ListData =>
 const addItem = (path: Path) => (data: ListData) => <S>(state: State<S>): State<S> =>
   set ([...path, "items"]) ([...data.items, ""]) (state)
 
-const updateItem = (path: Path) => (i: number) => <S>(state: State<S>, value: Payload): State<S> =>
+const updateItem = (path: Path) => (i: number) => <S, P>(state: State<S>, value: Payload<P>): State<S> =>
   set ([...path, "items", i]) (value) (state)
 
 const removeItem = (path: Path) => (i: number) => <S>(state: State<S>): State<S> =>

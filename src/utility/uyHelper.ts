@@ -2,13 +2,14 @@ import type {
   Action,
   App,
   Dispatch,
+  Payload,
   State,
   Transition,
   Subscriber,
 } from "hyperapp"
 import type { Transform } from "../types"
 
-import { fx, handleUsing, onMouseDown, onOutside } from "./hyperappHelper"
+import { handleUsing, onMouseDown, onOutside } from "./hyperappHelper"
 import { get, mod, set } from "./shadesHelper"
 import { delist } from "./utility"
 
@@ -45,13 +46,11 @@ const freshState = <S>(state: State<S>): State<S> => ({
 
 // -----------------------------------------------------------------------------
 
-// TODO:
-
-const mouseDownSubscriptionAction = <S>(state: State<S>): Transition<S> => {
-  const handlerMap = get (["uy", "mousedownHandlers"]) (state) as Record<string, Action<S>>
+const mouseDownSubscriptionAction = <S, P>(state: State<S>, _props?: Payload<P>): Transition<S> => {
+  const handlerMap = get (["uy", "mousedownHandlers"]) (state) as Record<string, Action<S, Event>>
   const handlers = Object.values (handlerMap)
   const transitioner = handleUsing (handlers)
-  return onMouseDown (transitioner)
+  return [state, onMouseDown (transitioner)]
 }
 
 const runMouseDownSubscription = <S>(dispatch: Dispatch<S>): void => {
@@ -60,7 +59,8 @@ const runMouseDownSubscription = <S>(dispatch: Dispatch<S>): void => {
 
 // -----------------------------------------------------------------------------
 
-// // TODO:
+// TODO:
+// - have the `uy` config part of the state be managed by the app that uses `uy`
 // const uy = (path: Path)
 
 export const uyAppConfig = <S>(config: App<S>): App<S> => ({

@@ -63,10 +63,6 @@ declare module "hyperapp" {
   // ---------------------------------------------------------------------------
 
   // A virtual DOM node represents an actual DOM element.
-
-  // TODO:
-  // - consider: VDOM<S = unknown>
-
   type VDOM<S> = {
     readonly type: string
     readonly props: PropList<S>

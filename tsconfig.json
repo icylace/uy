@@ -5,7 +5,7 @@
 // $ npx tsc --init
 
 {
-  "include": ["./src/**/*"],
+  "include": ["./src/**/*", "./types/**/*"],
   // "exclude": ["./dist", "./output", "./node_modules", "./web_modules"],
   "exclude": ["./dist", "./output", "./node_modules"],
   "compilerOptions": {

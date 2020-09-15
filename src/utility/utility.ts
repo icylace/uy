@@ -16,4 +16,4 @@ export const pipe = (...fs: ((_: any) => any)[]) => (x: any): any =>
   fs.reduce ((acc: any, f: ((_: any) => any)) => f (acc), x)
 
 export const range = (m: number) => (n: number): number[] =>
-  [...Array (n - m) as undefined[]].map ((_, i) => m + i)
+  [...Array (n - m)].map ((_, i) => m + i)

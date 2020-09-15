@@ -51,16 +51,16 @@ const tableHeader =
               })
               : null,
           ],
-        ) as VDOM<S>
+        )
       }
 
 const tableCell = <S>(x: TableCell<S>): VDOM<S> =>
-  (Array.isArray (x)
+  Array.isArray (x)
     ? html.td (x[0], x[1])
-    : html.td (x)) as VDOM<S>
+    : html.td (x)
 
 const tableRow = <S>(row: TableRow<S>): VDOM<S> =>
-  html.tr (row.map (tableCell)) as VDOM<S>
+  html.tr (row.map (tableCell))
 
 const rawTable = <S>(
   {

@@ -13,7 +13,7 @@ export type DropdownOptions<S> = {
   class?: ClassProp
   disabled: boolean
   locked: boolean
-  update: Transform<S>
+  update: Transform<S, unknown, Event>
   options: Record<string, Contents<S>>
   path: Path
 };
@@ -42,7 +42,7 @@ const rawDropdown =
             disabled,
             readonly: locked,
             value: data.value,
-            onchange: (state: State<S>, event?: Event): Transition<S> => {
+            onchange: (state, event) => {
               if (!event) return state
               const target = event.target as HTMLInputElement
               return update (state, target.value)
@@ -57,7 +57,7 @@ const rawDropdown =
           // - verify type of `x` is workable
           Object.entries (options).map (
             ([value, label]: [string, Contents<S>]): VDOM<S> =>
-              option ({ value }, label) as VDOM<S>,
+              option ({ value }, label),
           ),
         ),
       ]),

@@ -14,7 +14,7 @@ export type PagerOptions<S> = {
   itemsPerPage: number
   locked: boolean
   pageRange: number
-  update: Transform<S>
+  update: Transform<S, number, MouseEvent>
 }
 
 export type PagerData = {
@@ -26,7 +26,7 @@ export const freshPager = (itemsTotal: number) => (value: number): PagerData =>
   ({ value, itemsTotal })
 
 const pagerNav = <S>(
-  handler: Transform<S>,
+  handler: Transform<S, unknown, MouseEvent>,
   content: Contents<S>,
   active: boolean,
 ): VDOM<S> =>
@@ -35,10 +35,10 @@ const pagerNav = <S>(
     ...active
       ? { onclick: handler }
       : {},
-  }, content) as VDOM<S>
+  }, content)
 
 const pagerMore = <S>(content: Contents<S>): VDOM<S> =>
-  span ({ class: "uy-pager-more" }, content) as VDOM<S>
+  span ({ class: "uy-pager-more" }, content)
 
 const rawPager =
   <S>({ disabled, locked, itemsPerPage, pageRange, update, ...etc }: PagerOptions<S>) =>
@@ -59,13 +59,13 @@ const rawPager =
             ? li ({
               class: ["uy-pager-nav", "uy-pager-page", current && "uy-pager-current"],
               onclick: (state) => update (state, currentPage),
-            }, span (currentPage + 1)) as VDOM<S>
+            }, span (currentPage + 1))
             : null
         },
       )
 
-      const morePrev = pagerMore (rangeStartPage > 0 ? "..." : "")
-      const moreNext = pagerMore (rangeFinishPage < lastPage ? "..." : "")
+      const morePrev = pagerMore<S> (rangeStartPage > 0 ? "..." : "")
+      const moreNext = pagerMore<S> (rangeFinishPage < lastPage ? "..." : "")
 
       const navFirst = pagerNav<S> (
         (state) => update (state, 0),
@@ -96,15 +96,15 @@ const rawPager =
         class: cc (["uy-control uy-pager", { locked, disabled }, etc.class]),
       }, [
         ul ([
-          li<S> (navFirst),
-          li<S> (navPrev),
-          li<S> (morePrev),
+          li (navFirst),
+          li (navPrev),
+          li (morePrev),
           ...pages,
-          li<S> (moreNext),
-          li<S> (navNext),
-          li<S> (navLast),
+          li (moreNext),
+          li (navNext),
+          li (navLast),
         ]),
-      ]) as VDOM<S>
+      ])
     }
 
 export const pager = component (rawPager)

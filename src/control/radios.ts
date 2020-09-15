@@ -12,7 +12,7 @@ export type RadiosOptions<S> = {
   disabled: boolean
   locked: boolean
   options: Record<string, Content<S>>
-  update: Transform<S>
+  update: Transform<S, string, Event>
 }
 
 export type RadiosData = {
@@ -35,16 +35,16 @@ const rawRadios =
               value,
               checked: value === data.value,
               type: "radio",
-              onchange: (state: State<S>, event?: Event): Transition<S> => {
+              onchange: (state, event) => {
                 if (!event) return state
                 const target = event.target as HTMLInputElement
                 return update (state, target.value)
               },
               ...etc,
               class: cc (["uy-input", { locked, disabled }, etc.class]),
-            }) as VDOM<S>,
+            }),
             label != null ? html.span (label) : null,
-          ]) as VDOM<S>,
+          ]),
         ),
       )
 

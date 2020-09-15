@@ -49,7 +49,7 @@ const rawMultiselect =
                 disabled,
                 label,
                 locked,
-                update: (state: State<S>, checked?: boolean): Transition<S> => {
+                update: (state, checked) => {
                   if (checked) {
                     selection.add (value)
                   } else {
@@ -63,7 +63,7 @@ const rawMultiselect =
               }) ({ value: selection.has (value) }),
           ),
         ),
-      ]) as VDOM<S>
+      ])
     }
 
 export const multiselect = component (rawMultiselect)

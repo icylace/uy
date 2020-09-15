@@ -1,4 +1,4 @@
-import type { ClassProp, State, Transition, VDOM } from "hyperapp"
+import type { ClassProp, State, VDOM } from "hyperapp"
 import type { Content } from "ntml"
 import type { Path } from "../utility/shadesHelper"
 
@@ -41,7 +41,7 @@ const rawNumberbox =
             readonly: locked,
             type: "number",
             value: data.value,
-            onchange: (state: State<S>, event?: Event): Transition<S> => {
+            onchange: (state, event) => {
               if (!event) return state
               const target = event.target as HTMLInputElement
               return update (path) (state, target.value)

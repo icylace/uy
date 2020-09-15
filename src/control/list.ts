@@ -74,7 +74,7 @@ const rawList =
             sortDescending: false,
           }) ({ rows: [...data.items.map (item), grower] }),
         ],
-      ) as VDOM<S>
+      )
     }
 
 const list = component (rawList)

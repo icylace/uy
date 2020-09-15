@@ -32,7 +32,7 @@ export const freshTabs = (value: string): TabsData =>
 
 const isSelected = (activeTab: string) => <S>(item: Content<S>, i: number): boolean => {
   if (typeof item === "object") {
-    const vdomItem = item as VDOM<S>
+    // const vdomItem = item
     return ("props" in vdomItem) && activeTab === vdomItem.props["data-tab-id"]
   }
   return activeTab === String (i)
@@ -45,7 +45,7 @@ const tab =
         const selected = isSelected (activeTab) (item, i)
         return div ({
           class: { "uy-tabs-item": true, selected },
-          onclick: (state: State<S>, event?: MouseEvent): Transition<S> => {
+          onclick: (state, event) => {
             if (!event) return state
             const target = event.target as HTMLElement
             const transition = update (state, String (i))
@@ -55,7 +55,7 @@ const tab =
                 : [transition, scrollIntoView (target)]
               : transition
           },
-        }, item) as VDOM<S>
+        }, item)
       }
 
 const rawTabs = <S>(
@@ -89,7 +89,7 @@ const rawTabs = <S>(
             panels[headings.findIndex (isSelected (data.value))],
           ),
         ],
-      ) as VDOM<S>
+      )
     }
 
 export const tabs = component (rawTabs)

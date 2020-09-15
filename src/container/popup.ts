@@ -23,4 +23,4 @@ export const popup =
           { locked, disabled },
           etc.class,
         ]),
-      }, contents) as VDOM<S>
+      }, contents)

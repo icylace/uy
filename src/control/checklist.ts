@@ -61,7 +61,7 @@ const rawChecklist =
           class: cc (["uy-container uy-checklist", { locked, disabled }, etc.class]),
         },
         [rawTable<S> ({ disabled, locked }) (tableData)],
-      ) as VDOM<S>
+      )
     }
 
 const checklist = component (rawChecklist)

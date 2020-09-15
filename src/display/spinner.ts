@@ -10,4 +10,4 @@ export type SpinnerOptions = {
 }
 
 export const spinner = <S>(props: SpinnerOptions): VDOM<S> =>
-  span ({ ...props, class: cc (["uy-indicator uy-spinner", props.class]) }) as VDOM<S>
+  span ({ ...props, class: cc (["uy-indicator uy-spinner", props.class]) })

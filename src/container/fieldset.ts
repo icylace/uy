@@ -25,7 +25,7 @@ const rawFieldset =
           class: cc (["uy-fieldset", { locked, disabled }, etc.class]),
         },
         label ? [html.legend (label), ...stuff] : stuff,
-      ) as VDOM<S>
+      )
     }
 
 export const fieldset = <S>(props: FieldsetOptions<S>): ContainerView<S> =>

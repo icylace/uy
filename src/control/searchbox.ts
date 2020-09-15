@@ -99,7 +99,7 @@ const update =
 // -----------------------------------------------------------------------------
 
 const searchResult = (path: Path) => (id: string) => <S>(x: string): VDOM<S> =>
-  li ({ onclick: chooseResult (path) (id) (x) }, x) as VDOM<S>
+  li ({ onclick: chooseResult (path) (id) (x) }, x)
 
 // We don't let certain keys unnecessarily affect searching.
 const noopKeys = [
@@ -130,7 +130,7 @@ const rawSearchbox =
         type: "search",
         onfocus: set ([...path, "focused"]) (true),
         onblur: set ([...path, "focused"]) (false),
-        onkeyup: (state: State<S>, event?: KeyboardEvent): Transition<S> => {
+        onkeyup: (state, event) => {
           if (!event) return state
           if (noopKeys.includes (event.key)) return state
           const target = event.target as HTMLInputElement
@@ -142,14 +142,14 @@ const rawSearchbox =
         // less convenient since it would conflict with how we're using
         // the `keyup` event.
         // https://stackoverflow.com/a/25569880
-        onsearch: (state: State<S>, event?: Event): Transition<S> => {
+        onsearch: (state, event) => {
           if (!event) return state
           const target = event.target as HTMLInputElement
           return update (search) (path) (id) (target.value) (state)
         },
         ...etc,
         class: cc (["uy-input", { locked, disabled }, etc.class]),
-      }) as VDOM<S>
+      })
 
       return box ({
         disabled,
@@ -169,7 +169,7 @@ const rawSearchbox =
           inputSearch,
           span (
             {
-              onclick: (state: State<S>, _event?: MouseEvent): Transition<S> =>
+              onclick: (state, _event) =>
                 update (search) (path) (id) (data.value) (state),
             },
             [
@@ -180,7 +180,7 @@ const rawSearchbox =
                 "fa-search": !data.searching,
               }),
             ],
-          ) as VDOM<S>,
+          ),
         ]),
 
         data.results.length && !disabled
@@ -188,7 +188,7 @@ const rawSearchbox =
             ul (
               { class: "uy-searchbox-results uy-scroller" },
               data.results.map (searchResult (path) (id)),
-            ) as VDOM<S>,
+            ),
           ])
           : null,
       ])

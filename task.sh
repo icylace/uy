@@ -5,6 +5,7 @@ task:index() {
     # '_snowpack'
     'build:dev'
     'build:prod'
+    'check'
     'clean'
     'hard-refresh'
     'lint'
@@ -13,7 +14,6 @@ task:index() {
     'prepare'
     'release'
     'test'
-    'typecheck'
     'watch'
     'watch:postcss'
     'watch:rollup'
@@ -123,6 +123,14 @@ task:build:prod() {
 
 # ------------------------------------------------------------------------------
 
+task:check() {
+  echo
+  echo "Typechecking TypeScript code..."
+  npx tsc --noEmit --incremental false
+}
+
+# ------------------------------------------------------------------------------
+
 task:clean() {
   echo
   echo "Cleaning the distribution folder..."
@@ -215,14 +223,6 @@ task:test() {
   # TODO:
   # echo "Error: no test specified" && exit 1
   return
-}
-
-# ------------------------------------------------------------------------------
-
-task:typecheck() {
-  echo
-  echo "Typechecking TypeScript code..."
-  npx tsc --noEmit --incremental false
 }
 
 # ------------------------------------------------------------------------------

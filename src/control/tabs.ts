@@ -32,8 +32,7 @@ export const freshTabs = (value: string): TabsData =>
 
 const isSelected = (activeTab: string) => <S>(item: Content<S>, i: number): boolean => {
   if (typeof item === "object") {
-    // const vdomItem = item
-    return ("props" in vdomItem) && activeTab === vdomItem.props["data-tab-id"]
+    return item != null && "props" in item && activeTab === item.props["data-tab-id"]
   }
   return activeTab === String (i)
 }
@@ -49,11 +48,13 @@ const tab =
             if (!event) return state
             const target = event.target as HTMLElement
             const transition = update (state, String (i))
-            return selected
-              ? Array.isArray (transition)
-                ? [...transition, scrollIntoView (target)]
-                : [transition, scrollIntoView (target)]
-              : transition
+            return [...transition, scrollIntoView (target)]
+            // return state
+            // return selected
+            //   ? Array.isArray (transition)
+            //     ? [...transition, scrollIntoView (target)]
+            //     : [transition, scrollIntoView (target)]
+            //   : transition
           },
         }, item)
       }

@@ -13,7 +13,7 @@ export type MultiselectOptions<S> = {
   disabled: boolean
   locked: boolean
   options: Record<string, Contents<S>>
-  update: Transform<S>
+  update: Transform<S, boolean, Event>
   usingColumnMode: boolean
 }
 
@@ -57,7 +57,8 @@ const rawMultiselect =
                   }
                   // TODO:
                   // - maybe return Set directly and maybe also find a way to ensure order?
-                  return update (state, Array.from (selection))
+                  return update (state, selection.has (value))
+                  // return update (state, Array.from (selection))
                   // const update = (state: State<S>, value: any): any => set ([...path, "value"]) (value) (state)
                 },
               }) ({ value: selection.has (value) }),

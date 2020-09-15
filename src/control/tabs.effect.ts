@@ -2,9 +2,9 @@ import type { Dispatch, Effect, EffectDescriptor } from "hyperapp"
 
 import { fx } from "../utility/hyperappHelper"
 
-const runScrollIntoView = <S>(_dispatch: Dispatch<S>, el: Element): void => {
+const runScrollIntoView = ((_dispatch: Dispatch<unknown>, el: Element): void => {
   el.scrollIntoView ({ behavior: "smooth", block: "nearest" })
-}
+}) as Effect<unknown>
 
-export const scrollIntoView = <S>(el: Element): EffectDescriptor<S> =>
-  fx (runScrollIntoView as Effect<S>) (el)
+export const scrollIntoView = (el: Element): EffectDescriptor<unknown> =>
+  fx (runScrollIntoView) (el)

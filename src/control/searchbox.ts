@@ -12,7 +12,8 @@ import { popup } from "../container/popup"
 import { box } from "../container/box"
 import { icon } from "../display/icon"
 
-export type Searcher<S> = (action: Action<S, SearchboxData>) => (value: string) => EffectDescriptor<S>
+export type Searcher<S, P = unknown, D = unknown> =
+  (action: Action<S, SearchboxData, D>) => (value: string) => EffectDescriptor<S, P, D>
 
 export type SearchboxOptions<S> = {
   class?: ClassProp

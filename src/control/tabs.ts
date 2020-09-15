@@ -20,7 +20,7 @@ export type TabsOptions<S> = {
   itemsHeader?: string | VNode<S>
   locked: boolean
   tabList: Tab<S>[]
-  update: Transform<S>
+  update: Transform<S, string, MouseEvent>
 }
 
 export type TabsData = {
@@ -48,13 +48,11 @@ const tab =
             if (!event) return state
             const target = event.target as HTMLElement
             const transition = update (state, String (i))
-            return [...transition, scrollIntoView (target)]
-            // return state
-            // return selected
-            //   ? Array.isArray (transition)
-            //     ? [...transition, scrollIntoView (target)]
-            //     : [transition, scrollIntoView (target)]
-            //   : transition
+            return selected
+              ? Array.isArray (transition)
+                ? [...transition, scrollIntoView (target)]
+                : [transition, scrollIntoView (target)]
+              : transition
           },
         }, item)
       }

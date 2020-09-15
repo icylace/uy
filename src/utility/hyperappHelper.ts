@@ -121,7 +121,7 @@ export const glam = (xr: { [_: string]: boolean }): string =>
 
 // Based on:
 // https://github.com/jorgebucaran/hyperapp/blob/f30e70e77513948d2a1286ea6509b4e0c1de8999/lib/dom/src/index.js
-export const fx = <S, P>(f: Effect<S>) => (x: EffectData<P>): EffectDescriptor<S> =>
+export const fx = <S, P, D>(f: Effect<S, P, D>) => (x: EffectData<D>): EffectDescriptor<S, P, D> =>
   [f, x]
 
 // -----------------------------------------------------------------------------

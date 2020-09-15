@@ -1,4 +1,4 @@
-import type { ClassProp, State, Transition, VDOM } from "hyperapp"
+import type { ClassProp, VDOM } from "hyperapp"
 import type { Contents } from "ntml"
 import type { Transform } from "../types"
 import type { Path } from "../utility/shadesHelper"

@@ -1,4 +1,4 @@
-import type { ClassProp, State, Transition, VDOM } from "hyperapp"
+import type { ClassProp, VDOM } from "hyperapp"
 import type { Transform } from "../types"
 
 import cc from "classcat"
@@ -10,7 +10,7 @@ export type TextboxOptions<S> = {
   class?: ClassProp
   disabled: boolean
   locked: boolean
-  update: Transform<S>
+  update: Transform<S, string, Event>
 }
 
 export type TextboxData = {
@@ -29,7 +29,7 @@ export const rawTextbox =
         readonly: locked,
         value: data.value,
         type: "text",
-        onchange: (state: State<S>, event?: Event): Transition<S> => {
+        onchange: (state, event) => {
           if (!event) return state
           const target = event.target as HTMLInputElement
           return update (state, target.value)

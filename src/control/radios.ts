@@ -1,4 +1,4 @@
-import type { ClassProp, State, Transition, VDOM } from "hyperapp"
+import type { ClassProp, VDOM } from "hyperapp"
 import type { Content } from "ntml"
 import type { Transform } from "../types"
 

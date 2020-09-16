@@ -188,28 +188,30 @@ export const onMouseDown = eventFx ("mousedown")
 //   }
 
 // TODO:
-export const actWith = <S, P>(a: Action<S, P>) => (t: Transition<S>): Transition<S> => {
+export const actWith = <S, P, D>(a: Action<S, P, D>) => (t: Transition<S, P, D>): Transition<S, P, D> => {
   if (!Array.isArray (a)) {
-    const action: Action<S, P> = a
+    const action: Action<S, P, D> = a
     if (!Array.isArray (t)) {
-      return action (t) as Transition<S>
+      return action (t) as Transition<S, P, D>
     }
-    const [state, ...effects]: StateWithEffects<S> = t
-    const transition: Transition<S> = action (state) as Transition<S>
+    const [state, ...effects]: StateWithEffects<S, P, D> = t
+    const transition: Transition<S, P, D> = action (state) as Transition<S, P, D>
     if (!Array.isArray (transition)) {
       return [transition, ...effects]
     }
     const [restate, ...newEffects] = transition
     return [restate, ...effects, ...newEffects]
   } else {
-    const action: Action<S, P> = a[0] as Transform<S, P>
+    // TODO:
+    // const action: Action<S, P, D> = a[0] as Transform<S, P, unknown, D>
+    const action: Transform<S, P, unknown, D> = a[0] as Transform<S, P, unknown, D>
     const payload: Payload<P> = a[1]
     const nextTransition = actWith (a[0]) (t)
     if (!Array.isArray (nextTransition)) {
-      return action (nextTransition, payload) as Transition<S>
+      return action (nextTransition, payload) as Transition<S, P, D>
     }
-    const [state, ...effects]: StateWithEffects<S> = nextTransition
-    const transition: Transition<S> = action (state, payload) as Transition<S>
+    const [state, ...effects]: StateWithEffects<S, P, D> = nextTransition
+    const transition: Transition<S, P, D> = action (state, payload) as Transition<S, P, D>
     if (!Array.isArray (transition)) {
       return [transition, ...effects]
     }
@@ -220,15 +222,15 @@ export const actWith = <S, P>(a: Action<S, P>) => (t: Transition<S>): Transition
 
 // Invokes a collection of event handlers for the same event.
 export const handleUsing =
-  <S>(handlers: Action<S, Event>[]) =>
-    (state: Transition<S>, event?: Event): Transition<S> =>
+  <S, P, D>(handlers: Action<S, Event, D>[]) =>
+    (state: Transition<S, P, D>, event?: Event): Transition<S, P, D> =>
       handlers.reduce ((t, a) => {
         if (Array.isArray (a)) {
           // TODO:
           // - reconsider discarding original payload?
           return actWith ([a[0], event]) (t)
         }
-        return actWith ([a as Action<S, unknown>, event]) (t)
+        return actWith ([a as Action<S, unknown, D>, event]) (t)
       }, state)
 
 // -----------------------------------------------------------------------------
@@ -241,8 +243,8 @@ export const handleUsing =
 //
 export const onOutside =
   (selector: string) =>
-    <S>(action: Transform<S>) =>
-      (state: State<S>, event?: Event): Transition<S> => {
+    <S, P, D>(action: Transform<S, P, unknown, D>) =>
+      (state: State<S>, event?: Payload<Event>): Transition<S, P, D> => {
         if (!event) return state
         const el = document.querySelector (selector)
         if (!el || el.contains (event.target as Element)) return state

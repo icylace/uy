@@ -42,9 +42,16 @@ declare module "hyperapp" {
   type Dispatch<S, P = unknown, D = unknown> = (action: Action<S, P, D>, props?: Payload<P>) => void
 
   // An action transforms existing state and can be wrapped by another action.
-  type Action<S, P = unknown, D = unknown>
-    = [Action<S, P, D>, Payload<P>]
-    | ((state: State<S>, props?: Payload<P>) => Transition<S, P, D> | Action<S, P, D>)
+  type Action<S, P = unknown, D = unknown> = ActionTransform<S, P, D> | [Action<S, P, D>, Payload<P>]
+  type ActionTransform<S, P = unknown, D = unknown> =
+    (state: State<S>, props?: Payload<P>) => Transition<S, P, D> | Action<S, P, D>
+
+  // Note: `ActionTransform` is based on the `Transform` concept from the
+  // "Modular Hyperapp" pattern by zaceno.
+
+  // type Action<S, P = unknown, D = unknown>
+  //   = [Action<S, P, D>, Payload<P>]
+  //   | ((state: State<S>, props?: Payload<P>) => Transition<S, P, D> | Action<S, P, D>)
 
   // A payload is data external to state that is given to a dispatched action.
   type Payload<P = unknown> = P

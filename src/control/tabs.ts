@@ -38,7 +38,7 @@ const isSelected = (activeTab: string) => <S>(item: Content<S>, i: number): bool
 }
 
 const tab =
-  <S>(update: Transform<S>) =>
+  <S>(update: Transform<S, string, MouseEvent>) =>
     (activeTab: string) =>
       (item: Content<S>, i: number): VDOM<S> => {
         const selected = isSelected (activeTab) (item, i)

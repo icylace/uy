@@ -222,8 +222,8 @@ export const actWith = <S, P, D>(a: Action<S, P, D>) => (t: Transition<S, P, D>)
 
 // Invokes a collection of event handlers for the same event.
 export const handleUsing =
-  <S, P, D>(handlers: Action<S, Event, D>[]) =>
-    (state: Transition<S, P, D>, event?: Event): Transition<S, P, D> =>
+  <S, D>(handlers: Action<S, Event, D>[]) =>
+    (state: Transition<S, Event, D>, event?: Payload<Event>): Transition<S, Event, D> =>
       handlers.reduce ((t, a) => {
         if (Array.isArray (a)) {
           // TODO:
@@ -243,7 +243,7 @@ export const handleUsing =
 //
 export const onOutside =
   (selector: string) =>
-    <S, P, D>(action: Transform<S, P, unknown, D>) =>
+    <S, P, D>(action: Transform<S, unknown, unknown, D>) =>
       (state: State<S>, event?: Payload<Event>): Transition<S, P, D> => {
         if (!event) return state
         const el = document.querySelector (selector)

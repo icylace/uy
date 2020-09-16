@@ -1,4 +1,12 @@
-import type { Action, ClassProp, EffectDescriptor, State, Transition, VDOM } from "hyperapp"
+import type {
+  Action,
+  ClassProp,
+  EffectDescriptor,
+  Payload,
+  State,
+  Transition,
+  VDOM,
+} from "hyperapp"
 import type { Path } from "../utility/shadesHelper"
 
 import cc from "classcat"
@@ -54,7 +62,7 @@ const updateResults =
   <S>(search: Searcher<S>) =>
     (path: Path) =>
       (id: string) =>
-        (state: State<S>, props?: SearchboxData): Transition<S> => {
+        (state: State<S>, props?: Payload<SearchboxData>): Transition<S> => {
           const { value, results } = props ?? { value: "", results: [] }
 
           // It is possible the current value of the searchbox and the value that was
@@ -86,7 +94,7 @@ const update =
     (path: Path) =>
       (id: string) =>
         (value: string) =>
-          (state: State<S>): Transition<S> =>
+          <D>(state: State<S>): Transition<S, KeyboardEvent, D> =>
             get ([...path, "searching"]) (state)
               ? set ([...path, "value"]) (value) (state)
               : [
@@ -99,8 +107,8 @@ const update =
 
 // -----------------------------------------------------------------------------
 
-const searchResult = (path: Path) => (id: string) => <S>(x: string): VDOM<S> =>
-  li ({ onclick: chooseResult (path) (id) (x) }, x)
+const searchResult = (path: Path) => (id: string) => <S, D>(x: string): VDOM<S, D> =>
+  li<S, D> ({ onclick: chooseResult (path) (id) (x) }, x)
 
 // We don't let certain keys unnecessarily affect searching.
 const noopKeys = [
@@ -120,11 +128,11 @@ const noopKeys = [
 ]
 
 const rawSearchbox =
-  <S>({ disabled, locked, path, search, ...etc }: SearchboxOptions<S>) =>
-    (data: SearchboxData): VDOM<S> => {
+  <S, D>({ disabled, locked, path, search, ...etc }: SearchboxOptions<S>) =>
+    (data: SearchboxData): VDOM<S, D> => {
       const id = path.join ("-")
 
-      const inputSearch = input ({
+      const inputSearch = input<S, D> ({
         disabled,
         readonly: locked,
         value: data.value,
@@ -170,8 +178,8 @@ const rawSearchbox =
           inputSearch,
           span (
             {
-              onclick: (state, _event) =>
-                update (search) (path) (id) (data.value) (state),
+              // onclick: (state) =>
+              //   update (search) (path) (id) (data.value) (state),
             },
             [
               icon ({
@@ -185,8 +193,8 @@ const rawSearchbox =
         ]),
 
         data.results.length && !disabled
-          ? popup ({ locked, disabled, id }) ([
-            ul (
+          ? popup ({ locked, disabled, id })<S, D> ([
+            ul<S, D> (
               { class: "uy-searchbox-results uy-scroller" },
               data.results.map (searchResult (path) (id)),
             ),

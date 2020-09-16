@@ -2,6 +2,7 @@ import type {
   Action,
   App,
   Dispatch,
+  Effect,
   Payload,
   State,
   Transition,

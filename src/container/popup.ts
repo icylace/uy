@@ -14,7 +14,7 @@ export type PopupOptions = {
 
 export const popup =
   ({ disabled, id, locked, ...etc }: PopupOptions) =>
-    <S>(contents: Contents<S>): VDOM<S> =>
+    <S, D>(contents: Contents<S, D>): VDOM<S, D> =>
       div ({
         id,
         ...etc,

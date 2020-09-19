@@ -12,7 +12,7 @@ export type FileOptions<S> = {
   disabled: boolean
   label?: string
   locked: boolean
-  update: Transform<S, string, Event>
+  update: Transform<S>
 }
 
 export type FileData = {

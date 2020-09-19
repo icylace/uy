@@ -10,7 +10,7 @@ export type TextareaOptions<S> = {
   class?: ClassProp
   disabled: boolean
   locked: boolean
-  update: Transform<S, string, Event>
+  update: Transform<S>
 }
 
 export type TextareaData = {

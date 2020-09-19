@@ -13,7 +13,7 @@ export type MultiselectOptions<S> = {
   disabled: boolean
   locked: boolean
   options: Record<string, Contents<S>>
-  update: Transform<S, boolean, Event>
+  update: Transform<S>
   usingColumnMode: boolean
 }
 

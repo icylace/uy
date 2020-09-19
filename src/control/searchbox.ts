@@ -6,6 +6,7 @@ import type {
   State,
   Transition,
   VDOM,
+  VNode,
 } from "hyperapp"
 import type { Path } from "../utility/shadesHelper"
 
@@ -20,8 +21,8 @@ import { popup } from "../container/popup"
 import { box } from "../container/box"
 import { icon } from "../display/icon"
 
-export type Searcher<S, P = unknown, D = unknown> =
-  (action: Action<S, SearchboxData, D>) => (value: string) => EffectDescriptor<S, P, D>
+export type Searcher<S> =
+  (action: Action<S, SearchboxData>) => (value: string) => EffectDescriptor<S, string>
 
 export type SearchboxOptions<S> = {
   class?: ClassProp
@@ -94,21 +95,21 @@ const update =
     (path: Path) =>
       (id: string) =>
         (value: string) =>
-          <D>(state: State<S>): Transition<S, KeyboardEvent, D> =>
+          (state: State<S>): Transition<S> =>
             get ([...path, "searching"]) (state)
               ? set ([...path, "value"]) (value) (state)
               : [
                 pipe (
                   set ([...path, "searching"]) (true),
                   set ([...path, "value"]) (value),
-                ) (state),
+                ) (state) as State<S>,
                 search (updateResults (search) (path) (id)) (value),
               ]
 
 // -----------------------------------------------------------------------------
 
-const searchResult = (path: Path) => (id: string) => <S, D>(x: string): VDOM<S, D> =>
-  li<S, D> ({ onclick: chooseResult (path) (id) (x) }, x)
+const searchResult = (path: Path) => (id: string) => <S>(x: string): VDOM<S> =>
+  li<S> ({ onclick: chooseResult (path) (id) (x) }, x)
 
 // We don't let certain keys unnecessarily affect searching.
 const noopKeys = [
@@ -128,11 +129,11 @@ const noopKeys = [
 ]
 
 const rawSearchbox =
-  <S, D>({ disabled, locked, path, search, ...etc }: SearchboxOptions<S>) =>
-    (data: SearchboxData): VDOM<S, D> => {
+  <S>({ disabled, locked, path, search, ...etc }: SearchboxOptions<S>) =>
+    (data: SearchboxData): VDOM<S> => {
       const id = path.join ("-")
 
-      const inputSearch = input<S, D> ({
+      const inputSearch = input<S> ({
         disabled,
         readonly: locked,
         value: data.value,
@@ -160,6 +161,17 @@ const rawSearchbox =
         class: cc (["uy-input", { locked, disabled }, etc.class]),
       })
 
+      const popupNode = (
+        data.results.length && !disabled
+          ? popup ({ locked, disabled, id }) ([
+            ul (
+              { class: "uy-searchbox-results uy-scroller" },
+              data.results.map (searchResult (path) (id)),
+            ),
+          ])
+          : null
+      ) as VNode<S>
+
       return box ({
         disabled,
         locked,
@@ -178,8 +190,8 @@ const rawSearchbox =
           inputSearch,
           span (
             {
-              // onclick: (state) =>
-              //   update (search) (path) (id) (data.value) (state),
+              onclick: (state) =>
+                update (search) (path) (id) (data.value) (state),
             },
             [
               icon ({
@@ -191,15 +203,7 @@ const rawSearchbox =
             ],
           ),
         ]),
-
-        data.results.length && !disabled
-          ? popup ({ locked, disabled, id })<S, D> ([
-            ul<S, D> (
-              { class: "uy-searchbox-results uy-scroller" },
-              data.results.map (searchResult (path) (id)),
-            ),
-          ])
-          : null,
+        popupNode,
       ])
     }
 

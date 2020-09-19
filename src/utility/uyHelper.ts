@@ -2,7 +2,6 @@ import type {
   Action,
   App,
   Dispatch,
-  Effect,
   Payload,
   State,
   Transition,
@@ -54,7 +53,7 @@ const mouseDownSubscriptionAction = <S, P>(state: State<S>, _props?: Payload<P>)
   return [state, onMouseDown (transitioner)]
 }
 
-const runMouseDownSubscription = <S>(dispatch: Dispatch<S>): void => {
+const runMouseDownSubscription = <S, P>(dispatch: Dispatch<S, P>): void => {
   window.requestAnimationFrame (() => dispatch (mouseDownSubscriptionAction))
 }
 

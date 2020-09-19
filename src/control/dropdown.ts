@@ -13,7 +13,7 @@ export type DropdownOptions<S> = {
   class?: ClassProp
   disabled: boolean
   locked: boolean
-  update: Transform<S, unknown, Event>
+  update: Transform<S>
   options: Record<string, Contents<S>>
   path: Path
 };

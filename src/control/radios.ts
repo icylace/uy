@@ -12,7 +12,7 @@ export type RadiosOptions<S> = {
   disabled: boolean
   locked: boolean
   options: Record<string, Content<S>>
-  update: Transform<S, string, Event>
+  update: Transform<S>
 }
 
 export type RadiosData = {

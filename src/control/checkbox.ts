@@ -25,7 +25,7 @@ export type CheckboxOptions<S> = {
   disabled: boolean
   label?: Contents<S>
   locked: boolean
-  update: Transform<S, boolean, Event>
+  update: Transform<S>
 }
 
 export type CheckboxData = {

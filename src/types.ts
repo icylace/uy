@@ -15,10 +15,6 @@ export type ComponentOptions = {
   locked: boolean
 }
 
-export type Component<S, D = unknown> =
-  (_: ComponentOptions) => (_: Path) => (_: State<S>) => VDOM<S, D>
-
-export type ContainerView<S, D = unknown> = (_: View<S, D>[]) => View<S, D>
-
-export type Transform<S, P = unknown, P2 = unknown, D = unknown> =
-  (state: State<S>, props?: Payload<P>) => Transition<S, P2, D>
+export type Component<S> = (_: ComponentOptions) => (_: Path) => (_: State<S>) => VDOM<S>
+export type ContainerView<S> = (_: View<S>[]) => View<S>
+export type Transform<S, P = unknown> = (state: State<S>, props?: Payload<P>) => Transition<S>

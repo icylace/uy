@@ -129,7 +129,7 @@ export const glam = (xr: { [_: string]: boolean }): string =>
 // https://github.com/jorgebucaran/hyperapp/issues/752#issue-355556484
 
 const windowListener = (name: string) =>
-  <S>(dispatch: Dispatch<S, Event>, action?: Action<S, Event>): void | Unsubscribe => {
+  <S>(dispatch: Dispatch<S>, action?: Action<S, Event>): void | Unsubscribe => {
     if (!action) return
     const listener = (event: Event): void => dispatch (action, event)
     window.addEventListener (name, listener)

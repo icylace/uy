@@ -3,7 +3,7 @@
 declare module "hyperapp" {
   // The `app` function initiates a Hyperapp application. `app` along with
   // effects are the only places where side effects are allowed.
-  function app<S>(props: App<S>): Dispatch<S, unknown>
+  function app<S>(props: App<S>): Dispatch<S>
 
   // The `h` function builds a virtual DOM node.
   function h<S>(
@@ -24,7 +24,7 @@ declare module "hyperapp" {
   // It must also be mounted over an available DOM element.
   type App<S>
     = Readonly<{
-      init: Transition<S> | Action<S, unknown>
+      init: Transition<S> | Action<S, any>
       view: View<S>
       node: Node
       subscriptions?: Subscription<S>
@@ -38,22 +38,22 @@ declare module "hyperapp" {
   type Subscription<S> = (state: State<S>) => Subscriber<S>[]
 
   // A subscriber reacts to subscription updates.
-  type Subscriber<S, D = unknown> = boolean | undefined | Effect<S, D> | Unsubscribe
+  type Subscriber<S, D = any> = boolean | undefined | Effect<S, D> | Unsubscribe
 
   // A subscriber ideally provides a function that cancels itself properly.
   type Unsubscribe = () => void
 
   // Middleware allows for custom processing during dispatching.
-  type Middleware<S> = (dispatch: Dispatch<S, unknown>) => Dispatch<S, unknown>
+  type Middleware<S> = (dispatch: Dispatch<S>) => Dispatch<S>
 
   // ---------------------------------------------------------------------------
 
   // A dispatched action handles an event in the context of the current state.
-  type Dispatch<S, P> = (action: Action<S, P>, props?: Payload<P>) => void
+  type Dispatch<S> = (action: Action<S, any>, props?: Payload<any>) => void
 
   // An action transforms existing state and/or wraps another action.
   type Action<S, P>
-    = ((state: State<S>, props?: Payload<P>) => Transition<S> | Action<S, unknown>)
+    = ((state: State<S>, props?: Payload<P>) => Transition<S> | Action<S, any>)
     | ActionDescriptor<S, P>
 
   // An action descriptor describes an action and any payload for it.
@@ -78,8 +78,8 @@ declare module "hyperapp" {
   // An effect is where side effects and any additional dispatching occur.
   // An effect used in a subscription should be able to unsubscribe.
   type Effect<S, D>
-    = (dispatch: Dispatch<S, any>, props?: Payload<D>) =>
-        void | Unsubscribe | Promise<undefined | Unsubscribe>
+    = (dispatch: Dispatch<S>, props?: Payload<D>) =>
+        void | Unsubscribe | Promise<void | Unsubscribe>
 
   // ---------------------------------------------------------------------------
 

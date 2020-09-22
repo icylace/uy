@@ -18,9 +18,9 @@ export const field = <S>(f: Component<S>) =>
     ({ disabled, locked, ...etc }: FieldOptions) =>
       (path: Path) =>
         (state: State<S>): VDOM<S> =>
-          box ("uy-container uy-field") ([
-            label (
-              { ...etc, class: cc ([{ locked, disabled }, etc.class]) },
-              [title, f ({ disabled, locked, ...etc }) (path) (state)],
+          box("uy-container uy-field", [
+            label(
+              { ...etc, class: cc([{ locked, disabled }, etc.class]) },
+              [title, f({ disabled, locked, ...etc })(path)(state)],
             ),
           ])

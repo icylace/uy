@@ -30,13 +30,13 @@ export const freshDropdown = (value: string): DropdownData =>
 const rawDropdown =
   <S>({ disabled, locked, options, path, update, ...etc }: DropdownOptions<S>) =>
     (data: DropdownData): VDOM<S> =>
-      box("uy-control uy-dropdown")([
+      box("uy-control uy-dropdown", [
         box({
           disabled,
           locked,
           "uy-dropdown-arrow": true,
           focus: !!data.focused,
-        })([
+        }, [
           select(
             {
               disabled,

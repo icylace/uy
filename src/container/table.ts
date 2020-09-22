@@ -82,7 +82,7 @@ const rawTable = <S>(
       "uy-table": true,
       locked,
       disabled,
-    })([
+    }, [
       html.table(etc, [
         Array.isArray(headers) && headers.length
           ? html.thead(headers.map(tableHeader(orderColumn)(!!sortDescending)))

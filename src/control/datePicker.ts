@@ -25,23 +25,23 @@ export const freshDatePicker = (value: string): DatePickerData =>
 const rawDatePicker =
   <S>({ disabled, locked, update, ...etc }: DatePickerOptions<S>) =>
     (data: DatePickerData): VDOM<S> =>
-    box ("uy-control uy-datePicker") ([
-      input ({
-        disabled,
-        readonly: locked,
-        value: data.value,
-        type: "date",
-        onchange: (state, event) => {
-          if (!event) return state
-          const target = event.target as HTMLInputElement
-          return update (state, target.value)
-        },
-        ...etc,
-        class: cc (["uy-input", { locked, disabled }, etc.class]),
-      }),
-    ])
+      box("uy-control uy-datePicker", [
+        input({
+          disabled,
+          readonly: locked,
+          value: data.value,
+          type: "date",
+          onchange: (state, event) => {
+            if (!event) return state
+            const target = event.target as HTMLInputElement
+            return update(state, target.value)
+          },
+          ...etc,
+          class: cc(["uy-input", { locked, disabled }, etc.class]),
+        }),
+      ])
 
-export const datePicker = component (rawDatePicker)
+export const datePicker = component(rawDatePicker)
 
 // -----------------------------------------------------------------------------
 
@@ -51,9 +51,9 @@ export const freshDatetimeLocalPicker = (value: string): DatePickerData =>
 const rawDatetimeLocalPicker = <S>(
   { disabled, locked, update, ...etc }: DatePickerOptions<S>,
 ) =>
-    (data: DatePickerData): VDOM<S> =>
-    box ("uy-control uy-datePicker") ([
-      input ({
+  (data: DatePickerData): VDOM<S> =>
+    box("uy-control uy-datePicker", [
+      input({
         disabled,
         readonly: locked,
         value: data.value,
@@ -61,14 +61,14 @@ const rawDatetimeLocalPicker = <S>(
         onchange: (state, event) => {
           if (!event) return state
           const target = event.target as HTMLInputElement
-          return update (state, target.value)
+          return update(state, target.value)
         },
         ...etc,
-        class: cc (["uy-input", { locked, disabled }, etc.class]),
+        class: cc(["uy-input", { locked, disabled }, etc.class]),
       }),
     ])
 
-export const datetimeLocalPicker = component (rawDatetimeLocalPicker)
+export const datetimeLocalPicker = component(rawDatetimeLocalPicker)
 
 // -----------------------------------------------------------------------------
 
@@ -78,8 +78,8 @@ export const freshMonthPicker = (value: string): DatePickerData =>
 const rawMonthPicker =
   <S>({ disabled, locked, update, ...etc }: DatePickerOptions<S>) =>
     (data: DatePickerData): VDOM<S> =>
-      box ("uy-control uy-datePicker") ([
-        input ({
+      box("uy-control uy-datePicker", [
+        input({
           disabled,
           readonly: locked,
           value: data.value,
@@ -87,14 +87,14 @@ const rawMonthPicker =
           onchange: (state, event) => {
             if (!event) return state
             const target = event.target as HTMLInputElement
-            return update (state, target.value)
+            return update(state, target.value)
           },
           ...etc,
-          class: cc (["uy-input", { locked, disabled }, etc.class]),
+          class: cc(["uy-input", { locked, disabled }, etc.class]),
         }),
       ])
 
-export const monthPicker = component (rawMonthPicker)
+export const monthPicker = component(rawMonthPicker)
 
 // -----------------------------------------------------------------------------
 
@@ -104,23 +104,23 @@ export const freshTimePicker = (value: string): DatePickerData =>
 const rawTimePicker =
   <S>({ disabled, locked, update, ...etc }: DatePickerOptions<S>) =>
     (data: DatePickerData): VDOM<S> =>
-    box ("uy-control uy-datePicker") ([
-      input ({
-        disabled,
-        readonly: locked,
-        value: data.value,
-        type: "time",
-        onchange: (state, event) => {
-          if (!event) return state
-          const target = event.target as HTMLInputElement
-          return update (state, target.value)
-        },
-        ...etc,
-        class: cc (["uy-input", { locked, disabled }, etc.class]),
-      }),
-    ])
+      box("uy-control uy-datePicker", [
+        input({
+          disabled,
+          readonly: locked,
+          value: data.value,
+          type: "time",
+          onchange: (state, event) => {
+            if (!event) return state
+            const target = event.target as HTMLInputElement
+            return update(state, target.value)
+          },
+          ...etc,
+          class: cc(["uy-input", { locked, disabled }, etc.class]),
+        }),
+      ])
 
-export const timePicker = component (rawTimePicker)
+export const timePicker = component(rawTimePicker)
 
 // -----------------------------------------------------------------------------
 
@@ -130,8 +130,8 @@ export const freshWeekPicker = (value: string): DatePickerData =>
 const rawWeekPicker =
   <S>({ disabled, locked, update, ...etc }: DatePickerOptions<S>) =>
     (data: DatePickerData): VDOM<S> =>
-      box ("uy-control uy-datePicker") ([
-        input ({
+      box("uy-control uy-datePicker", [
+        input({
           disabled,
           readonly: locked,
           value: data.value,
@@ -139,11 +139,11 @@ const rawWeekPicker =
           onchange: (state, event) => {
             if (!event) return state
             const target = event.target as HTMLInputElement
-            return update (state, target.value)
+            return update(state, target.value)
           },
           ...etc,
-          class: cc (["uy-input", { locked, disabled }, etc.class]),
+          class: cc(["uy-input", { locked, disabled }, etc.class]),
         }),
       ])
 
-export const weekPicker = component (rawWeekPicker)
+export const weekPicker = component(rawWeekPicker)

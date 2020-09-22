@@ -25,12 +25,12 @@ export const freshRadios = (value: string): RadiosData =>
 const rawRadios =
   <S>({ disabled, locked, options, update, ...etc }: RadiosOptions<S>) =>
     (data: RadiosData): VDOM<S> =>
-      box ("uy-control uy-radios") (
+      box("uy-control uy-radios",
         // TODO:
         // - switch to using a Map object instead in order to guarantee order
-        Object.entries (options).map (([value, label]: [string, Content<S>]): VDOM<S> =>
-          html.label ({ class: { locked, disabled } }, [
-            html.input ({
+        Object.entries(options).map(([value, label]: [string, Content<S>]): VDOM<S> =>
+          html.label({ class: { locked, disabled } }, [
+            html.input({
               disabled,
               value,
               checked: value === data.value,
@@ -38,14 +38,14 @@ const rawRadios =
               onchange: (state, event) => {
                 if (!event) return state
                 const target = event.target as HTMLInputElement
-                return update (state, target.value)
+                return update(state, target.value)
               },
               ...etc,
-              class: cc (["uy-input", { locked, disabled }, etc.class]),
+              class: cc(["uy-input", { locked, disabled }, etc.class]),
             }),
-            label != null ? html.span (label) : null,
+            label != null ? html.span(label) : null,
           ]),
         ),
       )
 
-export const radios = component (rawRadios)
+export const radios = component(rawRadios)

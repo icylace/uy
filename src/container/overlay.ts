@@ -17,7 +17,7 @@ export type OverlayOptions = {
 const rawOverlay =
   ({ disabled, locked, ...etc }: OverlayOptions) =>
     <S>(contents: Content<S> | Content<S>[]): VDOM<S> =>
-      box("uy-overlay-background")([
+      box("uy-overlay-background", [
         div({
           disabled,
           ...etc,

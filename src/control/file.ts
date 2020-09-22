@@ -27,15 +27,15 @@ export const freshFile = (value: string): FileData =>
 const rawFile =
   <S>({ disabled, locked, label = "Select your file...", update, ...etc }: FileOptions<S>) =>
     (data: FileData): VDOM<S> =>
-      box ({
+      box({
         disabled,
         locked,
         "uy-control": true,
         "uy-file": true,
         "uy-input": true,
-      }) ([
-        html.label ({ class: "uy-clicky", "data-text": label }, [
-          html.input ({
+      }, [
+        html.label({ class: "uy-clicky", "data-text": label }, [
+          html.input({
             disabled,
             value: data.value,
             type: "file",
@@ -46,18 +46,18 @@ const rawFile =
               const target = event.target as HTMLInputElement
               const parent = target.parentNode as HTMLElement
               parent.dataset.text = target.value !== ""
-                ? target.value.replace (/.*(\/|\\)/, "")
+                ? target.value.replace(/.*(\/|\\)/, "")
                 : label
-              return update (state, target.value)
+              return update(state, target.value)
             },
             ...etc,
-            class: cc ([{ disabled, locked }, etc.class]),
+            class: cc([{ disabled, locked }, etc.class]),
           }),
-          html.span ({ class: "uy-clicky" }, [
-            icon ("fas fa-file-upload"),
+          html.span({ class: "uy-clicky" }, [
+            icon("fas fa-file-upload"),
             " Upload",
           ]),
         ]),
       ])
 
-export const file = component (rawFile)
+export const file = component(rawFile)

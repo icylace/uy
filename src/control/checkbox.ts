@@ -38,7 +38,7 @@ export const freshCheckbox = (value: boolean): CheckboxData =>
 export const rawCheckbox =
   <S>({ disabled, locked, label, update, ...etc }: CheckboxOptions<S>) =>
     (data: CheckboxData): VDOM<S> =>
-      box("uy-control uy-checkbox")([
+      box("uy-control uy-checkbox", [
         html.label({ class: { disabled, locked } }, [
           html.input({
             disabled,

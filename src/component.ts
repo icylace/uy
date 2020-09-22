@@ -12,10 +12,10 @@ const component = (f: Function) =>
   (options: ComponentOptions) =>
     (path: Path) =>
       <S>(state: State<S>): VDOM<S> => {
-        const data = get (path) (state)
+        const data = get(path)(state)
         const update = (state: State<S>, value: any): any =>
-          set ([...path, "value"]) (value) (state)
-        return f ({ update, path, ...options }) (data)
+          set([...path, "value"])(value)(state)
+        return f({ update, path, ...options })(data)
       }
 
 export { component }

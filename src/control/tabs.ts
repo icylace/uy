@@ -77,14 +77,12 @@ const rawTabs = <S>(
         class: cc(["uy-control uy-container uy-tabs", { locked, disabled }, etc.class]),
       },
       [
-        box("uy-tabs-navigation")([
+        box("uy-tabs-navigation", [
           itemsHeader,
-          box("uy-tabs-list uy-scroller")(
-            headings.map(tab(update)(data.value)),
-          ),
+          box("uy-tabs-list uy-scroller", headings.map(tab(update)(data.value))),
           itemsFooter,
         ]),
-        box("uy-tabs-panels")([
+        box("uy-tabs-panels", [
           panels[headings.findIndex(isSelected(data.value))],
         ]),
       ],

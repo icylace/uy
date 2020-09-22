@@ -53,11 +53,11 @@ const chooseResult =
     (id: string) =>
       (value: string) =>
         <S>(state: State<S>): State<S> =>
-          pipe (
-            set ([...path, "results"]) ([]),
-            set ([...path, "value"]) (value),
-            removeInsideEl (id),
-          ) (state) as State<S>
+          pipe(
+            set([...path, "results"])([]),
+            set([...path, "value"])(value),
+            removeInsideEl(id),
+          )(state) as State<S>
 
 const updateResults =
   <S>(search: Searcher<S>) =>
@@ -71,23 +71,23 @@ const updateResults =
           // the searchbox value during the search. In that case another search gets
           // triggered using the new current searchbox value.
 
-          const curValue = get ([...path, "value"]) (state) as string
+          const curValue = get([...path, "value"])(state) as string
 
           if (curValue !== value) {
             return [
-              set ([...path, "searching"]) (true) (state),
-              search (updateResults (search) (path) (id)) (curValue),
+              set([...path, "searching"])(true)(state),
+              search(updateResults(search)(path)(id))(curValue),
             ]
           }
 
-          const newState = pipe (
-            set ([...path, "searching"]) (false),
-            set ([...path, "results"]) (results),
-          ) (state) as State<S>
+          const newState = pipe(
+            set([...path, "searching"])(false),
+            set([...path, "results"])(results),
+          )(state) as State<S>
 
           return results.length
-            ? addInsideEl (id) (set ([...path, "results"]) ([])) (newState)
-            : removeInsideEl (id) (newState)
+            ? addInsideEl(id)(set([...path, "results"])([]))(newState)
+            : removeInsideEl(id)(newState)
         }
 
 const update =
@@ -96,20 +96,20 @@ const update =
       (id: string) =>
         (value: string) =>
           (state: State<S>): Transition<S> =>
-            get ([...path, "searching"]) (state)
-              ? set ([...path, "value"]) (value) (state)
+            get([...path, "searching"])(state)
+              ? set([...path, "value"])(value)(state)
               : [
-                pipe (
-                  set ([...path, "searching"]) (true),
-                  set ([...path, "value"]) (value),
-                ) (state) as State<S>,
-                search (updateResults (search) (path) (id)) (value),
+                pipe(
+                  set([...path, "searching"])(true),
+                  set([...path, "value"])(value),
+                )(state) as State<S>,
+                search(updateResults(search)(path)(id))(value),
               ]
 
 // -----------------------------------------------------------------------------
 
 const searchResult = (path: Path) => (id: string) => <S>(x: string): VDOM<S> =>
-  li<S> ({ onclick: chooseResult (path) (id) (x) }, x)
+  li<S>({ onclick: chooseResult(path)(id)(x) }, x)
 
 // We don't let certain keys unnecessarily affect searching.
 const noopKeys = [
@@ -131,20 +131,20 @@ const noopKeys = [
 const rawSearchbox =
   <S>({ disabled, locked, path, search, ...etc }: SearchboxOptions<S>) =>
     (data: SearchboxData): VDOM<S> => {
-      const id = path.join ("-")
+      const id = path.join("-")
 
-      const inputSearch = input<S> ({
+      const inputSearch = input<S>({
         disabled,
         readonly: locked,
         value: data.value,
         type: "search",
-        onfocus: set ([...path, "focused"]) (true),
-        onblur: set ([...path, "focused"]) (false),
+        onfocus: set([...path, "focused"])(true),
+        onblur: set([...path, "focused"])(false),
         onkeyup: (state, event) => {
           if (!event) return state
-          if (noopKeys.includes (event.key)) return state
+          if (noopKeys.includes(event.key)) return state
           const target = event.target as HTMLInputElement
-          return update (search) (path) (id) (target.value) (state)
+          return update(search)(path)(id)(target.value)(state)
         },
         // Here we're using the non-standard `search` event because it can detect
         // when a searchbox's clear button is used. The `input` event can also
@@ -155,30 +155,30 @@ const rawSearchbox =
         onsearch: (state, event) => {
           if (!event) return state
           const target = event.target as HTMLInputElement
-          return update (search) (path) (id) (target.value) (state)
+          return update(search)(path)(id)(target.value)(state)
         },
         ...etc,
-        class: cc (["uy-input", { locked, disabled }, etc.class]),
+        class: cc(["uy-input", { locked, disabled }, etc.class]),
       })
 
       const popupNode = (
         data.results.length && !disabled
-          ? popup ({ locked, disabled, id }) ([
-            ul (
+          ? popup({ locked, disabled, id })([
+            ul(
               { class: "uy-searchbox-results uy-scroller" },
-              data.results.map (searchResult (path) (id)),
+              data.results.map(searchResult(path)(id)),
             ),
           ])
           : null
       ) as VNode<S>
 
-      return box ({
+      return box({
         disabled,
         locked,
         "uy-control": true,
         "uy-searchbox": true,
-      }) ([
-        label ({
+      }, [
+        label({
           class: {
             "uy-searchbox-label": true,
             focus: data.focused,
@@ -188,13 +188,13 @@ const rawSearchbox =
           },
         }, [
           inputSearch,
-          span (
+          span(
             {
               onclick: (state) =>
-                update (search) (path) (id) (data.value) (state),
+                update(search)(path)(id)(data.value)(state),
             },
             [
-              icon ({
+              icon({
                 fas: true,
                 "fa-spinner": data.searching,
                 "fa-pulse": data.searching,
@@ -207,4 +207,4 @@ const rawSearchbox =
       ])
     }
 
-export const searchbox = component (rawSearchbox)
+export const searchbox = component(rawSearchbox)

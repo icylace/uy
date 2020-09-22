@@ -15,12 +15,12 @@ export type ButtonOptions<S> = {
 
 export const button =
   <S>({ disabled, locked, label, update, ...etc }: ButtonOptions<S>): VDOM<S> =>
-    box ("uy-control uy-button") ([
-      html.button ({
+    box("uy-control uy-button", [
+      html.button({
         disabled,
         type: "button",
         onclick: update,
         ...etc,
-        class: cc (["uy-clicky", { locked, disabled }, etc.class]),
+        class: cc(["uy-clicky", { locked, disabled }, etc.class]),
       }, label),
     ])

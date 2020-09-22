@@ -13,13 +13,13 @@ export type CancelButtonOptions<S> = {
 
 const cancelButton =
   <S>({ disabled, locked, update, ...etc }: CancelButtonOptions<S>): VDOM<S> =>
-    box ("uy-control uy-cancelButton") ([
-      html.button ({
+    box("uy-control uy-cancelButton", [
+      html.button({
         disabled,
         type: "button",
         onclick: update,
         ...etc,
-        class: cc (["uy-clicky", { locked, disabled }, etc.class]),
+        class: cc(["uy-clicky", { locked, disabled }, etc.class]),
       }, "✕"),
     ])
 

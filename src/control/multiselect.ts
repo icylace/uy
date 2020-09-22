@@ -40,7 +40,7 @@ const rawMultiselect =
           etc.class,
         ]),
       }, [
-        box("uy-multiselect-options")(
+        box("uy-multiselect-options",
           // TODO:
           // - switch to using a Map object instead in order to guarantee order
           Object.entries(options).map(

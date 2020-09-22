@@ -1,5 +1,5 @@
 import type { ClassProp, Payload, State, VDOM } from "hyperapp"
-import type { Contents } from "ntml"
+import type { Content } from "ntml"
 import type { Path } from "../utility/shadesHelper"
 import type { TableData, TableRow } from "../container/table"
 
@@ -15,7 +15,7 @@ export type ChecklistOptions<S> = {
   disabled: boolean
   locked: boolean
   path: Path
-  render: (_: Contents<S>) => VDOM<S>
+  render: (_: Content<S> | Content<S>[]) => VDOM<S>
 }
 
 export type ChecklistItem = {
@@ -31,7 +31,7 @@ const freshChecklist = (items: ChecklistItem[]): Checklist =>
   ({ items })
 
 const updateItem = (path: Path) => (i: number) => <S, P>(state: State<S>, value: Payload<P>): State<S> =>
-  set ([...path, "items", i]) (value) (state)
+  set([...path, "items", i])(value)(state)
 
 const rawChecklist =
   <S>({ disabled, locked, path, render, ...etc }: ChecklistOptions<S>) =>
@@ -41,29 +41,29 @@ const rawChecklist =
           [
             { class: { "uy-horizontal": x.id === "other" } },
             [
-              rawCheckbox ({
+              rawCheckbox({
                 disabled,
                 locked,
-                label: render (x.id),
-                update: updateItem (path) (i),
-              }) ({ value: x.selected }),
+                label: render(x.id),
+                update: updateItem(path)(i),
+              })({ value: x.selected }),
             ],
           ],
         ]
 
       const tableData: TableData<S> = {
-        rows: data.items.map (item),
+        rows: data.items.map(item),
       }
 
-      return div (
+      return div(
         {
           ...etc,
-          class: cc (["uy-container uy-checklist", { locked, disabled }, etc.class]),
+          class: cc(["uy-container uy-checklist", { locked, disabled }, etc.class]),
         },
-        [rawTable<S> ({ disabled, locked }) (tableData)],
+        [rawTable<S>({ disabled, locked })(tableData)],
       )
     }
 
-const checklist = component (rawChecklist)
+const checklist = component(rawChecklist)
 
 export { checklist, freshChecklist, rawChecklist }

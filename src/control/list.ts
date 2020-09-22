@@ -28,55 +28,55 @@ export type ListData = {
 const freshList = (items: string[]): ListData =>
   ({ items })
 
-const addItem = (path: Path) => (data: ListData) => <S>(state: State<S>): State<S> =>
-  set ([...path, "items"]) ([...data.items, ""]) (state)
+const addItem = (path: Path, data: ListData) => <S>(state: State<S>): State<S> =>
+  set([...path, "items"])([...data.items, ""])(state)
 
-const updateItem = (path: Path) => (i: number) => <S, P>(state: State<S>, value: Payload<P>): State<S> =>
-  set ([...path, "items", i]) (value) (state)
+const updateItem = (path: Path, i: number) => <S, P>(state: State<S>, value: Payload<P>): State<S> =>
+  set([...path, "items", i])(value)(state)
 
-const removeItem = (path: Path) => (i: number) => <S>(state: State<S>): State<S> =>
-  set ([...path, "items"]) (
-    exclude (i) (get ([...path, "items"]) (state) as string[]),
-  ) (state)
+const removeItem = (path: Path, i: number) => <S>(state: State<S>): State<S> =>
+  set([...path, "items"])(
+    exclude(i)(get([...path, "items"])(state) as string[]),
+  )(state)
 
 const rawList =
   <S>({ disabled, locked, headers, path, ...etc }: ListOptions<S>) =>
     (data: ListData): VDOM<S> => {
       const item = (value: string, i: number): TableCell<S>[] => [
         rawTextbox
-          ({ disabled, locked, update: updateItem (path) (i) })
+          ({ disabled, locked, update: updateItem(path, i) })
           ({ value }),
-        cancelButton<S> ({ disabled, locked, update: removeItem (path) (i) }),
+        cancelButton<S>({ disabled, locked, update: removeItem(path, i) }),
       ]
 
       const grower: TableCell<S>[] = [
         [
           { class: "uy-list-adder", colspan: 2 },
-          button<S> ({
+          button<S>({
             disabled,
             locked,
             label: "+ Add",
-            update: addItem (path) (data),
+            update: addItem(path, data),
           }),
         ],
       ]
 
-      return div (
+      return div(
         {
           ...etc,
-          class: cc (["uy-control uy-list", { locked, disabled }, etc.class]),
+          class: cc(["uy-control uy-list", { locked, disabled }, etc.class]),
         },
         [
-          rawTable ({
+          rawTable({
             disabled,
             headers,
             locked,
             sortDescending: false,
-          }) ({ rows: [...data.items.map (item), grower] }),
+          })({ rows: [...data.items.map(item), grower] }),
         ],
       )
     }
 
-const list = component (rawList)
+const list = component(rawList)
 
 export { freshList, list }

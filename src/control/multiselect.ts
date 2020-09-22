@@ -1,5 +1,5 @@
 import type { ClassProp, VDOM } from "hyperapp"
-import type { Contents } from "ntml"
+import type { Content } from "ntml"
 import type { Transform } from "../types"
 
 import cc from "classcat"
@@ -12,7 +12,7 @@ export type MultiselectOptions<S> = {
   class?: ClassProp
   disabled: boolean
   locked: boolean
-  options: Record<string, Contents<S>>
+  options: Record<string, Content<S> | Content<S>[]>
   update: Transform<S>
   usingColumnMode: boolean
 }
@@ -31,40 +31,40 @@ const rawMultiselect =
     (data: MultiselectData): VDOM<S> => {
       // TODO:
       // - should order matter? is Set the right way to do this?
-      const selection = new Set (data.value)
-      return div ({
+      const selection = new Set(data.value)
+      return div({
         ...etc,
-        class: cc ([
+        class: cc([
           "uy-control uy-scroller uy-multiselect",
           { "uy-multiselect--grid-mode": usingColumnMode, locked, disabled },
           etc.class,
         ]),
       }, [
-        box ("uy-multiselect-options") (
+        box("uy-multiselect-options")(
           // TODO:
           // - switch to using a Map object instead in order to guarantee order
-          Object.entries (options).map (
-            ([value, label]: [string, Contents<S>]): VDOM<S> =>
-              rawCheckbox ({
+          Object.entries(options).map(
+            ([value, label]: [string, Content<S> | Content<S>[]]): VDOM<S> =>
+              rawCheckbox({
                 disabled,
                 label,
                 locked,
                 update: (state, checked) => {
                   if (checked) {
-                    selection.add (value)
+                    selection.add(value)
                   } else {
-                    selection.delete (value)
+                    selection.delete(value)
                   }
                   // TODO:
                   // - maybe return Set directly and maybe also find a way to ensure order?
-                  return update (state, selection.has (value))
+                  return update(state, selection.has(value))
                   // return update (state, Array.from (selection))
                   // const update = (state: State<S>, value: any): any => set ([...path, "value"]) (value) (state)
                 },
-              }) ({ value: selection.has (value) }),
+              })({ value: selection.has(value) }),
           ),
         ),
       ])
     }
 
-export const multiselect = component (rawMultiselect)
+export const multiselect = component(rawMultiselect)

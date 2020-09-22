@@ -1,5 +1,5 @@
 import type { ClassProp, VDOM } from "hyperapp"
-import type { Contents } from "ntml"
+import type { Content } from "ntml"
 import type { Transform } from "../types"
 import type { Path } from "../utility/shadesHelper"
 
@@ -14,7 +14,7 @@ export type DropdownOptions<S> = {
   disabled: boolean
   locked: boolean
   update: Transform<S>
-  options: Record<string, Contents<S>>
+  options: Record<string, Content<S> | Content<S>[]>
   path: Path
 };
 
@@ -30,37 +30,37 @@ export const freshDropdown = (value: string): DropdownData =>
 const rawDropdown =
   <S>({ disabled, locked, options, path, update, ...etc }: DropdownOptions<S>) =>
     (data: DropdownData): VDOM<S> =>
-    box ("uy-control uy-dropdown") ([
-      box ({
-        disabled,
-        locked,
-        "uy-dropdown-arrow": true,
-        focus: !!data.focused,
-      }) ([
-        select (
-          {
-            disabled,
-            readonly: locked,
-            value: data.value,
-            onchange: (state, event) => {
-              if (!event) return state
-              const target = event.target as HTMLInputElement
-              return update (state, target.value)
+      box("uy-control uy-dropdown")([
+        box({
+          disabled,
+          locked,
+          "uy-dropdown-arrow": true,
+          focus: !!data.focused,
+        })([
+          select(
+            {
+              disabled,
+              readonly: locked,
+              value: data.value,
+              onchange: (state, event) => {
+                if (!event) return state
+                const target = event.target as HTMLInputElement
+                return update(state, target.value)
+              },
+              onfocus: set([...path, "focused"])(true),
+              onblur: set([...path, "focused"])(false),
+              ...etc,
+              class: cc(["uy-input", { locked, disabled }, etc.class]),
             },
-            onfocus: set ([...path, "focused"]) (true),
-            onblur: set ([...path, "focused"]) (false),
-            ...etc,
-            class: cc (["uy-input", { locked, disabled }, etc.class]),
-          },
-          // TODO:
-          // - switch to using a Map object instead in order to guarantee order
-          // - verify type of `x` is workable
-          Object.entries (options).map (
-            ([value, label]: [string, Contents<S>]): VDOM<S> =>
-              option ({ value }, label),
+            // TODO:
+            // - switch to using a Map object instead in order to guarantee order
+            // - verify type of `x` is workable
+            Object.entries(options).map(
+              ([value, label]: [string, Content<S> | Content<S>[]]): VDOM<S> =>
+                option({ value }, label),
+            ),
           ),
-        ),
-      ]),
-    ])
+        ]),
+      ])
 
-export const dropdown = component (rawDropdown)
+export const dropdown = component(rawDropdown)

@@ -1,5 +1,5 @@
 import type { ClassProp, VDOM } from "hyperapp"
-import type { Contents } from "ntml"
+import type { Content } from "ntml"
 import type { ContainerView } from "../types"
 
 import cc from "classcat"
@@ -16,14 +16,14 @@ export type OverlayOptions = {
 
 const rawOverlay =
   ({ disabled, locked, ...etc }: OverlayOptions) =>
-    <S>(contents: Contents<S>): VDOM<S> =>
-      box ("uy-overlay-background") ([
-        div ({
+    <S>(contents: Content<S> | Content<S>[]): VDOM<S> =>
+      box("uy-overlay-background")([
+        div({
           disabled,
           ...etc,
-          class: cc (["uy-overlay", { locked, disabled }, etc.class]),
+          class: cc(["uy-overlay", { locked, disabled }, etc.class]),
         }, contents),
       ])
 
 export const overlay = <S>(props: OverlayOptions): ContainerView<S> =>
-  ui (rawOverlay (props))
+  ui(rawOverlay(props))

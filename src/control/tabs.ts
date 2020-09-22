@@ -34,24 +34,24 @@ const isSelected = (activeTab: string) => <S>(item: Content<S>, i: number): bool
   if (typeof item === "object") {
     return item != null && "props" in item && activeTab === item.props["data-tab-id"]
   }
-  return activeTab === String (i)
+  return activeTab === String(i)
 }
 
 const tab =
   <S>(update: Transform<S>) =>
     (activeTab: string) =>
       (item: Content<S>, i: number): VDOM<S> => {
-        const selected = isSelected (activeTab) (item, i)
-        return div ({
+        const selected = isSelected(activeTab)(item, i)
+        return div({
           class: { "uy-tabs-item": true, selected },
           onclick: (state, event) => {
             if (!event) return state
             const target = event.target as HTMLElement
-            const transition = update (state, String (i))
+            const transition = update(state, String(i))
             return selected
-              ? Array.isArray (transition)
-                ? [...transition, scrollIntoView (target)] as StateWithEffects<S>
-                : [transition, scrollIntoView (target)] as StateWithEffects<S>
+              ? Array.isArray(transition)
+                ? [...transition, scrollIntoView(target)] as StateWithEffects<S>
+                : [transition, scrollIntoView(target)] as StateWithEffects<S>
               : transition
           },
         }, item)
@@ -68,27 +68,27 @@ const rawTabs = <S>(
     ...etc
   }: TabsOptions<S>,
 ) =>
-    (data: TabsData): VDOM<S> => {
-      const headings = tabList.map ((x: Tab<S>): Content<S> => x.heading)
-      const panels = tabList.map ((x: Tab<S>): Content<S> => x.panel)
-      return div (
-        {
-          ...etc,
-          class: cc (["uy-control uy-container uy-tabs", { locked, disabled }, etc.class]),
-        },
-        [
-          box ("uy-tabs-navigation") ([
-            itemsHeader,
-            box ("uy-tabs-list uy-scroller") (
-              headings.map (tab (update) (data.value)),
-            ),
-            itemsFooter,
-          ]),
-          box ("uy-tabs-panels") (
-            panels[headings.findIndex (isSelected (data.value))],
+  (data: TabsData): VDOM<S> => {
+    const headings = tabList.map((x: Tab<S>): Content<S> => x.heading)
+    const panels = tabList.map((x: Tab<S>): Content<S> => x.panel)
+    return div(
+      {
+        ...etc,
+        class: cc(["uy-control uy-container uy-tabs", { locked, disabled }, etc.class]),
+      },
+      [
+        box("uy-tabs-navigation")([
+          itemsHeader,
+          box("uy-tabs-list uy-scroller")(
+            headings.map(tab(update)(data.value)),
           ),
-        ],
-      )
-    }
+          itemsFooter,
+        ]),
+        box("uy-tabs-panels")([
+          panels[headings.findIndex(isSelected(data.value))],
+        ]),
+      ],
+    )
+  }
 
-export const tabs = component (rawTabs)
+export const tabs = component(rawTabs)

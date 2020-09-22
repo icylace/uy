@@ -1,5 +1,5 @@
 import type { ClassProp, VDOM } from "hyperapp"
-import type { Contents } from "ntml"
+import type { Content } from "ntml"
 import type { Transform } from "../types"
 
 import cc from "classcat"
@@ -23,7 +23,7 @@ import { box } from "../container/box"
 export type CheckboxOptions<S> = {
   class?: ClassProp
   disabled: boolean
-  label?: Contents<S>
+  label?: Content<S> | Content<S>[]
   locked: boolean
   update: Transform<S>
 }
@@ -38,7 +38,7 @@ export const freshCheckbox = (value: boolean): CheckboxData =>
 export const rawCheckbox =
   <S>({ disabled, locked, label, update, ...etc }: CheckboxOptions<S>) =>
     (data: CheckboxData): VDOM<S> =>
-      box ("uy-control uy-checkbox") ([
+      box("uy-control uy-checkbox")([
         html.label({ class: { disabled, locked } }, [
           html.input({
             disabled,
@@ -47,13 +47,13 @@ export const rawCheckbox =
             onchange: (state, event) => {
               if (!event) return state
               const target = event.target as HTMLInputElement
-              return update (state, target.checked)
+              return update(state, target.checked)
             },
             ...etc,
-            class: cc (["uy-input", { locked, disabled }, etc.class]),
+            class: cc(["uy-input", { locked, disabled }, etc.class]),
           }),
-          label ? html.span (label) : null,
+          label ? html.span(label) : null,
         ]),
       ])
 
-export const checkbox = component (rawCheckbox)
+export const checkbox = component(rawCheckbox)

@@ -1,5 +1,5 @@
 import type { ClassProp, VDOM } from "hyperapp"
-import type { Contents } from "ntml"
+import type { Content } from "ntml"
 
 import cc from "classcat"
 import { div } from "ntml"
@@ -14,11 +14,11 @@ export type PopupOptions = {
 
 export const popup =
   ({ disabled, id, locked, ...etc }: PopupOptions) =>
-    <S>(contents: Contents<S>): VDOM<S> =>
-      div ({
+    <S>(contents: Content<S> | Content<S>[]): VDOM<S> =>
+      div({
         id,
         ...etc,
-        class: cc ([
+        class: cc([
           "uy-container uy-popup",
           { locked, disabled },
           etc.class,

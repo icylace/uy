@@ -58,8 +58,11 @@ const tableHeader =
         )
       }
 
-const tableCell = <S>(x: TableCell<S>): VDOM<S> =>
+const hasPropList = <S>(x: TableCell<S>): x is [PropList<S>, Content<S> | Content<S>[]] =>
   Array.isArray(x)
+
+const tableCell = <S>(x: TableCell<S>): VDOM<S> =>
+  hasPropList(x)
     ? html.td(x[0], x[1])
     : html.td(x)
 

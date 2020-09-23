@@ -24,7 +24,7 @@ declare module "hyperapp" {
   // It must also be mounted over an available DOM element.
   type App<S>
     = Readonly<{
-      init: Transition<S> | Action<S, any>
+      init: Transition<S> | Action<S>
       view: View<S>
       node: Node
       subscriptions?: Subscription<S>
@@ -49,10 +49,10 @@ declare module "hyperapp" {
   // ---------------------------------------------------------------------------
 
   // A dispatched action handles an event in the context of the current state.
-  type Dispatch<S> = (action: Action<S, any>, props?: Payload<any>) => void
+  type Dispatch<S> = (action: Action<S>, props?: Payload<any>) => void
 
   // An action transforms existing state and/or wraps another action.
-  type Action<S, P>
+  type Action<S, P = any>
     = ((state: State<S>, props?: Payload<P>) => Transition<S> | Action<S, any>)
     | ActionDescriptor<S, P>
 
@@ -79,7 +79,7 @@ declare module "hyperapp" {
   // An effect used in a subscription should be able to unsubscribe.
   type Effect<S, D>
     = (dispatch: Dispatch<S>, props?: Payload<D>) =>
-        void | Unsubscribe | Promise<void | Unsubscribe>
+      void | Unsubscribe | Promise<void | Unsubscribe>
 
   // ---------------------------------------------------------------------------
 

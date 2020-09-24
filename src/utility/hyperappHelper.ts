@@ -7,7 +7,6 @@ import type {
   Payload,
   State,
   Transform,
-  Transition,
   Unsubscribe,
 } from "hyperapp"
 
@@ -185,6 +184,8 @@ export const onMouseDown = eventFx("mousedown")
 
 //     return action (t, payload)
 //   }
+
+type Transition<S> = State<S> | EffectfulState<S>
 
 // TODO:
 export const actWith = <S, P>(a: Action<S, P>) => (t: Transition<S>): Transition<S> => {

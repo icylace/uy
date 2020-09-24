@@ -2,9 +2,9 @@ import type {
   Action,
   ClassProp,
   EffectDescriptor,
+  EffectfulState,
   Payload,
   State,
-  Transition,
   VDOM,
   VNode,
 } from "hyperapp"
@@ -63,7 +63,7 @@ const updateResults =
   <S>(search: Searcher<S>) =>
     (path: Path) =>
       (id: string) =>
-        (state: State<S>, props?: Payload<SearchboxData>): Transition<S> => {
+        (state: State<S>, props?: Payload<SearchboxData>): State<S> | EffectfulState<S> => {
           const { value, results } = props ?? { value: "", results: [] }
 
           // It is possible the current value of the searchbox and the value that was
@@ -95,7 +95,7 @@ const update =
     (path: Path) =>
       (id: string) =>
         (value: string) =>
-          (state: State<S>): Transition<S> =>
+          (state: State<S>): State<S> | EffectfulState<S> =>
             get([...path, "searching"])(state)
               ? set([...path, "value"])(value)(state)
               : [

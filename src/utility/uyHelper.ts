@@ -2,10 +2,10 @@ import type {
   Action,
   App,
   Dispatch,
+  EffectfulState,
   Payload,
   State,
   Transform,
-  Transition,
   Subscriber,
 } from "hyperapp"
 
@@ -28,7 +28,7 @@ const freshState = <S>(state: State<S>): State<S> => ({
   uy: {
     insiders: {},
     mousedownHandlers: {
-      detectOutsideAction: (state: State<S>, event: Event): Transition<S> => {
+      detectOutsideAction: (state: State<S>, event: Event): State<S> | EffectfulState<S> => {
         // TODO:
         // - switch to using a Map object instead in order to guarantee order
         const insiders: [string, Transform<S>][] = Object.entries(
@@ -46,7 +46,7 @@ const freshState = <S>(state: State<S>): State<S> => ({
 
 // -----------------------------------------------------------------------------
 
-const mouseDownSubscriptionAction = <S, P>(state: State<S>, _props?: Payload<P>): Transition<S> => {
+const mouseDownSubscriptionAction = <S, P>(state: State<S>, _props?: Payload<P>): State<S> | EffectfulState<S> => {
   const handlerMap = get(["uy", "mousedownHandlers"])(state) as Record<string, Action<S, Event>>
   const handlers = Object.values(handlerMap)
   const transitioner = handleUsing(handlers)

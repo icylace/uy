@@ -24,7 +24,8 @@ declare module "hyperapp" {
   // It must also be mounted over an available DOM element.
   type App<S>
     = Readonly<{
-      init: Transition<S> | Action<S>
+      // init: Transition<S> | Action<S>
+      init: State<S> | EffectfulState<S> | Action<S>
       view: View<S>
       node: Node
       subscriptions?: Subscription<S>
@@ -53,20 +54,22 @@ declare module "hyperapp" {
 
   // An action transforms existing state and/or wraps another action.
   type Action<S, P = any> = ActionTransform<S, P> | ActionDescriptor<S, P>
-  type ActionTransform<S, P = any> = (state: State<S>, props?: Payload<P>) => Transition<S> | Action<S>
+  // type ActionTransform<S, P = any> = (state: State<S>, props?: Payload<P>) => Transition<S> | Action<S>
+  type ActionTransform<S, P = any> = (state: State<S>, props?: Payload<P>) => State<S> | EffectfulState<S> | Action<S>
   type ActionDescriptor<S, P> = [Action<S, P>, Payload<P>]
 
   // A transform carries out the transition from one state to another.
-  type Transform<S, P = any> = (state: State<S>, props?: Payload<P>) => Transition<S>
+  // type Transform<S, P = any> = (state: State<S>, props?: Payload<P>) => Transition<S>
+  type Transform<S, P = any> = (state: State<S>, props?: Payload<P>) => State<S> | EffectfulState<S>
 
   // A payload is data external to state that is given to an action or effect.
   type Payload<P> = P
 
-  // TODO:
-  // - consider deprecating `Transition`
-  //   - just use `State` and `EffectfulState` directly
-  // A transition is a state transformation with any effects to run.
-  type Transition<S> = State<S> | EffectfulState<S>
+  // // TODO:
+  // // - consider deprecating `Transition`
+  // //   - just use `State` and `EffectfulState` directly
+  // // A transition is a state transformation with any effects to run.
+  // type Transition<S> = State<S> | EffectfulState<S>
 
   // Application state is accessible in every view, action, and subscription.
   type State<S> = S

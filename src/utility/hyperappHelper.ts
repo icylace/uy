@@ -185,6 +185,7 @@ export const onMouseDown = eventFx("mousedown")
 //     return action (t, payload)
 //   }
 
+// A transition is a state transformation with any effects to run.
 type Transition<S> = State<S> | EffectfulState<S>
 
 // TODO:

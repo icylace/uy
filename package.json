@@ -43,7 +43,7 @@
     "@fortawesome/fontawesome-free": "^5.14.0",
     "classcat": "^4.1.0",
     "hyperapp": "^2.0.8",
-    "ntml": "^0.1.27",
+    "ntml": "^0.1.28",
     "redaxios": "^0.3.0",
     "remeda": "0.0.22",
     "shades": "^2.1.0"
@@ -69,7 +69,7 @@
     "postcss-preset-env": "^6.7.0",
     "postcss-reporter": "^6.0.1",
     "prettier": "^2.1.2",
-    "rollup": "^2.28.1",
+    "rollup": "^2.28.2",
     "snowpack": "^2.11.1",
     "terser": "^5.3.2",
     "ts-jest": "^26.4.0",

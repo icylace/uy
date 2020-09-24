@@ -52,24 +52,27 @@ declare module "hyperapp" {
   type Dispatch<S> = (action: Action<S>, props?: Payload<any>) => void
 
   // An action transforms existing state and/or wraps another action.
-  type Action<S, P = any>
-    = ((state: State<S>, props?: Payload<P>) => Transition<S> | Action<S, any>)
-    | ActionDescriptor<S, P>
-
-  // An action descriptor describes an action and any payload for it.
+  type Action<S, P = any> = ActionTransform<S, P> | ActionDescriptor<S, P>
+  type ActionTransform<S, P = any> = (state: State<S>, props?: Payload<P>) => Transition<S> | Action<S>
   type ActionDescriptor<S, P> = [Action<S, P>, Payload<P>]
+
+  // A transform carries out the transition from one state to another.
+  type Transform<S, P = any> = (state: State<S>, props?: Payload<P>) => Transition<S>
 
   // A payload is data external to state that is given to an action or effect.
   type Payload<P> = P
 
+  // TODO:
+  // - consider deprecating `Transition`
+  //   - just use `State` and `EffectfulState` directly
   // A transition is a state transformation with any effects to run.
-  type Transition<S> = State<S> | StateWithEffects<S>
+  type Transition<S> = State<S> | EffectfulState<S>
 
   // Application state is accessible in every view, action, and subscription.
   type State<S> = S
 
   // Transformed state can be paired with a list of effects to run.
-  type StateWithEffects<S, D = any> = [State<S>, ...EffectDescriptor<S, D>[]]
+  type EffectfulState<S, D = any> = [State<S>, ...EffectDescriptor<S, D>[]]
 
   // An effect descriptor describes how an effect should be invoked.
   // A function that creates this is called an effect constructor.

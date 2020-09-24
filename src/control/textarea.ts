@@ -1,5 +1,4 @@
-import type { ClassProp, VDOM } from "hyperapp"
-import type { Transform } from "../types"
+import type { ClassProp, VDOM, Transform } from "hyperapp"
 
 import cc from "classcat"
 import * as html from "ntml"

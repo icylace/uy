@@ -4,10 +4,10 @@ import type {
   Dispatch,
   Payload,
   State,
+  Transform,
   Transition,
   Subscriber,
 } from "hyperapp"
-import type { Transform } from "../types"
 
 import { handleUsing, onMouseDown, onOutside } from "./hyperappHelper"
 import { get, mod, set } from "./shadesHelper"

@@ -1,8 +1,8 @@
 import type {
   ClassProp,
-  Payload,
+  // Payload,
   State,
-  Transition,
+  // Transition,
   VDOM,
   View,
 } from "hyperapp"
@@ -17,4 +17,4 @@ export type ComponentOptions = {
 
 export type Component<S> = (_: ComponentOptions) => (_: Path) => (_: State<S>) => VDOM<S>
 export type ContainerView<S> = (_: View<S>[]) => View<S>
-export type Transform<S, P = unknown> = (state: State<S>, props?: Payload<P>) => Transition<S>
+// export type Transform<S, P = unknown> = (state: State<S>, props?: Payload<P>) => Transition<S>

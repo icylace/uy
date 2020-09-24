@@ -1,6 +1,5 @@
-import type { ClassProp, StateWithEffects, VDOM, VNode } from "hyperapp"
+import type { ClassProp, EffectfulState, Transform, VDOM, VNode } from "hyperapp"
 import type { Content } from "ntml"
-import type { Transform } from "../types"
 
 import cc from "classcat"
 import { div } from "ntml"
@@ -50,8 +49,8 @@ const tab =
             const transition = update(state, String(i))
             return selected
               ? Array.isArray(transition)
-                ? [...transition, scrollIntoView(target)] as StateWithEffects<S>
-                : [transition, scrollIntoView(target)] as StateWithEffects<S>
+                ? [...transition, scrollIntoView(target)] as EffectfulState<S>
+                : [transition, scrollIntoView(target)] as EffectfulState<S>
               : transition
           },
         }, item)

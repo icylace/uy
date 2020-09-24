@@ -3,14 +3,13 @@ import type {
   Dispatch,
   // Effect,
   EffectDescriptor,
+  EffectfulState,
   Payload,
   State,
-  StateWithEffects,
+  Transform,
   Transition,
   Unsubscribe,
 } from "hyperapp"
-
-import type { Transform } from "../types"
 
 // -----------------------------------------------------------------------------
 
@@ -194,7 +193,7 @@ export const actWith = <S, P>(a: Action<S, P>) => (t: Transition<S>): Transition
     if (!Array.isArray(t)) {
       return action(t) as Transition<S>
     }
-    const [state, ...effects]: StateWithEffects<S> = t
+    const [state, ...effects]: EffectfulState<S> = t
     const transition: Transition<S> = action(state) as Transition<S>
     if (!Array.isArray(transition)) {
       return [transition, ...effects]
@@ -210,7 +209,7 @@ export const actWith = <S, P>(a: Action<S, P>) => (t: Transition<S>): Transition
     if (!Array.isArray(nextTransition)) {
       return action(nextTransition, payload) as Transition<S>
     }
-    const [state, ...effects]: StateWithEffects<S> = nextTransition
+    const [state, ...effects]: EffectfulState<S> = nextTransition
     const transition: Transition<S> = action(state, payload) as Transition<S>
     if (!Array.isArray(transition)) {
       return [transition, ...effects]
@@ -228,7 +227,7 @@ export const handleUsing =
         if (Array.isArray(a)) {
           // TODO:
           // - reconsider discarding original payload?
-          return actWith([a[0], event])(t)
+          return actWith([a[0] as Action<S, unknown>, event])(t)
         }
         return actWith([a as Action<S, unknown>, event])(t)
       }, state)

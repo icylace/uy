@@ -39,71 +39,71 @@ const pagerNav = <S>(
 const pagerMore = <S>(content: Content<S> | Content<S>[]): VDOM<S> =>
   span({ class: "uy-pager-more" }, content)
 
-const rawPager =
-  <S>({ disabled, locked, itemsPerPage, pageRange, update, ...etc }: PagerOptions<S>) =>
-    (data: PagerData): VDOM<S> | null => {
-      if (!data.itemsTotal) return null
+const rawPager = <S>(props: PagerOptions<S>, data: PagerData): VDOM<S> | null => {
+  const { disabled, locked, itemsPerPage, pageRange, update, ...etc } = props
 
-      const pageCount = Math.ceil(data.itemsTotal / itemsPerPage)
-      const lastPage = pageCount - 1
+  if (!data.itemsTotal) return null
 
-      const rangeStartPage = Math.max(0, data.value - pageRange)
-      const rangeFinishPage = Math.min(lastPage, data.value + pageRange)
+  const pageCount = Math.ceil(data.itemsTotal / itemsPerPage)
+  const lastPage = pageCount - 1
 
-      const pages = range(0)(rangeFinishPage - rangeStartPage + 1).map(
-        (n: number): VNode<S> => {
-          const currentPage = rangeStartPage + n
-          const current = currentPage === data.value
-          return rangeStartPage <= currentPage && currentPage <= rangeFinishPage
-            ? li({
-              class: ["uy-pager-nav", "uy-pager-page", current && "uy-pager-current"],
-              onclick: (state) => update(state, currentPage),
-            }, span(currentPage + 1))
-            : null
-        },
-      )
+  const rangeStartPage = Math.max(0, data.value - pageRange)
+  const rangeFinishPage = Math.min(lastPage, data.value + pageRange)
 
-      const morePrev = pagerMore<S>(rangeStartPage > 0 ? "..." : "")
-      const moreNext = pagerMore<S>(rangeFinishPage < lastPage ? "..." : "")
+  const pages = range(0)(rangeFinishPage - rangeStartPage + 1).map(
+    (n: number): VNode<S> => {
+      const currentPage = rangeStartPage + n
+      const current = currentPage === data.value
+      return rangeStartPage <= currentPage && currentPage <= rangeFinishPage
+        ? li({
+          class: ["uy-pager-nav", "uy-pager-page", current && "uy-pager-current"],
+          onclick: (state) => update(state, currentPage),
+        }, span(currentPage + 1))
+        : null
+    },
+  )
 
-      const navFirst = pagerNav<S>(
-        (state) => update(state, 0),
-        [icon("fas fa-angle-double-left"), " first"],
-        data.value !== 0,
-      )
+  const morePrev = pagerMore<S>(rangeStartPage > 0 ? "..." : "")
+  const moreNext = pagerMore<S>(rangeFinishPage < lastPage ? "..." : "")
 
-      const navPrev = pagerNav<S>(
-        (state) => update(state, Math.max(0, data.value - 1)),
-        [icon("fas fa-angle-left"), " prev"],
-        data.value !== 0,
-      )
+  const navFirst = pagerNav<S>(
+    (state) => update(state, 0),
+    [icon("fas fa-angle-double-left"), " first"],
+    data.value !== 0,
+  )
 
-      const navNext = pagerNav<S>(
-        (state) => update(state, Math.min(lastPage, data.value + 1)),
-        ["next ", icon("fas fa-angle-right")],
-        data.value !== lastPage,
-      )
+  const navPrev = pagerNav<S>(
+    (state) => update(state, Math.max(0, data.value - 1)),
+    [icon("fas fa-angle-left"), " prev"],
+    data.value !== 0,
+  )
 
-      const navLast = pagerNav<S>(
-        (state) => update(state, lastPage),
-        ["last ", icon("fas fa-angle-double-right")],
-        data.value !== lastPage,
-      )
+  const navNext = pagerNav<S>(
+    (state) => update(state, Math.min(lastPage, data.value + 1)),
+    ["next ", icon("fas fa-angle-right")],
+    data.value !== lastPage,
+  )
 
-      return div({
-        ...etc,
-        class: cc(["uy-control uy-pager", { locked, disabled }, etc.class]),
-      }, [
-        ul([
-          li(navFirst),
-          li(navPrev),
-          li(morePrev),
-          ...pages,
-          li(moreNext),
-          li(navNext),
-          li(navLast),
-        ]),
-      ])
-    }
+  const navLast = pagerNav<S>(
+    (state) => update(state, lastPage),
+    ["last ", icon("fas fa-angle-double-right")],
+    data.value !== lastPage,
+  )
+
+  return div({
+    ...etc,
+    class: cc(["uy-control uy-pager", { locked, disabled }, etc.class]),
+  }, [
+    ul([
+      li(navFirst),
+      li(navPrev),
+      li(morePrev),
+      ...pages,
+      li(moreNext),
+      li(navNext),
+      li(navLast),
+    ]),
+  ])
+}
 
 export const pager = component(rawPager)

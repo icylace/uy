@@ -21,6 +21,6 @@ export const field = <S>(f: Component<S>) =>
           box("uy-container uy-field", [
             label(
               { ...etc, class: cc([{ locked, disabled }, etc.class]) },
-              [title, f({ disabled, locked, ...etc })(path)(state)],
+              [title, f({ disabled, locked, ...etc }, path)(state)],
             ),
           ])

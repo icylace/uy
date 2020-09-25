@@ -33,36 +33,39 @@ const freshChecklist = (items: ChecklistItem[]): Checklist =>
 const updateItem = (path: Path) => (i: number) => <S, P>(state: State<S>, value: Payload<P>): State<S> =>
   set([...path, "items", i])(value)(state)
 
-const rawChecklist =
-  <S>({ disabled, locked, path, render, ...etc }: ChecklistOptions<S>) =>
-    (data: Checklist): VDOM<S> => {
-      const item = (x: ChecklistItem, i: number): TableRow<S> =>
+const rawChecklist = <S>(props: ChecklistOptions<S>, data: Checklist): VDOM<S> => {
+  const { disabled, locked, path, render, ...etc } = props
+
+  const item = (x: ChecklistItem, i: number): TableRow<S> =>
+    [
+      [
+        { class: { "uy-horizontal": x.id === "other" } },
         [
-          [
-            { class: { "uy-horizontal": x.id === "other" } },
-            [
-              rawCheckbox({
-                disabled,
-                locked,
-                label: render(x.id),
-                update: updateItem(path)(i),
-              })({ value: x.selected }),
-            ],
-          ],
-        ]
+          rawCheckbox(
+            {
+              disabled,
+              locked,
+              label: render(x.id),
+              update: updateItem(path)(i),
+            },
+            { value: x.selected }
+          ),
+        ],
+      ],
+    ]
 
-      const tableData: TableData<S> = {
-        rows: data.items.map(item),
-      }
+  const tableData: TableData<S> = {
+    rows: data.items.map(item),
+  }
 
-      return div(
-        {
-          ...etc,
-          class: cc(["uy-container uy-checklist", { locked, disabled }, etc.class]),
-        },
-        [rawTable<S>({ disabled, locked })(tableData)],
-      )
-    }
+  return div(
+    {
+      ...etc,
+      class: cc(["uy-container uy-checklist", { locked, disabled }, etc.class]),
+    },
+    [rawTable<S>({ disabled, locked }, tableData)],
+  )
+}
 
 const checklist = component(rawChecklist)
 

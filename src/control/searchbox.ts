@@ -128,83 +128,85 @@ const noopKeys = [
   "Super",
 ]
 
-const rawSearchbox =
-  <S>({ disabled, locked, path, search, ...etc }: SearchboxOptions<S>) =>
-    (data: SearchboxData): VDOM<S> => {
-      const id = path.join("-")
+const rawSearchbox = <S>(props: SearchboxOptions<S>, data: SearchboxData): VDOM<S> => {
+  const { disabled, locked, path, search, ...etc } = props
+  const id = path.join("-")
 
-      const inputSearch = input<S>({
-        disabled,
-        readonly: locked,
-        value: data.value,
-        type: "search",
-        onfocus: set([...path, "focused"])(true),
-        onblur: set([...path, "focused"])(false),
-        onkeyup: (state, event) => {
-          if (!event) return state
-          if (noopKeys.includes(event.key)) return state
-          const target = event.target as HTMLInputElement
-          return update(search)(path)(id)(target.value)(state)
-        },
-        // Here we're using the non-standard `search` event because it can detect
-        // when a searchbox's clear button is used. The `input` event can also
-        // detect it but it will also detect keypresses which makes things
-        // less convenient since it would conflict with how we're using
-        // the `keyup` event.
-        // https://stackoverflow.com/a/25569880
-        onsearch: (state, event) => {
-          if (!event) return state
-          const target = event.target as HTMLInputElement
-          return update(search)(path)(id)(target.value)(state)
-        },
-        ...etc,
-        class: cc(["uy-input", { locked, disabled }, etc.class]),
-      })
+  const inputSearch = input<S>({
+    disabled,
+    readonly: locked,
+    value: data.value,
+    type: "search",
+    onfocus: set([...path, "focused"])(true),
+    onblur: set([...path, "focused"])(false),
+    onkeyup: (state, event) => {
+      if (!event) return state
+      if (noopKeys.includes(event.key)) return state
+      const target = event.target as HTMLInputElement
+      return update(search)(path)(id)(target.value)(state)
+    },
+    // Here we're using the non-standard `search` event because it can detect
+    // when a searchbox's clear button is used. The `input` event can also
+    // detect it but it will also detect keypresses which makes things
+    // less convenient since it would conflict with how we're using
+    // the `keyup` event.
+    // https://stackoverflow.com/a/25569880
+    onsearch: (state, event) => {
+      if (!event) return state
+      const target = event.target as HTMLInputElement
+      return update(search)(path)(id)(target.value)(state)
+    },
+    ...etc,
+    class: cc(["uy-input", { locked, disabled }, etc.class]),
+  })
 
-      const popupNode = (
-        data.results.length && !disabled
-          ? popup({ locked, disabled, id })([
-            ul(
-              { class: "uy-searchbox-results uy-scroller" },
-              data.results.map(searchResult(path)(id)),
-            ),
-          ])
-          : null
-      ) as VNode<S>
-
-      return box({
-        disabled,
-        locked,
-        "uy-control": true,
-        "uy-searchbox": true,
-      }, [
-        label({
-          class: {
-            "uy-searchbox-label": true,
-            focus: data.focused,
-            busy: data.searching,
-            locked,
-            disabled,
-          },
-        }, [
-          inputSearch,
-          span(
-            {
-              onclick: (state) =>
-                update(search)(path)(id)(data.value)(state),
-            },
-            [
-              icon({
-                fas: true,
-                "fa-spinner": data.searching,
-                "fa-pulse": data.searching,
-                "fa-search": !data.searching,
-              }),
-            ],
+  const popupNode = (
+    data.results.length && !disabled
+      ? popup(
+        { locked, disabled, id },
+        [
+          ul(
+            { class: "uy-searchbox-results uy-scroller" },
+            data.results.map(searchResult(path)(id)),
           ),
-        ]),
-        popupNode,
-      ])
-    }
+        ]
+      )
+      : null
+  ) as VNode<S>
+
+  return box({
+    disabled,
+    locked,
+    "uy-control": true,
+    "uy-searchbox": true,
+  }, [
+    label({
+      class: {
+        "uy-searchbox-label": true,
+        focus: data.focused,
+        busy: data.searching,
+        locked,
+        disabled,
+      },
+    }, [
+      inputSearch,
+      span(
+        {
+          onclick: (state) =>
+            update(search)(path)(id)(data.value)(state),
+        },
+        [
+          icon({
+            fas: true,
+            "fa-spinner": data.searching,
+            "fa-pulse": data.searching,
+            "fa-search": !data.searching,
+          }),
+        ],
+      ),
+    ]),
+    popupNode,
+  ])
+}
 
 export const searchbox = component(rawSearchbox)

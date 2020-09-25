@@ -69,30 +69,22 @@ const tableCell = <S>(x: TableCell<S>): VDOM<S> =>
 const tableRow = <S>(row: TableRow<S>): VDOM<S> =>
   html.tr(row.map(tableCell))
 
-const rawTable = <S>(
-  {
-    disabled,
+const rawTable = <S>(props: TableOptions<S>, data: TableData<S>): VDOM<S> => {
+  const { disabled, locked, headers, orderColumn, sortDescending, ...etc } = props
+  return box({
+    "uy-control": true,
+    "uy-table": true,
     locked,
-    headers,
-    orderColumn,
-    sortDescending,
-    ...etc
-  }: TableOptions<S>,
-) =>
-  (data: TableData<S>): VDOM<S> =>
-    box({
-      "uy-control": true,
-      "uy-table": true,
-      locked,
-      disabled,
-    }, [
-      html.table(etc, [
-        Array.isArray(headers) && headers.length
-          ? html.thead(headers.map(tableHeader(orderColumn)(!!sortDescending)))
-          : null,
-        html.tbody(data.rows.map(tableRow)),
-      ]),
-    ])
+    disabled,
+  }, [
+    html.table(etc, [
+      Array.isArray(headers) && headers.length
+        ? html.thead(headers.map(tableHeader(orderColumn)(!!sortDescending)))
+        : null,
+      html.tbody(data.rows.map(tableRow)),
+    ]),
+  ])
+}
 
 const table = component(rawTable)
 

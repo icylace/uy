@@ -222,17 +222,16 @@ export const actWith = <S, P>(a: Action<S, P>) => (t: Transition<S>): Transition
 }
 
 // Invokes a collection of event handlers for the same event.
-export const handleUsing =
-  <S>(handlers: Action<S, Event>[]) =>
-    (state: Transition<S>, event?: Payload<Event>): Transition<S> =>
-      handlers.reduce((t, a) => {
-        if (Array.isArray(a)) {
-          // TODO:
-          // - reconsider discarding original payload?
-          return actWith([a[0] as Action<S, unknown>, event])(t)
-        }
-        return actWith([a as Action<S, unknown>, event])(t)
-      }, state)
+export const handleUsing = <S>(handlers: Action<S, Event>[]) => (state: Transition<S>, event?: Payload<Event>): Transition<S> => {
+  return handlers.reduce((t, a) => {
+    if (Array.isArray(a)) {
+      // TODO:
+      // - reconsider discarding original payload?
+      return actWith([a[0] as Action<S, unknown>, event])(t)
+    }
+    return actWith([a as Action<S, unknown>, event])(t)
+  }, state)
+}
 
 // -----------------------------------------------------------------------------
 

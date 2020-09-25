@@ -30,31 +30,31 @@ const sanitizedNumber = (n: string): number =>
 const update = (path: Path) => <S>(state: State<S>, value: string): State<S> =>
   set([...path, "value"])(sanitizedNumber(value))(state)
 
-const rawNumberbox =
-  <S>({ disabled, locked, label, path, ...etc }: NumberboxOptions<S>) =>
-    (data: NumberboxData): VDOM<S> =>
-      box("uy-control uy-numberbox", [
-        html.label({ class: { focus: !!data.focused, locked, disabled } }, [
-          html.input({
-            disabled,
-            min: 0,
-            readonly: locked,
-            type: "number",
-            value: data.value,
-            onchange: (state, event) => {
-              if (!event) return state
-              const target = event.target as HTMLInputElement
-              return update(path)(state, target.value)
-            },
-            onfocus: set([...path, "focused"])(true),
-            onblur: set([...path, "focused"])(false),
-            ...etc,
-            class: cc(["uy-input", { locked, disabled }, etc.class]),
-          }),
-          label != null
-            ? html.span({ class: { "uy-input": true, locked, disabled } }, label)
-            : null,
-        ]),
-      ])
+const rawNumberbox = <S>(props: NumberboxOptions<S>, data: NumberboxData): VDOM<S> => {
+  const { disabled, locked, label, path, ...etc } = props
+  return box("uy-control uy-numberbox", [
+    html.label({ class: { focus: !!data.focused, locked, disabled } }, [
+      html.input({
+        disabled,
+        min: 0,
+        readonly: locked,
+        type: "number",
+        value: data.value,
+        onchange: (state, event) => {
+          if (!event) return state
+          const target = event.target as HTMLInputElement
+          return update(path)(state, target.value)
+        },
+        onfocus: set([...path, "focused"])(true),
+        onblur: set([...path, "focused"])(false),
+        ...etc,
+        class: cc(["uy-input", { locked, disabled }, etc.class]),
+      }),
+      label != null
+        ? html.span({ class: { "uy-input": true, locked, disabled } }, label)
+        : null,
+    ]),
+  ])
+}
 
 export const numberbox = component(rawNumberbox)

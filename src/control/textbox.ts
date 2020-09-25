@@ -19,23 +19,23 @@ export type TextboxData = {
 export const freshTextbox = (value: string): TextboxData =>
   ({ value })
 
-export const rawTextbox =
-  <S>({ disabled, locked, update, ...etc }: TextboxOptions<S>) =>
-    (data: TextboxData): VDOM<S> =>
-      box("uy-control uy-textbox", [
-        input({
-          disabled,
-          readonly: locked,
-          value: data.value,
-          type: "text",
-          onchange: (state, event) => {
-            if (!event) return state
-            const target = event.target as HTMLInputElement
-            return update(state, target.value)
-          },
-          ...etc,
-          class: cc(["uy-input", { locked, disabled }, etc.class]),
-        }),
-      ])
+export const rawTextbox = <S>(props: TextboxOptions<S>, data: TextboxData): VDOM<S> => {
+  const { disabled, locked, update, ...etc } = props
+  return box("uy-control uy-textbox", [
+    input({
+      disabled,
+      readonly: locked,
+      value: data.value,
+      type: "text",
+      onchange: (state, event) => {
+        if (!event) return state
+        const target = event.target as HTMLInputElement
+        return update(state, target.value)
+      },
+      ...etc,
+      class: cc(["uy-input", { locked, disabled }, etc.class]),
+    }),
+  ])
+}
 
 export const textbox = component(rawTextbox)

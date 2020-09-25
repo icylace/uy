@@ -39,43 +39,39 @@ const removeItem = (path: Path, i: number) => <S>(state: State<S>): State<S> =>
     exclude(i)(get([...path, "items"])(state) as string[]),
   )(state)
 
-const rawList =
-  <S>({ disabled, locked, headers, path, ...etc }: ListOptions<S>) =>
-    (data: ListData): VDOM<S> => {
-      const item = (value: string, i: number): TableCell<S>[] => [
-        rawTextbox
-          ({ disabled, locked, update: updateItem(path, i) })
-          ({ value }),
-        cancelButton<S>({ disabled, locked, update: removeItem(path, i) }),
-      ]
+const rawList = <S>(props: ListOptions<S>, data: ListData): VDOM<S> => {
+  const { disabled, locked, headers, path, ...etc } = props
 
-      const grower: TableCell<S>[] = [
-        [
-          { class: "uy-list-adder", colspan: 2 },
-          button<S>({
-            disabled,
-            locked,
-            label: "+ Add",
-            update: addItem(path, data),
-          }),
-        ],
-      ]
+  const item = (value: string, i: number): TableCell<S>[] => [
+    rawTextbox({ disabled, locked, update: updateItem(path, i) }, { value }),
+    cancelButton<S>({ disabled, locked, update: removeItem(path, i) }),
+  ]
 
-      return div(
-        {
-          ...etc,
-          class: cc(["uy-control uy-list", { locked, disabled }, etc.class]),
-        },
-        [
-          rawTable({
-            disabled,
-            headers,
-            locked,
-            sortDescending: false,
-          })({ rows: [...data.items.map(item), grower] }),
-        ],
-      )
-    }
+  const grower: TableCell<S>[] = [
+    [
+      { class: "uy-list-adder", colspan: 2 },
+      button<S>({
+        disabled,
+        locked,
+        label: "+ Add",
+        update: addItem(path, data),
+      }),
+    ],
+  ]
+
+  return div(
+    {
+      ...etc,
+      class: cc(["uy-control uy-list", { locked, disabled }, etc.class]),
+    },
+    [
+      rawTable(
+        { disabled, headers, locked, sortDescending: false, },
+        { rows: [...data.items.map(item), grower] }
+      ),
+    ],
+  )
+}
 
 const list = component(rawList)
 

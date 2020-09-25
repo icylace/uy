@@ -13,14 +13,15 @@ export type ButtonOptions<S> = {
   update: Action<S, MouseEvent>
 }
 
-export const button =
-  <S>({ disabled, locked, label, update, ...etc }: ButtonOptions<S>): VDOM<S> =>
-    box("uy-control uy-button", [
-      html.button({
-        disabled,
-        type: "button",
-        onclick: update,
-        ...etc,
-        class: cc(["uy-clicky", { locked, disabled }, etc.class]),
-      }, label),
-    ])
+export const button = <S>(props: ButtonOptions<S>): VDOM<S> => {
+  const { disabled, locked, label, update, ...etc } = props
+  return box("uy-control uy-button", [
+    html.button({
+      disabled,
+      type: "button",
+      onclick: update,
+      ...etc,
+      class: cc(["uy-clicky", { locked, disabled }, etc.class]),
+    }, label),
+  ])
+}

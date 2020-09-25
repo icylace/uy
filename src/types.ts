@@ -1,11 +1,4 @@
-import type {
-  ClassProp,
-  // Payload,
-  State,
-  // Transition,
-  VDOM,
-  View,
-} from "hyperapp"
+import type { ClassProp, State, VDOM } from "hyperapp"
 import type { Path } from "./utility/shadesHelper"
 
 export type ComponentOptions = {
@@ -15,6 +8,4 @@ export type ComponentOptions = {
   locked: boolean
 }
 
-export type Component<S> = (_: ComponentOptions) => (_: Path) => (_: State<S>) => VDOM<S>
-export type ContainerView<S> = (_: View<S>[]) => View<S>
-// export type Transform<S, P = unknown> = (state: State<S>, props?: Payload<P>) => Transition<S>
+export type Component<S> = (props: ComponentOptions, path: Path) => (state: State<S>) => VDOM<S>

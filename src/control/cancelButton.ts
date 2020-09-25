@@ -11,16 +11,17 @@ export type CancelButtonOptions<S> = {
   update: Action<S, MouseEvent>
 }
 
-const cancelButton =
-  <S>({ disabled, locked, update, ...etc }: CancelButtonOptions<S>): VDOM<S> =>
-    box("uy-control uy-cancelButton", [
-      html.button({
-        disabled,
-        type: "button",
-        onclick: update,
-        ...etc,
-        class: cc(["uy-clicky", { locked, disabled }, etc.class]),
-      }, "✕"),
-    ])
+const cancelButton = <S>(props: CancelButtonOptions<S>): VDOM<S> => {
+  const { disabled, locked, update, ...etc } = props
+  return box("uy-control uy-cancelButton", [
+    html.button({
+      disabled,
+      type: "button",
+      onclick: update,
+      ...etc,
+      class: cc(["uy-clicky", { locked, disabled }, etc.class]),
+    }, "✕"),
+  ])
+}
 
 export { cancelButton }

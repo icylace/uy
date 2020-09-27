@@ -3,7 +3,7 @@ export const delist = (key: string) => (xr: Record<string, unknown>): Record<str
   return etc
 }
 
-export const exclude = (i: number) => (xs: unknown[]): unknown[] =>
+export const exclude = (i: number, xs: unknown[]): unknown[] =>
   [...xs.slice(0, i), ...xs.slice(i + 1)]
 
 // export const map = <T, U>(f: (_: T) => U) => (xs: T[]): U[] =>
@@ -15,5 +15,5 @@ export const exclude = (i: number) => (xs: unknown[]): unknown[] =>
 export const pipe = (...fs: ((_: any) => any)[]) => (x: any): any =>
   fs.reduce((acc: any, f: ((_: any) => any)) => f(acc), x)
 
-export const range = (m: number) => (n: number): number[] =>
+export const range = (m: number, n: number): number[] =>
   [...Array(n - m)].map((_, i) => m + i)

@@ -36,7 +36,7 @@ const updateItem = (path: Path, i: number) => <S, P>(state: State<S>, value: Pay
 
 const removeItem = (path: Path, i: number) => <S>(state: State<S>): State<S> =>
   set([...path, "items"])(
-    exclude(i)(get([...path, "items"])(state) as string[]),
+    exclude(i, get([...path, "items"])(state) as string[]),
   )(state)
 
 const rawList = <S>(props: ListOptions<S>, data: ListData): VDOM<S> => {

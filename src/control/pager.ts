@@ -50,7 +50,7 @@ const rawPager = <S>(props: PagerOptions<S>, data: PagerData): VDOM<S> | null =>
   const rangeStartPage = Math.max(0, data.value - pageRange)
   const rangeFinishPage = Math.min(lastPage, data.value + pageRange)
 
-  const pages = range(0)(rangeFinishPage - rangeStartPage + 1).map(
+  const pages = range(0, rangeFinishPage - rangeStartPage + 1).map(
     (n: number): VNode<S> => {
       const currentPage = rangeStartPage + n
       const current = currentPage === data.value

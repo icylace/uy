@@ -10,8 +10,8 @@ import { box } from "../container/box"
 
 export type DropdownOptions<S> = {
   class?: ClassProp
-  disabled: boolean
-  locked: boolean
+  disabled?: boolean
+  locked?: boolean
   update: Transform<S>
   options: Record<string, Content<S> | Content<S>[]>
   path: Path
@@ -54,8 +54,9 @@ const rawDropdown = <S>(props: DropdownOptions<S>, data: DropdownData): VDOM<S> 
         // - switch to using a Map object instead in order to guarantee order
         // - verify type of `x` is workable
         Object.entries(options).map(
-          ([value, label]: [string, Content<S> | Content<S>[]]): VDOM<S> =>
-            option({ value }, label),
+          ([value, label]: [string, Content<S> | Content<S>[]]): VDOM<S> => {
+            return option({ value }, label)
+          }
         ),
       ),
     ]),

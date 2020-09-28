@@ -15,9 +15,9 @@ import { rawTextbox } from "./textbox"
 
 export type ListOptions<S> = {
   class?: ClassProp
-  disabled: boolean
+  disabled?: boolean
   headers?: Content<S>[]
-  locked: boolean
+  locked?: boolean
   path: Path
 }
 

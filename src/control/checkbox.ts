@@ -21,9 +21,9 @@ import { box } from "../container/box"
 
 export type CheckboxOptions<S> = {
   class?: ClassProp
-  disabled: boolean
+  disabled?: boolean
   label?: Content<S> | Content<S>[]
-  locked: boolean
+  locked?: boolean
   update: Transform<S>
 }
 
@@ -37,7 +37,7 @@ export const freshCheckbox = (value: boolean): CheckboxData =>
 export const rawCheckbox = <S>(props: CheckboxOptions<S>, data: CheckboxData): VDOM<S> => {
   const { disabled, locked, label, update, ...etc } = props
   return box("uy-control uy-checkbox", [
-    html.label({ class: { disabled, locked } }, [
+    html.label({ class: { disabled: !!disabled, locked: !!locked } }, [
       html.input({
         disabled,
         checked: data.value,

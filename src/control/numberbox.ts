@@ -10,9 +10,9 @@ import { box } from "../container/box"
 
 export type NumberboxOptions<S> = {
   class?: ClassProp
-  disabled: boolean
+  disabled?: boolean
   label?: Content<S>
-  locked: boolean
+  locked?: boolean
   path: Path
 }
 

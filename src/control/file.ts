@@ -8,9 +8,9 @@ import { icon } from "../display/icon"
 
 export type FileOptions<S> = {
   class?: ClassProp
-  disabled: boolean
+  disabled?: boolean
   label?: string
-  locked: boolean
+  locked?: boolean
   update: Transform<S>
 }
 

@@ -8,8 +8,8 @@ import { box } from "./box"
 export type OverlayOptions = {
   [_: string]: unknown
   class?: ClassProp
-  disabled: boolean
-  locked: boolean
+  disabled?: boolean
+  locked?: boolean
 }
 
 const rawOverlay = <S>(props: OverlayOptions, contents: Content<S> | Content<S>[]): VDOM<S> => {
@@ -23,7 +23,8 @@ const rawOverlay = <S>(props: OverlayOptions, contents: Content<S> | Content<S>[
   ])
 }
 
-export const overlay =
-  <S>(props: OverlayOptions, views: View<S>[]) =>
-    (state: State<S>): VDOM<S> =>
-      rawOverlay(props, views.map((g) => g(state)))
+export const overlay = <S>(props: OverlayOptions, views: View<S>[]) => {
+  return (state: State<S>): VDOM<S> => {
+    return rawOverlay(props, views.map((g) => g(state)))
+  }
+}

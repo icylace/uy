@@ -9,8 +9,8 @@ import { rawCheckbox } from "./checkbox"
 
 export type MultiselectOptions<S> = {
   class?: ClassProp
-  disabled: boolean
-  locked: boolean
+  disabled?: boolean
+  locked?: boolean
   options: Record<string, Content<S> | Content<S>[]>
   update: Transform<S>
   usingColumnMode: boolean

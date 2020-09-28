@@ -9,9 +9,9 @@ import { icon } from "../display/icon"
 
 export type PagerOptions<S> = {
   class?: ClassProp
-  disabled: boolean
+  disabled?: boolean
   itemsPerPage: number
-  locked: boolean
+  locked?: boolean
   pageRange: number
   update: Transform<S>
 }
@@ -21,20 +21,21 @@ export type PagerData = {
   value: number
 }
 
-export const freshPager = (itemsTotal: number) => (value: number): PagerData =>
+export const freshPager = (itemsTotal: number, value: number): PagerData =>
   ({ value, itemsTotal })
 
 const pagerNav = <S>(
   handler: Transform<S>,
   content: Content<S> | Content<S>[],
   active: boolean,
-): VDOM<S> =>
-  span({
+): VDOM<S> => {
+  return span({
     class: ["uy-pager-nav", !active && "uy-pager-nav-inactive"],
     ...active
       ? { onclick: handler }
       : {},
   }, content)
+}
 
 const pagerMore = <S>(content: Content<S> | Content<S>[]): VDOM<S> =>
   span({ class: "uy-pager-more" }, content)

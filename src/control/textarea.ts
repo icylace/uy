@@ -7,8 +7,8 @@ import { box } from "../container/box"
 
 export type TextareaOptions<S> = {
   class?: ClassProp
-  disabled: boolean
-  locked: boolean
+  disabled?: boolean
+  locked?: boolean
   update: Transform<S>
 }
 

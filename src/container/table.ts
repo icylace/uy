@@ -17,9 +17,9 @@ export type TableRow<S> = TableCell<S>[]
 export type TableOptions<S> = {
   [_: string]: unknown
   class?: ClassProp
-  disabled: boolean
+  disabled?: boolean
   headers?: TableRow<S>
-  locked: boolean
+  locked?: boolean
   orderColumn?: string | null
   sortDescending?: boolean
 }
@@ -28,35 +28,34 @@ export type TableData<S> = {
   rows: TableRow<S>[]
 }
 
-const freshTable = <S>(rows: TableRow<S>[]): TableData<S> =>
+export const freshTable = <S>(rows: TableRow<S>[]): TableData<S> =>
   ({ rows })
 
-const tableHeader =
-  (orderColumn?: string | null) =>
-    (sortDescending: boolean) =>
-      <S>(header: TableCell<S>): VDOM<S> => {
-        const props = (Array.isArray(header) ? header[0] : {}) as PropList<S>
-        const headerContents: Content<S>[] = (Array.isArray(header) ? header[1] : [header]) as Content<S>[]
-        const column = props && "data-column" in props && props["data-column"]
-        const sorting = orderColumn != null && orderColumn === column
-        return html.th(
-          {
-            ...props,
-            class: cc([{ "sort-column": sorting }, props.class]),
-          },
-          [
-            ...headerContents,
-            sorting
-              ? icon({
-                glyphicon: true,
-                "glyphicon-chevron-down": sortDescending,
-                "glyphicon-chevron-up": !sortDescending,
-                "sort-indicator": true,
-              })
-              : null,
-          ],
-        )
-      }
+const tableHeader = (orderColumn: string | null | undefined, sortDescending: boolean) => {
+  return <S>(header: TableCell<S>): VDOM<S> => {
+    const props = (Array.isArray(header) ? header[0] : {}) as PropList<S>
+    const headerContents: Content<S>[] = (Array.isArray(header) ? header[1] : [header]) as Content<S>[]
+    const column = props && "data-column" in props && props["data-column"]
+    const sorting = orderColumn != null && orderColumn === column
+    return html.th(
+      {
+        ...props,
+        class: cc([{ "sort-column": sorting }, props.class]),
+      },
+      [
+        ...headerContents,
+        sorting
+          ? icon({
+            glyphicon: true,
+            "glyphicon-chevron-down": sortDescending,
+            "glyphicon-chevron-up": !sortDescending,
+            "sort-indicator": true,
+          })
+          : null,
+      ],
+    )
+  }
+}
 
 const hasPropList = <S>(x: TableCell<S>): x is [PropList<S>, Content<S> | Content<S>[]] =>
   Array.isArray(x)
@@ -69,7 +68,7 @@ const tableCell = <S>(x: TableCell<S>): VDOM<S> =>
 const tableRow = <S>(row: TableRow<S>): VDOM<S> =>
   html.tr(row.map(tableCell))
 
-const rawTable = <S>(props: TableOptions<S>, data: TableData<S>): VDOM<S> => {
+export const rawTable = <S>(props: TableOptions<S>, data: TableData<S>): VDOM<S> => {
   const { disabled, locked, headers, orderColumn, sortDescending, ...etc } = props
   return box({
     "uy-control": true,
@@ -79,13 +78,11 @@ const rawTable = <S>(props: TableOptions<S>, data: TableData<S>): VDOM<S> => {
   }, [
     html.table(etc, [
       Array.isArray(headers) && headers.length
-        ? html.thead(headers.map(tableHeader(orderColumn)(!!sortDescending)))
+        ? html.thead(headers.map(tableHeader(orderColumn, !!sortDescending)))
         : null,
       html.tbody(data.rows.map(tableRow)),
     ]),
   ])
 }
 
-const table = component(rawTable)
-
-export { freshTable, rawTable, table }
+export const table = component(rawTable)

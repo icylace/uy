@@ -7,9 +7,9 @@ import { box } from "../container/box"
 
 export type ButtonOptions<S> = {
   class?: ClassProp
-  disabled: boolean
+  disabled?: boolean
   label?: Content<S>
-  locked: boolean
+  locked?: boolean
   update: Action<S, MouseEvent>
 }
 

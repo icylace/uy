@@ -7,9 +7,9 @@ import * as html from "ntml"
 export type FieldsetOptions<S> = {
   [_: string]: unknown
   class?: ClassProp
-  disabled: boolean
+  disabled?: boolean
   label: Content<S> | Content<S>[]
-  locked: boolean
+  locked?: boolean
 }
 
 const rawFieldset = <S>(props: FieldsetOptions<S>, contents: Content<S> | Content<S>[]): VDOM<S> => {
@@ -25,7 +25,8 @@ const rawFieldset = <S>(props: FieldsetOptions<S>, contents: Content<S> | Conten
   )
 }
 
-export const fieldset =
-  <S>(props: FieldsetOptions<S>, views: View<S>[]) =>
-    (state: State<S>): VDOM<S> =>
-      rawFieldset(props, views.map((g) => g(state)))
+export const fieldset = <S>(props: FieldsetOptions<S>, views: View<S>[]) => {
+  return (state: State<S>): VDOM<S> => {
+    return rawFieldset(props, views.map((g) => g(state)))
+  }
+}

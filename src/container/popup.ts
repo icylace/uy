@@ -7,9 +7,9 @@ import { div } from "ntml"
 export type PopupOptions = {
   [_: string]: unknown
   class?: ClassProp
-  disabled: boolean
+  disabled?: boolean
   id: string
-  locked: boolean
+  locked?: boolean
 }
 
 export const popup = <S>(props: PopupOptions, contents: Content<S> | Content<S>[]): VDOM<S> => {

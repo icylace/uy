@@ -14,10 +14,10 @@ export type Tab<S> = {
 
 export type TabsOptions<S> = {
   class?: ClassProp
-  disabled: boolean
+  disabled?: boolean
   itemsFooter?: string | VNode<S>
   itemsHeader?: string | VNode<S>
-  locked: boolean
+  locked?: boolean
   tabList: Tab<S>[]
   update: Transform<S>
 }

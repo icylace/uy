@@ -5,9 +5,10 @@ import { span } from "ntml"
 
 export type SpinnerOptions = {
   class?: ClassProp
-  disabled: boolean
-  locked: boolean
+  disabled?: boolean
+  locked?: boolean
 }
 
-export const spinner = <S>(props: SpinnerOptions): VDOM<S> =>
-  span({ ...props, class: cc(["uy-indicator uy-spinner", props.class]) })
+export const spinner = <S>(props: SpinnerOptions): VDOM<S> => {
+  return span({ ...props, class: cc(["uy-indicator uy-spinner", props.class]) })
+}

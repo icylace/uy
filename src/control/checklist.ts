@@ -12,8 +12,8 @@ import { rawCheckbox } from "./checkbox"
 
 export type ChecklistOptions<S> = {
   class?: ClassProp
-  disabled: boolean
-  locked: boolean
+  disabled?: boolean
+  locked?: boolean
   path: Path
   render: (_: Content<S> | Content<S>[]) => VDOM<S>
 }
@@ -27,13 +27,13 @@ export type Checklist = {
   items: ChecklistItem[]
 }
 
-const freshChecklist = (items: ChecklistItem[]): Checklist =>
+export const freshChecklist = (items: ChecklistItem[]): Checklist =>
   ({ items })
 
-const updateItem = (path: Path) => (i: number) => <S, P>(state: State<S>, value: Payload<P>): State<S> =>
+const updateItem = (path: Path, i: number) => <S, P>(state: State<S>, value: Payload<P>): State<S> =>
   set([...path, "items", i])(value)(state)
 
-const rawChecklist = <S>(props: ChecklistOptions<S>, data: Checklist): VDOM<S> => {
+export const rawChecklist = <S>(props: ChecklistOptions<S>, data: Checklist): VDOM<S> => {
   const { disabled, locked, path, render, ...etc } = props
 
   const item = (x: ChecklistItem, i: number): TableRow<S> =>
@@ -46,7 +46,7 @@ const rawChecklist = <S>(props: ChecklistOptions<S>, data: Checklist): VDOM<S> =
               disabled,
               locked,
               label: render(x.id),
-              update: updateItem(path)(i),
+              update: updateItem(path, i),
             },
             { value: x.selected }
           ),
@@ -57,7 +57,6 @@ const rawChecklist = <S>(props: ChecklistOptions<S>, data: Checklist): VDOM<S> =
   const tableData: TableData<S> = {
     rows: data.items.map(item),
   }
-
   return div(
     {
       ...etc,
@@ -67,6 +66,4 @@ const rawChecklist = <S>(props: ChecklistOptions<S>, data: Checklist): VDOM<S> =
   )
 }
 
-const checklist = component(rawChecklist)
-
-export { checklist, freshChecklist, rawChecklist }
+export const checklist = component(rawChecklist)

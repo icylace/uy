@@ -5,7 +5,7 @@ import type { Path } from "./utility/shadesHelper"
 import { get, set } from "./utility/shadesHelper"
 
 // // TODO:
-// type Component<S> = (_: ComponentOptions) => (_: Path) => (_: State<S>) => VDOM<S>
+// type Component<S> = (_: ComponentOptions, __: Path) => (_: State<S>) => VDOM<S>
 
 // component :: (ComponentOptions -> Path -> Object -> VDOM) -> ComponentOptions -> Path -> State -> VDOM
 const component = <S>(f: Function) =>

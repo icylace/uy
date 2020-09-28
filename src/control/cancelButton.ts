@@ -6,12 +6,12 @@ import { box } from "../container/box"
 
 export type CancelButtonOptions<S> = {
   class?: ClassProp
-  disabled: boolean
-  locked: boolean
+  disabled?: boolean
+  locked?: boolean
   update: Action<S, MouseEvent>
 }
 
-const cancelButton = <S>(props: CancelButtonOptions<S>): VDOM<S> => {
+export const cancelButton = <S>(props: CancelButtonOptions<S>): VDOM<S> => {
   const { disabled, locked, update, ...etc } = props
   return box("uy-control uy-cancelButton", [
     html.button({
@@ -23,5 +23,3 @@ const cancelButton = <S>(props: CancelButtonOptions<S>): VDOM<S> => {
     }, "✕"),
   ])
 }
-
-export { cancelButton }

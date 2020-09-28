@@ -12,7 +12,6 @@ import type { Path } from "../utility/shadesHelper"
 
 import cc from "classcat"
 import { input, label, li, span, ul } from "ntml"
-// import { get, set } from "shades"
 import { pipe } from "../utility/utility"
 import { get, set } from "../utility/shadesHelper"
 import { addInsideEl, removeInsideEl } from "../utility/uyHelper"
@@ -26,8 +25,8 @@ export type Searcher<S> =
 
 export type SearchboxOptions<S> = {
   class?: ClassProp
-  disabled: boolean
-  locked: boolean
+  disabled?: boolean
+  locked?: boolean
   path: Path
   search: Searcher<S>
 }
@@ -48,68 +47,63 @@ export const freshSearchbox = (value: string): SearchboxData => ({
 
 // -----------------------------------------------------------------------------
 
-const chooseResult =
-  (path: Path) =>
-    (id: string) =>
-      (value: string) =>
-        <S>(state: State<S>): State<S> =>
-          pipe(
-            set([...path, "results"])([]),
-            set([...path, "value"])(value),
-            removeInsideEl(id),
-          )(state) as State<S>
+const chooseResult = (path: Path, id: string, value: string) => {
+  return <S>(state: State<S>): State<S> => {
+    return pipe(
+      set([...path, "results"])([]),
+      set([...path, "value"])(value),
+      removeInsideEl(id),
+    )(state)
+  }
+}
 
-const updateResults =
-  <S>(search: Searcher<S>) =>
-    (path: Path) =>
-      (id: string) =>
-        (state: State<S>, props?: Payload<SearchboxData>): State<S> | EffectfulState<S> => {
-          const { value, results } = props ?? { value: "", results: [] }
+const updateResults = <S>(search: Searcher<S>, path: Path, id: string) => {
+  return (state: State<S>, props?: Payload<SearchboxData>): State<S> | EffectfulState<S> => {
+    const { value, results } = props ?? { value: "", results: [] }
 
-          // It is possible the current value of the searchbox and the value that was
-          // actually searched on could be out of sync if the user continues changing
-          // the searchbox value during the search. In that case another search gets
-          // triggered using the new current searchbox value.
+    // It is possible the current value of the searchbox and the value that was
+    // actually searched on could be out of sync if the user continues changing
+    // the searchbox value during the search. In that case another search gets
+    // triggered using the new current searchbox value.
 
-          const curValue = get([...path, "value"])(state) as string
+    const curValue = get([...path, "value"])(state) as string
 
-          if (curValue !== value) {
-            return [
-              set([...path, "searching"])(true)(state),
-              search(updateResults(search)(path)(id))(curValue),
-            ]
-          }
+    if (curValue !== value) {
+      return [
+        set([...path, "searching"])(true)(state),
+        search(updateResults(search, path, id))(curValue),
+      ]
+    }
 
-          const newState = pipe(
-            set([...path, "searching"])(false),
-            set([...path, "results"])(results),
-          )(state) as State<S>
+    const newState = pipe(
+      set([...path, "searching"])(false),
+      set([...path, "results"])(results),
+    )(state) as State<S>
 
-          return results.length
-            ? addInsideEl(id)(set([...path, "results"])([]))(newState)
-            : removeInsideEl(id)(newState)
-        }
+    return results.length
+      ? addInsideEl(id)(set([...path, "results"])([]))(newState)
+      : removeInsideEl(id)(newState)
+  }
+}
 
-const update =
-  <S>(search: Searcher<S>) =>
-    (path: Path) =>
-      (id: string) =>
-        (value: string) =>
-          (state: State<S>): State<S> | EffectfulState<S> =>
-            get([...path, "searching"])(state)
-              ? set([...path, "value"])(value)(state)
-              : [
-                pipe(
-                  set([...path, "searching"])(true),
-                  set([...path, "value"])(value),
-                )(state) as State<S>,
-                search(updateResults(search)(path)(id))(value),
-              ]
+const update = <S>(search: Searcher<S>, path: Path, id: string, value: string) => {
+  return (state: State<S>): State<S> | EffectfulState<S> => {
+    return get([...path, "searching"])(state)
+      ? set([...path, "value"])(value)(state)
+      : [
+        pipe(
+          set([...path, "searching"])(true),
+          set([...path, "value"])(value),
+        )(state) as State<S>,
+        search(updateResults(search, path, id))(value),
+      ]
+  }
+}
 
 // -----------------------------------------------------------------------------
 
-const searchResult = (path: Path) => (id: string) => <S>(x: string): VDOM<S> =>
-  li<S>({ onclick: chooseResult(path)(id)(x) }, x)
+const searchResult = (path: Path, id: string) => <S>(x: string): VDOM<S> =>
+  li<S>({ onclick: chooseResult(path, id, x) }, x)
 
 // We don't let certain keys unnecessarily affect searching.
 const noopKeys = [
@@ -143,7 +137,7 @@ const rawSearchbox = <S>(props: SearchboxOptions<S>, data: SearchboxData): VDOM<
       if (!event) return state
       if (noopKeys.includes(event.key)) return state
       const target = event.target as HTMLInputElement
-      return update(search)(path)(id)(target.value)(state)
+      return update(search, path, id, target.value)(state)
     },
     // Here we're using the non-standard `search` event because it can detect
     // when a searchbox's clear button is used. The `input` event can also
@@ -154,7 +148,7 @@ const rawSearchbox = <S>(props: SearchboxOptions<S>, data: SearchboxData): VDOM<
     onsearch: (state, event) => {
       if (!event) return state
       const target = event.target as HTMLInputElement
-      return update(search)(path)(id)(target.value)(state)
+      return update(search, path, id, target.value)(state)
     },
     ...etc,
     class: cc(["uy-input", { locked, disabled }, etc.class]),
@@ -167,7 +161,7 @@ const rawSearchbox = <S>(props: SearchboxOptions<S>, data: SearchboxData): VDOM<
         [
           ul(
             { class: "uy-searchbox-results uy-scroller" },
-            data.results.map(searchResult(path)(id)),
+            data.results.map(searchResult(path, id)),
           ),
         ]
       )
@@ -191,10 +185,7 @@ const rawSearchbox = <S>(props: SearchboxOptions<S>, data: SearchboxData): VDOM<
     }, [
       inputSearch,
       span(
-        {
-          onclick: (state) =>
-            update(search)(path)(id)(data.value)(state),
-        },
+        { onclick: update(search, path, id, data.value) },
         [
           icon({
             fas: true,

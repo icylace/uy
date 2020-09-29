@@ -81,7 +81,7 @@ const updateResults = <S>(search: Searcher<S>, path: Path, id: string) => {
     )(state) as State<S>
 
     return results.length
-      ? addInsideEl(id)(set([...path, "results"])([]))(newState)
+      ? addInsideEl(id, set([...path, "results"])([]))(newState)
       : removeInsideEl(id)(newState)
   }
 }

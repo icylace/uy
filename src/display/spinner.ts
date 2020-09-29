@@ -9,6 +9,6 @@ export type SpinnerOptions = {
   locked?: boolean
 }
 
-export const spinner = <S>(props: SpinnerOptions): VDOM<S> => {
-  return span({ ...props, class: cc(["uy-indicator uy-spinner", props.class]) })
+export const spinner = <S>(props?: SpinnerOptions): VDOM<S> => {
+  return span({ ...props, class: cc(["uy-indicator uy-spinner", (props ?? {}).class]) })
 }

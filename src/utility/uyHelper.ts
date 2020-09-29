@@ -15,11 +15,17 @@ import { delist } from "./utility"
 
 // -----------------------------------------------------------------------------
 
-export const addInsideEl = (id: string) => <S>(f: Transform<S>) => (state: State<S>): State<S> =>
-  set(["uy", "insiders", id])(f)(state)
+export const addInsideEl = <S>(id: string, f: Transform<S>) => {
+  return (state: State<S>): State<S> => {
+    return set(["uy", "insiders", id])(f)(state)
+  }
+}
 
-export const removeInsideEl = (id: string) => <S>(state: State<S>): State<S> =>
-  mod(["uy", "insiders"])(delist(id))(state)
+export const removeInsideEl = (id: string) => {
+  return <S>(state: State<S>): State<S> => {
+    return mod(["uy", "insiders"])(delist(id))(state)
+  }
+}
 
 // -----------------------------------------------------------------------------
 

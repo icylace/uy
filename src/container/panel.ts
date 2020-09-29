@@ -1,9 +1,10 @@
-import type { ClassProp, State, VDOM, View } from "hyperapp"
+import type { ClassProp, State, VDOM } from "hyperapp"
+import type { ContentView } from "../types"
 
 import { box } from "./box"
 
-export const panel = <S>(classProp: ClassProp, views: View<S>[]) => {
+export const panel = <S>(classProp: ClassProp, views: ContentView<S>[]) => {
   return (state: State<S>): VDOM<S> => {
-    return box(classProp, views.map((g) => g(state)))
+    return box(classProp, views.map((view) => view(state)))
   }
 }

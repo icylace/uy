@@ -1,4 +1,5 @@
-import type { ClassProp } from "hyperapp"
+import type { ClassProp, State } from "hyperapp"
+import type { Content } from "ntml"
 
 export type ComponentOptions = {
   [_: string]: unknown
@@ -6,3 +7,5 @@ export type ComponentOptions = {
   disabled?: boolean
   locked?: boolean
 }
+
+export type ContentView<S> = (state: State<S>) => Content<S>

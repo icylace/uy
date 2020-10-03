@@ -1,5 +1,4 @@
 import type {
-  Action,
   App,
   Dispatch,
   EffectfulState,
@@ -40,9 +39,9 @@ const freshState = <S>(state: State<S>): State<S> => ({
         const insiders: [string, Transform<S>][] = Object.entries(
           get(["uy", "insiders"])(state) ?? {}
         )
-        const detectionsOutside: Action<S, Event>[] = insiders.map(
-          ([insider, f]: [string, Transform<S>]): Action<S, Event> =>
-            onOutside(`#${insider}`)((state) => removeInsideEl(insider)(f(state)))
+        const detectionsOutside: Transform<S, Event>[] = insiders.map(
+          ([insider, f]: [string, Transform<S>]): Transform<S, Event> =>
+            onOutside(`#${insider}`, (state) => removeInsideEl(insider)(f(state)))
         )
         return handleUsing(detectionsOutside)(state, event)
       },
@@ -53,7 +52,7 @@ const freshState = <S>(state: State<S>): State<S> => ({
 // -----------------------------------------------------------------------------
 
 const mouseDownSubscriptionAction = <S, P>(state: State<S>, _props?: Payload<P>): State<S> | EffectfulState<S> => {
-  const handlerMap = get(["uy", "mousedownHandlers"])(state) as Record<string, Action<S, Event>>
+  const handlerMap = get(["uy", "mousedownHandlers"])(state) as Record<string, Transform<S, Event>>
   const handlers = Object.values(handlerMap)
   const transitioner = handleUsing(handlers)
   return [state, onMouseDown(transitioner)]

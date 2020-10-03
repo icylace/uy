@@ -155,82 +155,34 @@ export const onMouseDown = eventFx("mousedown")
 //       return f (state, target.value)
 //     }
 
-// export const actWith = <S, P>(a: Action<S, P>) =>
-//   (t: Transition<S>): Transition<S> => {
-//     let action: Transform<S, P>
-//     let payload: Payload<P> | undefined
-//     let transition: Transition<S>
+// // A transition is a state transformation with any effects to run.
+// type Transition<S> = State<S> | EffectfulState<S>
 
-//     if (Array.isArray (a)) {
-//       action = a[0] as Transform<S, P>
-//       payload = a[1]
-//       transition = actWith (a[0]) (t)
-//       return transition
-//     } else {
-//       action = a as Transform<S, P>
-//       payload = undefined
-//       transition = t
-//     }
-
-//     if (Array.isArray (t)) {
-//       const [state, ...effects] = t
-//       const transition = action (state, payload)
-//       if (Array.isArray (transition)) {
-//         const [restate, ...newEffects] = transition
-//         return [restate, ...effects, ...newEffects]
-//       }
-//       return [transition, ...effects]
-//     }
-
-//     return action (t, payload)
-//   }
-
-// A transition is a state transformation with any effects to run.
-type Transition<S> = State<S> | EffectfulState<S>
-
-// TODO:
-export const actWith = <S, P>(a: Action<S, P>) => (t: Transition<S>): Transition<S> => {
-  if (!Array.isArray(a)) {
-    const action: Action<S, P> = a
-    if (!Array.isArray(t)) {
-      return action(t) as Transition<S>
-    }
-    const [state, ...effects]: EffectfulState<S> = t
-    const transition: Transition<S> = action(state) as Transition<S>
-    if (!Array.isArray(transition)) {
-      return [transition, ...effects]
-    }
-    const [restate, ...newEffects] = transition
-    return [restate, ...effects, ...newEffects]
-  } else {
-    // TODO:
-    // const action: Action<S, P> = a[0] as Transform<S, P>
-    const action: Transform<S, P> = a[0] as Transform<S, P>
-    const payload: Payload<P> = a[1]
-    const nextTransition = actWith(a[0])(t)
-    if (!Array.isArray(nextTransition)) {
-      return action(nextTransition, payload) as Transition<S>
-    }
-    const [state, ...effects]: EffectfulState<S> = nextTransition
-    const transition: Transition<S> = action(state, payload) as Transition<S>
-    if (!Array.isArray(transition)) {
-      return [transition, ...effects]
-    }
-    const [restate, ...newEffects] = transition
-    return [restate, ...effects, ...newEffects]
+export const unite = <S, P>(
+  t: Transform<S>,
+  s: State<S> | EffectfulState<S>,
+  p?: Payload<P>
+): State<S> | EffectfulState<S> => {
+  if (!Array.isArray(s)) {
+    return t(s, p)
   }
+
+  const [state, ...effects] = s
+  const transition = t(state, p)
+
+  if (!Array.isArray(transition)) {
+    return [transition, ...effects]
+  }
+
+  const [newState, ...newEffects] = transition
+  return [newState, ...effects, ...newEffects]
 }
 
 // Invokes a collection of event handlers for the same event.
-export const handleUsing = <S>(handlers: Action<S, Event>[]) => (state: Transition<S>, event?: Payload<Event>): Transition<S> => {
-  return handlers.reduce((t, a) => {
-    if (Array.isArray(a)) {
-      // TODO:
-      // - reconsider discarding original payload?
-      return actWith([a[0] as Action<S, unknown>, event])(t)
-    }
-    return actWith([a as Action<S, unknown>, event])(t)
-  }, state)
+export const handleUsing = <S>(handlers: Transform<S, Event>[]) => {
+  return (state: State<S> | EffectfulState<S>, event?: Payload<Event>): State<S> | EffectfulState<S> => {
+    return handlers.reduce((s, t) => unite(t, s, event), state)
+  }
 }
 
 // -----------------------------------------------------------------------------
@@ -241,12 +193,11 @@ export const handleUsing = <S>(handlers: Action<S, Event>[]) => (state: Transiti
 // https://stackoverflow.com/a/28432139
 // https://codesandbox.io/s/czee7
 //
-export const onOutside =
-  (selector: string) =>
-    <S>(action: Transform<S, unknown>) =>
-      (state: State<S>, event?: Payload<Event>): Transition<S> => {
-        if (!event) return state
-        const el = document.querySelector(selector)
-        if (!el || el.contains(event.target as Element)) return state
-        return action(state, event)
-      }
+export const onOutside = <S>(selector: string, action: Transform<S, unknown>) => {
+  return (state: State<S>, event?: Payload<Event>): State<S> | EffectfulState<S> => {
+    if (!event) return state
+    const el = document.querySelector(selector)
+    if (!el || el.contains(event.target as Element)) return state
+    return action(state, event)
+  }
+}

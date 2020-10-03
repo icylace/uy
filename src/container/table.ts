@@ -28,8 +28,9 @@ export type TableData<S> = {
   rows: TableRow<S>[]
 }
 
-export const freshTable = <S>(rows: TableRow<S>[]): TableData<S> =>
-  ({ rows })
+export const freshTable = <S>(rows: TableRow<S>[]): TableData<S> => {
+  return { rows }
+}
 
 const tableHeader = (orderColumn: string | null | undefined, sortDescending: boolean) => {
   return <S>(header: TableCell<S>): VDOM<S> => {
@@ -57,16 +58,19 @@ const tableHeader = (orderColumn: string | null | undefined, sortDescending: boo
   }
 }
 
-const hasPropList = <S>(x: TableCell<S>): x is [PropList<S>, Content<S> | Content<S>[]] =>
-  Array.isArray(x)
+const hasPropList = <S>(x: TableCell<S>): x is [PropList<S>, Content<S> | Content<S>[]] => {
+  return Array.isArray(x)
+}
 
-const tableCell = <S>(x: TableCell<S>): VDOM<S> =>
-  hasPropList(x)
+const tableCell = <S>(x: TableCell<S>): VDOM<S> => {
+  return hasPropList(x)
     ? html.td(x[0], x[1])
     : html.td(x)
+}
 
-const tableRow = <S>(row: TableRow<S>): VDOM<S> =>
-  html.tr(row.map(tableCell))
+const tableRow = <S>(row: TableRow<S>): VDOM<S> => {
+  return html.tr(row.map(tableCell))
+}
 
 export const rawTable = <S>(props: TableOptions<S>, data: TableData<S>): VDOM<S> => {
   const { disabled, locked, headers, orderColumn, sortDescending, ...etc } = props

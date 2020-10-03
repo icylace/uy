@@ -25,19 +25,27 @@ export type ListData = {
   items: string[]
 }
 
-const freshList = (items: string[]): ListData =>
-  ({ items })
+const freshList = (items: string[]): ListData => {
+  return { items }
+}
 
-const addItem = (path: Path, data: ListData) => <S>(state: State<S>): State<S> =>
-  set([...path, "items"])([...data.items, ""])(state)
+const addItem = (path: Path, data: ListData) => {
+  return <S>(state: State<S>): State<S> => {
+    return set([...path, "items"])([...data.items, ""])(state)
+  }
+}
 
-const updateItem = (path: Path, i: number) => <S, P>(state: State<S>, value: Payload<P>): State<S> =>
-  set([...path, "items", i])(value)(state)
+const updateItem = (path: Path, i: number) => {
+  return <S, P>(state: State<S>, value: Payload<P>): State<S> => {
+    return set([...path, "items", i])(value)(state)
+  }
+}
 
-const removeItem = (path: Path, i: number) => <S>(state: State<S>): State<S> =>
-  set([...path, "items"])(
+const removeItem = (path: Path, i: number) => <S>(state: State<S>): State<S> => {
+  return set([...path, "items"])(
     exclude(i, get([...path, "items"])(state) as string[]),
   )(state)
+}
 
 const rawList = <S>(props: ListOptions<S>, data: ListData): VDOM<S> => {
   const { disabled, locked, headers, path, ...etc } = props

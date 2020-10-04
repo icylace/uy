@@ -21,14 +21,19 @@ export type NumberboxData = {
   value: number
 }
 
-export const freshNumberbox = (value: number): NumberboxData =>
-  ({ value, focused: false })
+export const freshNumberbox = (value: number): NumberboxData => {
+  return { value, focused: false }
+}
 
-const sanitizedNumber = (n: string): number =>
-  Math.max(0, Number.parseInt(n, 10))
+const sanitizedNumber = (n: string): number => {
+  return Math.max(0, Number.parseInt(n, 10))
+}
 
-const update = (path: Path) => <S>(state: State<S>, value: string): State<S> =>
-  set([...path, "value"])(sanitizedNumber(value))(state)
+const update = (path: Path) => {
+  return <S>(state: State<S>, value: string): State<S> => {
+    return set([...path, "value"])(sanitizedNumber(value))(state)
+  }
+}
 
 const rawNumberbox = <S>(props: NumberboxOptions<S>, data: NumberboxData): VDOM<S> => {
   const { disabled, locked, label, path, ...etc } = props

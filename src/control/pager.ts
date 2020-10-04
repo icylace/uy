@@ -21,8 +21,9 @@ export type PagerData = {
   value: number
 }
 
-export const freshPager = (itemsTotal: number, value: number): PagerData =>
-  ({ value, itemsTotal })
+export const freshPager = (itemsTotal: number, value: number): PagerData => {
+  return { value, itemsTotal }
+}
 
 const pagerNav = <S>(
   handler: Transform<S>,
@@ -37,8 +38,9 @@ const pagerNav = <S>(
   }, content)
 }
 
-const pagerMore = <S>(content: Content<S> | Content<S>[]): VDOM<S> =>
-  span({ class: "uy-pager-more" }, content)
+const pagerMore = <S>(content: Content<S> | Content<S>[]): VDOM<S> => {
+  return span({ class: "uy-pager-more" }, content)
+}
 
 const rawPager = <S>(props: PagerOptions<S>, data: PagerData): VDOM<S> | null => {
   const { disabled, locked, itemsPerPage, pageRange, update, ...etc } = props

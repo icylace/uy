@@ -36,12 +36,12 @@ const freshState = <S>(state: State<S>): State<S> => ({
       detectOutsideAction: (state: State<S>, event: Event): State<S> | EffectfulState<S> => {
         // TODO:
         // - switch to using a Map object instead in order to guarantee order
-        const insiders: [string, Transform<S>][] = Object.entries(
-          get(["uy", "insiders"])(state) ?? {}
-        )
+        const insiders: [string, Transform<S>][] =
+          Object.entries(get(["uy", "insiders"])(state) ?? {})
         const detectionsOutside: Transform<S, Event>[] = insiders.map(
-          ([insider, f]: [string, Transform<S>]): Transform<S, Event> =>
-            onOutside(`#${insider}`, (state) => removeInsideEl(insider)(f(state)))
+          ([insider, f]: [string, Transform<S>]): Transform<S, Event> => {
+            return onOutside(`#${insider}`, (state) => removeInsideEl(insider)(f(state)))
+          }
         )
         return handleUsing(detectionsOutside)(state, event)
       },

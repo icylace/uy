@@ -26,8 +26,9 @@ export type TabsData = {
   value: string
 }
 
-export const freshTabs = (value: string): TabsData =>
-  ({ value })
+export const freshTabs = (value: string): TabsData => {
+  return { value }
+}
 
 const isSelected = (activeTab: string) => <S>(item: Content<S>, i: number): boolean => {
   if (typeof item === "object") {

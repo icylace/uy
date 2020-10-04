@@ -95,10 +95,10 @@ console.log(mergeClasses(["purple", haze && "haze", foggy && "foggy"], { common:
 
 // -----------------------------------------------------------------------------
 
-export const toggle = <T>(x: T) => (cond: boolean): T | null => cond ? x : null
+// export const toggle = <T>(x: T) => (cond: boolean): T | null => cond ? x : null
 
-export const toggleBetween = <T>(x: T) =>
-  <U>(y: U) => (cond: boolean): T | U => cond ? x : y
+// export const toggleBetween = <T>(x: T) =>
+//   <U>(y: U) => (cond: boolean): T | U => cond ? x : y
 
 // -----------------------------------------------------------------------------
 

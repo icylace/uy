@@ -12,21 +12,17 @@ export type FieldsetOptions<S> = {
   locked?: boolean
 }
 
-const rawFieldset = <S>(props: FieldsetOptions<S>, contents: Content<S> | Content<S>[]): VDOM<S> => {
-  const { disabled, locked, label, ...etc } = props
-  const stuff = Array.isArray(contents) ? contents : [contents]
-  return html.fieldset(
-    {
-      disabled,
-      ...etc,
-      class: cc(["uy-fieldset", { locked, disabled }, etc.class]),
-    },
-    label ? [html.legend(label), ...stuff] : stuff,
-  )
-}
-
 export const fieldset = <S>(props: FieldsetOptions<S>, views: View<S>[]) => {
   return (state: State<S>): VDOM<S> => {
-    return rawFieldset(props, views.map((g) => g(state)))
+    const { disabled, locked, label, ...etc } = props
+    const contents = views.map((g) => g(state))
+    return html.fieldset(
+      {
+        disabled,
+        ...etc,
+        class: cc(["uy-fieldset", { locked, disabled }, etc.class]),
+      },
+      label ? [html.legend(label), ...contents] : contents,
+    )
   }
 }

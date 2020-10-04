@@ -1,8 +1,10 @@
-import type { ClassProp, Transform, VDOM } from "hyperapp"
+import type { ClassProp, State, Transform, VDOM } from "hyperapp"
+import type { Path } from "../utility/shadesHelper"
 
 import cc from "classcat"
 import { input } from "ntml"
-import { component } from "../component"
+// import { component } from "../component"
+import { get, set } from "../utility/shadesHelper"
 import { box } from "../container/box"
 
 export type TextboxOptions<S> = {
@@ -16,8 +18,9 @@ export type TextboxData = {
   value: string
 }
 
-export const freshTextbox = (value: string): TextboxData =>
-  ({ value })
+// export const freshTextbox = (value: string): TextboxData => {
+//   return { value }
+// }
 
 export const rawTextbox = <S>(props: TextboxOptions<S>, data: TextboxData): VDOM<S> => {
   const { disabled, locked, update, ...etc } = props
@@ -38,4 +41,22 @@ export const rawTextbox = <S>(props: TextboxOptions<S>, data: TextboxData): VDOM
   ])
 }
 
-export const textbox = component(rawTextbox)
+// export const textbox = component(rawTextbox)
+
+const textbox = <S>(options: TextboxOptions<S>) => (path: Path) => {
+  return (state: State<S>): VDOM<S> => {
+    const data = get(path)(state) as TextboxData
+    return rawTextbox({
+      ...options,
+      update: (state: State<S>, value: any): State<S> => {
+        return set([...path, "value"])(value)(state)
+      },
+    }, data)
+  }
+}
+
+textbox.init = (value: string): TextboxData => {
+  return { value }
+}
+
+export { textbox }

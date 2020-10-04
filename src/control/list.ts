@@ -41,10 +41,12 @@ const updateItem = (path: Path, i: number) => {
   }
 }
 
-const removeItem = (path: Path, i: number) => <S>(state: State<S>): State<S> => {
-  return set([...path, "items"])(
-    exclude(i, get([...path, "items"])(state) as string[]),
-  )(state)
+const removeItem = (path: Path, i: number) => {
+  return <S>(state: State<S>): State<S> => {
+    return set([...path, "items"])(
+      exclude(i, get([...path, "items"])(state) as string[]),
+    )(state)
+  }
 }
 
 const rawList = <S>(props: ListOptions<S>, data: ListData): VDOM<S> => {

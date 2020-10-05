@@ -155,8 +155,8 @@ task:hard-refresh() {
   npm install --save-dev eslint-config-standard eslint-plugin-standard
   npm install --save-dev eslint-import-resolver-typescript
   npm install --save-dev @typescript-eslint/eslint-plugin @typescript-eslint/parser
-  npm install --save-dev utility-types
-  npm install --save-dev jest ts-jest
+  # npm install --save-dev utility-types
+  # npm install --save-dev jest ts-jest
   npm install --save-dev postcss cssnano
   npm install --save-dev postcss-cli postcss-import postcss-reporter postcss-preset-env
 

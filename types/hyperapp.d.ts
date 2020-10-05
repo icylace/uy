@@ -48,17 +48,8 @@ declare module "hyperapp" {
 
   // ---------------------------------------------------------------------------
 
-  // TODO:
-  // - obsolete ?
-  // // A dispatched action handles an event in the context of the current state.
-  // type Dispatch<S> = (action: Action<S>, props?: Payload<any>) => void
-
-  // TODO:
-  // - try this instead
-  //   - the intent is to avoid unnecessary payload checks for event handlers
-  type Dispatch<S>
-    = ((action: Action<S>, props?: Payload<any>) => void)
-    | ((action: Action<S>, props: Payload<any>) => void)
+  // A dispatched action handles an event in the context of the current state.
+  type Dispatch<S> = (action: Action<S>, props?: Payload<any>) => void
 
   // An action transforms existing state and/or wraps another action.
   type Action<S, P = any> = ActionTransform<S, P> | ActionDescriptor<S, P>

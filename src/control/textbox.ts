@@ -3,7 +3,6 @@ import type { ClassProp, State, Transform, VDOM } from "hyperapp"
 
 import cc from "classcat"
 import { input } from "ntml"
-// import { component } from "../component"
 // import { get, set } from "../utility/shadesHelper"
 import { box } from "../container/box"
 
@@ -18,18 +17,14 @@ export type TextboxData = {
   value: string
 }
 
-// export const freshTextbox = (value: string): TextboxData => {
-//   return { value }
-// }
-
 const init = (value: string): TextboxData => {
   return { value }
 }
 
-// const restate = (get, set) => (f) => (state) => set(state, f(get(state)))
+const restate = (getter, setter) => (f) => (state) => setter(state, f(getter(state)))
 
-// get: (state) => get(path)(state) as TextboxData,
-// set: (state, value) => set(path)(value)(state),
+// getter: (state) => get(path)(state) as TextboxData,
+// setter: (state, value) => set(path)(value)(state),
 
 export type TextboxSettings<S> = {
   getter: (state: State<S>) => TextboxData
@@ -51,24 +46,21 @@ export type TextboxWiring<S> = {
 }
 
 const wire = <S>(settings: TextboxSettings<S>): TextboxWiring<S> => {
-  // const mod = restate(settings.getter, settings.setter)
-  // const update = mod(settings.update)
+  const { getter, setter } = settings
+  const mod = restate(getter, setter)
+  const update = mod(settings.update)
   return {
-    update: settings.setter,
-    data: settings.getter,
+    update: setter,
+    data: getter,
     model: (state) => ({
       // update,
-      update: settings.setter,
-      data: settings.getter(state),
+      update: setter,
+      data: getter(state),
     }),
   }
 }
 
-// TODO:
-// - `textbox` -> `Textbox`
-//   - components (things that need wiring) should be capitalized
-
-const textbox = <S>(options: TextboxOptions, model: TextboxModel<S>): VDOM<S> => {
+const Textbox = <S>(options: TextboxOptions, model: TextboxModel<S>): VDOM<S> => {
   const { disabled, locked, ...etc } = options
   return box("uy-control uy-textbox", [
     input({
@@ -87,27 +79,6 @@ const textbox = <S>(options: TextboxOptions, model: TextboxModel<S>): VDOM<S> =>
   ])
 }
 
-// export const rawTextbox = <S>(model: TextboxModel<S>): VDOM<S> => {
-//   const { disabled, locked, update, ...etc } = model.props
-//   return box("uy-control uy-textbox", [
-//     input({
-//       disabled,
-//       readonly: locked,
-//       value: model.data.value,
-//       type: "text",
-//       onchange: (state, event) => {
-//         if (!event) return state
-//         const target = event.target as HTMLInputElement
-//         return update(state, target.value)
-//       },
-//       ...etc,
-//       class: cc(["uy-input", { locked, disabled }, etc.class]),
-//     }),
-//   ])
-// }
-
-// export const textbox = component(rawTextbox)
-
 // const textbox = <S>(options: TextboxOptions<S>) => (path: Path) => {
 //   return (state: State<S>): VDOM<S> => {
 //     const data = get(path)(state) as TextboxData
@@ -120,7 +91,7 @@ const textbox = <S>(options: TextboxOptions, model: TextboxModel<S>): VDOM<S> =>
 //   }
 // }
 
-textbox.init = init
-textbox.wire = wire
+Textbox.init = init
+Textbox.wire = wire
 
-export { textbox }
+export { Textbox }

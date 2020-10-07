@@ -53,8 +53,8 @@ input control states:
 @import url(./control/textarea.css);
 @import url(./control/textbox.css);
 
-@import url(./display/icon.css);
-@import url(./display/spinner.css);
+@import url(./indicator/icon.css);
+@import url(./indicator/spinner.css);
 
 /* -------------------------------------------------------------------------- */
 

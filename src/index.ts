@@ -25,8 +25,8 @@ export * from "./control/tabs"
 export * from "./control/textarea"
 export * from "./control/textbox"
 
-export * from "./display/icon"
-export * from "./display/spinner"
+export * from "./indicator/icon"
+export * from "./indicator/spinner"
 
 export * from "./utility/hyperappHelper"
 export * from "./utility/shadesHelper"

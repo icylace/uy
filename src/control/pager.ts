@@ -5,7 +5,7 @@ import cc from "classcat"
 import { div, li, span, ul } from "ntml"
 import { range } from "../utility/utility"
 import { component } from "../component"
-import { icon } from "../display/icon"
+import { icon } from "../indicator/icon"
 
 export type PagerOptions<S> = {
   class?: ClassProp

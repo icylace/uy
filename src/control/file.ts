@@ -4,7 +4,7 @@ import cc from "classcat"
 import * as html from "ntml"
 import { component } from "../component"
 import { box } from "../container/box"
-import { icon } from "../display/icon"
+import { icon } from "../indicator/icon"
 
 export type FileOptions<S> = {
   class?: ClassProp

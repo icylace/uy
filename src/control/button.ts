@@ -13,7 +13,7 @@ export type ButtonOptions<S> = {
   update: Action<S, MouseEvent>
 }
 
-export const button = <S>(props: ButtonOptions<S>): VDOM<S> => {
+const Button = <S>(props: ButtonOptions<S>): VDOM<S> => {
   const { disabled, locked, label, update, ...etc } = props
   return box("uy-control uy-button", [
     html.button({
@@ -25,3 +25,5 @@ export const button = <S>(props: ButtonOptions<S>): VDOM<S> => {
     }, label),
   ])
 }
+
+export { Button }

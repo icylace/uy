@@ -18,7 +18,7 @@ import { addInsideEl, removeInsideEl } from "../utility/uyHelper"
 import { component } from "../component"
 import { popup } from "../container/popup"
 import { box } from "../container/box"
-import { icon } from "../display/icon"
+import { icon } from "../indicator/icon"
 
 export type Searcher<S> =
   (action: Action<S, SearchboxData>) => (value: string) => EffectDescriptor<S, string>

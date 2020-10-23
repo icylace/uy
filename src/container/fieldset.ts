@@ -12,6 +12,10 @@ export type FieldsetOptions<S> = {
   locked?: boolean
 }
 
+// TODO:
+// - `fieldset` -> `fields`
+//   - the renaming is to distinguish from the plain `fieldset` HTML element
+
 export const fieldset = <S>(props: FieldsetOptions<S>, views: View<S>[]) => {
   return (state: State<S>): VDOM<S> => {
     const { disabled, locked, label, ...etc } = props

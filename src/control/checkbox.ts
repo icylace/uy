@@ -1,9 +1,9 @@
-import type { ClassProp, Transform, VDOM } from "hyperapp"
+import type { ClassProp, State, VDOM } from "hyperapp"
 import type { Content } from "ntml"
+import type { Wiring } from "../component"
 
 import cc from "classcat"
 import * as html from "ntml"
-import { component } from "../component"
 import { box } from "../container/box"
 
 // TODO:
@@ -19,33 +19,34 @@ import { box } from "../container/box"
 //
 // const freshCheckbox = (value: boolean, indeterminate?: boolean): CheckboxData => ({ indeterminate, value })
 
+export type CheckboxData = {
+  value: boolean
+}
+
 export type CheckboxOptions<S> = {
   class?: ClassProp
   disabled?: boolean
   label?: Content<S> | Content<S>[]
   locked?: boolean
-  update: Transform<S>
+  wiring: Wiring<S, CheckboxData>
 }
 
-export type CheckboxData = {
-  value: boolean
+const freshCheckbox = (value: boolean): CheckboxData => {
+  return { value }
 }
 
-export const freshCheckbox = (value: boolean): CheckboxData =>
-  ({ value })
-
-export const rawCheckbox = <S>(props: CheckboxOptions<S>, data: CheckboxData): VDOM<S> => {
-  const { disabled, locked, label, update, ...etc } = props
+const checkbox = <S>(options: CheckboxOptions<S>) => (state: State<S>): VDOM<S> => {
+  const { disabled, locked, label, wiring, ...etc } = options
   return box("uy-control uy-checkbox", [
     html.label({ class: { disabled: !!disabled, locked: !!locked } }, [
       html.input({
         disabled,
-        checked: data.value,
+        checked: wiring.data(state).value,
         type: "checkbox",
         onchange: (state, event) => {
           if (!event) return state
           const target = event.target as HTMLInputElement
-          return update(state, target.checked)
+          return wiring.update(state, freshCheckbox(target.checked))
         },
         ...etc,
         class: cc(["uy-input", { locked, disabled }, etc.class]),
@@ -55,4 +56,4 @@ export const rawCheckbox = <S>(props: CheckboxOptions<S>, data: CheckboxData): V
   ])
 }
 
-export const checkbox = component(rawCheckbox)
+export { checkbox, freshCheckbox }

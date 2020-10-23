@@ -4,6 +4,25 @@ import type { Path } from "./utility/shadesHelper"
 
 import { get, set } from "./utility/shadesHelper"
 
+// -----------------------------------------------------------------------------
+
+export type Wiring<R extends Record<string, any>, D> = Readonly<{
+  data: (r: R) => D
+  update: (r: R, x: D) => R
+}>
+
+const wire = <R extends Record<string, any>, D>
+  (prop: string, context?: Wiring<R, D>): Wiring<R, D> => ({
+    data: (r) => context
+      ? (context.data(r) as Record<string, any>)[prop]
+      : r[prop],
+    update: (r, x) => context
+      ? context.update(r, { ...context.data(r), [prop]: x })
+      : { ...r, [prop]: x },
+  })
+
+// -----------------------------------------------------------------------------
+
 // // TODO:
 // type Component<S> = (_: ComponentOptions, __: Path) => (_: State<S>) => VDOM<S>
 
@@ -18,4 +37,4 @@ const component = <S>(f: Function) => (options: ComponentOptions) => (path: Path
   }
 }
 
-export { component }
+export { component, wire }

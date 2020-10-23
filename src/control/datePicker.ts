@@ -1,38 +1,39 @@
-import type { ClassProp, Transform, VDOM } from "hyperapp"
+import type { ClassProp, State, VDOM } from "hyperapp"
+import type { Wiring } from "../component"
 
 import cc from "classcat"
 import { input } from "ntml"
-import { component } from "../component"
 import { box } from "../container/box"
-
-export type DatePickerOptions<S> = {
-  class?: ClassProp
-  disabled?: boolean
-  locked?: boolean
-  update: Transform<S>
-}
 
 export type DatePickerData = {
   value: string
 }
 
+export type DatePickerOptions<S> = {
+  class?: ClassProp
+  disabled?: boolean
+  locked?: boolean
+  wiring: Wiring<S, DatePickerData>
+}
+
 // -----------------------------------------------------------------------------
 
-export const freshDatePicker = (value: string): DatePickerData =>
-  ({ value })
+const freshDatePicker = (value: string): DatePickerData => {
+  return { value }
+}
 
-const rawDatePicker = <S>(props: DatePickerOptions<S>, data: DatePickerData): VDOM<S> => {
-  const { disabled, locked, update, ...etc } = props
+const datePicker = <S>(options: DatePickerOptions<S>) => (state: State<S>): VDOM<S> => {
+  const { disabled, locked, wiring, ...etc } = options
   return box("uy-control uy-datePicker", [
     input({
       disabled,
       readonly: locked,
-      value: data.value,
+      value: wiring.data(state).value,
       type: "date",
       onchange: (state, event) => {
         if (!event) return state
         const target = event.target as HTMLInputElement
-        return update(state, target.value)
+        return wiring.update(state, freshDatePicker(target.value))
       },
       ...etc,
       class: cc(["uy-input", { locked, disabled }, etc.class]),
@@ -40,25 +41,24 @@ const rawDatePicker = <S>(props: DatePickerOptions<S>, data: DatePickerData): VD
   ])
 }
 
-export const datePicker = component(rawDatePicker)
-
 // -----------------------------------------------------------------------------
 
-export const freshDatetimeLocalPicker = (value: string): DatePickerData =>
-  ({ value })
+const freshDatetimeLocalPicker = (value: string): DatePickerData => {
+  return { value }
+}
 
-const rawDatetimeLocalPicker = <S>(props: DatePickerOptions<S>, data: DatePickerData): VDOM<S> => {
-  const { disabled, locked, update, ...etc } = props
+const datetimeLocalPicker = <S>(options: DatePickerOptions<S>) => (state: State<S>): VDOM<S> => {
+  const { disabled, locked, wiring, ...etc } = options
   return box("uy-control uy-datePicker", [
     input({
       disabled,
       readonly: locked,
-      value: data.value,
+      value: wiring.data(state).value,
       type: "datetime-local",
       onchange: (state, event) => {
         if (!event) return state
         const target = event.target as HTMLInputElement
-        return update(state, target.value)
+        return wiring.update(state, freshDatetimeLocalPicker(target.value))
       },
       ...etc,
       class: cc(["uy-input", { locked, disabled }, etc.class]),
@@ -66,25 +66,24 @@ const rawDatetimeLocalPicker = <S>(props: DatePickerOptions<S>, data: DatePicker
   ])
 }
 
-export const datetimeLocalPicker = component(rawDatetimeLocalPicker)
-
 // -----------------------------------------------------------------------------
 
-export const freshMonthPicker = (value: string): DatePickerData =>
-  ({ value })
+const freshMonthPicker = (value: string): DatePickerData => {
+  return { value }
+}
 
-const rawMonthPicker = <S>(props: DatePickerOptions<S>, data: DatePickerData): VDOM<S> => {
-  const { disabled, locked, update, ...etc } = props
+const monthPicker = <S>(options: DatePickerOptions<S>) => (state: State<S>): VDOM<S> => {
+  const { disabled, locked, wiring, ...etc } = options
   return box("uy-control uy-datePicker", [
     input({
       disabled,
       readonly: locked,
-      value: data.value,
+      value: wiring.data(state).value,
       type: "month",
       onchange: (state, event) => {
         if (!event) return state
         const target = event.target as HTMLInputElement
-        return update(state, target.value)
+        return wiring.update(state, freshMonthPicker(target.value))
       },
       ...etc,
       class: cc(["uy-input", { locked, disabled }, etc.class]),
@@ -92,25 +91,24 @@ const rawMonthPicker = <S>(props: DatePickerOptions<S>, data: DatePickerData): V
   ])
 }
 
-export const monthPicker = component(rawMonthPicker)
-
 // -----------------------------------------------------------------------------
 
-export const freshTimePicker = (value: string): DatePickerData =>
-  ({ value })
+const freshTimePicker = (value: string): DatePickerData => {
+  return { value }
+}
 
-const rawTimePicker = <S>(props: DatePickerOptions<S>, data: DatePickerData): VDOM<S> => {
-  const { disabled, locked, update, ...etc } = props
+const timePicker = <S>(options: DatePickerOptions<S>) => (state: State<S>): VDOM<S> => {
+  const { disabled, locked, wiring, ...etc } = options
   return box("uy-control uy-datePicker", [
     input({
       disabled,
       readonly: locked,
-      value: data.value,
+      value: wiring.data(state).value,
       type: "time",
       onchange: (state, event) => {
         if (!event) return state
         const target = event.target as HTMLInputElement
-        return update(state, target.value)
+        return wiring.update(state, freshTimePicker(target.value))
       },
       ...etc,
       class: cc(["uy-input", { locked, disabled }, etc.class]),
@@ -118,25 +116,24 @@ const rawTimePicker = <S>(props: DatePickerOptions<S>, data: DatePickerData): VD
   ])
 }
 
-export const timePicker = component(rawTimePicker)
-
 // -----------------------------------------------------------------------------
 
-export const freshWeekPicker = (value: string): DatePickerData =>
-  ({ value })
+const freshWeekPicker = (value: string): DatePickerData => {
+  return { value }
+}
 
-const rawWeekPicker = <S>(props: DatePickerOptions<S>, data: DatePickerData): VDOM<S> => {
-  const { disabled, locked, update, ...etc } = props
+const weekPicker = <S>(options: DatePickerOptions<S>) => (state: State<S>): VDOM<S> => {
+  const { disabled, locked, wiring, ...etc } = options
   return box("uy-control uy-datePicker", [
     input({
       disabled,
       readonly: locked,
-      value: data.value,
+      value: wiring.data(state).value,
       type: "week",
       onchange: (state, event) => {
         if (!event) return state
         const target = event.target as HTMLInputElement
-        return update(state, target.value)
+        return wiring.update(state, freshWeekPicker(target.value))
       },
       ...etc,
       class: cc(["uy-input", { locked, disabled }, etc.class]),
@@ -144,4 +141,17 @@ const rawWeekPicker = <S>(props: DatePickerOptions<S>, data: DatePickerData): VD
   ])
 }
 
-export const weekPicker = component(rawWeekPicker)
+// -----------------------------------------------------------------------------
+
+export {
+  datePicker,
+  datetimeLocalPicker,
+  freshDatePicker,
+  freshDatetimeLocalPicker,
+  freshMonthPicker,
+  freshTimePicker,
+  freshWeekPicker,
+  monthPicker,
+  timePicker,
+  weekPicker
+}

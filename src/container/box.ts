@@ -3,6 +3,22 @@ import type { Content } from "ntml"
 
 import { div } from "ntml"
 
-export const box = <S>(classProp: ClassProp, content: Content<S> | Content<S>[]): VDOM<S> => {
-  return div({ class: classProp }, content)
+const box = <S>(classProp: ClassProp, contents: Content<S>[]): VDOM<S> => {
+  return div({ class: classProp }, contents)
 }
+
+export { box }
+
+// -----------------------------------------------------------------------------
+
+// TODO:
+
+// import type { ClassProp, VDOM } from "hyperapp"
+
+// import { h } from "hyperapp"
+
+// const box = <S>(classProp: ClassProp, contents: VDOM<S>[]): VDOM<S> => {
+//   return h("div", { class: classProp }, contents)
+// }
+
+// export { box }

@@ -3,8 +3,8 @@ import type { ContentView } from "../types"
 
 import { box } from "./box"
 
-export const row = <S>(views: ContentView<S>[]) => {
-  return (state: State<S>): VDOM<S> => {
-    return box("uy-row", views.map((view) => view(state)))
-  }
+const row = <S>(views: ContentView<S>[]) => (state: State<S>): VDOM<S> => {
+  return box("uy-row", views.map((view) => view(state)))
 }
+
+export { row }

@@ -12,7 +12,7 @@ export type PopupOptions = {
   locked?: boolean
 }
 
-export const popup = <S>(props: PopupOptions, contents: Content<S> | Content<S>[]): VDOM<S> => {
+const popup = <S>(props: PopupOptions, contents: Content<S> | Content<S>[]): VDOM<S> => {
   const { disabled, id, locked, ...etc } = props
   return div({
     id,
@@ -24,3 +24,5 @@ export const popup = <S>(props: PopupOptions, contents: Content<S> | Content<S>[
     ]),
   }, contents)
 }
+
+export { popup }

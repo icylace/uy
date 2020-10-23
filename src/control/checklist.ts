@@ -6,17 +6,8 @@ import type { TableData, TableRow } from "../container/table"
 import cc from "classcat"
 import { div } from "ntml"
 import { set } from "../utility/shadesHelper"
-import { component } from "../component"
 import { rawTable } from "../container/table"
-import { rawCheckbox } from "./checkbox"
-
-export type ChecklistOptions<S> = {
-  class?: ClassProp
-  disabled?: boolean
-  locked?: boolean
-  path: Path
-  render: (_: Content<S> | Content<S>[]) => VDOM<S>
-}
+import { checkbox } from "./checkbox"
 
 export type ChecklistItem = {
   id: string
@@ -27,13 +18,23 @@ export type Checklist = {
   items: ChecklistItem[]
 }
 
-export const freshChecklist = (items: ChecklistItem[]): Checklist =>
-  ({ items })
+export type ChecklistOptions<S> = {
+  class?: ClassProp
+  disabled?: boolean
+  locked?: boolean
+  path: Path
+  render: (_: Content<S> | Content<S>[]) => VDOM<S>
+}
 
-const updateItem = (path: Path, i: number) => <S, P>(state: State<S>, value: Payload<P>): State<S> =>
-  set([...path, "items", i])(value)(state)
+const freshChecklist = (items: ChecklistItem[]): Checklist => {
+  return { items }
+}
 
-export const rawChecklist = <S>(props: ChecklistOptions<S>, data: Checklist): VDOM<S> => {
+const updateItem = (path: Path, i: number) => <S, P>(state: State<S>, value: Payload<P>): State<S> => {
+  return set([...path, "items", i])(value)(state)
+}
+
+const checklist = <S>(props: ChecklistOptions<S>, data: Checklist): VDOM<S> => {
   const { disabled, locked, path, render, ...etc } = props
 
   const item = (x: ChecklistItem, i: number): TableRow<S> =>
@@ -41,7 +42,7 @@ export const rawChecklist = <S>(props: ChecklistOptions<S>, data: Checklist): VD
       [
         { class: { "uy-horizontal": x.id === "other" } },
         [
-          rawCheckbox(
+          checkbox(
             {
               disabled,
               locked,
@@ -66,4 +67,4 @@ export const rawChecklist = <S>(props: ChecklistOptions<S>, data: Checklist): VD
   )
 }
 
-export const checklist = component(rawChecklist)
+export { checklist, freshChecklist }

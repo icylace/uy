@@ -1,11 +1,16 @@
 import type { ClassProp, Transform, VDOM, VNode } from "hyperapp"
 import type { Content } from "ntml"
+import type { Wiring } from "../component"
 
 import cc from "classcat"
 import { div, li, span, ul } from "ntml"
 import { range } from "../utility/utility"
-import { component } from "../component"
 import { icon } from "../indicator/icon"
+
+export type PagerData = {
+  itemsTotal: number
+  value: number
+}
 
 export type PagerOptions<S> = {
   class?: ClassProp
@@ -13,15 +18,11 @@ export type PagerOptions<S> = {
   itemsPerPage: number
   locked?: boolean
   pageRange: number
-  update: Transform<S>
+  // update: Transform<S>
+  wiring: Wiring<S, PagerData>
 }
 
-export type PagerData = {
-  itemsTotal: number
-  value: number
-}
-
-export const freshPager = (itemsTotal: number, value: number): PagerData => {
+const freshPager = (itemsTotal: number, value: number): PagerData => {
   return { value, itemsTotal }
 }
 
@@ -42,8 +43,8 @@ const pagerMore = <S>(content: Content<S> | Content<S>[]): VDOM<S> => {
   return span({ class: "uy-pager-more" }, content)
 }
 
-const rawPager = <S>(props: PagerOptions<S>, data: PagerData): VDOM<S> | null => {
-  const { disabled, locked, itemsPerPage, pageRange, update, ...etc } = props
+const pager = <S>(props: PagerOptions<S>, data: PagerData): VDOM<S> | null => {
+  const { disabled, locked, itemsPerPage, pageRange, wiring, ...etc } = props
 
   if (!data.itemsTotal) return null
 
@@ -109,4 +110,4 @@ const rawPager = <S>(props: PagerOptions<S>, data: PagerData): VDOM<S> | null =>
   ])
 }
 
-export const pager = component(rawPager)
+export { freshPager, pager }

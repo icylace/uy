@@ -7,7 +7,6 @@ import cc from "classcat"
 import { div } from "ntml"
 import { exclude } from "../utility/utility"
 import { get, set } from "../utility/shadesHelper"
-import { component } from "../component"
 import { rawTable } from "../container/table"
 import { button } from "./button"
 import { cancelButton } from "./cancelButton"
@@ -49,12 +48,12 @@ const removeItem = (path: Path, i: number) => {
   }
 }
 
-const rawList = <S>(props: ListOptions<S>, data: ListData): VDOM<S> => {
+const list = <S>(props: ListOptions<S>, data: ListData): VDOM<S> => {
   const { disabled, locked, headers, path, ...etc } = props
 
   const item = (value: string, i: number): TableCell<S>[] => [
     rawTextbox({ disabled, locked, update: updateItem(path, i) }, { value }),
-    cancelButton<S>({ disabled, locked, update: removeItem(path, i) }),
+    cancelButton<S>({ disabled, locked, handler: removeItem(path, i) }),
   ]
 
   const grower: TableCell<S>[] = [
@@ -64,7 +63,7 @@ const rawList = <S>(props: ListOptions<S>, data: ListData): VDOM<S> => {
         disabled,
         locked,
         label: "+ Add",
-        update: addItem(path, data),
+        handler: addItem(path, data),
       }),
     ],
   ]
@@ -82,7 +81,4 @@ const rawList = <S>(props: ListOptions<S>, data: ListData): VDOM<S> => {
     ],
   )
 }
-
-const list = component(rawList)
-
 export { freshList, list }

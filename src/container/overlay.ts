@@ -23,8 +23,8 @@ const rawOverlay = <S>(props: OverlayOptions, contents: Content<S> | Content<S>[
   ])
 }
 
-export const overlay = <S>(props: OverlayOptions, views: View<S>[]) => {
-  return (state: State<S>): VDOM<S> => {
-    return rawOverlay(props, views.map((g) => g(state)))
-  }
+const overlay = <S>(props: OverlayOptions, views: View<S>[]) => (state: State<S>): VDOM<S> => {
+  return rawOverlay(props, views.map((g) => g(state)))
 }
+
+export { overlay }

@@ -15,20 +15,20 @@ export type FieldOptions = {
 
 export type Component<S> = (props: ComponentOptions, path: Path) => (state: State<S>) => VDOM<S>
 
-export const field = <S>(title: Content<S>, f: Component<S>, props: FieldOptions, path: Path) => {
-  return (state: State<S>): VDOM<S> => {
-    const { disabled, locked, ...etc } = props
-    return box("uy-container uy-field", [
-      label(
-        {
-          ...etc,
-          class: cc([{ locked, disabled }, etc.class]),
-        },
-        [
-          title,
-          f({ disabled, locked, ...etc }, path)(state),
-        ],
-      ),
-    ])
-  }
+const field = <S>(title: Content<S>, f: Component<S>, props: FieldOptions, path: Path) => (state: State<S>): VDOM<S> => {
+  const { disabled, locked, ...etc } = props
+  return box("uy-container uy-field", [
+    label(
+      {
+        ...etc,
+        class: cc([{ locked, disabled }, etc.class]),
+      },
+      [
+        title,
+        f({ disabled, locked, ...etc }, path)(state),
+      ],
+    ),
+  ])
 }
+
+export { field }

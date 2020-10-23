@@ -1,11 +1,11 @@
 import type { ClassProp, State, VDOM } from "hyperapp"
 import type { Content } from "ntml"
+import type { Wiring } from "../component"
 import type { Path } from "../utility/shadesHelper"
 
 import cc from "classcat"
 import * as html from "ntml"
 import { set } from "../utility/shadesHelper"
-import { component } from "../component"
 import { box } from "../container/box"
 
 export type NumberboxOptions<S> = {
@@ -14,6 +14,7 @@ export type NumberboxOptions<S> = {
   label?: Content<S>
   locked?: boolean
   path: Path
+  wiring: Wiring<S, NumberboxData>
 }
 
 export type NumberboxData = {
@@ -21,7 +22,7 @@ export type NumberboxData = {
   value: number
 }
 
-export const freshNumberbox = (value: number): NumberboxData => {
+const freshNumberbox = (value: number): NumberboxData => {
   return { value, focused: false }
 }
 
@@ -29,27 +30,23 @@ const sanitizedNumber = (n: string): number => {
   return Math.max(0, Number.parseInt(n, 10))
 }
 
-const update = (path: Path) => {
-  return <S>(state: State<S>, value: string): State<S> => {
-    return set([...path, "value"])(sanitizedNumber(value))(state)
-  }
-}
-
-const rawNumberbox = <S>(props: NumberboxOptions<S>, data: NumberboxData): VDOM<S> => {
-  const { disabled, locked, label, path, ...etc } = props
+const numberbox = <S>(props: NumberboxOptions<S>) => (state: State<S>): VDOM<S> => {
+  const { disabled, locked, label, path, wiring, ...etc } = props
+  const x = wiring.data(state)
   return box("uy-control uy-numberbox", [
-    html.label({ class: { focus: !!data.focused, locked, disabled } }, [
+    html.label({ class: { focus: !!x.focused, locked, disabled } }, [
       html.input({
         disabled,
         min: 0,
         readonly: locked,
         type: "number",
-        value: data.value,
+        value: x.value,
         onchange: (state, event) => {
           if (!event) return state
           const target = event.target as HTMLInputElement
-          return update(path)(state, target.value)
+          return wiring.update(state, { focused: x.focused, value: sanitizedNumber(target.value) })
         },
+        // TODO:
         onfocus: set([...path, "focused"])(true),
         onblur: set([...path, "focused"])(false),
         ...etc,
@@ -62,4 +59,4 @@ const rawNumberbox = <S>(props: NumberboxOptions<S>, data: NumberboxData): VDOM<
   ])
 }
 
-export const numberbox = component(rawNumberbox)
+export { freshNumberbox, numberbox }

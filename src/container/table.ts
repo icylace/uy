@@ -3,8 +3,7 @@ import type { Content } from "ntml"
 
 import cc from "classcat"
 import * as html from "ntml"
-import { component } from "../component"
-import { icon } from "../display/icon"
+import { icon } from "../indicator/icon"
 import { box } from "./box"
 
 export type TableCell<S>
@@ -28,7 +27,7 @@ export type TableData<S> = {
   rows: TableRow<S>[]
 }
 
-export const freshTable = <S>(rows: TableRow<S>[]): TableData<S> => {
+const freshTable = <S>(rows: TableRow<S>[]): TableData<S> => {
   return { rows }
 }
 
@@ -72,7 +71,7 @@ const tableRow = <S>(row: TableRow<S>): VDOM<S> => {
   return html.tr(row.map(tableCell))
 }
 
-export const rawTable = <S>(props: TableOptions<S>, data: TableData<S>): VDOM<S> => {
+const table = <S>(props: TableOptions<S>, data: TableData<S>): VDOM<S> => {
   const { disabled, locked, headers, orderColumn, sortDescending, ...etc } = props
   return box({
     "uy-control": true,
@@ -89,4 +88,4 @@ export const rawTable = <S>(props: TableOptions<S>, data: TableData<S>): VDOM<S>
   ])
 }
 
-export const table = component(rawTable)
+export { freshTable, table }

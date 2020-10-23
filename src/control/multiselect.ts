@@ -3,9 +3,12 @@ import type { Content } from "ntml"
 
 import cc from "classcat"
 import { div } from "ntml"
-import { component } from "../component"
 import { box } from "../container/box"
-import { rawCheckbox } from "./checkbox"
+import { checkbox } from "./checkbox"
+
+export type MultiselectData = {
+  value: string[]
+}
 
 export type MultiselectOptions<S> = {
   class?: ClassProp
@@ -16,16 +19,13 @@ export type MultiselectOptions<S> = {
   usingColumnMode: boolean
 }
 
-export type MultiselectData = {
-  value: string[]
-}
-
 // TODO:
 // - maybe use Set here instead?
-export const freshMultiselect = (value: string[]): MultiselectData =>
-  ({ value })
+const freshMultiselect = (value: string[]): MultiselectData => {
+  return { value }
+}
 
-const rawMultiselect = <S>(props: MultiselectOptions<S>, data: MultiselectData): VDOM<S> => {
+const multiselect = <S>(props: MultiselectOptions<S>, data: MultiselectData): VDOM<S> => {
   const { disabled, locked, update, options, usingColumnMode, ...etc } = props
 
   // TODO:
@@ -44,7 +44,7 @@ const rawMultiselect = <S>(props: MultiselectOptions<S>, data: MultiselectData):
       // - switch to using a Map object instead in order to guarantee order
       Object.entries(options).map(
         ([value, label]: [string, Content<S> | Content<S>[]]): VDOM<S> => {
-          return rawCheckbox(
+          return checkbox(
             {
               disabled,
               label,
@@ -70,4 +70,4 @@ const rawMultiselect = <S>(props: MultiselectOptions<S>, data: MultiselectData):
   ])
 }
 
-export const multiselect = component(rawMultiselect)
+export { freshMultiselect, multiselect }

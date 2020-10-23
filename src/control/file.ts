@@ -1,30 +1,31 @@
-import type { ClassProp, Transform, VDOM } from "hyperapp"
+import type { ClassProp, State, VDOM } from "hyperapp"
+import type { Wiring } from "../component"
 
 import cc from "classcat"
 import * as html from "ntml"
-import { component } from "../component"
 import { box } from "../container/box"
 import { icon } from "../indicator/icon"
+
+export type FileData = {
+  value: string
+}
 
 export type FileOptions<S> = {
   class?: ClassProp
   disabled?: boolean
   label?: string
   locked?: boolean
-  update: Transform<S>
+  wiring: Wiring<S, FileData>
 }
 
-export type FileData = {
-  value: string
+const freshFile = (value: string): FileData => {
+  return { value }
 }
-
-export const freshFile = (value: string): FileData =>
-  ({ value })
 
 // https://codepen.io/adamlaki/pen/VYpewx
 
-const rawFile = <S>(props: FileOptions<S>, data: FileData): VDOM<S> => {
-  const { disabled, locked, label = "Select your file...", update, ...etc } = props
+const file = <S>(options: FileOptions<S>) => (state: State<S>): VDOM<S> => {
+  const { disabled, locked, label = "Select your file...", wiring, ...etc } = options
   return box({
     disabled,
     locked,
@@ -35,7 +36,7 @@ const rawFile = <S>(props: FileOptions<S>, data: FileData): VDOM<S> => {
     html.label({ class: "uy-clicky", "data-text": label }, [
       html.input({
         disabled,
-        value: data.value,
+        value: wiring.data(state).value,
         type: "file",
         // TODO:
         // - probably needs to be rethought
@@ -46,7 +47,7 @@ const rawFile = <S>(props: FileOptions<S>, data: FileData): VDOM<S> => {
           parent.dataset.text = target.value !== ""
             ? target.value.replace(/.*(\/|\\)/, "")
             : label
-          return update(state, target.value)
+          return wiring.update(state, freshFile(target.value))
         },
         ...etc,
         class: cc([{ disabled, locked }, etc.class]),
@@ -59,4 +60,4 @@ const rawFile = <S>(props: FileOptions<S>, data: FileData): VDOM<S> => {
   ])
 }
 
-export const file = component(rawFile)
+export { file, freshFile }

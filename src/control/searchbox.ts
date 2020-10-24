@@ -8,6 +8,7 @@ import type {
   VDOM,
   VNode,
 } from "hyperapp"
+import type { Wiring } from "../component"
 import type { Path } from "../utility/shadesHelper"
 
 import cc from "classcat"
@@ -15,21 +16,11 @@ import { input, label, li, span, ul } from "ntml"
 import { pipe } from "../utility/utility"
 import { get, set } from "../utility/shadesHelper"
 import { addInsideEl, removeInsideEl } from "../utility/uyHelper"
-import { component } from "../component"
 import { popup } from "../container/popup"
 import { box } from "../container/box"
 import { icon } from "../indicator/icon"
 
-export type Searcher<S> =
-  (action: Action<S, SearchboxData>) => (value: string) => EffectDescriptor<S, string>
-
-export type SearchboxOptions<S> = {
-  class?: ClassProp
-  disabled?: boolean
-  locked?: boolean
-  path: Path
-  search: Searcher<S>
-}
+export type Searcher<S> = (action: Action<S, SearchboxData>) => (value: string) => EffectDescriptor<S, string>
 
 export type SearchboxData = {
   focused: boolean
@@ -38,7 +29,16 @@ export type SearchboxData = {
   value: string
 }
 
-export const freshSearchbox = (value: string): SearchboxData => ({
+export type SearchboxOptions<S> = {
+  class?: ClassProp
+  disabled?: boolean
+  locked?: boolean
+  path: Path
+  search: Searcher<S>
+  wiring: Wiring<S, SearchboxData>
+}
+
+const freshSearchbox = (value: string): SearchboxData => ({
   value,
   focused: false,
   searching: false,
@@ -47,14 +47,12 @@ export const freshSearchbox = (value: string): SearchboxData => ({
 
 // -----------------------------------------------------------------------------
 
-const chooseResult = (path: Path, id: string, value: string) => {
-  return <S>(state: State<S>): State<S> => {
-    return pipe(
-      set([...path, "results"])([]),
-      set([...path, "value"])(value),
-      removeInsideEl(id),
-    )(state)
-  }
+const chooseResult = (path: Path, id: string, value: string) => <S>(state: State<S>): State<S> => {
+  return pipe(
+    set([...path, "results"])([]),
+    set([...path, "value"])(value),
+    removeInsideEl(id),
+  )(state)
 }
 
 const updateResults = <S>(search: Searcher<S>, path: Path, id: string) => {
@@ -102,8 +100,9 @@ const update = <S>(search: Searcher<S>, path: Path, id: string, value: string) =
 
 // -----------------------------------------------------------------------------
 
-const searchResult = (path: Path, id: string) => <S>(x: string): VDOM<S> =>
-  li<S>({ onclick: chooseResult(path, id, x) }, x)
+const searchResult = (path: Path, id: string) => <S>(x: string): VDOM<S> => {
+  return li<S>({ onclick: chooseResult(path, id, x) }, x)
+}
 
 // We don't let certain keys unnecessarily affect searching.
 const noopKeys = [
@@ -122,17 +121,18 @@ const noopKeys = [
   "Super",
 ]
 
-const rawSearchbox = <S>(props: SearchboxOptions<S>, data: SearchboxData): VDOM<S> => {
-  const { disabled, locked, path, search, ...etc } = props
+const searchbox = <S>(options: SearchboxOptions<S>) => (state: State<S>): VDOM<S> => {
+  const { disabled, locked, path, search, wiring, ...etc } = options
   const id = path.join("-")
+  const x = wiring.data(state)
 
   const inputSearch = input<S>({
     disabled,
     readonly: locked,
-    value: data.value,
+    value: x.value,
     type: "search",
-    onfocus: set([...path, "focused"])(true),
-    onblur: set([...path, "focused"])(false),
+    onfocus: (state) => wiring.update(state, { ...x, focused: true }),
+    onblur: (state) => wiring.update(state, { ...x, focused: false }),
     onkeyup: (state, event) => {
       if (!event) return state
       if (noopKeys.includes(event.key)) return state
@@ -155,13 +155,13 @@ const rawSearchbox = <S>(props: SearchboxOptions<S>, data: SearchboxData): VDOM<
   })
 
   const popupNode = (
-    data.results.length && !disabled
+    x.results.length && !disabled
       ? popup(
         { locked, disabled, id },
         [
           ul(
             { class: "uy-searchbox-results uy-scroller" },
-            data.results.map(searchResult(path, id)),
+            x.results.map(searchResult(path, id)),
           ),
         ]
       )
@@ -177,21 +177,21 @@ const rawSearchbox = <S>(props: SearchboxOptions<S>, data: SearchboxData): VDOM<
     label({
       class: {
         "uy-searchbox-label": true,
-        focus: data.focused,
-        busy: data.searching,
+        focus: x.focused,
+        busy: x.searching,
         locked,
         disabled,
       },
     }, [
       inputSearch,
       span(
-        { onclick: update(search, path, id, data.value) },
+        { onclick: update(search, path, id, x.value) },
         [
           icon({
             fas: true,
-            "fa-spinner": data.searching,
-            "fa-pulse": data.searching,
-            "fa-search": !data.searching,
+            "fa-spinner": x.searching,
+            "fa-pulse": x.searching,
+            "fa-search": !x.searching,
           }),
         ],
       ),
@@ -200,4 +200,4 @@ const rawSearchbox = <S>(props: SearchboxOptions<S>, data: SearchboxData): VDOM<
   ])
 }
 
-export const searchbox = component(rawSearchbox)
+export { freshSearchbox, searchbox }

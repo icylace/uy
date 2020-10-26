@@ -47,8 +47,8 @@ const dropdown = <S>(options: DropdownSettings<S>) => (state: State<S>): VDOM<S>
             const target = event.target as HTMLInputElement
             return wiring.update(state, freshDropdown(target.value))
           },
-          onfocus: set([...path, "focused"])(true),
-          onblur: set([...path, "focused"])(false),
+          onfocus: (state) => wiring.update(state, { ...x, focused: true }),
+          onblur: (state) => wiring.update(state, { ...x, focused: false }),
           ...etc,
           class: cc(["uy-input", { locked, disabled }, etc.class]),
         },

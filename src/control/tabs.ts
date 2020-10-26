@@ -1,15 +1,19 @@
-import type { ClassProp, EffectfulState, Transform, VDOM, VNode } from "hyperapp"
+import type { ClassProp, EffectfulState, State, VDOM, VNode } from "hyperapp"
 import type { Content } from "ntml"
+import type { Wiring } from "../component"
 
 import cc from "classcat"
 import { div } from "ntml"
-import { component } from "../component"
 import { box } from "../container/box"
 import { scrollIntoView } from "./tabs.effect"
 
 export type Tab<S> = {
   heading: Content<S>
   panel: Content<S>
+}
+
+export type TabsData = {
+  value: string
 }
 
 export type TabsOptions<S> = {
@@ -19,14 +23,10 @@ export type TabsOptions<S> = {
   itemsHeader?: string | VNode<S>
   locked?: boolean
   tabList: Tab<S>[]
-  update: Transform<S>
+  wiring: Wiring<S, TabsData>
 }
 
-export type TabsData = {
-  value: string
-}
-
-export const freshTabs = (value: string): TabsData => {
+const freshTabs = (value: string): TabsData => {
   return { value }
 }
 
@@ -37,7 +37,7 @@ const isSelected = (activeTab: string) => <S>(item: Content<S>, i: number): bool
   return activeTab === String(i)
 }
 
-const tab = <S>(update: Transform<S>, activeTab: string) => {
+const tab = <S>(wiring: Wiring<S, TabsData>, activeTab: string) => {
   return (item: Content<S>, i: number): VDOM<S> => {
     const selected = isSelected(activeTab)(item, i)
     return div({
@@ -45,7 +45,7 @@ const tab = <S>(update: Transform<S>, activeTab: string) => {
       onclick: (state, event) => {
         if (!event) return state
         const target = event.target as HTMLElement
-        const transition = update(state, String(i))
+        const transition = wiring.update(state, freshTabs(String(i)))
         return selected
           ? Array.isArray(transition)
             ? [...transition, scrollIntoView(target)] as EffectfulState<S>
@@ -56,8 +56,9 @@ const tab = <S>(update: Transform<S>, activeTab: string) => {
   }
 }
 
-const rawTabs = <S>(props: TabsOptions<S>, data: TabsData): VDOM<S> => {
-  const { disabled, locked, itemsFooter, itemsHeader, tabList, update, ...etc } = props
+const tabs = <S>(options: TabsOptions<S>) => (state: State<S>): VDOM<S> => {
+  const { disabled, locked, itemsFooter, itemsHeader, tabList, wiring, ...etc } = options
+  const x = wiring.data(state)
   const headings = tabList.map((x: Tab<S>): Content<S> => x.heading)
   const panels = tabList.map((x: Tab<S>): Content<S> => x.panel)
   return div(
@@ -68,14 +69,14 @@ const rawTabs = <S>(props: TabsOptions<S>, data: TabsData): VDOM<S> => {
     [
       box("uy-tabs-navigation", [
         itemsHeader,
-        box("uy-tabs-list uy-scroller", headings.map(tab(update, data.value))),
+        box("uy-tabs-list uy-scroller", headings.map(tab(wiring, x.value))),
         itemsFooter,
       ]),
       box("uy-tabs-panels", [
-        panels[headings.findIndex(isSelected(data.value))],
+        panels[headings.findIndex(isSelected(x.value))],
       ]),
     ],
   )
 }
 
-export const tabs = component(rawTabs)
+export { freshTabs, tabs }

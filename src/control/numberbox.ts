@@ -5,8 +5,12 @@ import type { Path } from "../utility/shadesHelper"
 
 import cc from "classcat"
 import * as html from "ntml"
-import { set } from "../utility/shadesHelper"
 import { box } from "../container/box"
+
+export type NumberboxData = {
+  focused?: boolean
+  value: number
+}
 
 export type NumberboxOptions<S> = {
   class?: ClassProp
@@ -15,11 +19,6 @@ export type NumberboxOptions<S> = {
   locked?: boolean
   path: Path
   wiring: Wiring<S, NumberboxData>
-}
-
-export type NumberboxData = {
-  focused?: boolean
-  value: number
 }
 
 const freshNumberbox = (value: number): NumberboxData => {
@@ -46,9 +45,8 @@ const numberbox = <S>(props: NumberboxOptions<S>) => (state: State<S>): VDOM<S> 
           const target = event.target as HTMLInputElement
           return wiring.update(state, { focused: x.focused, value: sanitizedNumber(target.value) })
         },
-        // TODO:
-        onfocus: set([...path, "focused"])(true),
-        onblur: set([...path, "focused"])(false),
+        onfocus: (state) => wiring.update(state, { ...x, focused: true }),
+        onblur: (state) => wiring.update(state, { ...x, focused: false }),
         ...etc,
         class: cc(["uy-input", { locked, disabled }, etc.class]),
       }),

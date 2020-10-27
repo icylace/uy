@@ -1,6 +1,5 @@
 import type { State, VDOM } from "hyperapp"
 import type { Content } from "ntml"
-import type { Path } from "../utility/shadesHelper"
 import type { ComponentOptions } from "../types"
 
 import cc from "classcat"
@@ -13,10 +12,10 @@ export type FieldOptions = {
   locked?: boolean
 }
 
-export type Component<S> = (props: ComponentOptions, path: Path) => (state: State<S>) => VDOM<S>
+export type Component<S> = (options: ComponentOptions) => (state: State<S>) => VDOM<S>
 
-const field = <S>(title: Content<S>, f: Component<S>, props: FieldOptions, path: Path) => (state: State<S>): VDOM<S> => {
-  const { disabled, locked, ...etc } = props
+const field = <S>(title: Content<S>, f: Component<S>, options: FieldOptions) => (state: State<S>): VDOM<S> => {
+  const { disabled, locked, ...etc } = options
   return box("uy-container uy-field", [
     label(
       {
@@ -25,7 +24,7 @@ const field = <S>(title: Content<S>, f: Component<S>, props: FieldOptions, path:
       },
       [
         title,
-        f({ disabled, locked, ...etc }, path)(state),
+        f({ disabled, locked, ...etc })(state),
       ],
     ),
   ])

@@ -8,17 +8,3 @@ const box = <S>(classProp: ClassProp, contents: Content<S>[]): VDOM<S> => {
 }
 
 export { box }
-
-// -----------------------------------------------------------------------------
-
-// TODO:
-
-// import type { ClassProp, VDOM } from "hyperapp"
-
-// import { h } from "hyperapp"
-
-// const box = <S>(classProp: ClassProp, contents: VDOM<S>[]): VDOM<S> => {
-//   return h("div", { class: classProp }, contents)
-// }
-
-// export { box }

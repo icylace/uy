@@ -1,55 +1,50 @@
 import type { ClassProp, Payload, State, VDOM } from "hyperapp"
 import type { Content } from "ntml"
 import type { TableCell } from "../container/table"
-import type { Path } from "../utility/shadesHelper"
+import type { Wiring } from "../component"
 
 import cc from "classcat"
 import { div } from "ntml"
 import { exclude } from "../utility/utility"
 import { get, set } from "../utility/shadesHelper"
-import { rawTable } from "../container/table"
+import { freshTable, rawTable } from "../container/table"
 import { button } from "./button"
 import { cancelButton } from "./cancelButton"
 import { rawTextbox } from "./textbox"
+
+export type ListData = {
+  items: string[]
+}
 
 export type ListOptions<S> = {
   class?: ClassProp
   disabled?: boolean
   headers?: Content<S>[]
   locked?: boolean
-  path: Path
-}
-
-export type ListData = {
-  items: string[]
+  wiring: Wiring<S, ListData>
 }
 
 const freshList = (items: string[]): ListData => {
   return { items }
 }
 
-const addItem = (path: Path, data: ListData) => {
-  return <S>(state: State<S>): State<S> => {
-    return set([...path, "items"])([...data.items, ""])(state)
-  }
+const addItem = (data: ListData) => <S>(state: State<S>): State<S> => {
+  return set([...path, "items"])([...data.items, ""])(state)
 }
 
-const updateItem = (path: Path, i: number) => {
-  return <S, P>(state: State<S>, value: Payload<P>): State<S> => {
-    return set([...path, "items", i])(value)(state)
-  }
+const updateItem = (i: number) => <S, P>(state: State<S>, value: Payload<P>): State<S> => {
+  return set([...path, "items", i])(value)(state)
 }
 
-const removeItem = (path: Path, i: number) => {
-  return <S>(state: State<S>): State<S> => {
-    return set([...path, "items"])(
-      exclude(i, get([...path, "items"])(state) as string[]),
-    )(state)
-  }
+const removeItem = (i: number) => <S>(state: State<S>): State<S> => {
+  return set([...path, "items"])(
+    exclude(i, get([...path, "items"])(state) as string[]),
+  )(state)
 }
 
-const list = <S>(props: ListOptions<S>, data: ListData): VDOM<S> => {
-  const { disabled, locked, headers, path, ...etc } = props
+const list = <S>(options: ListOptions<S>) => (state: State<S>): VDOM<S> => {
+  const { disabled, locked, headers, wiring, ...etc } = options
+  const x = wiring.data(state)
 
   const item = (value: string, i: number): TableCell<S>[] => [
     rawTextbox({ disabled, locked, update: updateItem(path, i) }, { value }),
@@ -63,7 +58,7 @@ const list = <S>(props: ListOptions<S>, data: ListData): VDOM<S> => {
         disabled,
         locked,
         label: "+ Add",
-        handler: addItem(path, data),
+        handler: addItem(x),
       }),
     ],
   ]
@@ -76,9 +71,10 @@ const list = <S>(props: ListOptions<S>, data: ListData): VDOM<S> => {
     [
       rawTable(
         { disabled, headers, locked, sortDescending: false, },
-        { rows: [...data.items.map(item), grower] }
+        freshTable([...x.items.map(item), grower])
       ),
     ],
   )
 }
+
 export { freshList, list }

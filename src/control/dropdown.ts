@@ -5,7 +5,7 @@ import type { Path } from "../utility/shadesHelper"
 
 import cc from "classcat"
 import { option, select } from "ntml"
-import { set } from "../utility/shadesHelper"
+// import { set } from "../utility/shadesHelper"
 import { box } from "../container/box"
 
 export type DropdownData = {
@@ -14,7 +14,7 @@ export type DropdownData = {
   value: string
 }
 
-export type DropdownSettings<S> = {
+export type DropdownOptions<S> = {
   class?: ClassProp
   disabled?: boolean
   locked?: boolean
@@ -27,7 +27,7 @@ const freshDropdown = (value: string): DropdownData => {
   return { value, focused: false }
 }
 
-const dropdown = <S>(options: DropdownSettings<S>) => (state: State<S>): VDOM<S> => {
+const dropdown = <S>(options: DropdownOptions<S>) => (state: State<S>): VDOM<S> => {
   const { disabled, locked, choices, path, wiring, ...etc } = options
   const x = wiring.data(state)
   return box("uy-control uy-dropdown", [

@@ -1,5 +1,4 @@
 import type { ClassProp, State, VDOM, View } from "hyperapp"
-import type { Content } from "ntml"
 
 import cc from "classcat"
 import { div } from "ntml"
@@ -12,19 +11,15 @@ export type OverlayOptions = {
   locked?: boolean
 }
 
-const rawOverlay = <S>(props: OverlayOptions, contents: Content<S> | Content<S>[]): VDOM<S> => {
-  const { disabled, locked, ...etc } = props
+const overlay = <S>(options: OverlayOptions, views: View<S>[]) => (state: State<S>): VDOM<S> => {
+  const { disabled, locked, ...etc } = options
   return box("uy-overlay-background", [
     div({
       disabled,
       ...etc,
       class: cc(["uy-overlay", { locked, disabled }, etc.class]),
-    }, contents),
+    }, views.map((g) => g(state))),
   ])
-}
-
-const overlay = <S>(props: OverlayOptions, views: View<S>[]) => (state: State<S>): VDOM<S> => {
-  return rawOverlay(props, views.map((g) => g(state)))
 }
 
 export { overlay }

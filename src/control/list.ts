@@ -7,10 +7,10 @@ import cc from "classcat"
 import { div } from "ntml"
 import { exclude } from "../utility/utility"
 import { get, set } from "../utility/shadesHelper"
-import { freshTable, rawTable } from "../container/table"
+import { freshTable, table } from "../container/table"
 import { button } from "./button"
 import { cancelButton } from "./cancelButton"
-import { rawTextbox } from "./textbox"
+import { textbox } from "./textbox"
 
 export type ListData = {
   items: string[]
@@ -29,7 +29,13 @@ const freshList = (items: string[]): ListData => {
 }
 
 const addItem = (data: ListData) => <S>(state: State<S>): State<S> => {
-  return set([...path, "items"])([...data.items, ""])(state)
+  const xs = wiring.data(state).items
+  return wiring.update(state, [...xs, ""])
+  // {
+  //   ...state,
+  //   items: [...state.items, ""],
+  //   set([...path, "items"])([...data.items, ""])(state)
+  // // return set([...path, "items"])([...data.items, ""])(state)
 }
 
 const updateItem = (i: number) => <S, P>(state: State<S>, value: Payload<P>): State<S> => {
@@ -46,10 +52,21 @@ const list = <S>(options: ListOptions<S>) => (state: State<S>): VDOM<S> => {
   const { disabled, locked, headers, wiring, ...etc } = options
   const x = wiring.data(state)
 
-  const item = (value: string, i: number): TableCell<S>[] => [
-    rawTextbox({ disabled, locked, update: updateItem(path, i) }, { value }),
-    cancelButton<S>({ disabled, locked, handler: removeItem(path, i) }),
-  ]
+  const item = (value: string, i: number): TableCell<S>[] => {
+    const textWiring = {
+      data: () => ({ value })
+      update: () => ({ ...wiring.update(), value })
+    }
+    return [
+      textbox({
+        disabled,
+        locked,
+        update: updateItem(path, i),
+        wiring: textWiring,
+      }),
+      cancelButton<S>({ disabled, locked, handler: removeItem(path, i) }),
+    ]
+  }
 
   const grower: TableCell<S>[] = [
     [
@@ -69,7 +86,7 @@ const list = <S>(options: ListOptions<S>) => (state: State<S>): VDOM<S> => {
       class: cc(["uy-control uy-list", { locked, disabled }, etc.class]),
     },
     [
-      rawTable(
+      table(
         { disabled, headers, locked, sortDescending: false, },
         freshTable([...x.items.map(item), grower])
       ),

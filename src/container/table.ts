@@ -71,8 +71,8 @@ const tableRow = <S>(row: TableRow<S>): VDOM<S> => {
   return html.tr(row.map(tableCell))
 }
 
-const table = <S>(props: TableOptions<S>, data: TableData<S>): VDOM<S> => {
-  const { disabled, locked, headers, orderColumn, sortDescending, ...etc } = props
+const table = <S>(options: TableOptions<S>, data: TableData<S>): VDOM<S> => {
+  const { disabled, locked, headers, orderColumn, sortDescending, ...etc } = options
   return box({
     "uy-control": true,
     "uy-table": true,

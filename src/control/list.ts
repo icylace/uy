@@ -54,14 +54,14 @@ const list = <S>(options: ListOptions<S>) => (state: State<S>): VDOM<S> => {
 
   const item = (value: string, i: number): TableCell<S>[] => {
     const textWiring = {
-      data: () => ({ value })
+      data: () => ({ value }),
       update: () => ({ ...wiring.update(), value })
     }
     return [
       textbox({
         disabled,
         locked,
-        update: updateItem(path, i),
+        // update: updateItem(path, i),
         wiring: textWiring,
       }),
       cancelButton<S>({ disabled, locked, handler: removeItem(path, i) }),

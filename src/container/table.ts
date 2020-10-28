@@ -1,6 +1,5 @@
-import type { ClassProp, PropList, State, VDOM } from "hyperapp"
+import type { ClassProp, PropList, VDOM } from "hyperapp"
 import type { Content } from "ntml"
-import type { Wiring } from "../component"
 
 import cc from "classcat"
 import * as html from "ntml"
@@ -14,10 +13,6 @@ export type TableCell<S>
 
 export type TableRow<S> = TableCell<S>[]
 
-export type TableData<S> = {
-  rows: TableRow<S>[]
-}
-
 export type TableOptions<S> = {
   [_: string]: unknown
   class?: ClassProp
@@ -26,7 +21,10 @@ export type TableOptions<S> = {
   locked?: boolean
   orderColumn?: string | null
   sortDescending?: boolean
-  wiring: Wiring<S, TableData<S>>
+}
+
+export type TableData<S> = {
+  rows: TableRow<S>[]
 }
 
 const freshTable = <S>(rows: TableRow<S>[]): TableData<S> => {
@@ -73,9 +71,8 @@ const tableRow = <S>(row: TableRow<S>): VDOM<S> => {
   return html.tr(row.map(tableCell))
 }
 
-const table = <S>(options: TableOptions<S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, locked, headers, orderColumn, sortDescending, wiring, ...etc } = options
-  const x = wiring.data(state)
+const table = <S>(options: TableOptions<S>, data: TableData<S>): VDOM<S> => {
+  const { disabled, locked, headers, orderColumn, sortDescending, ...etc } = options
   return box({
     "uy-control": true,
     "uy-table": true,
@@ -86,7 +83,7 @@ const table = <S>(options: TableOptions<S>) => (state: State<S>): VDOM<S> => {
       Array.isArray(headers) && headers.length
         ? html.thead(headers.map(tableHeader(orderColumn, !!sortDescending)))
         : null,
-      html.tbody(x.rows.map(tableRow)),
+      html.tbody(data.rows.map(tableRow)),
     ]),
   ])
 }

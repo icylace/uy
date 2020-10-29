@@ -17,11 +17,7 @@ const popup = <S>(options: PopupOptions, contents: Content<S> | Content<S>[]): V
   return div({
     id,
     ...etc,
-    class: cc([
-      "uy-container uy-popup",
-      { locked, disabled },
-      etc.class,
-    ]),
+    class: cc(["uy-container uy-popup", { locked, disabled }, etc.class]),
   }, contents)
 }
 

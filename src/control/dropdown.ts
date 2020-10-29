@@ -29,10 +29,10 @@ const dropdown = <S>(options: DropdownOptions<S>) => (state: State<S>): VDOM<S> 
   const r = wiring.data(state)
   return box("uy-control uy-dropdown", [
     box({
-      disabled,
-      locked,
       "uy-dropdown-arrow": true,
       focus: !!r.focused,
+      disabled,
+      locked,
     }, [
       select(
         {
@@ -42,7 +42,8 @@ const dropdown = <S>(options: DropdownOptions<S>) => (state: State<S>): VDOM<S> 
           onchange: (state, event) => {
             if (!event) return state
             const target = event.target as HTMLInputElement
-            return wiring.update(state, freshDropdown(target.value))
+            const r = wiring.data(state)
+            return wiring.update(state, { ...r, value: target.value })
           },
           onfocus: (state) => wiring.update(state, { ...r, focused: true }),
           onblur: (state) => wiring.update(state, { ...r, focused: false }),

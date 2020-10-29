@@ -32,9 +32,7 @@ const pagerNav = <S>(
 ): VDOM<S> => {
   return span({
     class: ["uy-pager-nav", !active && "uy-pager-nav-inactive"],
-    ...active
-      ? { onclick: handler }
-      : {},
+    ...active ? { onclick: handler } : {},
   }, content)
 }
 

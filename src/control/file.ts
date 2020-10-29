@@ -26,13 +26,7 @@ const freshFile = (value: string): FileData => {
 
 const file = <S>(options: FileOptions<S>) => (state: State<S>): VDOM<S> => {
   const { disabled, locked, label = "Select your file...", wiring, ...etc } = options
-  return box({
-    disabled,
-    locked,
-    "uy-control": true,
-    "uy-file": true,
-    "uy-input": true,
-  }, [
+  return box(cc(["uy-control uy-file uy-input", { disabled, locked }]), [
     html.label({ class: "uy-clicky", "data-text": label }, [
       html.input({
         disabled,

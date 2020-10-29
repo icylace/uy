@@ -103,10 +103,10 @@ console.log(mergeClasses(["purple", haze && "haze", foggy && "foggy"], { common:
 // -----------------------------------------------------------------------------
 
 // Constructs a CSS class string.
-export const glam = (xr: { [_: string]: boolean }): string =>
+const glam = (r: { [_: string]: boolean }): string =>
   // TODO:
   // - switch to using a Map object instead in order to guarantee order
-  Object.entries(xr)
+  Object.entries(r)
     .reduce(
       (acc: string[], [cssClass, active]: [string, boolean]): string[] =>
         active ? [...acc, cssClass] : acc,
@@ -139,7 +139,7 @@ const eventFx = (name: string) =>
     [windowListener(name), action]
 // fx (windowListener (name)) (action)
 
-export const onMouseDown = eventFx("mousedown")
+const onMouseDown = eventFx("mousedown")
 
 // -----------------------------------------------------------------------------
 
@@ -155,14 +155,10 @@ export const onMouseDown = eventFx("mousedown")
 //       return f (state, target.value)
 //     }
 
-// // A transition is a state transformation with any effects to run.
-// type Transition<S> = State<S> | EffectfulState<S>
+// A transition is a state transformation with any effects to run.
+type Transition<S> = State<S> | EffectfulState<S>
 
-export const unite = <S, P>(
-  t: Transform<S>,
-  s: State<S> | EffectfulState<S>,
-  p?: Payload<P>
-): State<S> | EffectfulState<S> => {
+const unite = <S>(t: Transform<S>, s: Transition<S>, p?: Payload<any>): Transition<S> => {
   if (!Array.isArray(s)) {
     return t(s, p)
   }
@@ -179,8 +175,8 @@ export const unite = <S, P>(
 }
 
 // Invokes a collection of event handlers for the same event.
-export const handleUsing = <S>(handlers: Transform<S, Event>[]) => {
-  return (state: State<S> | EffectfulState<S>, event?: Payload<Event>): State<S> | EffectfulState<S> => {
+const handleUsing = <S>(handlers: Transform<S, Event>[]) => {
+  return (state: Transition<S>, event?: Payload<Event>): Transition<S> => {
     return handlers.reduce((s, t) => unite(t, s, event), state)
   }
 }
@@ -193,11 +189,21 @@ export const handleUsing = <S>(handlers: Transform<S, Event>[]) => {
 // https://stackoverflow.com/a/28432139
 // https://codesandbox.io/s/czee7
 //
-export const onOutside = <S>(selector: string, action: Transform<S, unknown>) => {
-  return (state: State<S>, event?: Payload<Event>): State<S> | EffectfulState<S> => {
+const onOutside = <S>(selector: string, action: Transform<S, unknown>) => {
+  return (state: State<S>, event?: Payload<Event>): Transition<S> => {
     if (!event) return state
     const el = document.querySelector(selector)
     if (!el || el.contains(event.target as Element)) return state
     return action(state, event)
   }
+}
+
+// -----------------------------------------------------------------------------
+
+export {
+  glam,
+  handleUsing,
+  onMouseDown,
+  onOutside,
+  unite,
 }

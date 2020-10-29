@@ -5,6 +5,8 @@ const runScrollIntoView = <S>(_dispatch: Dispatch<S>, el?: Payload<Element>) => 
   el.scrollIntoView({ behavior: "smooth", block: "nearest" })
 }
 
-export const scrollIntoView = <S>(el: Payload<Element>): EffectDescriptor<S, Element> => {
+const scrollIntoView = <S>(el: Payload<Element>): EffectDescriptor<S, Element> => {
   return [runScrollIntoView, el]
 }
+
+export { scrollIntoView }

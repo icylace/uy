@@ -30,7 +30,7 @@ const textarea = <S>(options: TextareaOptions<S>) => (state: State<S>): VDOM<S> 
       onchange: (state, event) => {
         if (!event) return state
         const target = event.target as HTMLInputElement
-        return wiring.update(state, freshTextarea(target.value))
+        return wiring.update(state, { value: target.value })
       },
       ...etc,
       class: cc(["uy-input", { locked, disabled }, etc.class]),

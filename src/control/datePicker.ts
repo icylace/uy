@@ -33,7 +33,7 @@ const datePicker = <S>(options: DatePickerOptions<S>) => (state: State<S>): VDOM
       onchange: (state, event) => {
         if (!event) return state
         const target = event.target as HTMLInputElement
-        return wiring.update(state, freshDatePicker(target.value))
+        return wiring.update(state, { value: target.value })
       },
       ...etc,
       class: cc(["uy-input", { locked, disabled }, etc.class]),
@@ -58,7 +58,7 @@ const datetimeLocalPicker = <S>(options: DatePickerOptions<S>) => (state: State<
       onchange: (state, event) => {
         if (!event) return state
         const target = event.target as HTMLInputElement
-        return wiring.update(state, freshDatetimeLocalPicker(target.value))
+        return wiring.update(state, { value: target.value })
       },
       ...etc,
       class: cc(["uy-input", { locked, disabled }, etc.class]),
@@ -83,7 +83,7 @@ const monthPicker = <S>(options: DatePickerOptions<S>) => (state: State<S>): VDO
       onchange: (state, event) => {
         if (!event) return state
         const target = event.target as HTMLInputElement
-        return wiring.update(state, freshMonthPicker(target.value))
+        return wiring.update(state, { value: target.value })
       },
       ...etc,
       class: cc(["uy-input", { locked, disabled }, etc.class]),
@@ -108,7 +108,7 @@ const timePicker = <S>(options: DatePickerOptions<S>) => (state: State<S>): VDOM
       onchange: (state, event) => {
         if (!event) return state
         const target = event.target as HTMLInputElement
-        return wiring.update(state, freshTimePicker(target.value))
+        return wiring.update(state, { value: target.value })
       },
       ...etc,
       class: cc(["uy-input", { locked, disabled }, etc.class]),
@@ -133,7 +133,7 @@ const weekPicker = <S>(options: DatePickerOptions<S>) => (state: State<S>): VDOM
       onchange: (state, event) => {
         if (!event) return state
         const target = event.target as HTMLInputElement
-        return wiring.update(state, freshWeekPicker(target.value))
+        return wiring.update(state, { value: target.value })
       },
       ...etc,
       class: cc(["uy-input", { locked, disabled }, etc.class]),

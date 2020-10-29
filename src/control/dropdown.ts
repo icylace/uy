@@ -26,26 +26,26 @@ const freshDropdown = (value: string): DropdownData => {
 
 const dropdown = <S>(options: DropdownOptions<S>) => (state: State<S>): VDOM<S> => {
   const { disabled, locked, choices, wiring, ...etc } = options
-  const x = wiring.data(state)
+  const r = wiring.data(state)
   return box("uy-control uy-dropdown", [
     box({
       disabled,
       locked,
       "uy-dropdown-arrow": true,
-      focus: !!x.focused,
+      focus: !!r.focused,
     }, [
       select(
         {
           disabled,
           readonly: locked,
-          value: x.value,
+          value: r.value,
           onchange: (state, event) => {
             if (!event) return state
             const target = event.target as HTMLInputElement
             return wiring.update(state, freshDropdown(target.value))
           },
-          onfocus: (state) => wiring.update(state, { ...x, focused: true }),
-          onblur: (state) => wiring.update(state, { ...x, focused: false }),
+          onfocus: (state) => wiring.update(state, { ...r, focused: true }),
+          onblur: (state) => wiring.update(state, { ...r, focused: false }),
           ...etc,
           class: cc(["uy-input", { locked, disabled }, etc.class]),
         },

@@ -47,7 +47,7 @@ const file = <S>(options: FileOptions<S>) => (state: State<S>): VDOM<S> => {
           parent.dataset.text = target.value !== ""
             ? target.value.replace(/.*(\/|\\)/, "")
             : label
-          return wiring.update(state, freshFile(target.value))
+          return wiring.update(state, { value: target.value })
         },
         ...etc,
         class: cc([{ disabled, locked }, etc.class]),

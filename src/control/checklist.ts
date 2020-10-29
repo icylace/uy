@@ -36,15 +36,15 @@ const checklist = <S>(options: ChecklistOptions<S>) => (state: State<S>): VDOM<S
 
   const item = (x: ChecklistItem, i: number): TableRow<S> => {
     const itemWiring: Wiring<S, CheckboxData> = ({
-      data: (r) => ({ value: wiring.data(r).items[i].selected }),
-      update: (r, x) => {
-        const xr = wiring.data(r)
-        return wiring.update(r, {
-          ...xr,
+      data: (state) => ({ value: wiring.data(state).items[i].selected }),
+      update: (state, x) => {
+        const r = wiring.data(state)
+        return wiring.update(state, {
+          ...r,
           items: [
-            ...xr.items.slice(0, i),
-            { ...xr.items[i], selected: x.value },
-            ...xr.items.slice(i + 1,),
+            ...r.items.slice(0, i),
+            { ...r.items[i], selected: x.value },
+            ...r.items.slice(i + 1,),
           ],
         })
       },

@@ -46,7 +46,7 @@ const checkbox = <S>(options: CheckboxOptions<S>) => (state: State<S>): VDOM<S> 
         onchange: (state, event) => {
           if (!event) return state
           const target = event.target as HTMLInputElement
-          return wiring.update(state, freshCheckbox(target.checked))
+          return wiring.update(state, { value: target.checked })
         },
         ...etc,
         class: cc(["uy-input", { locked, disabled }, etc.class]),

@@ -5,9 +5,8 @@ import type { Wiring } from "../component"
 
 import cc from "classcat"
 import { div } from "ntml"
+import { table } from "../container/table"
 import { exclude } from "../utility/utility"
-import { get, set } from "../utility/shadesHelper"
-import { freshTable, table } from "../container/table"
 import { button } from "./button"
 import { cancelButton } from "./cancelButton"
 import { textbox } from "./textbox"
@@ -28,29 +27,31 @@ const freshList = (items: string[]): ListData => {
   return { items }
 }
 
-const addItem = (data: ListData) => <S>(state: State<S>): State<S> => {
-  const xs = wiring.data(state).items
-  return wiring.update(state, [...xs, ""])
-  // {
-  //   ...state,
-  //   items: [...state.items, ""],
-  //   set([...path, "items"])([...data.items, ""])(state)
-  // // return set([...path, "items"])([...data.items, ""])(state)
+const addItem = <S>(wiring: Wiring<S, ListData>) => (state: State<S>): State<S> => {
+  const r = wiring.data(state)
+  return wiring.update(state, { ...r, items: [...r.items, ""] })
 }
 
-const updateItem = (i: number) => <S, P>(state: State<S>, value: Payload<P>): State<S> => {
-  return set([...path, "items", i])(value)(state)
+const updateItem = <S>(wiring: Wiring<S, ListData>, i: number) => (state: State<S>, value: Payload<any>): State<S> => {
+  const r = wiring.data(state)
+  return wiring.update(state, {
+    ...r,
+    items: [
+      ...r.items.slice(0, i),
+      value,
+      ...r.items.slice(i + 1),
+    ],
+  })
 }
 
-const removeItem = (i: number) => <S>(state: State<S>): State<S> => {
-  return set([...path, "items"])(
-    exclude(i, get([...path, "items"])(state) as string[]),
-  )(state)
+const removeItem = <S>(wiring: Wiring<S, ListData>, i: number) => (state: State<S>): State<S> => {
+  const r = wiring.data(state)
+  return wiring.update(state, { ...r, items: exclude(i, r.items) })
 }
 
 const list = <S>(options: ListOptions<S>) => (state: State<S>): VDOM<S> => {
   const { disabled, locked, headers, wiring, ...etc } = options
-  const x = wiring.data(state)
+  const r = wiring.data(state)
 
   const item = (value: string, i: number): TableCell<S>[] => {
     const textWiring = {
@@ -61,10 +62,14 @@ const list = <S>(options: ListOptions<S>) => (state: State<S>): VDOM<S> => {
       textbox({
         disabled,
         locked,
-        // update: updateItem(path, i),
+        // update: updateItem(wiring, i),
         wiring: textWiring,
+      })(state),
+      cancelButton<S>({
+        disabled,
+        locked,
+        handler: removeItem(wiring, i),
       }),
-      cancelButton<S>({ disabled, locked, handler: removeItem(path, i) }),
     ]
   }
 
@@ -75,7 +80,7 @@ const list = <S>(options: ListOptions<S>) => (state: State<S>): VDOM<S> => {
         disabled,
         locked,
         label: "+ Add",
-        handler: addItem(x),
+        handler: addItem(r),
       }),
     ],
   ]
@@ -87,8 +92,8 @@ const list = <S>(options: ListOptions<S>) => (state: State<S>): VDOM<S> => {
     },
     [
       table(
-        { disabled, headers, locked, sortDescending: false, },
-        freshTable([...x.items.map(item), grower])
+        { disabled, locked, headers, sortDescending: false, },
+        [...r.items.map(item), grower]
       ),
     ],
   )

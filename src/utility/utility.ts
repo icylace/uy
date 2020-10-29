@@ -1,22 +1,40 @@
-export const delist = (key: string) => (xr: Record<string, unknown>): Record<string, unknown> => {
-  const { [key]: _, ...etc } = xr
+const delist = (key: string) => <T>(r: Record<string, T>): Record<string, T> => {
+  const { [key]: _, ...etc } = r
   return etc
 }
 
-export const exclude = (i: number, xs: unknown[]): unknown[] => {
+// -----------------------------------------------------------------------------
+
+const adjust = <T>(i: number, value: any, xs: T[]): T[] => {
+  return [...xs.slice(0, i), value, ...xs.slice(i + 1)]
+}
+
+const exclude = <T>(i: number, xs: T[]): T[] => {
   return [...xs.slice(0, i), ...xs.slice(i + 1)]
 }
 
-// export const map = <T, U>(f: (_: T) => U) => (xs: T[]): U[] =>
+// -----------------------------------------------------------------------------
+
+// const map = <T, U>(f: (_: T) => U) => (xs: T[]): U[] =>
 //   xs.map (f)
 
 // TODO:
-// export const pipe = <T extends any>(...fs: ((_: T) => T)[]) => (x: T): T =>
+// const pipe = <T extends any>(...fs: ((_: T) => T)[]) => (x: T): T =>
 //   fs.reduce ((acc: any, f: Function) => f (acc), x)
-export const pipe = (...fs: ((_: any) => any)[]) => (x: any): any => {
+const pipe = (...fs: ((_: any) => any)[]) => (x: any): any => {
   return fs.reduce((acc: any, f: ((_: any) => any)) => f(acc), x)
 }
 
-export const range = (m: number, n: number): number[] => {
+const range = (m: number, n: number): number[] => {
   return [...Array(n - m)].map((_, i) => m + i)
+}
+
+// -----------------------------------------------------------------------------
+
+export {
+  adjust,
+  delist,
+  exclude,
+  pipe,
+  range,
 }

@@ -1,11 +1,9 @@
 import type { ClassProp, State, VDOM } from "hyperapp"
 import type { Content } from "ntml"
 import type { Wiring } from "../component"
-import type { Path } from "../utility/shadesHelper"
 
 import cc from "classcat"
 import { option, select } from "ntml"
-// import { set } from "../utility/shadesHelper"
 import { box } from "../container/box"
 
 export type DropdownData = {
@@ -19,7 +17,6 @@ export type DropdownOptions<S> = {
   disabled?: boolean
   locked?: boolean
   choices: Record<string, Content<S> | Content<S>[]>
-  path: Path
   wiring: Wiring<S, DropdownData>
 }
 
@@ -28,7 +25,7 @@ const freshDropdown = (value: string): DropdownData => {
 }
 
 const dropdown = <S>(options: DropdownOptions<S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, locked, choices, path, wiring, ...etc } = options
+  const { disabled, locked, choices, wiring, ...etc } = options
   const x = wiring.data(state)
   return box("uy-control uy-dropdown", [
     box({

@@ -9,12 +9,9 @@ import type {
   VNode,
 } from "hyperapp"
 import type { Wiring } from "../component"
-import type { Path } from "../utility/shadesHelper"
 
 import cc from "classcat"
 import { input, label, li, span, ul } from "ntml"
-import { pipe } from "../utility/utility"
-import { get, set } from "../utility/shadesHelper"
 import { addInsideEl, removeInsideEl } from "../utility/uyHelper"
 import { popup } from "../container/popup"
 import { box } from "../container/box"
@@ -33,7 +30,6 @@ export type SearchboxOptions<S> = {
   class?: ClassProp
   disabled?: boolean
   locked?: boolean
-  path: Path
   search: Searcher<S>
   wiring: Wiring<S, SearchboxData>
 }
@@ -47,16 +43,18 @@ const freshSearchbox = (value: string): SearchboxData => ({
 
 // -----------------------------------------------------------------------------
 
-const chooseResult = (path: Path, id: string, value: string) => <S>(state: State<S>): State<S> => {
-  return pipe(
-    set([...path, "results"])([]),
-    set([...path, "value"])(value),
-    removeInsideEl(id),
-  )(state)
+const chooseResult = (id: string, value: string) => <S>(state: State<S>): State<S> => {
+  return wiring.update(removeInsideEl(id)(state), {
+    ...wiring.data(state),
+    value,
+    results: [],
+  })
 }
 
-const updateResults = <S>(search: Searcher<S>, path: Path, id: string) => {
+const updateResults = <S>(search: Searcher<S>, id: string) => {
   return (state: State<S>, props?: Payload<SearchboxData>): State<S> | EffectfulState<S> => {
+    const r = wiring.data(state)
+
     const { value, results } = props ?? { value: "", results: [] }
 
     // It is possible the current value of the searchbox and the value that was
@@ -64,44 +62,43 @@ const updateResults = <S>(search: Searcher<S>, path: Path, id: string) => {
     // the searchbox value during the search. In that case another search gets
     // triggered using the new current searchbox value.
 
-    const curValue = get([...path, "value"])(state) as string
-
-    if (curValue !== value) {
+    if (r.value !== value) {
       return [
-        set([...path, "searching"])(true)(state),
-        search(updateResults(search, path, id))(curValue),
+        wiring.update(state, { ...r, searching: true }),
+        search(updateResults(search, id))(r.value),
       ]
     }
 
-    const newState = pipe(
-      set([...path, "searching"])(false),
-      set([...path, "results"])(results),
-    )(state) as State<S>
-
     return results.length
-      ? addInsideEl(id, set([...path, "results"])([]))(newState)
-      : removeInsideEl(id)(newState)
+      ? addInsideEl(id, wiring.update(state, {
+        ...r,
+        results: [],
+        searching: false,
+      }))
+      : removeInsideEl(id)(wiring.update(state, {
+        ...r,
+        results,
+        searching: false,
+      }))
   }
 }
 
-const update = <S>(search: Searcher<S>, path: Path, id: string, value: string) => {
+const update = <S>(search: Searcher<S>, id: string, value: string) => {
   return (state: State<S>): State<S> | EffectfulState<S> => {
-    return get([...path, "searching"])(state)
-      ? set([...path, "value"])(value)(state)
+    const r = wiring.data(state)
+    return r.searching
+      ? wiring.update(state, { ...r, value })
       : [
-        pipe(
-          set([...path, "searching"])(true),
-          set([...path, "value"])(value),
-        )(state) as State<S>,
-        search(updateResults(search, path, id))(value),
+        wiring.update(state, { ...r, value, searching: true }),
+        search(updateResults(search, id))(value),
       ]
   }
 }
 
 // -----------------------------------------------------------------------------
 
-const searchResult = (path: Path, id: string) => <S>(x: string): VDOM<S> => {
-  return li<S>({ onclick: chooseResult(path, id, x) }, x)
+const searchResult = (id: string) => <S>(x: string): VDOM<S> => {
+  return li<S>({ onclick: chooseResult(id, x) }, x)
 }
 
 // We don't let certain keys unnecessarily affect searching.
@@ -122,7 +119,7 @@ const noopKeys = [
 ]
 
 const searchbox = <S>(options: SearchboxOptions<S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, locked, path, search, wiring, ...etc } = options
+  const { disabled, locked, search, wiring, ...etc } = options
   const id = path.join("-")
   const x = wiring.data(state)
 
@@ -137,7 +134,7 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (state: State<S>): VDOM<S
       if (!event) return state
       if (noopKeys.includes(event.key)) return state
       const target = event.target as HTMLInputElement
-      return update(search, path, id, target.value)(state)
+      return update(search, id, target.value)(state)
     },
     // Here we're using the non-standard `search` event because it can detect
     // when a searchbox's clear button is used. The `input` event can also
@@ -148,7 +145,7 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (state: State<S>): VDOM<S
     onsearch: (state, event) => {
       if (!event) return state
       const target = event.target as HTMLInputElement
-      return update(search, path, id, target.value)(state)
+      return update(search, id, target.value)(state)
     },
     ...etc,
     class: cc(["uy-input", { locked, disabled }, etc.class]),
@@ -161,7 +158,7 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (state: State<S>): VDOM<S
         [
           ul(
             { class: "uy-searchbox-results uy-scroller" },
-            x.results.map(searchResult(path, id)),
+            x.results.map(searchResult(id)),
           ),
         ]
       )
@@ -185,7 +182,7 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (state: State<S>): VDOM<S
     }, [
       inputSearch,
       span(
-        { onclick: update(search, path, id, x.value) },
+        { onclick: update(search, id, x.value) },
         [
           icon({
             fas: true,

@@ -1,7 +1,7 @@
 import type { ClassProp, State, VDOM } from "hyperapp"
 import type { Content } from "ntml"
 import type { Wiring } from "../component"
-import type { TableData, TableRow } from "../container/table"
+import type { TableRow } from "../container/table"
 import type { CheckboxData } from "./checkbox"
 
 import cc from "classcat"
@@ -67,16 +67,12 @@ const checklist = <S>(options: ChecklistOptions<S>) => (state: State<S>): VDOM<S
     ]
   }
 
-  const tableData: TableData<S> = {
-    rows: x.items.map(item),
-  }
-
   return div(
     {
       ...etc,
       class: cc(["uy-container uy-checklist", { locked, disabled }, etc.class]),
     },
-    [table({ disabled, locked }, tableData)],
+    [table({ disabled, locked }, x.items.map(item))],
   )
 }
 

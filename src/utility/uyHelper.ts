@@ -9,20 +9,30 @@ import type {
 } from "hyperapp"
 
 import { handleUsing, onMouseDown, onOutside } from "./hyperappHelper"
-import { get, mod, set } from "./shadesHelper"
 import { delist } from "./utility"
 
 // -----------------------------------------------------------------------------
 
-export const addInsideEl = <S>(id: string, f: Transform<S>) => {
-  return (state: State<S>): State<S> => {
-    return set(["uy", "insiders", id])(f)(state)
+export const addInsideEl = <S>(id: string, f: Transform<S>) => (state: State<S>): State<S> => {
+  return {
+    ...state,
+    uy: {
+      ...state.uy,
+      insiders: {
+        ...state.uy.insiders,
+        [id]: f,
+      },
+    },
   }
 }
 
-export const removeInsideEl = (id: string) => {
-  return <S>(state: State<S>): State<S> => {
-    return mod(["uy", "insiders"])(delist(id))(state)
+export const removeInsideEl = (id: string) => <S>(state: State<S>): State<S> => {
+  return {
+    ...state,
+    uy: {
+      ...state.uy,
+      insiders: delist(id)(state.uy.insiders),
+    },
   }
 }
 
@@ -37,7 +47,7 @@ const freshState = <S>(state: State<S>): State<S> => ({
         // TODO:
         // - switch to using a Map object instead in order to guarantee order
         const insiders: [string, Transform<S>][] =
-          Object.entries(get(["uy", "insiders"])(state) ?? {})
+          Object.entries(state.uy.insiders ?? {})
         const detectionsOutside: Transform<S, Event>[] = insiders.map(
           ([insider, f]: [string, Transform<S>]): Transform<S, Event> => {
             return onOutside(`#${insider}`, (state) => removeInsideEl(insider)(f(state)))
@@ -52,7 +62,7 @@ const freshState = <S>(state: State<S>): State<S> => ({
 // -----------------------------------------------------------------------------
 
 const mouseDownSubscriptionAction = <S, P>(state: State<S>, _props?: Payload<P>): State<S> | EffectfulState<S> => {
-  const handlerMap = get(["uy", "mousedownHandlers"])(state) as Record<string, Transform<S, Event>>
+  const handlerMap = state.uy.mousedownHandlers as Record<string, Transform<S, Event>>
   const handlers = Object.values(handlerMap)
   const transitioner = handleUsing(handlers)
   return [state, onMouseDown(transitioner)]

@@ -31,7 +31,7 @@ const textbox = <S>(options: TextboxOptions<S>) => (state: State<S>): VDOM<S> =>
       onchange: (state, event) => {
         if (!event) return state
         const target = event.target as HTMLInputElement
-        return wiring.update(state, freshTextbox(target.value))
+        return wiring.update(state, { value: target.value })
       },
       ...etc,
       class: cc(["uy-input", { locked, disabled }, etc.class]),

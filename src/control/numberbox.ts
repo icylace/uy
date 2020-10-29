@@ -1,7 +1,6 @@
 import type { ClassProp, State, VDOM } from "hyperapp"
 import type { Content } from "ntml"
 import type { Wiring } from "../component"
-import type { Path } from "../utility/shadesHelper"
 
 import cc from "classcat"
 import * as html from "ntml"
@@ -17,7 +16,6 @@ export type NumberboxOptions<S> = {
   disabled?: boolean
   label?: Content<S>
   locked?: boolean
-  path: Path
   wiring: Wiring<S, NumberboxData>
 }
 
@@ -29,8 +27,8 @@ const sanitizedNumber = (n: string): number => {
   return Math.max(0, Number.parseInt(n, 10))
 }
 
-const numberbox = <S>(props: NumberboxOptions<S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, locked, label, path, wiring, ...etc } = props
+const numberbox = <S>(options: NumberboxOptions<S>) => (state: State<S>): VDOM<S> => {
+  const { disabled, locked, label, wiring, ...etc } = options
   const x = wiring.data(state)
   return box("uy-control uy-numberbox", [
     html.label({ class: { focus: !!x.focused, locked, disabled } }, [
@@ -43,7 +41,10 @@ const numberbox = <S>(props: NumberboxOptions<S>) => (state: State<S>): VDOM<S> 
         onchange: (state, event) => {
           if (!event) return state
           const target = event.target as HTMLInputElement
-          return wiring.update(state, { focused: x.focused, value: sanitizedNumber(target.value) })
+          return wiring.update(state, {
+            focused: x.focused,
+            value: sanitizedNumber(target.value),
+          })
         },
         onfocus: (state) => wiring.update(state, { ...x, focused: true }),
         onblur: (state) => wiring.update(state, { ...x, focused: false }),

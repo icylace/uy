@@ -17,18 +17,10 @@ export type TableOptions<S> = {
   [_: string]: unknown
   class?: ClassProp
   disabled?: boolean
-  headers?: TableRow<S>
   locked?: boolean
+  headers?: TableRow<S>
   orderColumn?: string | null
   sortDescending?: boolean
-}
-
-export type TableData<S> = {
-  rows: TableRow<S>[]
-}
-
-const freshTable = <S>(rows: TableRow<S>[]): TableData<S> => {
-  return { rows }
 }
 
 const tableHeader = (orderColumn: string | null | undefined, sortDescending: boolean) => {
@@ -71,7 +63,7 @@ const tableRow = <S>(row: TableRow<S>): VDOM<S> => {
   return html.tr(row.map(tableCell))
 }
 
-const table = <S>(options: TableOptions<S>, data: TableData<S>): VDOM<S> => {
+const table = <S>(options: TableOptions<S>, rows: TableRow<S>[]): VDOM<S> => {
   const { disabled, locked, headers, orderColumn, sortDescending, ...etc } = options
   return box({
     "uy-control": true,
@@ -83,9 +75,9 @@ const table = <S>(options: TableOptions<S>, data: TableData<S>): VDOM<S> => {
       Array.isArray(headers) && headers.length
         ? html.thead(headers.map(tableHeader(orderColumn, !!sortDescending)))
         : null,
-      html.tbody(data.rows.map(tableRow)),
+      html.tbody(rows.map(tableRow)),
     ]),
   ])
 }
 
-export { freshTable, table }
+export { table }

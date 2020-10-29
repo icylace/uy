@@ -29,7 +29,6 @@ export * from "./indicator/icon"
 export * from "./indicator/spinner"
 
 export * from "./utility/hyperappHelper"
-export * from "./utility/shadesHelper"
 export * from "./utility/uyHelper"
 
 // TODO:

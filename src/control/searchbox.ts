@@ -44,8 +44,8 @@ const freshSearchbox = (value: string): SearchboxData => ({
 // -----------------------------------------------------------------------------
 
 const chooseResult = (id: string, value: string) => <S>(state: State<S>): State<S> => {
-  return wiring.update(removeInsideEl(id)(state), {
-    ...wiring.data(state),
+  return wiring.set(removeInsideEl(id)(state), {
+    ...wiring.get(state),
     value,
     results: [],
   })
@@ -53,7 +53,7 @@ const chooseResult = (id: string, value: string) => <S>(state: State<S>): State<
 
 const updateResults = <S>(search: Searcher<S>, id: string) => {
   return (state: State<S>, props?: Payload<SearchboxData>): State<S> | EffectfulState<S> => {
-    const r = wiring.data(state)
+    const r = wiring.get(state)
 
     const { value, results } = props ?? { value: "", results: [] }
 
@@ -64,18 +64,18 @@ const updateResults = <S>(search: Searcher<S>, id: string) => {
 
     if (r.value !== value) {
       return [
-        wiring.update(state, { ...r, searching: true }),
+        wiring.set(state, { ...r, searching: true }),
         search(updateResults(search, id))(r.value),
       ]
     }
 
     return results.length
-      ? addInsideEl(id, wiring.update(state, {
+      ? addInsideEl(id, wiring.set(state, {
         ...r,
         results: [],
         searching: false,
       }))
-      : removeInsideEl(id)(wiring.update(state, {
+      : removeInsideEl(id)(wiring.set(state, {
         ...r,
         results,
         searching: false,
@@ -85,11 +85,11 @@ const updateResults = <S>(search: Searcher<S>, id: string) => {
 
 const update = <S>(search: Searcher<S>, id: string, value: string) => {
   return (state: State<S>): State<S> | EffectfulState<S> => {
-    const r = wiring.data(state)
+    const r = wiring.get(state)
     return r.searching
-      ? wiring.update(state, { ...r, value })
+      ? wiring.set(state, { ...r, value })
       : [
-        wiring.update(state, { ...r, value, searching: true }),
+        wiring.set(state, { ...r, value, searching: true }),
         search(updateResults(search, id))(value),
       ]
   }
@@ -121,15 +121,15 @@ const noopKeys = [
 const searchbox = <S>(options: SearchboxOptions<S>) => (state: State<S>): VDOM<S> => {
   const { disabled, locked, search, wiring, ...etc } = options
   const id = path.join("-")
-  const x = wiring.data(state)
+  const x = wiring.get(state)
 
   const inputSearch = input<S>({
     disabled,
     readonly: locked,
     value: x.value,
     type: "search",
-    onfocus: (state) => wiring.update(state, { ...x, focused: true }),
-    onblur: (state) => wiring.update(state, { ...x, focused: false }),
+    onfocus: (state) => wiring.set(state, { ...x, focused: true }),
+    onblur: (state) => wiring.set(state, { ...x, focused: false }),
     onkeyup: (state, event) => {
       if (!event) return state
       if (noopKeys.includes(event.key)) return state

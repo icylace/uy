@@ -30,7 +30,7 @@ const file = <S>(options: FileOptions<S>) => (state: State<S>): VDOM<S> => {
     html.label({ class: "uy-clicky", "data-text": label }, [
       html.input({
         disabled,
-        value: wiring.data(state).value,
+        value: wiring.get(state).value,
         type: "file",
         // TODO:
         // - probably needs to be rethought
@@ -41,7 +41,7 @@ const file = <S>(options: FileOptions<S>) => (state: State<S>): VDOM<S> => {
           parent.dataset.text = target.value !== ""
             ? target.value.replace(/.*(\/|\\)/, "")
             : label
-          return wiring.update(state, { value: target.value })
+          return wiring.set(state, { value: target.value })
         },
         ...etc,
         class: cc([{ disabled, locked }, etc.class]),

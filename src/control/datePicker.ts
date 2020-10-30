@@ -28,12 +28,12 @@ const datePicker = <S>(options: DatePickerOptions<S>) => (state: State<S>): VDOM
     input({
       disabled,
       readonly: locked,
-      value: wiring.data(state).value,
+      value: wiring.get(state).value,
       type: "date",
       onchange: (state, event) => {
         if (!event) return state
         const target = event.target as HTMLInputElement
-        return wiring.update(state, { value: target.value })
+        return wiring.set(state, { value: target.value })
       },
       ...etc,
       class: cc(["uy-input", { locked, disabled }, etc.class]),
@@ -53,12 +53,12 @@ const datetimeLocalPicker = <S>(options: DatePickerOptions<S>) => (state: State<
     input({
       disabled,
       readonly: locked,
-      value: wiring.data(state).value,
+      value: wiring.get(state).value,
       type: "datetime-local",
       onchange: (state, event) => {
         if (!event) return state
         const target = event.target as HTMLInputElement
-        return wiring.update(state, { value: target.value })
+        return wiring.set(state, { value: target.value })
       },
       ...etc,
       class: cc(["uy-input", { locked, disabled }, etc.class]),
@@ -78,12 +78,12 @@ const monthPicker = <S>(options: DatePickerOptions<S>) => (state: State<S>): VDO
     input({
       disabled,
       readonly: locked,
-      value: wiring.data(state).value,
+      value: wiring.get(state).value,
       type: "month",
       onchange: (state, event) => {
         if (!event) return state
         const target = event.target as HTMLInputElement
-        return wiring.update(state, { value: target.value })
+        return wiring.set(state, { value: target.value })
       },
       ...etc,
       class: cc(["uy-input", { locked, disabled }, etc.class]),
@@ -103,12 +103,12 @@ const timePicker = <S>(options: DatePickerOptions<S>) => (state: State<S>): VDOM
     input({
       disabled,
       readonly: locked,
-      value: wiring.data(state).value,
+      value: wiring.get(state).value,
       type: "time",
       onchange: (state, event) => {
         if (!event) return state
         const target = event.target as HTMLInputElement
-        return wiring.update(state, { value: target.value })
+        return wiring.set(state, { value: target.value })
       },
       ...etc,
       class: cc(["uy-input", { locked, disabled }, etc.class]),
@@ -128,12 +128,12 @@ const weekPicker = <S>(options: DatePickerOptions<S>) => (state: State<S>): VDOM
     input({
       disabled,
       readonly: locked,
-      value: wiring.data(state).value,
+      value: wiring.get(state).value,
       type: "week",
       onchange: (state, event) => {
         if (!event) return state
         const target = event.target as HTMLInputElement
-        return wiring.update(state, { value: target.value })
+        return wiring.set(state, { value: target.value })
       },
       ...etc,
       class: cc(["uy-input", { locked, disabled }, etc.class]),

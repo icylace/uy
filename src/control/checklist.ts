@@ -32,14 +32,14 @@ const freshChecklist = (items: ChecklistItem[]): Checklist => {
 
 const checklist = <S>(options: ChecklistOptions<S>) => (state: State<S>): VDOM<S> => {
   const { disabled, locked, render, wiring, ...etc } = options
-  const x = wiring.data(state)
+  const x = wiring.get(state)
 
   const item = (x: ChecklistItem, i: number): TableRow<S> => {
     const itemWiring: Wiring<S, CheckboxData> = ({
-      data: (state) => ({ value: wiring.data(state).items[i].selected }),
+      data: (state) => ({ value: wiring.get(state).items[i].selected }),
       update: (state, x) => {
-        const r = wiring.data(state)
-        return wiring.update(state, {
+        const r = wiring.get(state)
+        return wiring.set(state, {
           ...r,
           items: [
             ...r.items.slice(0, i),

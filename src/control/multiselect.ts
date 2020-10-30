@@ -29,7 +29,7 @@ const freshMultiselect = (value: string[]): MultiselectData => {
 
 const multiselect = <S>(options: MultiselectOptions<S>) => (state: State<S>): VDOM<S> => {
   const { disabled, locked, update, choices, usingColumnMode, wiring, ...etc } = options
-  const r = wiring.data(state)
+  const r = wiring.get(state)
 
   // TODO:
   // - should order matter? is Set the right way to do this?
@@ -57,7 +57,7 @@ const multiselect = <S>(options: MultiselectOptions<S>) => (state: State<S>): VD
               }
               // TODO:
               // - maybe return Set directly and maybe also find a way to ensure order?
-              return wiring.update(state, selection.has(value))
+              return wiring.set(state, selection.has(value))
               // return update (state, Array.from (selection))
               // const update = (state: State<S>, value: any): any => set ([...path, "value"]) (value) (state)
             },

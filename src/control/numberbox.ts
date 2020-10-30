@@ -29,7 +29,7 @@ const sanitizedNumber = (n: string): number => {
 
 const numberbox = <S>(options: NumberboxOptions<S>) => (state: State<S>): VDOM<S> => {
   const { disabled, locked, label, wiring, ...etc } = options
-  const r = wiring.data(state)
+  const r = wiring.get(state)
   return box("uy-control uy-numberbox", [
     html.label({ class: { focus: !!r.focused, locked, disabled } }, [
       html.input({
@@ -41,13 +41,13 @@ const numberbox = <S>(options: NumberboxOptions<S>) => (state: State<S>): VDOM<S
         onchange: (state, event) => {
           if (!event) return state
           const target = event.target as HTMLInputElement
-          return wiring.update(state, {
-            focused: wiring.data(state).focused,
+          return wiring.set(state, {
+            focused: wiring.get(state).focused,
             value: sanitizedNumber(target.value),
           })
         },
-        onfocus: (state) => wiring.update(state, { ...wiring.data(state), focused: true }),
-        onblur: (state) => wiring.update(state, { ...wiring.data(state), focused: false }),
+        onfocus: (state) => wiring.set(state, { ...wiring.get(state), focused: true }),
+        onblur: (state) => wiring.set(state, { ...wiring.get(state), focused: false }),
         ...etc,
         class: cc(["uy-input", { locked, disabled }, etc.class]),
       }),

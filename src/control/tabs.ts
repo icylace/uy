@@ -45,7 +45,7 @@ const tab = <S>(wiring: Wiring<S, TabsData>, activeTab: string) => {
       onclick: (state, event) => {
         if (!event) return state
         const target = event.target as HTMLElement
-        const transition = wiring.update(state, freshTabs(String(i)))
+        const transition = wiring.set(state, freshTabs(String(i)))
         return selected
           ? Array.isArray(transition)
             ? [...transition, scrollIntoView(target)] as EffectfulState<S>
@@ -58,7 +58,7 @@ const tab = <S>(wiring: Wiring<S, TabsData>, activeTab: string) => {
 
 const tabs = <S>(options: TabsOptions<S>) => (state: State<S>): VDOM<S> => {
   const { disabled, locked, itemsFooter, itemsHeader, tabList, wiring, ...etc } = options
-  const x = wiring.data(state)
+  const x = wiring.get(state)
   const headings = tabList.map((x: Tab<S>): Content<S> => x.heading)
   const panels = tabList.map((x: Tab<S>): Content<S> => x.panel)
   return div(

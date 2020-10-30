@@ -28,13 +28,13 @@ const freshList = (items: string[]): ListData => {
 }
 
 const addItem = <S>(wiring: Wiring<S, ListData>) => (state: State<S>): State<S> => {
-  const r = wiring.data(state)
-  return wiring.update(state, { ...r, items: [...r.items, ""] })
+  const r = wiring.get(state)
+  return wiring.set(state, { ...r, items: [...r.items, ""] })
 }
 
 const updateItem = <S>(wiring: Wiring<S, ListData>, i: number) => (state: State<S>, value: Payload<any>): State<S> => {
-  const r = wiring.data(state)
-  return wiring.update(state, {
+  const r = wiring.get(state)
+  return wiring.set(state, {
     ...r,
     items: [
       ...r.items.slice(0, i),
@@ -45,18 +45,18 @@ const updateItem = <S>(wiring: Wiring<S, ListData>, i: number) => (state: State<
 }
 
 const removeItem = <S>(wiring: Wiring<S, ListData>, i: number) => (state: State<S>): State<S> => {
-  const r = wiring.data(state)
-  return wiring.update(state, { ...r, items: exclude(i, r.items) })
+  const r = wiring.get(state)
+  return wiring.set(state, { ...r, items: exclude(i, r.items) })
 }
 
 const list = <S>(options: ListOptions<S>) => (state: State<S>): VDOM<S> => {
   const { disabled, locked, headers, wiring, ...etc } = options
-  const r = wiring.data(state)
+  const r = wiring.get(state)
 
   const item = (value: string, i: number): TableCell<S>[] => {
     const textWiring = {
       data: () => ({ value }),
-      update: () => ({ ...wiring.update(), value })
+      update: () => ({ ...wiring.set(), value })
     }
     return [
       textbox({

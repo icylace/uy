@@ -42,9 +42,9 @@ const pagerMore = <S>(content: Content<S> | Content<S>[]): VDOM<S> => {
 
 const pager = <S>(options: PagerOptions<S>) => (state: State<S>): VDOM<S> | null => {
   const { disabled, locked, itemsPerPage, pageRange, wiring, ...etc } = options
-  const r = wiring.data(state)
+  const r = wiring.get(state)
   const update = (state: State<S>, value: number) => {
-    return wiring.update(state, { ...r, value })
+    return wiring.set(state, { ...r, value })
   }
 
   if (!r.itemsTotal) return null

@@ -41,12 +41,12 @@ const checkbox = <S>(options: CheckboxOptions<S>) => (state: State<S>): VDOM<S> 
     html.label({ class: { disabled: !!disabled, locked: !!locked } }, [
       html.input({
         disabled,
-        checked: wiring.data(state).value,
+        checked: wiring.get(state).value,
         type: "checkbox",
         onchange: (state, event) => {
           if (!event) return state
           const target = event.target as HTMLInputElement
-          return wiring.update(state, { value: target.checked })
+          return wiring.set(state, { value: target.checked })
         },
         ...etc,
         class: cc(["uy-input", { locked, disabled }, etc.class]),

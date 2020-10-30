@@ -33,12 +33,12 @@ const radios = <S>(options: RadiosOptions<S>) => (state: State<S>): VDOM<S> => {
           html.input({
             disabled,
             value,
-            checked: value === wiring.data(state).value,
+            checked: value === wiring.get(state).value,
             type: "radio",
             onchange: (state, event) => {
               if (!event) return state
               const target = event.target as HTMLInputElement
-              return wiring.update(state, { value: target.value })
+              return wiring.set(state, { value: target.value })
             },
             ...etc,
             class: cc(["uy-input", { locked, disabled }, etc.class]),

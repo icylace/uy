@@ -1,15 +1,16 @@
-import type { ClassProp, Payload, State, VDOM } from "hyperapp"
+import type { ClassProp, State, VDOM } from "hyperapp"
 import type { Content } from "ntml"
 import type { TableCell } from "../container/table"
 import type { Wiring } from "../component"
+import type { TextboxData } from "./textbox"
 
 import cc from "classcat"
 import { div } from "ntml"
 import { table } from "../container/table"
-import { exclude } from "../utility/utility"
+import { adjust, exclude } from "../utility/utility"
 import { button } from "./button"
 import { cancelButton } from "./cancelButton"
-import { textbox } from "./textbox"
+import { textbox, freshTextbox } from "./textbox"
 
 export type ListData = {
   items: string[]
@@ -27,48 +28,27 @@ const freshList = (items: string[]): ListData => {
   return { items }
 }
 
-const addItem = <S>(wiring: Wiring<S, ListData>) => (state: State<S>): State<S> => {
-  const r = wiring.get(state)
-  return wiring.set(state, { ...r, items: [...r.items, ""] })
-}
-
-const updateItem = <S>(wiring: Wiring<S, ListData>, i: number) => (state: State<S>, value: Payload<any>): State<S> => {
-  const r = wiring.get(state)
-  return wiring.set(state, {
-    ...r,
-    items: [
-      ...r.items.slice(0, i),
-      value,
-      ...r.items.slice(i + 1),
-    ],
-  })
-}
-
-const removeItem = <S>(wiring: Wiring<S, ListData>, i: number) => (state: State<S>): State<S> => {
-  const r = wiring.get(state)
-  return wiring.set(state, { ...r, items: exclude(i, r.items) })
-}
-
 const list = <S>(options: ListOptions<S>) => (state: State<S>): VDOM<S> => {
   const { disabled, locked, headers, wiring, ...etc } = options
   const r = wiring.get(state)
 
   const item = (value: string, i: number): TableCell<S>[] => {
-    const textWiring = {
-      data: () => ({ value }),
-      update: () => ({ ...wiring.set(), value })
+    const textWiring: Wiring<S, TextboxData> = {
+      get: (_state) => freshTextbox(value),
+      mod: (state, _f) => state,
+      set: (state, x) => wiring.mod(state, (r) => ({
+        ...r,
+        items: adjust(i, x, r.items),
+      })),
     }
     return [
-      textbox({
-        disabled,
-        locked,
-        // update: updateItem(wiring, i),
-        wiring: textWiring,
-      })(state),
+      textbox({ disabled, locked, wiring: textWiring })(state),
       cancelButton<S>({
         disabled,
         locked,
-        handler: removeItem(wiring, i),
+        handler: (state: State<S>): State<S> => {
+          return wiring.mod(state, (r) => ({ ...r, items: exclude(i, r.items) }))
+        },
       }),
     ]
   }
@@ -80,7 +60,9 @@ const list = <S>(options: ListOptions<S>) => (state: State<S>): VDOM<S> => {
         disabled,
         locked,
         label: "+ Add",
-        handler: addItem(r),
+        handler: (state: State<S>): State<S> => {
+          return wiring.mod(state, (r) => ({ ...r, items: [...r.items, ""] }))
+        },
       }),
     ],
   ]

@@ -36,8 +36,9 @@ const checklist = <S>(options: ChecklistOptions<S>) => (state: State<S>): VDOM<S
 
   const item = (x: ChecklistItem, i: number): TableRow<S> => {
     const itemWiring: Wiring<S, CheckboxData> = ({
-      data: (state) => ({ value: wiring.get(state).items[i].selected }),
-      update: (state, x) => {
+      get: (state) => ({ value: wiring.get(state).items[i].selected }),
+      mod: (state, _f) => state,
+      set: (state, x) => {
         const r = wiring.get(state)
         return wiring.set(state, {
           ...r,

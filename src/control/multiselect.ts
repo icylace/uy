@@ -1,6 +1,7 @@
 import type { ClassProp, State, Transform, VDOM } from "hyperapp"
 import type { Content } from "ntml"
 import type { Wiring } from "../component"
+import type { CheckboxData } from "./checkbox"
 
 import cc from "classcat"
 import { div } from "ntml"
@@ -47,9 +48,10 @@ const multiselect = <S>(options: MultiselectOptions<S>) => (state: State<S>): VD
       // - switch to using a Map object instead in order to guarantee order
       Object.entries(choices).map(
         ([value, label]: [string, Content<S> | Content<S>[]]): VDOM<S> => {
-          const checkboxWiring = {
-            data: (_state) => freshCheckbox(selection.has(value)),
-            update: (state, checked) => {
+          const checkboxWiring: Wiring<S, CheckboxData> = {
+            get: (_state) => freshCheckbox(selection.has(value)),
+            mod: (state, _f) => state,
+            set: (state, checked) => {
               if (checked) {
                 selection.add(value)
               } else {
@@ -57,7 +59,7 @@ const multiselect = <S>(options: MultiselectOptions<S>) => (state: State<S>): VD
               }
               // TODO:
               // - maybe return Set directly and maybe also find a way to ensure order?
-              return wiring.set(state, selection.has(value))
+              return wiring.set(state, freshCheckbox(selection.has(value)))
               // return update (state, Array.from (selection))
               // const update = (state: State<S>, value: any): any => set ([...path, "value"]) (value) (state)
             },

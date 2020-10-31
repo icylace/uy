@@ -1,4 +1,4 @@
-import type { ClassProp, State, Transform, VDOM } from "hyperapp"
+import type { ClassProp, State, VDOM } from "hyperapp"
 import type { Content } from "ntml"
 import type { Wiring } from "../component"
 import type { CheckboxData } from "./checkbox"
@@ -17,7 +17,6 @@ export type MultiselectOptions<S> = {
   disabled?: boolean
   locked?: boolean
   choices: Record<string, Content<S> | Content<S>[]>
-  update: Transform<S>
   usingColumnMode: boolean
   wiring: Wiring<S, MultiselectData>
 }
@@ -29,7 +28,7 @@ const freshMultiselect = (value: string[]): MultiselectData => {
 }
 
 const multiselect = <S>(options: MultiselectOptions<S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, locked, update, choices, usingColumnMode, wiring, ...etc } = options
+  const { disabled, locked, choices, usingColumnMode, wiring, ...etc } = options
   const r = wiring.get(state)
 
   // TODO:
@@ -54,36 +53,20 @@ const multiselect = <S>(options: MultiselectOptions<S>) => (state: State<S>): VD
             set: (state, checked) => {
               if (checked) {
                 selection.add(value)
-              } else {
-                selection.delete(value)
+                return wiring.set(state, freshCheckbox(true))
               }
-              // TODO:
-              // - maybe return Set directly and maybe also find a way to ensure order?
-              return wiring.set(state, freshCheckbox(selection.has(value)))
-              // return update (state, Array.from (selection))
-              // const update = (state: State<S>, value: any): any => set ([...path, "value"]) (value) (state)
+              selection.delete(value)
+              // return wiring.set(state, freshCheckbox(selection.has(value)))
+              return wiring.set(state, freshMultiselect(Array.from(selection)))
+
+              return wiring.set(state, freshCheckbox(false))
             },
+            // set: (state, x) => wiring.mod(state, (r) => ({
+            //   ...r,
+            //   items: adjust(i, x, r.items),
+            // })),
           }
-          return checkbox(
-            {
-              disabled,
-              label,
-              locked,
-              update: (state, checked) => {
-                if (checked) {
-                  selection.add(value)
-                } else {
-                  selection.delete(value)
-                }
-                // TODO:
-                // - maybe return Set directly and maybe also find a way to ensure order?
-                return update(state, selection.has(value))
-                // return update (state, Array.from (selection))
-                // const update = (state: State<S>, value: any): any => set ([...path, "value"]) (value) (state)
-              },
-            },
-            { value: selection.has(value) }
-          )
+          return checkbox({ disabled, label, locked, wiring: checkboxWiring })(state)
         }
       ),
     ),

@@ -53,13 +53,10 @@ const multiselect = <S>(options: MultiselectOptions<S>) => (state: State<S>): VD
             set: (state, checked) => {
               if (checked) {
                 selection.add(value)
-                return wiring.set(state, freshCheckbox(true))
+              } else {
+                selection.delete(value)
               }
-              selection.delete(value)
-              // return wiring.set(state, freshCheckbox(selection.has(value)))
               return wiring.set(state, freshMultiselect(Array.from(selection)))
-
-              return wiring.set(state, freshCheckbox(false))
             },
             // set: (state, x) => wiring.mod(state, (r) => ({
             //   ...r,

@@ -1,3 +1,5 @@
+export * from "./component"
+
 export * from "./container/box"
 export * from "./container/column"
 export * from "./container/field"

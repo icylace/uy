@@ -1,5 +1,9 @@
 // TODO:
 
+const foo = undefined
+
+export { foo }
+
 // import type {
 //   Action,
 //   ClassProp,

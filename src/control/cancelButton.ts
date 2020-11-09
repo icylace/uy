@@ -19,7 +19,7 @@ const cancelButton = <S>(options: CancelButtonOptions<S>): VDOM<S> => {
       type: "button",
       onclick: handler,
       ...etc,
-      class: cc(["uy-clicky", { locked, disabled }, etc.class]),
+      class: cc([{ locked, disabled }, etc.class]),
     }, "✕"),
   ])
 }

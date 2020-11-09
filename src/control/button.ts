@@ -21,7 +21,7 @@ const button = <S>(options: ButtonOptions<S>): VDOM<S> => {
       type: "button",
       onclick: handler,
       ...etc,
-      class: cc(["uy-clicky", { locked, disabled }, etc.class]),
+      class: cc([{ locked, disabled }, etc.class]),
     }, label),
   ])
 }

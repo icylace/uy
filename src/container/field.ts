@@ -16,7 +16,7 @@ export type Component<S> = (options: ComponentOptions) => (state: State<S>) => V
 
 const field = <S>(title: Content<S>, f: Component<S>, options: FieldOptions) => (state: State<S>): VDOM<S> => {
   const { disabled, locked, ...etc } = options
-  return box("uy-container uy-field", [
+  return box("uy-field", [
     label(
       {
         ...etc,

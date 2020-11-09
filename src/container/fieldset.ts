@@ -8,7 +8,7 @@ export type FieldsetOptions<S> = {
   [_: string]: unknown
   class?: ClassProp
   disabled?: boolean
-  label: Content<S> | Content<S>[]
+  title?: Content<S> | Content<S>[]
   locked?: boolean
 }
 
@@ -16,8 +16,8 @@ export type FieldsetOptions<S> = {
 // - `fieldset` -> `fields`
 //   - the renaming is to distinguish from the plain `fieldset` HTML element
 
-const fieldset = <S>(options: FieldsetOptions<S>, views: View<S>[]) => (state: State<S>): VDOM<S> => {
-  const { disabled, locked, label, ...etc } = options
+const fieldset = <S>(title: Content<S> | Content<S>[], options: FieldsetOptions<S>, views: View<S>[]) => (state: State<S>): VDOM<S> => {
+  const { disabled, locked, ...etc } = options
   const contents = views.map((g) => g(state))
   return html.fieldset(
     {
@@ -25,7 +25,7 @@ const fieldset = <S>(options: FieldsetOptions<S>, views: View<S>[]) => (state: S
       ...etc,
       class: cc(["uy-fieldset", { locked, disabled }, etc.class]),
     },
-    label ? [html.legend(label), ...contents] : contents,
+    title ? [html.legend(title), ...contents] : contents,
   )
 }
 

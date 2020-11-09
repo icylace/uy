@@ -64,7 +64,7 @@ const tabs = <S>(options: TabsOptions<S>) => (state: State<S>): VDOM<S> => {
   return div(
     {
       ...etc,
-      class: cc(["uy-control uy-container uy-tabs", { locked, disabled }, etc.class]),
+      class: cc(["uy-control uy-tabs", { locked, disabled }, etc.class]),
     },
     [
       box("uy-tabs-navigation", [

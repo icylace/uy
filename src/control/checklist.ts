@@ -71,7 +71,7 @@ const checklist = <S>(options: ChecklistOptions<S>) => (state: State<S>): VDOM<S
   return div(
     {
       ...etc,
-      class: cc(["uy-container uy-checklist", { locked, disabled }, etc.class]),
+      class: cc(["uy-checklist", { locked, disabled }, etc.class]),
     },
     [table({ disabled, locked }, x.items.map(item))],
   )

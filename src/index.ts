@@ -22,8 +22,7 @@ export * from "./control/multiselect"
 export * from "./control/numberbox"
 export * from "./control/pager"
 export * from "./control/radios"
-// TODO:
-// export * from "./control/searchbox"
+export * from "./control/searchbox"
 export * from "./control/tabs"
 export * from "./control/textarea"
 export * from "./control/textbox"
@@ -32,11 +31,8 @@ export * from "./indicator/icon"
 export * from "./indicator/spinner"
 
 export * from "./utility/hyperappHelper"
-// TODO:
-// export * from "./utility/uyHelper"
+export * from "./utility/uyHelper"
 
-// TODO:
 export * from "./utility/utility"
 
-// TODO:
 export * from "./types"

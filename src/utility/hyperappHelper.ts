@@ -102,17 +102,17 @@ console.log(mergeClasses(["purple", haze && "haze", foggy && "foggy"], { common:
 
 // -----------------------------------------------------------------------------
 
-// Constructs a CSS class string.
-const glam = (r: { [_: string]: boolean }): string =>
-  // TODO:
-  // - switch to using a Map object instead in order to guarantee order
-  Object.entries(r)
-    .reduce(
-      (acc: string[], [cssClass, active]: [string, boolean]): string[] =>
-        active ? [...acc, cssClass] : acc,
-      [],
-    )
-    .join(" ")
+// // Constructs a CSS class string.
+// const glam = (r: { [_: string]: boolean }): string =>
+//   // TODO:
+//   // - switch to using a Map object instead in order to guarantee order
+//   Object.entries(r)
+//     .reduce(
+//       (acc: string[], [cssClass, active]: [string, boolean]): string[] =>
+//         active ? [...acc, cssClass] : acc,
+//       [],
+//     )
+//     .join(" ")
 
 // -----------------------------------------------------------------------------
 
@@ -201,7 +201,7 @@ const onOutside = <S>(selector: string, action: Transform<S, unknown>) => {
 // -----------------------------------------------------------------------------
 
 export {
-  glam,
+  // glam,
   handleUsing,
   onMouseDown,
   onOutside,

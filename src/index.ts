@@ -30,9 +30,11 @@ export * from "./control/textbox"
 export * from "./indicator/icon"
 export * from "./indicator/spinner"
 
-export * from "./utility/hyperappHelper"
-export * from "./utility/uyHelper"
-
+export * from "./utility/handleUsing"
+export * from "./utility/onMouseDown"
+export * from "./utility/onOutside"
+export * from "./utility/unite"
 export * from "./utility/utility"
+export * from "./utility/uyHelper"
 
 export * from "./types"

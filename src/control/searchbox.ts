@@ -16,7 +16,7 @@ import { popup } from "../container/popup"
 import { box } from "../container/box"
 import { icon } from "../indicator/icon"
 
-export type Searcher<S> = (action: Action<S, SearchboxData>) => (value: string) => EffectDescriptor<S, string>
+export type Searcher<S, D> = (action: Action<S, SearchboxData>) => (value: string) => EffectDescriptor<S, D>
 
 export type SearchboxData = {
   focused: boolean
@@ -25,21 +25,21 @@ export type SearchboxData = {
   value: string
 }
 
-export type SearchboxOptions<S> = {
+export type SearchboxOptions<S, D> = {
   class?: ClassProp
   disabled?: boolean
   locked?: boolean
-  search: Searcher<S>
+  search: Searcher<S, D>
   onResults: (results: SearchboxData["results"], id: string, state: State<S>) => State<S>
   id: string
   wiring: Wiring<S, SearchboxData>
 }
 
 const freshSearchbox = (value: string): SearchboxData => ({
-  value,
   focused: false,
-  searching: false,
   results: [],
+  searching: false,
+  value,
 })
 
 // -----------------------------------------------------------------------------
@@ -61,16 +61,8 @@ const noopKeys = [
   "Super",
 ]
 
-const searchbox = <S>(options: SearchboxOptions<S>) => (state: State<S>): VDOM<S> => {
-  const {
-    disabled,
-    locked,
-    search,
-    onResults,
-    id,
-    wiring,
-    ...etc
-  } = options
+const searchbox = <S>(options: SearchboxOptions<S, any>) => (state: State<S>): VDOM<S> => {
+  const { disabled, locked, search, onResults, id, wiring, ...etc } = options
 
   const x = wiring.get(state)
 

@@ -145,7 +145,7 @@ task:hard-refresh() {
 
   rm ./package-lock.json && rm -fr ./node_modules && rm -fr ./output
 
-  npm install --save classcat hyperapp shades remeda redaxios
+  npm install --save classcat hyperapp shades remeda
   npm install --save @fortawesome/fontawesome-free
   npm install --save ntml
   npm install --save-dev snowpack typescript@4.0 rollup terser prettier
@@ -155,7 +155,6 @@ task:hard-refresh() {
   npm install --save-dev eslint-config-standard eslint-plugin-standard
   npm install --save-dev eslint-import-resolver-typescript
   npm install --save-dev @typescript-eslint/eslint-plugin @typescript-eslint/parser
-  # npm install --save-dev utility-types
   # npm install --save-dev jest ts-jest
   npm install --save-dev postcss cssnano
   npm install --save-dev postcss-cli postcss-import postcss-reporter postcss-preset-env

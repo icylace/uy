@@ -14,7 +14,7 @@ export type ChecklistItem = {
   selected: boolean
 }
 
-export type Checklist = {
+export type ChecklistData = {
   items: ChecklistItem[]
 }
 
@@ -23,10 +23,10 @@ export type ChecklistOptions<S> = {
   disabled?: boolean
   locked?: boolean
   render: (_: Content<S> | Content<S>[]) => VDOM<S>
-  wiring: Wiring<S, Checklist>
+  wiring: Wiring<S, ChecklistData>
 }
 
-const freshChecklist = (items: ChecklistItem[]): Checklist => {
+const freshChecklist = (items: ChecklistItem[]): ChecklistData => {
   return { items }
 }
 

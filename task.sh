@@ -139,13 +139,35 @@ task:clean() {
 
 # ------------------------------------------------------------------------------
 
+# From `webdev-scaffolding`.
+update_json() {
+  local filter="$1"
+  local file="$2"
+  local tmp="$(mktemp)"
+
+  if [ ! -f "$file" ] ; then
+    echo '{}' > "$file"
+  fi
+
+  jq "$filter" "$file" > "$tmp" && mv -f "$tmp" "$file"
+}
+
 task:hard-refresh() {
   echo
   echo "Hard-refreshing dependencies..."
 
-  rm ./package-lock.json && rm -fr ./node_modules && rm -fr ./output
+  rm ./package-lock.json
+  rm -fr ./node_modules
+  rm -fr ./output
 
-  npm install --save classcat hyperapp shades remeda
+  update_json '.dependencies = {} | .devDependencies = {}' ./package.json
+
+  # TODO:
+  # npm install --save hyperapp
+  npm install --save icylace/hyperapp#master
+
+  npm install --save classcat remeda
+  # npm install --save classcat shades remeda
   npm install --save @fortawesome/fontawesome-free
   npm install --save ntml
   npm install --save-dev snowpack typescript@4.0 rollup terser prettier

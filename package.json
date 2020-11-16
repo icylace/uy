@@ -28,13 +28,13 @@
   "scripts": {
     "build:dev": "./task.sh build:dev",
     "build:prod": "./task.sh build:prod",
+    "check": "./task.sh check",
     "clean": "./task.sh clean",
     "lint": "./task.sh lint",
     "lint:fix": "./task.sh lint:fix",
     "lint:fix-dry-run": "./task.sh lint:fix-dry-run",
     "release": "./task.sh release",
     "test": "./task.sh test",
-    "typecheck": "./task.sh typecheck",
     "watch:postcss": "./task.sh watch:postcss",
     "watch:rollup": "./task.sh watch:rollup",
     "watch:typescript": "./task.sh watch:typescript"

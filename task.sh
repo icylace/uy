@@ -110,10 +110,10 @@ task:build:prod() {
   npx terser --ecma 6 --compress --mangle --module --output ./dist/index.esm.min.js -- ./dist/index.esm.js
   gzip --best --to-stdout ./dist/index.esm.min.js > ./dist/index.esm.min.js.gz
 
-  echo
-  echo "Minifying and gzipping UMD modules..."
-  npx terser --ecma 6 --compress --mangle --output ./dist/index.umd.min.js -- ./dist/index.umd.js
-  gzip --best --to-stdout ./dist/index.umd.min.js > ./dist/index.umd.min.js.gz
+  # echo
+  # echo "Minifying and gzipping UMD modules..."
+  # npx terser --ecma 6 --compress --mangle --output ./dist/index.umd.min.js -- ./dist/index.umd.js
+  # gzip --best --to-stdout ./dist/index.umd.min.js > ./dist/index.umd.min.js.gz
 
   # TODO:
   # echo

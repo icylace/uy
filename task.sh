@@ -226,7 +226,7 @@ task:reset() {
   # npm install --save classcat shades remeda
   npm install --save @fortawesome/fontawesome-free
   npm install --save ntml
-  npm install --save-dev snowpack typescript@4.0 rollup terser prettier
+  npm install --save-dev snowpack typescript rollup terser prettier
   npm install --save-dev eslint
   npm install --save-dev eslint-plugin-import eslint-plugin-json eslint-plugin-node eslint-plugin-promise
   npm install --save-dev eslint-config-prettier eslint-plugin-prettier

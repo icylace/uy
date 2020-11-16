@@ -211,18 +211,20 @@ task:lint:fix-dry-run() {
 # ------------------------------------------------------------------------------
 
 task:prepare() {
-  echo
-  echo 'Patching `shades` to pass typechecking...'
-  # https://github.com/jamesmcnamara/shades/issues/37#issuecomment-594810688
-  # https://stackoverflow.com/a/42192768/1935675
-  sed -i '' '30i\
-    _val: T\
-    _key: K
-  ' ./node_modules/shades/types/utils.ts
+  return
 
-  echo
-  echo 'Patching `ntml` to pass typechecking...'
-  sed -i '' '1d' ./node_modules/ntml/dist/index.d.ts
+  # echo
+  # echo 'Patching `shades` to pass typechecking...'
+  # # https://github.com/jamesmcnamara/shades/issues/37#issuecomment-594810688
+  # # https://stackoverflow.com/a/42192768/1935675
+  # sed -i '' '30i\
+  #   _val: T\
+  #   _key: K
+  # ' ./node_modules/shades/types/utils.ts
+
+  # echo
+  # echo 'Patching `ntml` to pass typechecking...'
+  # sed -i '' '1d' ./node_modules/ntml/dist/index.d.ts
 
   # # https://www.snowpack.dev/#run-after-every-install
   # echo "Preparing web modules..."

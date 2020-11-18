@@ -31,8 +31,6 @@ const multiselect = <S>(options: MultiselectOptions<S>) => (state: State<S>): VD
   const { disabled, locked, choices, usingColumnMode, wiring, ...etc } = options
   const r = wiring.get(state)
 
-  // TODO:
-  // - should order matter? is Set the right way to do this?
   const selection = new Set(r.value)
   return div({
     ...etc,
@@ -43,15 +41,13 @@ const multiselect = <S>(options: MultiselectOptions<S>) => (state: State<S>): VD
     ]),
   }, [
     box("uy-multiselect-options",
-      // TODO:
-      // - switch to using a Map object instead in order to guarantee order
       Object.entries(choices).map(
         ([value, label]: [string, Content<S> | Content<S>[]]): VDOM<S> => {
           const checkboxWiring: Wiring<S, CheckboxData> = {
             get: (_state) => freshCheckbox(selection.has(value)),
-            mod: (state, _f) => state,
-            set: (state, checked) => {
-              if (checked) {
+            mod: (state) => state,
+            set: (state, checkboxData) => {
+              if (checkboxData.value) {
                 selection.add(value)
               } else {
                 selection.delete(value)

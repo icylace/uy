@@ -54,10 +54,6 @@ const multiselect = <S>(options: MultiselectOptions<S>) => (state: State<S>): VD
               }
               return wiring.set(state, freshMultiselect(Array.from(selection)))
             },
-            // set: (state, x) => wiring.mod(state, (r) => ({
-            //   ...r,
-            //   items: adjust(i, x, r.items),
-            // })),
           }
           return checkbox({ disabled, label, locked, wiring: checkboxWiring })(state)
         }

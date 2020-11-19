@@ -31,10 +31,9 @@ const freshTabs = (value: string): TabsData => {
 }
 
 const isSelected = (activeTab: string) => <S>(item: Content<S>, i: number): boolean => {
-  if (typeof item === "object") {
-    return item != null && "props" in item && activeTab === item.props["data-tab-id"]
-  }
-  return activeTab === String(i)
+  return typeof item === "object"
+    && item != null && "props" in item && activeTab === item.props["data-tab-id"]
+    || activeTab === String(i)
 }
 
 const tab = <S>(wiring: Wiring<S, TabsData>, activeTab: string) => {
@@ -43,13 +42,13 @@ const tab = <S>(wiring: Wiring<S, TabsData>, activeTab: string) => {
     return div({
       class: { "uy-tabs-item": true, selected },
       onclick: (state, event) => {
-        if (!event) return state
-        const target = event.target as HTMLElement
         const transition = wiring.set(state, freshTabs(String(i)))
+        if (!event) return transition
+        if (!event.target) return transition
         return selected
           ? Array.isArray(transition)
-            ? [...transition, scrollIntoView(target)] as EffectfulState<S>
-            : [transition, scrollIntoView(target)] as EffectfulState<S>
+            ? [...transition, scrollIntoView(event.target as HTMLElement)] as EffectfulState<S>
+            : [transition, scrollIntoView(event.target as HTMLElement)] as EffectfulState<S>
           : transition
       },
     }, item)

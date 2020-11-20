@@ -222,8 +222,7 @@ task:reset() {
   # npm install --save hyperapp
   npm install --save icylace/hyperapp#master
 
-  npm install --save classcat remeda
-  # npm install --save classcat shades remeda
+  npm install --save remeda
   npm install --save @fortawesome/fontawesome-free
   npm install --save ntml
   npm install --save-dev snowpack typescript rollup terser prettier

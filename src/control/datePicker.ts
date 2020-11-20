@@ -1,7 +1,6 @@
 import type { ClassProp, State, VDOM } from "hyperapp"
 import type { Wiring } from "../component"
 
-import cc from "classcat"
 import { input } from "ntml"
 import { box } from "../container/box"
 
@@ -36,7 +35,7 @@ const datePicker = <S>(options: DatePickerOptions<S>) => (state: State<S>): VDOM
         return wiring.set(state, { value: target.value })
       },
       ...etc,
-      class: cc(["uy-input", { locked, disabled }, etc.class]),
+      class: ["uy-input", { locked, disabled }, etc.class],
     }),
   ])
 }
@@ -61,7 +60,7 @@ const datetimeLocalPicker = <S>(options: DatePickerOptions<S>) => (state: State<
         return wiring.set(state, { value: target.value })
       },
       ...etc,
-      class: cc(["uy-input", { locked, disabled }, etc.class]),
+      class: ["uy-input", { locked, disabled }, etc.class],
     }),
   ])
 }
@@ -86,7 +85,7 @@ const monthPicker = <S>(options: DatePickerOptions<S>) => (state: State<S>): VDO
         return wiring.set(state, { value: target.value })
       },
       ...etc,
-      class: cc(["uy-input", { locked, disabled }, etc.class]),
+      class: ["uy-input", { locked, disabled }, etc.class],
     }),
   ])
 }
@@ -111,7 +110,7 @@ const timePicker = <S>(options: DatePickerOptions<S>) => (state: State<S>): VDOM
         return wiring.set(state, { value: target.value })
       },
       ...etc,
-      class: cc(["uy-input", { locked, disabled }, etc.class]),
+      class: ["uy-input", { locked, disabled }, etc.class],
     }),
   ])
 }
@@ -136,7 +135,7 @@ const weekPicker = <S>(options: DatePickerOptions<S>) => (state: State<S>): VDOM
         return wiring.set(state, { value: target.value })
       },
       ...etc,
-      class: cc(["uy-input", { locked, disabled }, etc.class]),
+      class: ["uy-input", { locked, disabled }, etc.class],
     }),
   ])
 }

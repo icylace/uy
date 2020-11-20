@@ -4,7 +4,6 @@ import type { Wiring } from "../component"
 import type { TableRow } from "../container/table"
 import type { CheckboxData } from "./checkbox"
 
-import cc from "classcat"
 import { div } from "ntml"
 import { table } from "../container/table"
 import { checkbox } from "./checkbox"
@@ -71,7 +70,7 @@ const checklist = <S>(options: ChecklistOptions<S>) => (state: State<S>): VDOM<S
   return div(
     {
       ...etc,
-      class: cc(["uy-checklist", { locked, disabled }, etc.class]),
+      class: ["uy-checklist", { locked, disabled }, etc.class],
     },
     [table({ disabled, locked }, x.items.map(item))],
   )

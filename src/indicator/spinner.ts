@@ -1,6 +1,5 @@
 import type { ClassProp, VDOM } from "hyperapp"
 
-import cc from "classcat"
 import { span } from "ntml"
 
 export type SpinnerOptions = {
@@ -10,7 +9,7 @@ export type SpinnerOptions = {
 }
 
 const spinner = <S>(props?: SpinnerOptions): VDOM<S> => {
-  return span({ ...props, class: cc(["uy-indicator uy-spinner", (props ?? {}).class]) })
+  return span({ ...props, class: ["uy-indicator uy-spinner", (props ?? {}).class] })
 }
 
 export { spinner }

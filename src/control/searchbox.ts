@@ -10,7 +10,6 @@ import type {
 } from "hyperapp"
 import type { Wiring } from "../component"
 
-import cc from "classcat"
 import { input, label, li, span, ul } from "ntml"
 import { popup } from "../container/popup"
 import { box } from "../container/box"
@@ -127,7 +126,7 @@ const searchbox = <S>(options: SearchboxOptions<S, any>) => (state: State<S>): V
       return update(target.value)(state)
     },
     ...etc,
-    class: cc(["uy-input", { locked, disabled }, etc.class]),
+    class: ["uy-input", { locked, disabled }, etc.class],
   })
 
   const searchResult = (result: string): VDOM<S> => {

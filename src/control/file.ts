@@ -1,7 +1,6 @@
 import type { ClassProp, State, VDOM } from "hyperapp"
 import type { Wiring } from "../component"
 
-import cc from "classcat"
 import * as html from "ntml"
 import { box } from "../container/box"
 import { icon } from "../indicator/icon"
@@ -44,7 +43,7 @@ const file = <S>(options: FileOptions<S>) => (state: State<S>): VDOM<S> => {
           return wiring.set(state, { value: target.value })
         },
         ...etc,
-        class: cc([{ disabled, locked }, etc.class]),
+        class: [{ disabled, locked }, etc.class],
       }),
       html.span([icon("fas fa-file-upload"), " Upload"]),
     ]),

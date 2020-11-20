@@ -2,7 +2,6 @@ import type { ClassProp, State, Transform, VDOM, VNode } from "hyperapp"
 import type { Content } from "ntml"
 import type { Wiring } from "../component"
 
-import cc from "classcat"
 import { div, li, span, ul } from "ntml"
 import { range } from "../utility/utility"
 import { icon } from "../indicator/icon"
@@ -97,7 +96,7 @@ const pager = <S>(options: PagerOptions<S>) => (state: State<S>): VDOM<S> | null
 
   return div({
     ...etc,
-    class: cc(["uy-control uy-pager", { locked, disabled }, etc.class]),
+    class: ["uy-control uy-pager", { locked, disabled }, etc.class],
   }, [
     ul([
       li(navFirst),

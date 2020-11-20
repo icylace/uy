@@ -1,7 +1,6 @@
 import type { ClassProp, State, VDOM, View } from "hyperapp"
 import type { Content } from "ntml"
 
-import cc from "classcat"
 import * as html from "ntml"
 
 export type FieldsetOptions<S> = {
@@ -23,7 +22,7 @@ const fieldset = <S>(title: Content<S> | Content<S>[], options: FieldsetOptions<
     {
       disabled,
       ...etc,
-      class: cc(["uy-fieldset", { locked, disabled }, etc.class]),
+      class: ["uy-fieldset", { locked, disabled }, etc.class],
     },
     title ? [html.legend(title), ...contents] : contents,
   )

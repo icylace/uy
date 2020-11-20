@@ -2,7 +2,6 @@ import type { ClassProp, State, VDOM } from "hyperapp"
 import type { Content } from "ntml"
 import type { ContentView } from "../types"
 
-import cc from "classcat"
 import { label } from "ntml"
 import { box } from "./box"
 
@@ -18,7 +17,7 @@ const field = <S>(title: Content<S>, options: FieldOptions, views: ContentView<S
     label(
       {
         ...etc,
-        class: cc([{ locked, disabled }, etc.class]),
+        class: [{ locked, disabled }, etc.class],
       },
       [
         title,

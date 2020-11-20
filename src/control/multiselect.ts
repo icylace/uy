@@ -3,7 +3,6 @@ import type { Content } from "ntml"
 import type { Wiring } from "../component"
 import type { CheckboxData } from "./checkbox"
 
-import cc from "classcat"
 import { div } from "ntml"
 import { box } from "../container/box"
 import { checkbox, freshCheckbox } from "./checkbox"
@@ -34,11 +33,11 @@ const multiselect = <S>(options: MultiselectOptions<S>) => (state: State<S>): VD
   const selection = new Set(r.value)
   return div({
     ...etc,
-    class: cc([
+    class: [
       "uy-control uy-scroller uy-multiselect",
       { "uy-multiselect--grid-mode": usingColumnMode, locked, disabled },
       etc.class,
-    ]),
+    ],
   }, [
     box("uy-multiselect-options",
       Object.entries(choices).map(

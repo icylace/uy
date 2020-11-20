@@ -2,7 +2,6 @@ import type { ClassProp, EffectfulState, State, VDOM, VNode } from "hyperapp"
 import type { Content } from "ntml"
 import type { Wiring } from "../component"
 
-import cc from "classcat"
 import { div } from "ntml"
 import { box } from "../container/box"
 import { scrollIntoView } from "./tabs.effect"
@@ -63,7 +62,7 @@ const tabs = <S>(options: TabsOptions<S>) => (state: State<S>): VDOM<S> => {
   return div(
     {
       ...etc,
-      class: cc(["uy-control uy-tabs", { locked, disabled }, etc.class]),
+      class: ["uy-control uy-tabs", { locked, disabled }, etc.class],
     },
     [
       box("uy-tabs-navigation", [

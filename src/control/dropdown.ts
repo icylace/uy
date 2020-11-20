@@ -2,7 +2,6 @@ import type { ClassProp, State, VDOM } from "hyperapp"
 import type { Content } from "ntml"
 import type { Wiring } from "../component"
 
-import cc from "classcat"
 import { option, select } from "ntml"
 import { box } from "../container/box"
 
@@ -48,7 +47,7 @@ const dropdown = <S>(options: DropdownOptions<S>) => (state: State<S>): VDOM<S> 
           onfocus: (state) => wiring.set(state, { ...r, focused: true }),
           onblur: (state) => wiring.set(state, { ...r, focused: false }),
           ...etc,
-          class: cc(["uy-input", { locked, disabled }, etc.class]),
+          class: ["uy-input", { locked, disabled }, etc.class],
         },
         // TODO:
         // - switch to using a Map object instead in order to guarantee order

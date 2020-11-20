@@ -4,7 +4,6 @@ import type { TableCell } from "../container/table"
 import type { Wiring } from "../component"
 import type { TextboxData } from "./textbox"
 
-import cc from "classcat"
 import { div } from "ntml"
 import { table } from "../container/table"
 import { adjust, exclude } from "../utility/utility"
@@ -70,7 +69,7 @@ const list = <S>(options: ListOptions<S>) => (state: State<S>): VDOM<S> => {
   return div(
     {
       ...etc,
-      class: cc(["uy-control uy-list", { locked, disabled }, etc.class]),
+      class: ["uy-control uy-list", { locked, disabled }, etc.class],
     },
     [
       table(

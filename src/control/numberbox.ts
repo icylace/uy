@@ -2,7 +2,6 @@ import type { ClassProp, State, VDOM } from "hyperapp"
 import type { Content } from "ntml"
 import type { Wiring } from "../component"
 
-import cc from "classcat"
 import * as html from "ntml"
 import { box } from "../container/box"
 

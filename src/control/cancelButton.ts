@@ -1,6 +1,5 @@
 import type { Action, ClassProp, VDOM } from "hyperapp"
 
-import cc from "classcat"
 import * as html from "ntml"
 import { box } from "../container/box"
 
@@ -19,7 +18,7 @@ const cancelButton = <S>(options: CancelButtonOptions<S>): VDOM<S> => {
       type: "button",
       onclick: handler,
       ...etc,
-      class: cc([{ locked, disabled }, etc.class]),
+      class: [{ locked, disabled }, etc.class],
     }, "✕"),
   ])
 }

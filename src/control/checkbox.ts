@@ -2,7 +2,6 @@ import type { ClassProp, State, VDOM } from "hyperapp"
 import type { Content } from "ntml"
 import type { Wiring } from "../component"
 
-import cc from "classcat"
 import * as html from "ntml"
 import { box } from "../container/box"
 
@@ -49,7 +48,7 @@ const checkbox = <S>(options: CheckboxOptions<S>) => (state: State<S>): VDOM<S> 
           return wiring.set(state, { value: target.checked })
         },
         ...etc,
-        class: cc(["uy-input", { locked, disabled }, etc.class]),
+        class: ["uy-input", { locked, disabled }, etc.class],
       }),
       label ? html.span(label) : null,
     ]),

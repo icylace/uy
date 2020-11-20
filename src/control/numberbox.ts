@@ -49,7 +49,7 @@ const numberbox = <S>(options: NumberboxOptions<S>) => (state: State<S>): VDOM<S
         onfocus: (state) => wiring.set(state, { ...wiring.get(state), focused: true }),
         onblur: (state) => wiring.set(state, { ...wiring.get(state), focused: false }),
         ...etc,
-        class: cc(["uy-input", { locked, disabled }, etc.class]),
+        class: ["uy-input", { locked, disabled }, etc.class],
       }),
       label != null
         ? html.span({ class: { "uy-input": true, locked, disabled } }, label)

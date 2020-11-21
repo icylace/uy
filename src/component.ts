@@ -6,29 +6,38 @@ export type Wiring<S, D> = Readonly<{
   set: (state: State<S>, x: D) => State<S>
 }>
 
-const wire = <S extends Record<string, any>, D>
-  (prop: string, context?: Wiring<S, Record<string, any>>): Wiring<S, D> => ({
-    get: (state) => {
-      if (context) {
-        const r = context.get(state)
-        return r[prop]
-      }
-      return state[prop]
-    },
-    mod: (state, f) => {
-      if (context) {
-        const r = context.get(state)
-        return context.set(state, { ...r, [prop]: f(r[prop]) })
-      }
-      return { ...state, [prop]: f(state[prop]) }
-    },
-    set: (state, x) => {
-      if (context) {
-        const r = context.get(state)
-        return context.set(state, { ...r, [prop]: x })
-      }
-      return { ...state, [prop]: x }
-    },
-  })
+const cable = <S extends Record<string | number, any>>(
+  path: (string | number)[],
+  context?: Wiring<S, Record<string | number, any>>
+): Wiring<S, any> | undefined => {
+  return path.reduce((ctx, x) => wire(x, ctx), context)
+}
 
-export { wire }
+const wire = <S extends Record<string | number, any>, D>(
+  prop: string | number,
+  context?: Wiring<S, Record<string | number, any>>
+): Wiring<S, D> => ({
+  get: (state) => {
+    if (context) {
+      const r = context.get(state)
+      return r[prop]
+    }
+    return state[prop]
+  },
+  mod: (state, f) => {
+    if (context) {
+      const r = context.get(state)
+      return context.set(state, { ...r, [prop]: f(r[prop]) })
+    }
+    return { ...state, [prop]: f(state[prop]) }
+  },
+  set: (state, x) => {
+    if (context) {
+      const r = context.get(state)
+      return context.set(state, { ...r, [prop]: x })
+    }
+    return { ...state, [prop]: x }
+  },
+})
+
+export { cable, wire }

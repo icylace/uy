@@ -19,15 +19,14 @@ export type ListOptions<S> = {
   class?: ClassProp
   disabled?: boolean
   headers?: Content<S>[]
-  wiring: Wiring<S, ListData>
 }
 
 const freshList = (items: string[]): ListData => {
   return { items }
 }
 
-const list = <S>(options: ListOptions<S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, headers, wiring, ...etc } = options
+const list = <S>(options: ListOptions<S>) => (wiring: Wiring<S, ListData>) => (state: State<S>): VDOM<S> => {
+  const { disabled, headers, ...etc } = options
   const r = wiring.get(state)
 
   const item = (value: string, i: number): TableCell<S>[] => {
@@ -40,7 +39,7 @@ const list = <S>(options: ListOptions<S>) => (state: State<S>): VDOM<S> => {
       })),
     }
     return [
-      textbox({ disabled, wiring: textWiring })(state),
+      textbox<S>({ disabled })(textWiring)(state),
       cancelButton<S>({
         disabled,
         handler: (state: State<S>): State<S> => {

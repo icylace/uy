@@ -8,10 +8,9 @@ export type DatePickerData = {
   value: string
 }
 
-export type DatePickerOptions<S> = {
+export type DatePickerOptions = {
   class?: ClassProp
   disabled?: boolean
-  wiring: Wiring<S, DatePickerData>
 }
 
 // -----------------------------------------------------------------------------
@@ -20,8 +19,8 @@ const freshDatePicker = (value: string): DatePickerData => {
   return { value }
 }
 
-const datePicker = <S>(options: DatePickerOptions<S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, wiring, ...etc } = options
+const datePicker = <S>(options: DatePickerOptions) => (wiring: Wiring<S, DatePickerData>) => (state: State<S>): VDOM<S> => {
+  const { disabled, ...etc } = options
   return box("uy-control uy-datePicker", [
     input({
       disabled,
@@ -44,8 +43,8 @@ const freshDatetimeLocalPicker = (value: string): DatePickerData => {
   return { value }
 }
 
-const datetimeLocalPicker = <S>(options: DatePickerOptions<S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, wiring, ...etc } = options
+const datetimeLocalPicker = <S>(options: DatePickerOptions) => (wiring: Wiring<S, DatePickerData>) => (state: State<S>): VDOM<S> => {
+  const { disabled, ...etc } = options
   return box("uy-control uy-datePicker", [
     input({
       disabled,
@@ -68,8 +67,8 @@ const freshMonthPicker = (value: string): DatePickerData => {
   return { value }
 }
 
-const monthPicker = <S>(options: DatePickerOptions<S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, wiring, ...etc } = options
+const monthPicker = <S>(options: DatePickerOptions) => (wiring: Wiring<S, DatePickerData>) => (state: State<S>): VDOM<S> => {
+  const { disabled, ...etc } = options
   return box("uy-control uy-datePicker", [
     input({
       disabled,
@@ -92,8 +91,8 @@ const freshTimePicker = (value: string): DatePickerData => {
   return { value }
 }
 
-const timePicker = <S>(options: DatePickerOptions<S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, wiring, ...etc } = options
+const timePicker = <S>(options: DatePickerOptions) => (wiring: Wiring<S, DatePickerData>) => (state: State<S>): VDOM<S> => {
+  const { disabled, ...etc } = options
   return box("uy-control uy-datePicker", [
     input({
       disabled,
@@ -116,8 +115,8 @@ const freshWeekPicker = (value: string): DatePickerData => {
   return { value }
 }
 
-const weekPicker = <S>(options: DatePickerOptions<S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, wiring, ...etc } = options
+const weekPicker = <S>(options: DatePickerOptions) => (wiring: Wiring<S, DatePickerData>) => (state: State<S>): VDOM<S> => {
+  const { disabled, ...etc } = options
   return box("uy-control uy-datePicker", [
     input({
       disabled,

@@ -16,7 +16,6 @@ export type MultiselectOptions<S> = {
   disabled?: boolean
   choices: Record<string, Content<S> | Content<S>[]>
   usingColumnMode: boolean
-  wiring: Wiring<S, MultiselectData>
 }
 
 // TODO:
@@ -25,8 +24,8 @@ const freshMultiselect = (value: string[]): MultiselectData => {
   return { value }
 }
 
-const multiselect = <S>(options: MultiselectOptions<S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, choices, usingColumnMode, wiring, ...etc } = options
+const multiselect = <S>(options: MultiselectOptions<S>) => (wiring: Wiring<S, MultiselectData>) => (state: State<S>): VDOM<S> => {
+  const { disabled, choices, usingColumnMode, ...etc } = options
   const r = wiring.get(state)
 
   const selection = new Set(r.value)
@@ -53,7 +52,7 @@ const multiselect = <S>(options: MultiselectOptions<S>) => (state: State<S>): VD
               return wiring.set(state, freshMultiselect(Array.from(selection)))
             },
           }
-          return checkbox({ disabled, label, wiring: checkboxWiring })(state)
+          return checkbox({ disabled, label })(checkboxWiring)(state)
         }
       ),
     ),

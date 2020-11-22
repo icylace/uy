@@ -11,12 +11,11 @@ export type PagerData = {
   value: number
 }
 
-export type PagerOptions<S> = {
+export type PagerOptions = {
   class?: ClassProp
   disabled?: boolean
   itemsPerPage: number
   pageRange: number
-  wiring: Wiring<S, PagerData>
 }
 
 const freshPager = (itemsTotal: number, value: number): PagerData => {
@@ -38,8 +37,8 @@ const pagerMore = <S>(content: Content<S> | Content<S>[]): VDOM<S> => {
   return span({ class: "uy-pager-more" }, content)
 }
 
-const pager = <S>(options: PagerOptions<S>) => (state: State<S>): VDOM<S> | null => {
-  const { disabled, itemsPerPage, pageRange, wiring, ...etc } = options
+const pager = <S>(options: PagerOptions) => (wiring: Wiring<S, PagerData>) => (state: State<S>): VDOM<S> | null => {
+  const { disabled, itemsPerPage, pageRange, ...etc } = options
   const r = wiring.get(state)
   const update = (state: State<S>, value: number) => {
     return wiring.set(state, { ...r, value })

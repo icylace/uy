@@ -21,15 +21,14 @@ export type ChecklistOptions<S> = {
   class?: ClassProp
   disabled?: boolean
   render: (_: Content<S> | Content<S>[]) => VDOM<S>
-  wiring: Wiring<S, ChecklistData>
 }
 
 const freshChecklist = (items: ChecklistItem[]): ChecklistData => {
   return { items }
 }
 
-const checklist = <S>(options: ChecklistOptions<S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, render, wiring, ...etc } = options
+const checklist = <S>(options: ChecklistOptions<S>) => (wiring: Wiring<S, ChecklistData>) => (state: State<S>): VDOM<S> => {
+  const { disabled, render, ...etc } = options
   const x = wiring.get(state)
 
   const item = (x: ChecklistItem, i: number): TableRow<S> => {
@@ -52,15 +51,7 @@ const checklist = <S>(options: ChecklistOptions<S>) => (state: State<S>): VDOM<S
     return [
       [
         { class: { "uy-horizontal": x.id === "other" } },
-        [
-          checkbox(
-            {
-              disabled,
-              label: render(x.id),
-              wiring: itemWiring,
-            },
-          )(state),
-        ],
+        [checkbox({ disabled, label: render(x.id) })(itemWiring)(state)],
       ],
     ]
   }

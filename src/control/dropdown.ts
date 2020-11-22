@@ -15,15 +15,14 @@ export type DropdownOptions<S> = {
   class?: ClassProp
   disabled?: boolean
   choices: Record<string, Content<S> | Content<S>[]>
-  wiring: Wiring<S, DropdownData>
 }
 
 const freshDropdown = (value: string): DropdownData => {
   return { value, focused: false }
 }
 
-const dropdown = <S>(options: DropdownOptions<S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, choices, wiring, ...etc } = options
+const dropdown = <S>(options: DropdownOptions<S>) => (wiring: Wiring<S, DropdownData>) => (state: State<S>): VDOM<S> => {
+  const { disabled, choices, ...etc } = options
   const r = wiring.get(state)
   return box("uy-control uy-dropdown", [
     box({

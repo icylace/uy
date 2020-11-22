@@ -9,11 +9,10 @@ export type FileData = {
   value: string
 }
 
-export type FileOptions<S> = {
+export type FileOptions = {
   class?: ClassProp
   disabled?: boolean
   label?: string
-  wiring: Wiring<S, FileData>
 }
 
 const freshFile = (value: string): FileData => {
@@ -22,8 +21,8 @@ const freshFile = (value: string): FileData => {
 
 // https://codepen.io/adamlaki/pen/VYpewx
 
-const file = <S>(options: FileOptions<S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, label = "Select your file...", wiring, ...etc } = options
+const file = <S>(options: FileOptions) => (wiring: Wiring<S, FileData>) => (state: State<S>): VDOM<S> => {
+  const { disabled, label = "Select your file...", ...etc } = options
   return box(["uy-control uy-file uy-input", { disabled }], [
     html.label({ "data-text": label }, [
       html.input({

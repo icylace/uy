@@ -30,7 +30,6 @@ export type SearchboxOptions<S, D> = {
   search: Searcher<S, D>
   onResults: (results: SearchboxData["results"], id: string, state: State<S>) => State<S>
   id: string
-  wiring: Wiring<S, SearchboxData>
 }
 
 const freshSearchbox = (value: string): SearchboxData => ({
@@ -59,8 +58,8 @@ const noopKeys = [
   "Super",
 ]
 
-const searchbox = <S>(options: SearchboxOptions<S, any>) => (state: State<S>): VDOM<S> => {
-  const { disabled, search, onResults, id, wiring, ...etc } = options
+const searchbox = <S>(options: SearchboxOptions<S, any>) => (wiring: Wiring<S, SearchboxData>) => (state: State<S>): VDOM<S> => {
+  const { disabled, search, onResults, id, ...etc } = options
 
   const x = wiring.get(state)
 

@@ -13,15 +13,14 @@ export type RadiosOptions<S> = {
   class?: ClassProp
   disabled?: boolean
   choices: Record<string, Content<S>>
-  wiring: Wiring<S, RadiosData>
 }
 
 const freshRadios = (value: string): RadiosData => {
   return { value }
 }
 
-const radios = <S>(options: RadiosOptions<S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, choices, wiring, ...etc } = options
+const radios = <S>(options: RadiosOptions<S>) => (wiring: Wiring<S, RadiosData>) => (state: State<S>): VDOM<S> => {
+  const { disabled, choices, ...etc } = options
   return box("uy-control uy-radios",
     // TODO:
     // - switch to using a Map object instead in order to guarantee order

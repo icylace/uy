@@ -14,7 +14,6 @@ export type NumberboxOptions<S> = {
   class?: ClassProp
   disabled?: boolean
   label?: Content<S>
-  wiring: Wiring<S, NumberboxData>
 }
 
 const freshNumberbox = (value: number): NumberboxData => {
@@ -25,8 +24,8 @@ const sanitizedNumber = (n: string): number => {
   return Math.max(0, Number.parseInt(n, 10))
 }
 
-const numberbox = <S>(options: NumberboxOptions<S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, label, wiring, ...etc } = options
+const numberbox = <S>(options: NumberboxOptions<S>) => (wiring: Wiring<S, NumberboxData>) => (state: State<S>): VDOM<S> => {
+  const { disabled, label, ...etc } = options
   const r = wiring.get(state)
   return box("uy-control uy-numberbox", [
     html.label({ class: { focus: !!r.focused, disabled } }, [

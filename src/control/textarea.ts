@@ -8,18 +8,17 @@ export type TextareaData = {
   value: string
 }
 
-export type TextareaOptions<S> = {
+export type TextareaOptions = {
   class?: ClassProp
   disabled?: boolean
-  wiring: Wiring<S, TextareaData>
 }
 
 const freshTextarea = (value: string): TextareaData => {
   return { value }
 }
 
-const textarea = <S>(options: TextareaOptions<S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, wiring, ...etc } = options
+const textarea = <S>(options: TextareaOptions) => (wiring: Wiring<S, TextareaData>) => (state: State<S>): VDOM<S> => {
+  const { disabled, ...etc } = options
   return box("uy-control uy-textarea", [
     html.textarea({
       disabled,

@@ -8,18 +8,17 @@ export type TextboxData = {
   value: string
 }
 
-export type TextboxOptions<S> = {
+export type TextboxOptions = {
   class?: ClassProp
   disabled?: boolean
-  wiring: Wiring<S, TextboxData>
 }
 
 const freshTextbox = (value: string): TextboxData => {
   return { value }
 }
 
-const textbox = <S>(options: TextboxOptions<S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, wiring, ...etc } = options
+const textbox = <S>(options: TextboxOptions) => (wiring: Wiring<S, TextboxData>) => (state: State<S>): VDOM<S> => {
+  const { disabled, ...etc } = options
   return box("uy-control uy-textbox", [
     input({
       disabled,

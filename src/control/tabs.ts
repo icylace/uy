@@ -20,7 +20,6 @@ export type TabsOptions<S> = {
   disabled?: boolean
   itemsFooter?: string | VNode<S>
   itemsHeader?: string | VNode<S>
-  locked?: boolean
   tabList: Tab<S>[]
   wiring: Wiring<S, TabsData>
 }
@@ -55,14 +54,14 @@ const tab = <S>(wiring: Wiring<S, TabsData>, activeTab: string) => {
 }
 
 const tabs = <S>(options: TabsOptions<S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, locked, itemsFooter, itemsHeader, tabList, wiring, ...etc } = options
+  const { disabled, itemsFooter, itemsHeader, tabList, wiring, ...etc } = options
   const x = wiring.get(state)
   const headings = tabList.map((x: Tab<S>): Content<S> => x.heading)
   const panels = tabList.map((x: Tab<S>): Content<S> => x.panel)
   return div(
     {
       ...etc,
-      class: ["uy-control uy-tabs", { locked, disabled }, etc.class],
+      class: ["uy-control uy-tabs", { disabled }, etc.class],
     },
     [
       box("uy-tabs-navigation", [

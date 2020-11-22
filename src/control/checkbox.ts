@@ -26,7 +26,6 @@ export type CheckboxOptions<S> = {
   class?: ClassProp
   disabled?: boolean
   label?: Content<S> | Content<S>[]
-  locked?: boolean
   wiring: Wiring<S, CheckboxData>
 }
 
@@ -35,9 +34,9 @@ const freshCheckbox = (value: boolean): CheckboxData => {
 }
 
 const checkbox = <S>(options: CheckboxOptions<S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, locked, label, wiring, ...etc } = options
+  const { disabled, label, wiring, ...etc } = options
   return box("uy-control uy-checkbox", [
-    html.label({ class: { disabled: !!disabled, locked: !!locked } }, [
+    html.label({ class: { disabled } }, [
       html.input({
         disabled,
         checked: wiring.get(state).value,
@@ -48,7 +47,7 @@ const checkbox = <S>(options: CheckboxOptions<S>) => (state: State<S>): VDOM<S> 
           return wiring.set(state, { value: target.checked })
         },
         ...etc,
-        class: ["uy-input", { locked, disabled }, etc.class],
+        class: ["uy-input", { disabled }, etc.class],
       }),
       label ? html.span(label) : null,
     ]),

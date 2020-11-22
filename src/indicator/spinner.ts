@@ -5,7 +5,6 @@ import { span } from "ntml"
 export type SpinnerOptions = {
   class?: ClassProp
   disabled?: boolean
-  locked?: boolean
 }
 
 const spinner = <S>(props?: SpinnerOptions): VDOM<S> => {

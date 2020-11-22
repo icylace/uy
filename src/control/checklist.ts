@@ -20,7 +20,6 @@ export type ChecklistData = {
 export type ChecklistOptions<S> = {
   class?: ClassProp
   disabled?: boolean
-  locked?: boolean
   render: (_: Content<S> | Content<S>[]) => VDOM<S>
   wiring: Wiring<S, ChecklistData>
 }
@@ -30,7 +29,7 @@ const freshChecklist = (items: ChecklistItem[]): ChecklistData => {
 }
 
 const checklist = <S>(options: ChecklistOptions<S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, locked, render, wiring, ...etc } = options
+  const { disabled, render, wiring, ...etc } = options
   const x = wiring.get(state)
 
   const item = (x: ChecklistItem, i: number): TableRow<S> => {
@@ -57,7 +56,6 @@ const checklist = <S>(options: ChecklistOptions<S>) => (state: State<S>): VDOM<S
           checkbox(
             {
               disabled,
-              locked,
               label: render(x.id),
               wiring: itemWiring,
             },
@@ -70,9 +68,9 @@ const checklist = <S>(options: ChecklistOptions<S>) => (state: State<S>): VDOM<S
   return div(
     {
       ...etc,
-      class: ["uy-checklist", { locked, disabled }, etc.class],
+      class: ["uy-checklist", { disabled }, etc.class],
     },
-    [table({ disabled, locked }, x.items.map(item))],
+    [table({ disabled }, x.items.map(item))],
   )
 }
 

@@ -19,7 +19,6 @@ export type ListOptions<S> = {
   class?: ClassProp
   disabled?: boolean
   headers?: Content<S>[]
-  locked?: boolean
   wiring: Wiring<S, ListData>
 }
 
@@ -28,7 +27,7 @@ const freshList = (items: string[]): ListData => {
 }
 
 const list = <S>(options: ListOptions<S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, locked, headers, wiring, ...etc } = options
+  const { disabled, headers, wiring, ...etc } = options
   const r = wiring.get(state)
 
   const item = (value: string, i: number): TableCell<S>[] => {
@@ -41,10 +40,9 @@ const list = <S>(options: ListOptions<S>) => (state: State<S>): VDOM<S> => {
       })),
     }
     return [
-      textbox({ disabled, locked, wiring: textWiring })(state),
+      textbox({ disabled, wiring: textWiring })(state),
       cancelButton<S>({
         disabled,
-        locked,
         handler: (state: State<S>): State<S> => {
           return wiring.mod(state, (r) => ({ ...r, items: exclude(i, r.items) }))
         },
@@ -57,7 +55,6 @@ const list = <S>(options: ListOptions<S>) => (state: State<S>): VDOM<S> => {
       { class: "uy-list-adder", colspan: 2 },
       button<S>({
         disabled,
-        locked,
         label: "+ Add",
         handler: (state: State<S>): State<S> => {
           return wiring.mod(state, (r) => ({ ...r, items: [...r.items, ""] }))
@@ -69,11 +66,11 @@ const list = <S>(options: ListOptions<S>) => (state: State<S>): VDOM<S> => {
   return div(
     {
       ...etc,
-      class: ["uy-control uy-list", { locked, disabled }, etc.class],
+      class: ["uy-control uy-list", { disabled }, etc.class],
     },
     [
       table(
-        { disabled, locked, headers, sortDescending: false, },
+        { disabled, headers, sortDescending: false, },
         [...r.items.map(item), grower]
       ),
     ],

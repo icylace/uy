@@ -14,7 +14,6 @@ export type DropdownData = {
 export type DropdownOptions<S> = {
   class?: ClassProp
   disabled?: boolean
-  locked?: boolean
   choices: Record<string, Content<S> | Content<S>[]>
   wiring: Wiring<S, DropdownData>
 }
@@ -24,19 +23,17 @@ const freshDropdown = (value: string): DropdownData => {
 }
 
 const dropdown = <S>(options: DropdownOptions<S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, locked, choices, wiring, ...etc } = options
+  const { disabled, choices, wiring, ...etc } = options
   const r = wiring.get(state)
   return box("uy-control uy-dropdown", [
     box({
       "uy-dropdown-arrow": true,
       focus: !!r.focused,
       disabled,
-      locked,
     }, [
       select(
         {
           disabled,
-          readonly: locked,
           value: r.value,
           onchange: (state, event) => {
             if (!event) return state
@@ -47,7 +44,7 @@ const dropdown = <S>(options: DropdownOptions<S>) => (state: State<S>): VDOM<S> 
           onfocus: (state) => wiring.set(state, { ...r, focused: true }),
           onblur: (state) => wiring.set(state, { ...r, focused: false }),
           ...etc,
-          class: ["uy-input", { locked, disabled }, etc.class],
+          class: ["uy-input", { disabled }, etc.class],
         },
         // TODO:
         // - switch to using a Map object instead in order to guarantee order

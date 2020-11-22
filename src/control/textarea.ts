@@ -11,7 +11,6 @@ export type TextareaData = {
 export type TextareaOptions<S> = {
   class?: ClassProp
   disabled?: boolean
-  locked?: boolean
   wiring: Wiring<S, TextareaData>
 }
 
@@ -20,11 +19,10 @@ const freshTextarea = (value: string): TextareaData => {
 }
 
 const textarea = <S>(options: TextareaOptions<S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, locked, wiring, ...etc } = options
+  const { disabled, wiring, ...etc } = options
   return box("uy-control uy-textarea", [
     html.textarea({
       disabled,
-      readonly: locked,
       value: wiring.get(state).value,
       onchange: (state, event) => {
         if (!event) return state
@@ -32,7 +30,7 @@ const textarea = <S>(options: TextareaOptions<S>) => (state: State<S>): VDOM<S> 
         return wiring.set(state, { value: target.value })
       },
       ...etc,
-      class: ["uy-input", { locked, disabled }, etc.class],
+      class: ["uy-input", { disabled }, etc.class],
     }),
   ])
 }

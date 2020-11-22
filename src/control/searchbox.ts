@@ -27,7 +27,6 @@ export type SearchboxData = {
 export type SearchboxOptions<S, D> = {
   class?: ClassProp
   disabled?: boolean
-  locked?: boolean
   search: Searcher<S, D>
   onResults: (results: SearchboxData["results"], id: string, state: State<S>) => State<S>
   id: string
@@ -61,7 +60,7 @@ const noopKeys = [
 ]
 
 const searchbox = <S>(options: SearchboxOptions<S, any>) => (state: State<S>): VDOM<S> => {
-  const { disabled, locked, search, onResults, id, wiring, ...etc } = options
+  const { disabled, search, onResults, id, wiring, ...etc } = options
 
   const x = wiring.get(state)
 
@@ -103,7 +102,6 @@ const searchbox = <S>(options: SearchboxOptions<S, any>) => (state: State<S>): V
 
   const inputSearch = input<S>({
     disabled,
-    readonly: locked,
     value: x.value,
     type: "search",
     onfocus: (state) => wiring.set(state, { ...x, focused: true }),
@@ -126,7 +124,7 @@ const searchbox = <S>(options: SearchboxOptions<S, any>) => (state: State<S>): V
       return update(target.value)(state)
     },
     ...etc,
-    class: ["uy-input", { locked, disabled }, etc.class],
+    class: ["uy-input", { disabled }, etc.class],
   })
 
   const searchResult = (result: string): VDOM<S> => {
@@ -144,7 +142,7 @@ const searchbox = <S>(options: SearchboxOptions<S, any>) => (state: State<S>): V
   const popupNode = (
     x.results.length && !disabled
       ? popup(
-        { locked, disabled, id },
+        { disabled, id },
         [
           ul(
             { class: "uy-searchbox-results uy-scroller" },
@@ -157,7 +155,6 @@ const searchbox = <S>(options: SearchboxOptions<S, any>) => (state: State<S>): V
 
   return box({
     disabled,
-    locked,
     "uy-control": true,
     "uy-searchbox": true,
   }, [
@@ -166,7 +163,6 @@ const searchbox = <S>(options: SearchboxOptions<S, any>) => (state: State<S>): V
         "uy-searchbox-label": true,
         focus: x.focused,
         busy: x.searching,
-        locked,
         disabled,
       },
     }, [

@@ -8,16 +8,15 @@ import { box } from "./box"
 export type FieldOptions = {
   class?: ClassProp
   disabled?: boolean
-  locked?: boolean
 }
 
 const field = <S>(title: Content<S>, options: FieldOptions, views: ContentView<S>[]) => (state: State<S>): VDOM<S> => {
-  const { disabled, locked, ...etc } = options
+  const { disabled, ...etc } = options
   return box("uy-field", [
     label(
       {
         ...etc,
-        class: [{ locked, disabled }, etc.class],
+        class: [{ disabled }, etc.class],
       },
       [
         title,

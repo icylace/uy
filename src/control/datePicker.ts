@@ -11,7 +11,6 @@ export type DatePickerData = {
 export type DatePickerOptions<S> = {
   class?: ClassProp
   disabled?: boolean
-  locked?: boolean
   wiring: Wiring<S, DatePickerData>
 }
 
@@ -22,11 +21,10 @@ const freshDatePicker = (value: string): DatePickerData => {
 }
 
 const datePicker = <S>(options: DatePickerOptions<S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, locked, wiring, ...etc } = options
+  const { disabled, wiring, ...etc } = options
   return box("uy-control uy-datePicker", [
     input({
       disabled,
-      readonly: locked,
       value: wiring.get(state).value,
       type: "date",
       onchange: (state, event) => {
@@ -35,7 +33,7 @@ const datePicker = <S>(options: DatePickerOptions<S>) => (state: State<S>): VDOM
         return wiring.set(state, { value: target.value })
       },
       ...etc,
-      class: ["uy-input", { locked, disabled }, etc.class],
+      class: ["uy-input", { disabled }, etc.class],
     }),
   ])
 }
@@ -47,11 +45,10 @@ const freshDatetimeLocalPicker = (value: string): DatePickerData => {
 }
 
 const datetimeLocalPicker = <S>(options: DatePickerOptions<S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, locked, wiring, ...etc } = options
+  const { disabled, wiring, ...etc } = options
   return box("uy-control uy-datePicker", [
     input({
       disabled,
-      readonly: locked,
       value: wiring.get(state).value,
       type: "datetime-local",
       onchange: (state, event) => {
@@ -60,7 +57,7 @@ const datetimeLocalPicker = <S>(options: DatePickerOptions<S>) => (state: State<
         return wiring.set(state, { value: target.value })
       },
       ...etc,
-      class: ["uy-input", { locked, disabled }, etc.class],
+      class: ["uy-input", { disabled }, etc.class],
     }),
   ])
 }
@@ -72,11 +69,10 @@ const freshMonthPicker = (value: string): DatePickerData => {
 }
 
 const monthPicker = <S>(options: DatePickerOptions<S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, locked, wiring, ...etc } = options
+  const { disabled, wiring, ...etc } = options
   return box("uy-control uy-datePicker", [
     input({
       disabled,
-      readonly: locked,
       value: wiring.get(state).value,
       type: "month",
       onchange: (state, event) => {
@@ -85,7 +81,7 @@ const monthPicker = <S>(options: DatePickerOptions<S>) => (state: State<S>): VDO
         return wiring.set(state, { value: target.value })
       },
       ...etc,
-      class: ["uy-input", { locked, disabled }, etc.class],
+      class: ["uy-input", { disabled }, etc.class],
     }),
   ])
 }
@@ -97,11 +93,10 @@ const freshTimePicker = (value: string): DatePickerData => {
 }
 
 const timePicker = <S>(options: DatePickerOptions<S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, locked, wiring, ...etc } = options
+  const { disabled, wiring, ...etc } = options
   return box("uy-control uy-datePicker", [
     input({
       disabled,
-      readonly: locked,
       value: wiring.get(state).value,
       type: "time",
       onchange: (state, event) => {
@@ -110,7 +105,7 @@ const timePicker = <S>(options: DatePickerOptions<S>) => (state: State<S>): VDOM
         return wiring.set(state, { value: target.value })
       },
       ...etc,
-      class: ["uy-input", { locked, disabled }, etc.class],
+      class: ["uy-input", { disabled }, etc.class],
     }),
   ])
 }
@@ -122,11 +117,10 @@ const freshWeekPicker = (value: string): DatePickerData => {
 }
 
 const weekPicker = <S>(options: DatePickerOptions<S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, locked, wiring, ...etc } = options
+  const { disabled, wiring, ...etc } = options
   return box("uy-control uy-datePicker", [
     input({
       disabled,
-      readonly: locked,
       value: wiring.get(state).value,
       type: "week",
       onchange: (state, event) => {
@@ -135,7 +129,7 @@ const weekPicker = <S>(options: DatePickerOptions<S>) => (state: State<S>): VDOM
         return wiring.set(state, { value: target.value })
       },
       ...etc,
-      class: ["uy-input", { locked, disabled }, etc.class],
+      class: ["uy-input", { disabled }, etc.class],
     }),
   ])
 }

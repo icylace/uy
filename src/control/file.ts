@@ -13,7 +13,6 @@ export type FileOptions<S> = {
   class?: ClassProp
   disabled?: boolean
   label?: string
-  locked?: boolean
   wiring: Wiring<S, FileData>
 }
 
@@ -24,8 +23,8 @@ const freshFile = (value: string): FileData => {
 // https://codepen.io/adamlaki/pen/VYpewx
 
 const file = <S>(options: FileOptions<S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, locked, label = "Select your file...", wiring, ...etc } = options
-  return box(["uy-control uy-file uy-input", { disabled, locked }], [
+  const { disabled, label = "Select your file...", wiring, ...etc } = options
+  return box(["uy-control uy-file uy-input", { disabled }], [
     html.label({ "data-text": label }, [
       html.input({
         disabled,
@@ -43,7 +42,7 @@ const file = <S>(options: FileOptions<S>) => (state: State<S>): VDOM<S> => {
           return wiring.set(state, { value: target.value })
         },
         ...etc,
-        class: [{ disabled, locked }, etc.class],
+        class: [{ disabled }, etc.class],
       }),
       html.span([icon("fas fa-file-upload"), " Upload"]),
     ]),

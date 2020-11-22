@@ -8,7 +8,6 @@ export type FieldsetOptions<S> = {
   class?: ClassProp
   disabled?: boolean
   title?: Content<S> | Content<S>[]
-  locked?: boolean
 }
 
 // TODO:
@@ -16,13 +15,13 @@ export type FieldsetOptions<S> = {
 //   - the renaming is to distinguish from the plain `fieldset` HTML element
 
 const fieldset = <S>(title: Content<S> | Content<S>[], options: FieldsetOptions<S>, views: View<S>[]) => (state: State<S>): VDOM<S> => {
-  const { disabled, locked, ...etc } = options
+  const { disabled, ...etc } = options
   const contents = views.map((g) => g(state))
   return html.fieldset(
     {
       disabled,
       ...etc,
-      class: ["uy-fieldset", { locked, disabled }, etc.class],
+      class: ["uy-fieldset", { disabled }, etc.class],
     },
     title ? [html.legend(title), ...contents] : contents,
   )

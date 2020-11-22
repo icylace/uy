@@ -8,15 +8,14 @@ export type PopupOptions = {
   class?: ClassProp
   disabled?: boolean
   id: string
-  locked?: boolean
 }
 
 const popup = <S>(options: PopupOptions, contents: Content<S> | Content<S>[]): VDOM<S> => {
-  const { disabled, id, locked, ...etc } = options
+  const { disabled, id, ...etc } = options
   return div({
     id,
     ...etc,
-    class: ["uy-popup", { locked, disabled }, etc.class],
+    class: ["uy-popup", { disabled }, etc.class],
   }, contents)
 }
 

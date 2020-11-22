@@ -7,16 +7,15 @@ export type OverlayOptions = {
   [_: string]: unknown
   class?: ClassProp
   disabled?: boolean
-  locked?: boolean
 }
 
 const overlay = <S>(options: OverlayOptions, views: View<S>[]) => (state: State<S>): VDOM<S> => {
-  const { disabled, locked, ...etc } = options
+  const { disabled, ...etc } = options
   return box("uy-overlay-background", [
     div({
       disabled,
       ...etc,
-      class: ["uy-overlay", { locked, disabled }, etc.class],
+      class: ["uy-overlay", { disabled }, etc.class],
     }, views.map((g) => g(state))),
   ])
 }

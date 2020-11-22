@@ -14,7 +14,6 @@ export type NumberboxOptions<S> = {
   class?: ClassProp
   disabled?: boolean
   label?: Content<S>
-  locked?: boolean
   wiring: Wiring<S, NumberboxData>
 }
 
@@ -27,14 +26,13 @@ const sanitizedNumber = (n: string): number => {
 }
 
 const numberbox = <S>(options: NumberboxOptions<S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, locked, label, wiring, ...etc } = options
+  const { disabled, label, wiring, ...etc } = options
   const r = wiring.get(state)
   return box("uy-control uy-numberbox", [
-    html.label({ class: { focus: !!r.focused, locked, disabled } }, [
+    html.label({ class: { focus: !!r.focused, disabled } }, [
       html.input({
         disabled,
         min: 0,
-        readonly: locked,
         type: "number",
         value: r.value,
         onchange: (state, event) => {
@@ -48,10 +46,10 @@ const numberbox = <S>(options: NumberboxOptions<S>) => (state: State<S>): VDOM<S
         onfocus: (state) => wiring.set(state, { ...wiring.get(state), focused: true }),
         onblur: (state) => wiring.set(state, { ...wiring.get(state), focused: false }),
         ...etc,
-        class: ["uy-input", { locked, disabled }, etc.class],
+        class: ["uy-input", { disabled }, etc.class],
       }),
       label != null
-        ? html.span({ class: { "uy-input": true, locked, disabled } }, label)
+        ? html.span({ class: { "uy-input": true, disabled } }, label)
         : null,
     ]),
   ])

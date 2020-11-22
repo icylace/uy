@@ -15,7 +15,6 @@ export type PagerOptions<S> = {
   class?: ClassProp
   disabled?: boolean
   itemsPerPage: number
-  locked?: boolean
   pageRange: number
   wiring: Wiring<S, PagerData>
 }
@@ -40,7 +39,7 @@ const pagerMore = <S>(content: Content<S> | Content<S>[]): VDOM<S> => {
 }
 
 const pager = <S>(options: PagerOptions<S>) => (state: State<S>): VDOM<S> | null => {
-  const { disabled, locked, itemsPerPage, pageRange, wiring, ...etc } = options
+  const { disabled, itemsPerPage, pageRange, wiring, ...etc } = options
   const r = wiring.get(state)
   const update = (state: State<S>, value: number) => {
     return wiring.set(state, { ...r, value })
@@ -96,7 +95,7 @@ const pager = <S>(options: PagerOptions<S>) => (state: State<S>): VDOM<S> | null
 
   return div({
     ...etc,
-    class: ["uy-control uy-pager", { locked, disabled }, etc.class],
+    class: ["uy-control uy-pager", { disabled }, etc.class],
   }, [
     ul([
       li(navFirst),

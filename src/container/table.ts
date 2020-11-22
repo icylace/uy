@@ -16,7 +16,6 @@ export type TableOptions<S> = {
   [_: string]: unknown
   class?: ClassProp
   disabled?: boolean
-  locked?: boolean
   headers?: TableRow<S>
   orderColumn?: string | null
   sortDescending?: boolean
@@ -63,11 +62,10 @@ const tableRow = <S>(row: TableRow<S>): VDOM<S> => {
 }
 
 const table = <S>(options: TableOptions<S>, rows: TableRow<S>[]): VDOM<S> => {
-  const { disabled, locked, headers, orderColumn, sortDescending, ...etc } = options
+  const { disabled, headers, orderColumn, sortDescending, ...etc } = options
   return box({
     "uy-control": true,
     "uy-table": true,
-    locked,
     disabled,
   }, [
     html.table(etc, [

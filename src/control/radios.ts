@@ -12,7 +12,6 @@ export type RadiosData = {
 export type RadiosOptions<S> = {
   class?: ClassProp
   disabled?: boolean
-  locked?: boolean
   choices: Record<string, Content<S>>
   wiring: Wiring<S, RadiosData>
 }
@@ -22,13 +21,13 @@ const freshRadios = (value: string): RadiosData => {
 }
 
 const radios = <S>(options: RadiosOptions<S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, locked, choices, wiring, ...etc } = options
+  const { disabled, choices, wiring, ...etc } = options
   return box("uy-control uy-radios",
     // TODO:
     // - switch to using a Map object instead in order to guarantee order
     Object.entries(choices).map(
       ([value, label]: [string, Content<S>]): VDOM<S> => {
-        return html.label({ class: { locked, disabled } }, [
+        return html.label({ class: { disabled } }, [
           html.input({
             disabled,
             value,
@@ -40,7 +39,7 @@ const radios = <S>(options: RadiosOptions<S>) => (state: State<S>): VDOM<S> => {
               return wiring.set(state, { value: target.value })
             },
             ...etc,
-            class: ["uy-input", { locked, disabled }, etc.class],
+            class: ["uy-input", { disabled }, etc.class],
           }),
           label != null ? html.span(label) : null,
         ])

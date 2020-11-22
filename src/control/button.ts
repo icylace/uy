@@ -8,19 +8,18 @@ export type ButtonOptions<S> = {
   class?: ClassProp
   disabled?: boolean
   label?: Content<S>
-  locked?: boolean
   handler: Action<S, MouseEvent>
 }
 
 const button = <S>(options: ButtonOptions<S>): VDOM<S> => {
-  const { disabled, locked, label, handler, ...etc } = options
+  const { disabled, label, handler, ...etc } = options
   return box("uy-control uy-button", [
     html.button({
       disabled,
       type: "button",
       onclick: handler,
       ...etc,
-      class: [{ locked, disabled }, etc.class],
+      class: [{ disabled }, etc.class],
     }, label),
   ])
 }

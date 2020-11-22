@@ -11,7 +11,6 @@ export type TextboxData = {
 export type TextboxOptions<S> = {
   class?: ClassProp
   disabled?: boolean
-  locked?: boolean
   wiring: Wiring<S, TextboxData>
 }
 
@@ -20,11 +19,10 @@ const freshTextbox = (value: string): TextboxData => {
 }
 
 const textbox = <S>(options: TextboxOptions<S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, locked, wiring, ...etc } = options
+  const { disabled, wiring, ...etc } = options
   return box("uy-control uy-textbox", [
     input({
       disabled,
-      readonly: locked,
       type: "text",
       value: wiring.get(state).value,
       onchange: (state, event) => {
@@ -33,7 +31,7 @@ const textbox = <S>(options: TextboxOptions<S>) => (state: State<S>): VDOM<S> =>
         return wiring.set(state, { value: target.value })
       },
       ...etc,
-      class: ["uy-input", { locked, disabled }, etc.class],
+      class: ["uy-input", { disabled }, etc.class],
     }),
   ])
 }

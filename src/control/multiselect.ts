@@ -14,7 +14,6 @@ export type MultiselectData = {
 export type MultiselectOptions<S> = {
   class?: ClassProp
   disabled?: boolean
-  locked?: boolean
   choices: Record<string, Content<S> | Content<S>[]>
   usingColumnMode: boolean
   wiring: Wiring<S, MultiselectData>
@@ -27,7 +26,7 @@ const freshMultiselect = (value: string[]): MultiselectData => {
 }
 
 const multiselect = <S>(options: MultiselectOptions<S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, locked, choices, usingColumnMode, wiring, ...etc } = options
+  const { disabled, choices, usingColumnMode, wiring, ...etc } = options
   const r = wiring.get(state)
 
   const selection = new Set(r.value)
@@ -35,7 +34,7 @@ const multiselect = <S>(options: MultiselectOptions<S>) => (state: State<S>): VD
     ...etc,
     class: [
       "uy-control uy-scroller uy-multiselect",
-      { "uy-multiselect--grid-mode": usingColumnMode, locked, disabled },
+      { "uy-multiselect--grid-mode": usingColumnMode, disabled },
       etc.class,
     ],
   }, [
@@ -54,7 +53,7 @@ const multiselect = <S>(options: MultiselectOptions<S>) => (state: State<S>): VD
               return wiring.set(state, freshMultiselect(Array.from(selection)))
             },
           }
-          return checkbox({ disabled, label, locked, wiring: checkboxWiring })(state)
+          return checkbox({ disabled, label, wiring: checkboxWiring })(state)
         }
       ),
     ),

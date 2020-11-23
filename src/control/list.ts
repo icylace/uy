@@ -25,12 +25,12 @@ const freshList = (items: string[]): ListData => {
   return { items }
 }
 
-const list = <S>(options: ListOptions<S>) => (wiring: Wiring<S, ListData>) => (state: State<S>): VDOM<S> => {
+const list = <S>(options: ListOptions<S>) => (wiring: Wiring<ListData, S>) => (state: State<S>): VDOM<S> => {
   const { disabled, headers, ...etc } = options
   const r = wiring.get(state)
 
   const item = (value: string, i: number): TableCell<S>[] => {
-    const textWiring: Wiring<S, TextboxData> = {
+    const textWiring: Wiring<TextboxData, S> = {
       get: (_state) => freshTextbox(value),
       mod: (state, _f) => state,
       set: (state, x) => wiring.mod(state, (r) => ({

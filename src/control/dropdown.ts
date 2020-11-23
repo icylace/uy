@@ -21,7 +21,7 @@ const freshDropdown = (value: string): DropdownData => {
   return { value, focused: false }
 }
 
-const dropdown = <S>(options: DropdownOptions<S>) => (wiring: Wiring<S, DropdownData>) => (state: State<S>): VDOM<S> => {
+const dropdown = <S>(options: DropdownOptions<S>) => (wiring: Wiring<DropdownData, S>) => (state: State<S>): VDOM<S> => {
   const { disabled, choices, ...etc } = options
   const r = wiring.get(state)
   return box("uy-control uy-dropdown", [

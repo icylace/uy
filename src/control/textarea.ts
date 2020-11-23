@@ -17,7 +17,7 @@ const freshTextarea = (value: string): TextareaData => {
   return { value }
 }
 
-const textarea = <S>(options: TextareaOptions) => (wiring: Wiring<S, TextareaData>) => (state: State<S>): VDOM<S> => {
+const textarea = <S>(options: TextareaOptions) => (wiring: Wiring<TextareaData, S>) => (state: State<S>): VDOM<S> => {
   const { disabled, ...etc } = options
   return box("uy-control uy-textarea", [
     html.textarea({

@@ -58,7 +58,7 @@ const noopKeys = [
   "Super",
 ]
 
-const searchbox = <S>(options: SearchboxOptions<S, any>) => (wiring: Wiring<S, SearchboxData>) => (state: State<S>): VDOM<S> => {
+const searchbox = <S>(options: SearchboxOptions<S, any>) => (wiring: Wiring<SearchboxData, S>) => (state: State<S>): VDOM<S> => {
   const { disabled, search, onResults, id, ...etc } = options
 
   const x = wiring.get(state)

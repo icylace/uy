@@ -19,7 +19,7 @@ const freshRadios = (value: string): RadiosData => {
   return { value }
 }
 
-const radios = <S>(options: RadiosOptions<S>) => (wiring: Wiring<S, RadiosData>) => (state: State<S>): VDOM<S> => {
+const radios = <S>(options: RadiosOptions<S>) => (wiring: Wiring<RadiosData, S>) => (state: State<S>): VDOM<S> => {
   const { disabled, choices, ...etc } = options
   return box("uy-control uy-radios",
     // TODO:

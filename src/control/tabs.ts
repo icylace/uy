@@ -33,7 +33,7 @@ const isSelected = (activeTab: string) => <S>(item: Content<S>, i: number): bool
     || activeTab === String(i)
 }
 
-const tab = <S>(wiring: Wiring<S, TabsData>, activeTab: string) => {
+const tab = <S>(wiring: Wiring<TabsData, S>, activeTab: string) => {
   return (item: Content<S>, i: number): VDOM<S> => {
     const selected = isSelected(activeTab)(item, i)
     return div({
@@ -52,7 +52,7 @@ const tab = <S>(wiring: Wiring<S, TabsData>, activeTab: string) => {
   }
 }
 
-const tabs = <S>(options: TabsOptions<S>) => (wiring: Wiring<S, TabsData>) => (state: State<S>): VDOM<S> => {
+const tabs = <S>(options: TabsOptions<S>) => (wiring: Wiring<TabsData, S>) => (state: State<S>): VDOM<S> => {
   const { disabled, itemsFooter, itemsHeader, tabList, ...etc } = options
   const x = wiring.get(state)
   const headings = tabList.map((x: Tab<S>): Content<S> => x.heading)

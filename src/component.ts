@@ -1,6 +1,6 @@
 import type { State } from "hyperapp"
 
-export type Wiring<S, D> = Readonly<{
+export type Wiring<D, S> = Readonly<{
   get: (state: State<S>) => D
   mod: (state: State<S>, f: (_: D) => D) => State<S>
   set: (state: State<S>, x: D) => State<S>
@@ -8,15 +8,15 @@ export type Wiring<S, D> = Readonly<{
 
 const cable = <S extends Record<string | number, any>>(
   path: (string | number)[],
-  context?: Wiring<S, Record<string | number, any>>
-): Wiring<S, any> | undefined => {
+  context?: Wiring<Record<string | number, any>, S>
+): Wiring<any, S> | undefined => {
   return path.reduce((ctx, x) => wire(x, ctx), context)
 }
 
-const wire = <S extends Record<string | number, any>, D>(
+const wire = <D, S extends Record<string | number, any>>(
   prop: string | number,
-  context?: Wiring<S, Record<string | number, any>>
-): Wiring<S, D> => ({
+  context?: Wiring<Record<string | number, any>, S>
+): Wiring<D, S> => ({
   get: (state) => {
     if (context) {
       const r = context.get(state)

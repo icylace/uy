@@ -17,7 +17,7 @@ const freshTextbox = (value: string): TextboxData => {
   return { value }
 }
 
-const textbox = <S>(options: TextboxOptions) => (wiring: Wiring<S, TextboxData>) => (state: State<S>): VDOM<S> => {
+const textbox = <S>(options: TextboxOptions) => (wiring: Wiring<TextboxData, S>) => (state: State<S>): VDOM<S> => {
   const { disabled, ...etc } = options
   return box("uy-control uy-textbox", [
     input({

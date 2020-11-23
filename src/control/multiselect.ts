@@ -24,7 +24,7 @@ const freshMultiselect = (value: string[]): MultiselectData => {
   return { value }
 }
 
-const multiselect = <S>(options: MultiselectOptions<S>) => (wiring: Wiring<S, MultiselectData>) => (state: State<S>): VDOM<S> => {
+const multiselect = <S>(options: MultiselectOptions<S>) => (wiring: Wiring<MultiselectData, S>) => (state: State<S>): VDOM<S> => {
   const { disabled, choices, usingColumnMode, ...etc } = options
   const r = wiring.get(state)
 
@@ -40,7 +40,7 @@ const multiselect = <S>(options: MultiselectOptions<S>) => (wiring: Wiring<S, Mu
     box("uy-multiselect-options",
       Object.entries(choices).map(
         ([value, label]: [string, Content<S> | Content<S>[]]): VDOM<S> => {
-          const checkboxWiring: Wiring<S, CheckboxData> = {
+          const checkboxWiring: Wiring<CheckboxData, S> = {
             get: (_state) => freshCheckbox(selection.has(value)),
             mod: (state) => state,
             set: (state, checkboxData) => {

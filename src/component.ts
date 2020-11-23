@@ -13,7 +13,7 @@ const cable = <S extends Record<string | number, any>>(
   return path.reduce((ctx, x) => wire(x, ctx), context)
 }
 
-const wire = <D, S extends Record<string | number, any>>(
+const wire = <D, S extends Record<string | number, any> = Record<string | number, any>>(
   prop: string | number,
   context?: Wiring<Record<string | number, any>, S>
 ): Wiring<D, S> => ({

@@ -1,6 +1,6 @@
 import type { State } from "hyperapp"
 
-export type Wiring<D, S> = Readonly<{
+export type Wiring<D, S = Record<string | number, any>> = Readonly<{
   get: (state: State<S>) => D
   mod: (state: State<S>, f: (_: D) => D) => State<S>
   set: (state: State<S>, x: D) => State<S>

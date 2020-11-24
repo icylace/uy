@@ -2,25 +2,25 @@ import type { ClassProp, State, VDOM } from "hyperapp"
 import type { Content } from "ntml"
 import type { ContentView } from "../types"
 
-import { label } from "ntml"
+import * as html from "ntml"
 import { box } from "./box"
 
 export type FieldOptions<S> = {
   class?: ClassProp
   disabled?: boolean
-  title: Content<S> | Content<S>[]
+  label?: Content<S> | Content<S>[]
 }
 
 const field = <S>(options: FieldOptions<S>, views: ContentView<S>[]) => (state: State<S>): VDOM<S> => {
-  const { disabled, title, ...etc } = options
+  const { disabled, label, ...etc } = options
   return box("uy-field", [
-    label(
+    html.label(
       {
         ...etc,
         class: [{ disabled }, etc.class],
       },
       [
-        ...(Array.isArray(title) ? title : [title]),
+        ...(Array.isArray(label) ? label : [label]),
         ...views.map((view) => view(state)),
       ],
     ),

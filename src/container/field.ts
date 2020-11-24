@@ -5,13 +5,14 @@ import type { ContentView } from "../types"
 import { label } from "ntml"
 import { box } from "./box"
 
-export type FieldOptions = {
+export type FieldOptions<S> = {
   class?: ClassProp
   disabled?: boolean
+  title: Content<S> | Content<S>[]
 }
 
-const field = <S>(title: Content<S>, options: FieldOptions, views: ContentView<S>[]) => (state: State<S>): VDOM<S> => {
-  const { disabled, ...etc } = options
+const field = <S>(options: FieldOptions<S>, views: ContentView<S>[]) => (state: State<S>): VDOM<S> => {
+  const { disabled, title, ...etc } = options
   return box("uy-field", [
     label(
       {
@@ -19,7 +20,7 @@ const field = <S>(title: Content<S>, options: FieldOptions, views: ContentView<S
         class: [{ disabled }, etc.class],
       },
       [
-        title,
+        ...(Array.isArray(title) ? title : [title]),
         ...views.map((view) => view(state)),
       ],
     ),

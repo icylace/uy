@@ -28,7 +28,7 @@ export type SearchboxOptions<S, D> = {
   class?: ClassProp
   disabled?: boolean
   search: Searcher<S, D>
-  onResults: (results: SearchboxData["results"], id: string, state: State<S>) => State<S>
+  onresults: (results: SearchboxData["results"], id: string, state: State<S>) => State<S>
   id: string
 }
 
@@ -59,7 +59,7 @@ const noopKeys = [
 ]
 
 const searchbox = <S>(options: SearchboxOptions<S, any>) => (wiring: Wiring<SearchboxData, S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, search, onResults, id, ...etc } = options
+  const { disabled, search, onresults, id, ...etc } = options
 
   const x = wiring.get(state)
 
@@ -80,7 +80,7 @@ const searchbox = <S>(options: SearchboxOptions<S, any>) => (wiring: Wiring<Sear
       ]
     }
 
-    return onResults(results, id, wiring.set(state, {
+    return onresults(results, id, wiring.set(state, {
       ...r,
       results,
       searching: false,
@@ -129,7 +129,7 @@ const searchbox = <S>(options: SearchboxOptions<S, any>) => (wiring: Wiring<Sear
   const searchResult = (result: string): VDOM<S> => {
     return li<S>({
       onclick: (state: State<S>): State<S> => {
-        return onResults([], id, wiring.set(state, {
+        return onresults([], id, wiring.set(state, {
           ...wiring.get(state),
           value: result,
           results: [],

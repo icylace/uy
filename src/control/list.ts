@@ -42,7 +42,7 @@ const list = <S>(options: ListOptions<S> = {}) => (wiring: Wiring<ListData, S>) 
       textbox<S>({ disabled })(textWiring)(state),
       cancelButton<S>({
         disabled,
-        handler: (state: State<S>): State<S> => {
+        onclick: (state: State<S>): State<S> => {
           return wiring.mod(state, (r) => ({ ...r, items: exclude(i, r.items) }))
         },
       }),
@@ -55,7 +55,7 @@ const list = <S>(options: ListOptions<S> = {}) => (wiring: Wiring<ListData, S>) 
       button<S>({
         disabled,
         label: "+ Add",
-        handler: (state: State<S>): State<S> => {
+        onclick: (state: State<S>): State<S> => {
           return wiring.mod(state, (r) => ({ ...r, items: [...r.items, ""] }))
         },
       }),

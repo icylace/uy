@@ -25,7 +25,7 @@ const freshList = (items: string[]): ListData => {
   return { items }
 }
 
-const list = <S>(options: ListOptions<S>) => (wiring: Wiring<ListData, S>) => (state: State<S>): VDOM<S> => {
+const list = <S>(options: ListOptions<S> = {}) => (wiring: Wiring<ListData, S>) => (state: State<S>): VDOM<S> => {
   const { disabled, headers, ...etc } = options
   const r = wiring.get(state)
 

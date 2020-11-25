@@ -15,7 +15,7 @@ export type MultiselectOptions<S> = {
   class?: ClassProp
   disabled?: boolean
   choices: Record<string, Content<S> | Content<S>[]>
-  usingColumnMode: boolean
+  usingColumnMode?: boolean
 }
 
 // TODO:
@@ -33,7 +33,7 @@ const multiselect = <S>(options: MultiselectOptions<S>) => (wiring: Wiring<Multi
     ...etc,
     class: [
       "uy-control uy-scroller uy-multiselect",
-      { "uy-multiselect--grid-mode": usingColumnMode, disabled },
+      { "uy-multiselect--grid-mode": !!usingColumnMode, disabled },
       etc.class,
     ],
   }, [

@@ -7,15 +7,15 @@ export type FieldsetOptions<S> = {
   [_: string]: unknown
   class?: ClassProp
   disabled?: boolean
-  title?: Content<S> | Content<S>[]
+  label?: Content<S> | Content<S>[]
 }
 
 // TODO:
 // - `fieldset` -> `fields`
 //   - the renaming is to distinguish from the plain `fieldset` HTML element
 
-const fieldset = <S>(title: Content<S> | Content<S>[], options: FieldsetOptions<S>, views: View<S>[]) => (state: State<S>): VDOM<S> => {
-  const { disabled, ...etc } = options
+const fieldset = <S>(options: FieldsetOptions<S>, views: View<S>[]) => (state: State<S>): VDOM<S> => {
+  const { disabled, label, ...etc } = options
   const contents = views.map((g) => g(state))
   return html.fieldset(
     {
@@ -23,7 +23,7 @@ const fieldset = <S>(title: Content<S> | Content<S>[], options: FieldsetOptions<
       ...etc,
       class: ["uy-fieldset", { disabled }, etc.class],
     },
-    title ? [html.legend(title), ...contents] : contents,
+    label ? [html.legend(label), ...contents] : contents,
   )
 }
 

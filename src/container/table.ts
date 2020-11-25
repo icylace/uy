@@ -63,11 +63,7 @@ const tableRow = <S>(row: TableRow<S>): VDOM<S> => {
 
 const table = <S>(options: TableOptions<S>, rows: TableRow<S>[]): VDOM<S> => {
   const { disabled, headers, orderColumn, sortDescending, ...etc } = options
-  return box({
-    "uy-control": true,
-    "uy-table": true,
-    disabled,
-  }, [
+  return box({ "uy-control": true, "uy-table": true, disabled }, [
     html.table(etc, [
       Array.isArray(headers) && headers.length
         ? html.thead(headers.map(tableHeader(orderColumn, !!sortDescending)))

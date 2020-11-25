@@ -21,7 +21,7 @@ const freshFile = (value: string): FileData => {
 
 // https://codepen.io/adamlaki/pen/VYpewx
 
-const file = <S>(options: FileOptions) => (wiring: Wiring<FileData, S>) => (state: State<S>): VDOM<S> => {
+const file = <S>(options: FileOptions = {}) => (wiring: Wiring<FileData, S>) => (state: State<S>): VDOM<S> => {
   const { disabled, label = "Select your file...", ...etc } = options
   return box(["uy-control uy-file uy-input", { disabled }], [
     html.label({ "data-text": label }, [

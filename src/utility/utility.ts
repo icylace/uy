@@ -15,9 +15,4 @@ const range = (m: number, n: number): number[] => {
   return [...Array(n - m)].map((_, i) => m + i)
 }
 
-export {
-  adjust,
-  delist,
-  exclude,
-  range,
-}
+export { adjust, delist, exclude, range }

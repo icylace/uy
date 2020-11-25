@@ -24,7 +24,7 @@ const sanitizedNumber = (n: string): number => {
   return Math.max(0, Number.parseInt(n, 10))
 }
 
-const numberbox = <S>(options: NumberboxOptions<S>) => (wiring: Wiring<NumberboxData, S>) => (state: State<S>): VDOM<S> => {
+const numberbox = <S>(options: NumberboxOptions<S> = {}) => (wiring: Wiring<NumberboxData, S>) => (state: State<S>): VDOM<S> => {
   const { disabled, label, ...etc } = options
   const r = wiring.get(state)
   return box("uy-control uy-numberbox", [

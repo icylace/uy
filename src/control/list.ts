@@ -15,18 +15,21 @@ export type ListData = {
   items: string[]
 }
 
-export type ListOptions<S> = {
-  class?: ClassProp
-  disabled?: boolean
-  headers?: Stuff<S>[]
-}
+export type ListOptions<S>
+  = Stuff<S>[]
+  | {
+    class?: ClassProp
+    disabled?: boolean
+    headers?: Stuff<S>[]
+  }
 
 const freshList = (items: string[]): ListData => {
   return { items }
 }
 
 const list = <S>(options: ListOptions<S> = {}) => (wiring: Wiring<ListData, S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, headers, ...etc } = options
+  const props = Array.isArray(options) ? { headers: options } : options
+  const { disabled, headers, ...etc } = props
   const r = wiring.get(state)
 
   const item = (value: string, i: number): TableCell<S>[] => {
@@ -36,7 +39,7 @@ const list = <S>(options: ListOptions<S> = {}) => (wiring: Wiring<ListData, S>) 
     }
     return [
       textbox<S>({ disabled })(textWiring)(state),
-      cancelButton<S>({
+      cancelButton({
         disabled,
         onclick: (state: State<S>): State<S> => {
           return wiring.set(state, { ...r, items: exclude(i, r.items) })
@@ -48,7 +51,7 @@ const list = <S>(options: ListOptions<S> = {}) => (wiring: Wiring<ListData, S>) 
   const grower: TableCell<S>[] = [
     [
       { class: "uy-list-adder", colspan: 2 },
-      button<S>({
+      button({
         disabled,
         label: "+ Add",
         onclick: (state: State<S>): State<S> => {

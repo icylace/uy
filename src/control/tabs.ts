@@ -15,13 +15,15 @@ export type TabsData = {
   value: string
 }
 
-export type TabsOptions<S> = {
-  class?: ClassProp
-  disabled?: boolean
-  itemsFooter?: string | VNode<S>
-  itemsHeader?: string | VNode<S>
-  tabList: Tab<S>[]
-}
+export type TabsOptions<S>
+  = Tab<S>[]
+  | {
+    class?: ClassProp
+    disabled?: boolean
+    itemsFooter?: string | VNode<S>
+    itemsHeader?: string | VNode<S>
+    tabList: Tab<S>[]
+  }
 
 const freshTabs = (value: string): TabsData => {
   return { value }
@@ -53,7 +55,8 @@ const tab = <S>(wiring: Wiring<TabsData, S>, activeTab: string) => {
 }
 
 const tabs = <S>(options: TabsOptions<S>) => (wiring: Wiring<TabsData, S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, itemsFooter, itemsHeader, tabList, ...etc } = options
+  const props = Array.isArray(options) ? { tabList: options } : options
+  const { disabled, itemsFooter, itemsHeader, tabList, ...etc } = props
   const x = wiring.get(state)
   const headings = tabList.map((x: Tab<S>): Stuff<S> => x.heading)
   const panels = tabList.map((x: Tab<S>): Stuff<S> => x.panel)

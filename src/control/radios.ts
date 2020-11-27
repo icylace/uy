@@ -1,5 +1,5 @@
 import type { ClassProp, State, VDOM } from "hyperapp"
-import type { Stuff } from "ntml"
+import type { Content } from "ntml"
 import type { Wiring } from "../component"
 
 import * as html from "ntml"
@@ -9,23 +9,32 @@ export type RadiosData = {
   value: string
 }
 
-export type RadiosOptions<S> = {
-  class?: ClassProp
-  disabled?: boolean
-  choices: Record<string, Stuff<S>>
-}
+export type RadiosChoices<S> = Record<string, Content<S>>
+
+export type RadiosOptions<S>
+  = RadiosChoices<S>
+  | {
+    class?: ClassProp
+    disabled?: boolean
+    choices: RadiosChoices<S>
+  }
 
 const freshRadios = (value: string): RadiosData => {
   return { value }
 }
 
+const isOnlyChoices = <S>(x: any): x is Record<string, Content<S>> => {
+  return typeof x === "object" && !("choices" in x)
+}
+
 const radios = <S>(options: RadiosOptions<S>) => (wiring: Wiring<RadiosData, S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, choices, ...etc } = options
+  const props = isOnlyChoices<S>(options) ? { choices: options } : options
+  const { disabled, choices, ...etc } = props
   return box("uy-control uy-radios",
     // TODO:
     // - switch to using a Map object instead in order to guarantee order
     Object.entries(choices).map(
-      ([value, label]: [string, Stuff<S>]): VDOM<S> => {
+      ([value, label]: [string, Content<S>]): VDOM<S> => {
         return html.label({ class: { disabled } }, [
           html.input({
             disabled,

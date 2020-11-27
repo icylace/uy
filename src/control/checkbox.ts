@@ -3,6 +3,7 @@ import type { Content } from "ntml"
 import type { Wiring } from "../component"
 
 import * as html from "ntml"
+import { isContent } from "ntml"
 import { box } from "../container/box"
 
 // TODO:
@@ -22,18 +23,21 @@ export type CheckboxData = {
   value: boolean
 }
 
-export type CheckboxOptions<S> = {
-  class?: ClassProp
-  disabled?: boolean
-  label?: Content<S>
-}
+export type CheckboxOptions<S>
+  = Content<S>
+  | {
+    class?: ClassProp
+    disabled?: boolean
+    label?: Content<S>
+  }
 
 const freshCheckbox = (value: boolean): CheckboxData => {
   return { value }
 }
 
 const checkbox = <S>(options: CheckboxOptions<S> = {}) => (wiring: Wiring<CheckboxData, S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, label, ...etc } = options
+  const props = isContent<S>(options) ? { label: options } : options
+  const { disabled, label, ...etc } = props
   return box("uy-control uy-checkbox", [
     html.label({ class: { disabled } }, [
       html.input({

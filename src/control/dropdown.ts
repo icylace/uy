@@ -11,18 +11,27 @@ export type DropdownData = {
   value: string
 }
 
-export type DropdownOptions<S> = {
-  class?: ClassProp
-  disabled?: boolean
-  choices: Record<string, Content<S>>
-}
+export type DropdownChoices<S> = Record<string, Content<S>>
+
+export type DropdownOptions<S>
+  = DropdownChoices<S>
+  | {
+    class?: ClassProp
+    disabled?: boolean
+    choices: DropdownChoices<S>
+  }
 
 const freshDropdown = (value: string): DropdownData => {
   return { value, focused: false }
 }
 
+const isOnlyChoices = <S>(x: any): x is Record<string, Content<S>> => {
+  return typeof x === "object" && !("choices" in x)
+}
+
 const dropdown = <S>(options: DropdownOptions<S>) => (wiring: Wiring<DropdownData, S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, choices, ...etc } = options
+  const props = isOnlyChoices<S>(options) ? { choices: options } : options
+  const { disabled, choices, ...etc } = props
   const r = wiring.get(state)
   return box("uy-control uy-dropdown", [
     box({

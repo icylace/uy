@@ -11,12 +11,16 @@ export type MultiselectData = {
   value: string[]
 }
 
-export type MultiselectOptions<S> = {
-  class?: ClassProp
-  disabled?: boolean
-  choices: Record<string, Content<S>>
-  usingColumnMode?: boolean
-}
+export type MultiselectChoices<S> = Record<string, Content<S>>
+
+export type MultiselectOptions<S>
+  = MultiselectChoices<S>
+  | {
+    class?: ClassProp
+    disabled?: boolean
+    choices: MultiselectChoices<S>
+    usingColumnMode?: boolean
+  }
 
 // TODO:
 // - maybe use Set here instead?
@@ -24,8 +28,13 @@ const freshMultiselect = (value: string[]): MultiselectData => {
   return { value }
 }
 
+const isOnlyChoices = <S>(x: any): x is Record<string, Content<S>> => {
+  return typeof x === "object" && !("choices" in x)
+}
+
 const multiselect = <S>(options: MultiselectOptions<S>) => (wiring: Wiring<MultiselectData, S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, choices, usingColumnMode, ...etc } = options
+  const props = isOnlyChoices<S>(options) ? { choices: options } : options
+  const { disabled, choices, usingColumnMode, ...etc } = props
   const r = wiring.get(state)
 
   const selection = new Set(r.value)

@@ -20,10 +20,11 @@ const cable = <S extends Record<string | number, any>>(
 // // //   ])(state)
 // // const using = undefined
 
-const wire = <D, S extends Record<string | number, any> = Record<string | number, any>>(
-  prop: string | number,
-  context?: Wiring<Record<string | number, any>, S>
-): Wiring<D, S> => ({
+const wire = <
+  D,
+  S extends Record<string | number, any> = Record<string | number, any>,
+  C extends Record<string | number, any> = Record<string | number, any>
+>(prop: string | number, context?: Wiring<C, S>): Wiring<D, S> => ({
   get: (state) => {
     if (context) {
       const r = context.get(state)

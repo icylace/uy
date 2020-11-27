@@ -32,18 +32,14 @@ const list = <S>(options: ListOptions<S> = {}) => (wiring: Wiring<ListData, S>) 
   const item = (value: string, i: number): TableCell<S>[] => {
     const textWiring: Wiring<TextboxData, S> = {
       get: (_state) => freshTextbox(value),
-      mod: (state, _f) => state,
-      set: (state, x) => wiring.mod(state, (r) => ({
-        ...r,
-        items: adjust(i, x, r.items),
-      })),
+      set: (state, x) => wiring.set(state, { ...r, items: adjust(i, x, r.items) }),
     }
     return [
       textbox<S>({ disabled })(textWiring)(state),
       cancelButton<S>({
         disabled,
         onclick: (state: State<S>): State<S> => {
-          return wiring.mod(state, (r) => ({ ...r, items: exclude(i, r.items) }))
+          return wiring.set(state, { ...r, items: exclude(i, r.items) })
         },
       }),
     ]
@@ -56,7 +52,7 @@ const list = <S>(options: ListOptions<S> = {}) => (wiring: Wiring<ListData, S>) 
         disabled,
         label: "+ Add",
         onclick: (state: State<S>): State<S> => {
-          return wiring.mod(state, (r) => ({ ...r, items: [...r.items, ""] }))
+          return wiring.set(state, { ...r, items: [...r.items, ""] })
         },
       }),
     ],

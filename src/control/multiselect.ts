@@ -42,7 +42,6 @@ const multiselect = <S>(options: MultiselectOptions<S>) => (wiring: Wiring<Multi
         ([value, label]: [string, Content<S> | Content<S>[]]): VDOM<S> => {
           const checkboxWiring: Wiring<CheckboxData, S> = {
             get: (_state) => freshCheckbox(selection.has(value)),
-            mod: (state) => state,
             set: (state, checkboxData) => {
               if (checkboxData.value) {
                 selection.add(value)

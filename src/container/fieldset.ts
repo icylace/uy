@@ -18,7 +18,7 @@ export type FieldsetOptions<S>
 //   - the renaming is to distinguish from the plain `fieldset` HTML element
 
 const fieldset = <S>(options: FieldsetOptions<S>, views: View<S>[]) => (state: State<S>): VDOM<S> => {
-  const props = isContent<S>(options) ? {} : options
+  const props = isContent<S>(options) ? { label: options } : options
   const { disabled, label, ...etc } = props
   const contents = views.map((g) => g(state))
   return html.fieldset(

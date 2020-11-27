@@ -31,6 +31,7 @@ export * from "./indicator/icon"
 export * from "./indicator/spinner"
 
 export * from "./utility/handleUsing"
+export * from "./utility/isAction"
 export * from "./utility/onMouseDown"
 export * from "./utility/onOutside"
 export * from "./utility/unite"

@@ -1,4 +1,4 @@
 import type { State } from "hyperapp"
-import type { Content } from "ntml"
+import type { Stuff } from "ntml"
 
-export type ContentView<S> = (state: State<S>) => Content<S>
+export type ContentView<S> = (state: State<S>) => Stuff<S>

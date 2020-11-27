@@ -24,7 +24,7 @@ const freshPager = (itemsTotal: number, value: number): PagerData => {
 
 const pagerNav = <S>(
   handler: Transform<S>,
-  content: Content<S> | Content<S>[],
+  content: Content<S>,
   active: boolean,
 ): VDOM<S> => {
   return span({
@@ -33,7 +33,7 @@ const pagerNav = <S>(
   }, content)
 }
 
-const pagerMore = <S>(content: Content<S> | Content<S>[]): VDOM<S> => {
+const pagerMore = <S>(content: Content<S>): VDOM<S> => {
   return span({ class: "uy-pager-more" }, content)
 }
 

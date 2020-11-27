@@ -14,7 +14,7 @@ export type MultiselectData = {
 export type MultiselectOptions<S> = {
   class?: ClassProp
   disabled?: boolean
-  choices: Record<string, Content<S> | Content<S>[]>
+  choices: Record<string, Content<S>>
   usingColumnMode?: boolean
 }
 
@@ -39,7 +39,7 @@ const multiselect = <S>(options: MultiselectOptions<S>) => (wiring: Wiring<Multi
   }, [
     box("uy-multiselect-options",
       Object.entries(choices).map(
-        ([value, label]: [string, Content<S> | Content<S>[]]): VDOM<S> => {
+        ([value, label]: [string, Content<S>]): VDOM<S> => {
           const checkboxWiring: Wiring<CheckboxData, S> = {
             get: (_state) => freshCheckbox(selection.has(value)),
             set: (state, checkboxData) => {

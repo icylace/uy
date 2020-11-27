@@ -25,7 +25,7 @@ export type CheckboxData = {
 export type CheckboxOptions<S> = {
   class?: ClassProp
   disabled?: boolean
-  label?: Content<S> | Content<S>[]
+  label?: Content<S>
 }
 
 const freshCheckbox = (value: boolean): CheckboxData => {

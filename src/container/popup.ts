@@ -10,7 +10,7 @@ export type PopupOptions = {
   id: string
 }
 
-const popup = <S>(options: PopupOptions, contents: Content<S> | Content<S>[]): VDOM<S> => {
+const popup = <S>(options: PopupOptions, contents: Content<S>): VDOM<S> => {
   const { disabled, id, ...etc } = options
   return div({
     id,

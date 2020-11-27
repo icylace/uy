@@ -1,5 +1,5 @@
 import type { ClassProp, State, VDOM } from "hyperapp"
-import type { Content } from "ntml"
+import type { Stuff } from "ntml"
 import type { Wiring } from "../component"
 
 import * as html from "ntml"
@@ -12,7 +12,7 @@ export type RadiosData = {
 export type RadiosOptions<S> = {
   class?: ClassProp
   disabled?: boolean
-  choices: Record<string, Content<S>>
+  choices: Record<string, Stuff<S>>
 }
 
 const freshRadios = (value: string): RadiosData => {
@@ -25,7 +25,7 @@ const radios = <S>(options: RadiosOptions<S>) => (wiring: Wiring<RadiosData, S>)
     // TODO:
     // - switch to using a Map object instead in order to guarantee order
     Object.entries(choices).map(
-      ([value, label]: [string, Content<S>]): VDOM<S> => {
+      ([value, label]: [string, Stuff<S>]): VDOM<S> => {
         return html.label({ class: { disabled } }, [
           html.input({
             disabled,

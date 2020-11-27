@@ -1,5 +1,5 @@
 import type { ClassProp, State, VDOM } from "hyperapp"
-import type { Content } from "ntml"
+import type { Stuff } from "ntml"
 import type { Wiring } from "../component"
 
 import * as html from "ntml"
@@ -13,7 +13,7 @@ export type NumberboxData = {
 export type NumberboxOptions<S> = {
   class?: ClassProp
   disabled?: boolean
-  label?: Content<S>
+  label?: Stuff<S>
 }
 
 const freshNumberbox = (value: number): NumberboxData => {

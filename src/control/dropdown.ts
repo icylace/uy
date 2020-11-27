@@ -14,7 +14,7 @@ export type DropdownData = {
 export type DropdownOptions<S> = {
   class?: ClassProp
   disabled?: boolean
-  choices: Record<string, Content<S> | Content<S>[]>
+  choices: Record<string, Content<S>>
 }
 
 const freshDropdown = (value: string): DropdownData => {
@@ -49,7 +49,7 @@ const dropdown = <S>(options: DropdownOptions<S>) => (wiring: Wiring<DropdownDat
         // - switch to using a Map object instead in order to guarantee order
         // - verify type of `x` is workable
         Object.entries(choices).map(
-          ([value, label]: [string, Content<S> | Content<S>[]]): VDOM<S> => {
+          ([value, label]: [string, Content<S>]): VDOM<S> => {
             return option({ value }, label)
           }
         ),

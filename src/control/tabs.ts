@@ -1,5 +1,5 @@
 import type { ClassProp, EffectfulState, State, VDOM, VNode } from "hyperapp"
-import type { Content } from "ntml"
+import type { Stuff } from "ntml"
 import type { Wiring } from "../component"
 
 import { div } from "ntml"
@@ -7,8 +7,8 @@ import { box } from "../container/box"
 import { scrollIntoView } from "./tabs.effect"
 
 export type Tab<S> = {
-  heading: Content<S>
-  panel: Content<S>
+  heading: Stuff<S>
+  panel: Stuff<S>
 }
 
 export type TabsData = {
@@ -27,14 +27,14 @@ const freshTabs = (value: string): TabsData => {
   return { value }
 }
 
-const isSelected = (activeTab: string) => <S>(item: Content<S>, i: number): boolean => {
+const isSelected = (activeTab: string) => <S>(item: Stuff<S>, i: number): boolean => {
   return typeof item === "object"
     && item != null && "props" in item && activeTab === item.props["data-tab-id"]
     || activeTab === String(i)
 }
 
 const tab = <S>(wiring: Wiring<TabsData, S>, activeTab: string) => {
-  return (item: Content<S>, i: number): VDOM<S> => {
+  return (item: Stuff<S>, i: number): VDOM<S> => {
     const selected = isSelected(activeTab)(item, i)
     return div({
       class: { "uy-tabs-item": true, selected },
@@ -55,8 +55,8 @@ const tab = <S>(wiring: Wiring<TabsData, S>, activeTab: string) => {
 const tabs = <S>(options: TabsOptions<S>) => (wiring: Wiring<TabsData, S>) => (state: State<S>): VDOM<S> => {
   const { disabled, itemsFooter, itemsHeader, tabList, ...etc } = options
   const x = wiring.get(state)
-  const headings = tabList.map((x: Tab<S>): Content<S> => x.heading)
-  const panels = tabList.map((x: Tab<S>): Content<S> => x.panel)
+  const headings = tabList.map((x: Tab<S>): Stuff<S> => x.heading)
+  const panels = tabList.map((x: Tab<S>): Stuff<S> => x.panel)
   return div(
     {
       ...etc,

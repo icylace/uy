@@ -20,7 +20,7 @@ export type ChecklistData = {
 export type ChecklistOptions<S> = {
   class?: ClassProp
   disabled?: boolean
-  render: (_: Content<S> | Content<S>[]) => VDOM<S>
+  render: (_: Content<S>) => VDOM<S>
 }
 
 const freshChecklist = (items: ChecklistItem[]): ChecklistData => {

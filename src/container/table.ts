@@ -1,17 +1,12 @@
 import type { ClassProp, PropList, VDOM } from "hyperapp"
-import type { Content } from "ntml"
+import type { Content, Stuff } from "ntml"
 
 import * as html from "ntml"
 import { icon } from "../indicator/icon"
 import { box } from "./box"
 
-export type TableCell<S>
-  = Content<S>
-  | Content<S>[]
-  | [PropList<S>, Content<S> | Content<S>[]]
-
+export type TableCell<S> = Content<S> | [PropList<S>, Content<S>]
 export type TableRow<S> = TableCell<S>[]
-
 export type TableOptions<S> = {
   [_: string]: unknown
   class?: ClassProp
@@ -24,7 +19,7 @@ export type TableOptions<S> = {
 const tableHeader = (orderColumn: string | null | undefined, sortDescending: boolean) => {
   return <S>(header: TableCell<S>): VDOM<S> => {
     const props = (Array.isArray(header) ? header[0] : {}) as PropList<S>
-    const headerContents: Content<S>[] = (Array.isArray(header) ? header[1] : [header]) as Content<S>[]
+    const headerContents: Stuff<S>[] = (Array.isArray(header) ? header[1] : [header]) as Stuff<S>[]
     const column = props && "data-column" in props && props["data-column"]
     const sorting = orderColumn != null && orderColumn === column
     return html.th(
@@ -47,7 +42,7 @@ const tableHeader = (orderColumn: string | null | undefined, sortDescending: boo
   }
 }
 
-const hasPropList = <S>(x: TableCell<S>): x is [PropList<S>, Content<S> | Content<S>[]] => {
+const hasPropList = <S>(x: TableCell<S>): x is [PropList<S>, Content<S>] => {
   return Array.isArray(x)
 }
 

@@ -1,5 +1,5 @@
 import type { ClassProp, State, VDOM } from "hyperapp"
-import type { Content } from "ntml"
+import type { Stuff } from "ntml"
 import type { TableCell } from "../container/table"
 import type { Wiring } from "../component"
 import type { TextboxData } from "./textbox"
@@ -18,7 +18,7 @@ export type ListData = {
 export type ListOptions<S> = {
   class?: ClassProp
   disabled?: boolean
-  headers?: Content<S>[]
+  headers?: Stuff<S>[]
 }
 
 const freshList = (items: string[]): ListData => {

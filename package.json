@@ -42,7 +42,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.1",
     "hyperapp": "github:icylace/hyperapp#master",
-    "ntml": "^0.1.37",
+    "ntml": "^0.1.41",
     "remeda": "0.0.27"
   },
   "devDependencies": {

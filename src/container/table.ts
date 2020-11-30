@@ -7,14 +7,16 @@ import { box } from "./box"
 
 export type TableCell<S> = Content<S> | [PropList<S>, Content<S>]
 export type TableRow<S> = TableCell<S>[]
-export type TableOptions<S> = {
-  [_: string]: unknown
-  class?: ClassProp
-  disabled?: boolean
-  headers?: TableRow<S>
-  orderColumn?: string | null
-  sortDescending?: boolean
-}
+export type TableOptions<S>
+  = TableRow<S>
+  | {
+    [_: string]: unknown
+    class?: ClassProp
+    disabled?: boolean
+    headers?: TableRow<S>
+    orderColumn?: string | null
+    sortDescending?: boolean
+  }
 
 const tableHeader = (orderColumn: string | null | undefined, sortDescending: boolean) => {
   return <S>(header: TableCell<S>): VDOM<S> => {
@@ -57,7 +59,8 @@ const tableRow = <S>(row: TableRow<S>): VDOM<S> => {
 }
 
 const table = <S>(options: TableOptions<S>, rows: TableRow<S>[]): VDOM<S> => {
-  const { disabled, headers, orderColumn, sortDescending, ...etc } = options
+  const props = Array.isArray(options) ? { headers: options } : options
+  const { disabled, headers, orderColumn, sortDescending, ...etc } = props
   return box({ "uy-control": true, "uy-table": true, disabled }, [
     html.table(etc, [
       Array.isArray(headers) && headers.length

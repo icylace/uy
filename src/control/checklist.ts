@@ -10,7 +10,7 @@ import { checkbox } from "./checkbox"
 
 export type ChecklistItem = {
   id: string
-  selected: boolean
+  selected: boolean | null | undefined
 }
 
 export type ChecklistData = {

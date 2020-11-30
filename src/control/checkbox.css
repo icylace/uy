@@ -20,6 +20,10 @@
   justify-content: center;
   position: relative;
 }
+/*
+.uy-checkbox > label > input[type="checkbox"]:indeterminate {
+}
+*/
 
 .uy-checkbox > label > input[type="checkbox"]:before {
   position: absolute;

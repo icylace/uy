@@ -6,19 +6,6 @@ import * as html from "ntml"
 import { isContent } from "ntml"
 import { box } from "../container/box"
 
-// TODO:
-// - support indeterminate state
-//
-// setTimeout(() => {
-//   const el = document.querySelectorAll("input[type='checkbox']")
-//   if (el) {
-//     el.indeterminate = true
-//   }
-//   console.log(el)
-// }, 1000)
-//
-// const freshCheckbox = (value: boolean, indeterminate?: boolean): CheckboxData => ({ indeterminate, value })
-
 export type CheckboxData = {
   value: boolean | null | undefined
 }
@@ -31,7 +18,7 @@ export type CheckboxOptions<S>
     label?: Content<S>
   }
 
-const freshCheckbox = (value: boolean): CheckboxData => {
+const freshCheckbox = (value: boolean | null | undefined): CheckboxData => {
   return { value }
 }
 

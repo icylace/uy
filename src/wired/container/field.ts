@@ -4,6 +4,7 @@ import type { ContentView } from "../../types"
 
 import * as html from "ntml"
 import { isContent } from "ntml"
+import { encase } from "../../utility/encase"
 import { box } from "../../wireless/container/box"
 
 export type FieldOptions<S>
@@ -24,7 +25,7 @@ const field = <S>(options: FieldOptions<S>, views: ContentView<S>[]) => (state: 
         class: [{ disabled }, etc.class],
       },
       [
-        ...(Array.isArray(label) ? label : [label]),
+        ...encase(label),
         ...views.map((view) => view(state)),
       ],
     ),

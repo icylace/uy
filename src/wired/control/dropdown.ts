@@ -41,8 +41,8 @@ const dropdown = <S>(options: DropdownOptions<S>) => (wiring: Wiring<DropdownDat
     }, [
       select(
         {
-          disabled,
           value: r.value,
+          disabled,
           onchange: (state, event) => {
             if (!event) return state
             const target = event.target as HTMLInputElement

@@ -1,18 +1,21 @@
-import type { ClassProp, EffectfulState, State, VDOM, VNode } from "hyperapp"
-import type { Stuff } from "ntml"
+import type { ClassProp, EffectfulState, State, VDOM } from "hyperapp"
+import type { Content, Stuff } from "ntml"
 import type { Wiring } from "../../component"
 
-import { div } from "ntml"
+import { div, isVDOM } from "ntml"
+import { encase } from "../../utility/encase"
 import { box } from "../../wireless/container/box"
 import { scrollIntoView } from "./tabs.effect"
+
+export type TabIndex = number | string
+
+export type TabsData = {
+  value: TabIndex
+}
 
 export type Tab<S> = {
   heading: Stuff<S>
   panel: Stuff<S>
-}
-
-export type TabsData = {
-  value: string
 }
 
 export type TabsOptions<S>
@@ -20,8 +23,8 @@ export type TabsOptions<S>
   | {
     class?: ClassProp
     disabled?: boolean
-    itemsFooter?: string | VNode<S>
-    itemsHeader?: string | VNode<S>
+    itemsFooter?: Content<S>
+    itemsHeader?: Content<S>
     tabList: Tab<S>[]
   }
 
@@ -29,17 +32,17 @@ const freshTabs = (value: string): TabsData => {
   return { value }
 }
 
-const isSelected = (activeTab: string) => <S>(item: Stuff<S>, i: number): boolean => {
+const isSelected = (activeTab: TabIndex) => <S>(item: Stuff<S>, i: number): boolean => {
   return typeof item === "object"
-    && item != null && "props" in item && activeTab === item.props["data-tab-id"]
-    || activeTab === String(i)
+    ? item != null && isVDOM(item) && activeTab === item.props["data-tab-id"]
+    : activeTab === i
 }
 
-const tab = <S>(wiring: Wiring<TabsData, S>, activeTab: string) => {
+const tab = <S>(wiring: Wiring<TabsData, S>, activeTab: TabIndex) => {
   return (item: Stuff<S>, i: number): VDOM<S> => {
     const selected = isSelected(activeTab)(item, i)
     return div({
-      class: { "uy-tabs-item": true, selected },
+      class: ["uy-tabs-item", { selected }],
       onclick: (state, event) => {
         const transition = wiring.set(state, freshTabs(String(i)))
         if (!event) return transition
@@ -67,9 +70,9 @@ const tabs = <S>(options: TabsOptions<S>) => (wiring: Wiring<TabsData, S>) => (s
     },
     [
       box("uy-tabs-navigation", [
-        itemsHeader,
+        ...encase(itemsHeader),
         box("uy-tabs-list uy-scroller", headings.map(tab(wiring, x.value))),
-        itemsFooter,
+        ...encase(itemsFooter),
       ]),
       box("uy-tabs-panels", [
         panels[headings.findIndex(isSelected(x.value))],

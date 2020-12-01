@@ -3,7 +3,7 @@ import type { Content } from "ntml"
 import type { Wiring } from "../../component"
 
 import { div, li, span, ul } from "ntml"
-import { range } from "../../utility/utility"
+import { range } from "../../utility/range"
 import { icon } from "../../wireless/indicator/icon"
 
 export type PagerData = {

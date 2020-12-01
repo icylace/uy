@@ -2,12 +2,16 @@ export * from "./component"
 
 export * from "./types"
 
+export * from "./utility/adjust"
+export * from "./utility/delist"
+export * from "./utility/encase"
+export * from "./utility/exclude"
 export * from "./utility/handleUsing"
 export * from "./utility/isAction"
 export * from "./utility/onMouseDown"
 export * from "./utility/onOutside"
+export * from "./utility/range"
 export * from "./utility/unite"
-export * from "./utility/utility"
 export * from "./utility/uyHelper"
 
 export * from "./wired/container/board"

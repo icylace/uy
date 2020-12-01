@@ -18,7 +18,7 @@ export type TableOptions<S>
     sortDescending?: boolean
   }
 
-const tableHeader = <S>(orderColumn: string | null | undefined, sortDescending: boolean) => {
+const tableHeader = <S>(orderColumn: string | null | undefined, sortDescending: boolean | null | undefined) => {
   return (header: TableCell<S>): VDOM<S> => {
     const props = (Array.isArray(header) ? header[0] : {}) as PropList<S>
     const headerContents: Stuff<S>[] = (Array.isArray(header) ? header[1] : [header]) as Stuff<S>[]
@@ -31,7 +31,7 @@ const tableHeader = <S>(orderColumn: string | null | undefined, sortDescending: 
         sorting
           ? icon({
             glyphicon: true,
-            "glyphicon-chevron-down": sortDescending,
+            "glyphicon-chevron-down": !!sortDescending,
             "glyphicon-chevron-up": !sortDescending,
             "sort-indicator": true,
           })
@@ -58,10 +58,10 @@ const tableRow = <S>(row: TableRow<S>): VDOM<S> => {
 const table = <S>(options: TableOptions<S> = {}, rows: TableRow<S>[]): VDOM<S> => {
   const props = Array.isArray(options) ? { headers: options } : options
   const { disabled, headers, orderColumn, sortDescending, ...etc } = props
-  return box({ "uy-control": true, "uy-table": true, disabled }, [
+  return box(["uy-control uy-table", { disabled }], [
     html.table(etc, [
       Array.isArray(headers) && headers.length
-        ? html.thead(headers.map(tableHeader(orderColumn, !!sortDescending)))
+        ? html.thead(headers.map(tableHeader(orderColumn, sortDescending)))
         : null,
       html.tbody(rows.map(tableRow)),
     ]),

@@ -1,10 +1,10 @@
 import type { ClassProp, State, VDOM } from "hyperapp"
 import type { Content } from "ntml"
-import type { Wiring } from "../component"
+import type { Wiring } from "../../component"
 
 import * as html from "ntml"
 import { isContent } from "ntml"
-import { box } from "../container/box"
+import { box } from "../../wireless/container/box"
 
 export type NumberboxData = {
   focused?: boolean

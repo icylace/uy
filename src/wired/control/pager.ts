@@ -1,10 +1,10 @@
 import type { ClassProp, State, Transform, VDOM, VNode } from "hyperapp"
 import type { Content } from "ntml"
-import type { Wiring } from "../component"
+import type { Wiring } from "../../component"
 
 import { div, li, span, ul } from "ntml"
-import { range } from "../utility/utility"
-import { icon } from "../indicator/icon"
+import { range } from "../../utility/utility"
+import { icon } from "../../indicator/icon"
 
 export type PagerData = {
   itemsTotal: number

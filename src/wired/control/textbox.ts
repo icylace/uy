@@ -1,8 +1,8 @@
 import type { ClassProp, State, VDOM } from "hyperapp"
-import type { Wiring } from "../component"
+import type { Wiring } from "../../component"
 
 import { input } from "ntml"
-import { box } from "../container/box"
+import { box } from "../../wireless/container/box"
 
 export type TextboxData = {
   value: string

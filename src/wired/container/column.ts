@@ -1,7 +1,7 @@
 import type { State, VDOM } from "hyperapp"
-import type { ContentView } from "../types"
+import type { ContentView } from "../../types"
 
-import { box } from "./box"
+import { box } from "../../wireless/container/box"
 
 const column = <S>(views: ContentView<S>[]) => (state: State<S>): VDOM<S> => {
   return box("uy-column", views.map((view) => view(state)))

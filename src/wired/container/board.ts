@@ -1,8 +1,8 @@
 import type { PropList, State, VDOM } from "hyperapp"
-import type { ContentView } from "../types"
-import type { TableOptions } from "./table"
+import type { ContentView } from "../../types"
+import type { TableOptions } from "../../wireless/container/table"
 
-import { table } from "./table"
+import { table } from "../../wireless/container/table"
 
 export type BoardCell<S> = ContentView<S> | [PropList<S>, ContentView<S>]
 export type BoardRow<S> = BoardCell<S>[]

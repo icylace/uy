@@ -1,10 +1,10 @@
 import type { ClassProp, State, VDOM } from "hyperapp"
 import type { Content } from "ntml"
-import type { Wiring } from "../component"
+import type { Wiring } from "../../component"
 import type { CheckboxData } from "./checkbox"
 
 import { div } from "ntml"
-import { box } from "../container/box"
+import { box } from "../../wireless/container/box"
 import { checkbox, freshCheckbox } from "./checkbox"
 
 export type MultiselectData = {

@@ -1,10 +1,10 @@
 import type { ClassProp, State, VDOM } from "hyperapp"
 import type { Content } from "ntml"
-import type { ContentView } from "../types"
+import type { ContentView } from "../../types"
 
 import * as html from "ntml"
 import { isContent } from "ntml"
-import { box } from "./box"
+import { box } from "../../wireless/container/box"
 
 export type FieldOptions<S>
   = Content<S>

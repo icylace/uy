@@ -1,8 +1,8 @@
 import type { Action, ClassProp, VDOM } from "hyperapp"
 
 import * as html from "ntml"
-import { isAction } from "../utility/isAction"
-import { box } from "../container/box"
+import { isAction } from "../../utility/isAction"
+import { box } from "../../wireless/container/box"
 
 export type CancelButtonOptions<S>
   = Action<S, MouseEvent>

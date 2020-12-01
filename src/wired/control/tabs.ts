@@ -1,9 +1,9 @@
 import type { ClassProp, EffectfulState, State, VDOM, VNode } from "hyperapp"
 import type { Stuff } from "ntml"
-import type { Wiring } from "../component"
+import type { Wiring } from "../../component"
 
 import { div } from "ntml"
-import { box } from "../container/box"
+import { box } from "../../wireless/container/box"
 import { scrollIntoView } from "./tabs.effect"
 
 export type Tab<S> = {

@@ -1,14 +1,14 @@
 import type { ClassProp, State, VDOM } from "hyperapp"
 import type { Stuff } from "ntml"
-import type { TableCell } from "../container/table"
-import type { Wiring } from "../component"
+import type { TableCell } from "../../wireless/container/table"
+import type { Wiring } from "../../component"
 import type { TextboxData } from "./textbox"
 
 import { div } from "ntml"
-import { table } from "../container/table"
-import { adjust, exclude } from "../utility/utility"
-import { button } from "./button"
-import { cancelButton } from "./cancelButton"
+import { table } from "../../wireless/container/table"
+import { adjust, exclude } from "../../utility/utility"
+import { button } from "../../wireless/control/button"
+import { cancelButton } from "../../wireless/control/cancelButton"
 import { textbox, freshTextbox } from "./textbox"
 
 export type ListData = {

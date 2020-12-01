@@ -1,11 +1,11 @@
 import type { ClassProp, State, VDOM } from "hyperapp"
 import type { Content } from "ntml"
-import type { Wiring } from "../component"
-import type { TableRow } from "../container/table"
+import type { Wiring } from "../../component"
+import type { TableRow } from "../../wireless/container/table"
 import type { CheckboxData } from "./checkbox"
 
 import { div } from "ntml"
-import { table } from "../container/table"
+import { table } from "../../wireless/container/table"
 import { checkbox, freshCheckbox } from "./checkbox"
 
 export type ChecklistItem = {

@@ -5,7 +5,7 @@ import * as html from "ntml"
 import { icon } from "../indicator/icon"
 import { box } from "./box"
 
-export type TableCell<S> = Content<S> | [PropList<S>, Content<S>]
+export type TableCell<S> = Stuff<S> | [PropList<S>, Content<S>]
 export type TableRow<S> = TableCell<S>[]
 export type TableOptions<S>
   = TableRow<S>
@@ -18,17 +18,14 @@ export type TableOptions<S>
     sortDescending?: boolean
   }
 
-const tableHeader = (orderColumn: string | null | undefined, sortDescending: boolean) => {
-  return <S>(header: TableCell<S>): VDOM<S> => {
+const tableHeader = <S>(orderColumn: string | null | undefined, sortDescending: boolean) => {
+  return (header: TableCell<S>): VDOM<S> => {
     const props = (Array.isArray(header) ? header[0] : {}) as PropList<S>
     const headerContents: Stuff<S>[] = (Array.isArray(header) ? header[1] : [header]) as Stuff<S>[]
     const column = props && "data-column" in props && props["data-column"]
     const sorting = orderColumn != null && orderColumn === column
     return html.th(
-      {
-        ...props,
-        class: [{ "sort-column": sorting }, props.class],
-      },
+      { ...props, class: [{ "sort-column": sorting }, props.class], },
       [
         ...headerContents,
         sorting
@@ -58,7 +55,7 @@ const tableRow = <S>(row: TableRow<S>): VDOM<S> => {
   return html.tr(row.map(tableCell))
 }
 
-const table = <S>(options: TableOptions<S>, rows: TableRow<S>[]): VDOM<S> => {
+const table = <S>(options: TableOptions<S> = {}, rows: TableRow<S>[]): VDOM<S> => {
   const props = Array.isArray(options) ? { headers: options } : options
   const { disabled, headers, orderColumn, sortDescending, ...etc } = props
   return box({ "uy-control": true, "uy-table": true, disabled }, [

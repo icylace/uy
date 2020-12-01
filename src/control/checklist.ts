@@ -6,11 +6,11 @@ import type { CheckboxData } from "./checkbox"
 
 import { div } from "ntml"
 import { table } from "../container/table"
-import { checkbox } from "./checkbox"
+import { checkbox, freshCheckbox } from "./checkbox"
 
 export type ChecklistItem = {
   id: string
-  selected: boolean | null | undefined
+  selected: CheckboxData
 }
 
 export type ChecklistData = {
@@ -20,7 +20,7 @@ export type ChecklistData = {
 export type ChecklistOptions<S> = {
   class?: ClassProp
   disabled?: boolean
-  render: (_: Content<S>) => VDOM<S>
+  renderLabel: (_: Content<S>) => VDOM<S>
 }
 
 const freshChecklist = (items: ChecklistItem[]): ChecklistData => {
@@ -28,20 +28,20 @@ const freshChecklist = (items: ChecklistItem[]): ChecklistData => {
 }
 
 const checklist = <S>(options: ChecklistOptions<S>) => (wiring: Wiring<ChecklistData, S>) => (state: State<S>): VDOM<S> => {
-  const { disabled, render, ...etc } = options
+  const { disabled, renderLabel, ...etc } = options
   const x = wiring.get(state)
 
   const item = (x: ChecklistItem, i: number): TableRow<S> => {
     const itemWiring: Wiring<CheckboxData, S> = ({
-      get: (state) => ({ value: wiring.get(state).items[i].selected }),
+      get: (state) => wiring.get(state).items[i].selected,
       set: (state, x) => {
         const r = wiring.get(state)
         return wiring.set(state, {
           ...r,
           items: [
             ...r.items.slice(0, i),
-            { ...r.items[i], selected: x.value },
-            ...r.items.slice(i + 1,),
+            { ...r.items[i], selected: freshCheckbox(x.value) },
+            ...r.items.slice(i + 1),
           ],
         })
       },
@@ -50,7 +50,7 @@ const checklist = <S>(options: ChecklistOptions<S>) => (wiring: Wiring<Checklist
     return [
       [
         { class: { "uy-horizontal": x.id === "other" } },
-        [checkbox({ disabled, label: render(x.id) })(itemWiring)(state)],
+        [checkbox({ label: renderLabel(x.id), disabled })(itemWiring)(state)],
       ],
     ]
   }

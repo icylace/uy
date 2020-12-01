@@ -2,7 +2,7 @@ import type { ClassProp, PropList, VDOM } from "hyperapp"
 import type { Content, Stuff } from "ntml"
 
 import * as html from "ntml"
-import { icon } from "../../indicator/icon"
+import { icon } from "../../wireless/indicator/icon"
 import { box } from "./box"
 
 export type TableCell<S> = Stuff<S> | [PropList<S>, Content<S>]

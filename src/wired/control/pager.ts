@@ -4,7 +4,7 @@ import type { Wiring } from "../../component"
 
 import { div, li, span, ul } from "ntml"
 import { range } from "../../utility/utility"
-import { icon } from "../../indicator/icon"
+import { icon } from "../../wireless/indicator/icon"
 
 export type PagerData = {
   itemsTotal: number

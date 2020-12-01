@@ -3,7 +3,7 @@ import type { Wiring } from "../../component"
 
 import * as html from "ntml"
 import { box } from "../../wireless/container/box"
-import { icon } from "../../indicator/icon"
+import { icon } from "../../wireless/indicator/icon"
 
 export type FileData = {
   value: string

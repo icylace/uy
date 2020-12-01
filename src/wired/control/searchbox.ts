@@ -13,7 +13,7 @@ import type { Wiring } from "../../component"
 import { input, label, li, span, ul } from "ntml"
 import { popup } from "../../wireless/container/popup"
 import { box } from "../../wireless/container/box"
-import { icon } from "../../indicator/icon"
+import { icon } from "../../wireless/indicator/icon"
 
 export type Searcher<S, D> = (action: Action<S, SearchboxData>) => (value: string) => EffectDescriptor<S, D>
 

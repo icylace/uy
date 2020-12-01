@@ -9,26 +9,26 @@ import { scrollIntoView } from "./tabs.effect"
 
 export type TabIndex = number | string
 
-export type TabsData = {
+export type TabsData = Readonly<{
   value: TabIndex
-}
+}>
 
-export type Tab<S> = {
+export type Tab<S> = Readonly<{
   heading: Stuff<S>
   panel: Stuff<S>
-}
+}>
 
 export type TabsOptions<S>
   = Tab<S>[]
-  | {
-    class?: ClassProp
-    disabled?: boolean
-    itemsFooter?: Content<S>
-    itemsHeader?: Content<S>
+  | Readonly<{
     tabList: Tab<S>[]
-  }
+    class?: ClassProp
+    itemsHeader?: Content<S>
+    itemsFooter?: Content<S>
+    disabled?: boolean
+  }>
 
-const freshTabs = (value: string): TabsData => {
+const freshTabs = (value: TabIndex): TabsData => {
   return { value }
 }
 
@@ -44,7 +44,14 @@ const tab = <S>(wiring: Wiring<TabsData, S>, activeTab: TabIndex) => {
     return div({
       class: ["uy-tabs-item", { selected }],
       onclick: (state, event) => {
-        const transition = wiring.set(state, freshTabs(String(i)))
+        const transition = wiring.set(
+          state,
+          freshTabs(
+            isVDOM(item)
+              ? item.props["data-tab-id"] as string
+              : i
+          )
+        )
         if (!event) return transition
         if (!event.target) return transition
         return selected
@@ -57,28 +64,32 @@ const tab = <S>(wiring: Wiring<TabsData, S>, activeTab: TabIndex) => {
   }
 }
 
-const tabs = <S>(options: TabsOptions<S>) => (wiring: Wiring<TabsData, S>) => (state: State<S>): VDOM<S> => {
-  const props = Array.isArray(options) ? { tabList: options } : options
-  const { disabled, itemsFooter, itemsHeader, tabList, ...etc } = props
-  const x = wiring.get(state)
-  const headings = tabList.map((x: Tab<S>): Stuff<S> => x.heading)
-  const panels = tabList.map((x: Tab<S>): Stuff<S> => x.panel)
-  return div(
-    {
-      ...etc,
-      class: ["uy-control uy-tabs", { disabled }, etc.class],
-    },
-    [
-      box("uy-tabs-navigation", [
-        ...encase(itemsHeader),
-        box("uy-tabs-list uy-scroller", headings.map(tab(wiring, x.value))),
-        ...encase(itemsFooter),
-      ]),
-      box("uy-tabs-panels", [
-        panels[headings.findIndex(isSelected(x.value))],
-      ]),
-    ],
-  )
+const tabs = <S>(options: TabsOptions<S>) => (wiring: Wiring<TabsData, S>) => {
+  return (state: State<S>): VDOM<S> => {
+    const props = Array.isArray(options) ? { tabList: options } : options
+    const { tabList, itemsHeader, itemsFooter, disabled, ...etc } = props
+
+    const x = wiring.get(state)
+    const headings = tabList.map((x: Tab<S>): Stuff<S> => x.heading)
+    const panels = tabList.map((x: Tab<S>): Stuff<S> => x.panel)
+
+    return div(
+      {
+        ...etc,
+        class: ["uy-control uy-tabs", { disabled }, etc.class],
+      },
+      [
+        box("uy-tabs-navigation", [
+          ...encase(itemsHeader),
+          box("uy-tabs-list uy-scroller", headings.map(tab(wiring, x.value))),
+          ...encase(itemsFooter),
+        ]),
+        box("uy-tabs-panels", [
+          panels[headings.findIndex(isSelected(x.value))],
+        ]),
+      ],
+    )
+  }
 }
 
 export { freshTabs, tabs }

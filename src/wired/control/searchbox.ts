@@ -15,8 +15,6 @@ import { popup } from "../../wireless/container/popup"
 import { box } from "../../wireless/container/box"
 import { icon } from "../../wireless/indicator/icon"
 
-export type Searcher<S, D> = (action: Action<S, SearchboxData>) => (value: string) => EffectDescriptor<S, D>
-
 export type SearchboxData = {
   focused: boolean
   results: string[]
@@ -24,12 +22,14 @@ export type SearchboxData = {
   value: string
 }
 
+export type Searcher<S, D> = (action: Action<S, SearchboxData>) => (value: string) => EffectDescriptor<S, D>
+
 export type SearchboxOptions<S, D> = {
-  class?: ClassProp
-  disabled?: boolean
+  id: string
   search: Searcher<S, D>
   onresults: (results: SearchboxData["results"], id: string, state: State<S>) => State<S>
-  id: string
+  class?: ClassProp
+  disabled?: boolean
 }
 
 const freshSearchbox = (value: string): SearchboxData => ({
@@ -142,21 +142,15 @@ const searchbox = <S>(options: SearchboxOptions<S, any>) => (wiring: Wiring<Sear
     x.results.length && !disabled
       ? popup(
         { disabled, id },
-        [
-          ul(
-            { class: "uy-searchbox-results uy-scroller" },
-            x.results.map(searchResult),
-          ),
-        ]
+        [ul(
+          { class: "uy-searchbox-results uy-scroller" },
+          x.results.map(searchResult),
+        )]
       )
       : null
   ) as VNode<S>
 
-  return box({
-    disabled,
-    "uy-control": true,
-    "uy-searchbox": true,
-  }, [
+  return box(["uy-control uy-searchbox", { disabled }] , [
     label({
       class: {
         "uy-searchbox-label": true,

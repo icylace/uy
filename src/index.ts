@@ -2,7 +2,7 @@ export * from "./component"
 
 export * from "./types"
 
-export * from "./utility/adjust"
+export * from "./utility/assign"
 export * from "./utility/delist"
 export * from "./utility/encase"
 export * from "./utility/exclude"

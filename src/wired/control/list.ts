@@ -5,7 +5,7 @@ import type { Wiring } from "../../component"
 import type { TextboxData } from "./textbox"
 
 import { div } from "ntml"
-import { adjust } from "../../utility/adjust"
+import { assign } from "../../utility/assign"
 import { exclude } from "../../utility/exclude"
 import { table } from "../../wireless/container/table"
 import { button } from "../../wireless/control/button"
@@ -36,7 +36,7 @@ const list = <S>(options: ListOptions<S> = {}) => (wiring: Wiring<ListData, S>) 
   const item = (value: string, i: number): TableCell<S>[] => {
     const textWiring: Wiring<TextboxData, S> = {
       get: (_state) => freshTextbox(value),
-      set: (state, x) => wiring.set(state, { ...r, items: adjust(i, x, r.items) }),
+      set: (state, x) => wiring.set(state, { ...r, items: assign(i, x, r.items) }),
     }
     return [
       textbox<S>({ disabled })(textWiring)(state),

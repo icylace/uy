@@ -16,10 +16,10 @@ import { box } from "../../wireless/container/box"
 import { icon } from "../../wireless/indicator/icon"
 
 export type SearchboxData = {
-  focused: boolean
+  value: string
   results: string[]
   searching: boolean
-  value: string
+  focused?: boolean
 }
 
 export type SearchboxOptions<S> = {

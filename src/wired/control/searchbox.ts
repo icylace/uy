@@ -22,9 +22,9 @@ export type SearchboxData = {
   value: string
 }
 
-export type SearchboxOptions<S, D> = {
+export type SearchboxOptions<S> = {
   id: string
-  search: (action: Action<S, SearchboxData>, value: string) => EffectDescriptor<S, D>
+  search: (action: Action<S, SearchboxData>, value: string) => EffectDescriptor<S, SearchboxData>
   onresults: (results: SearchboxData["results"], id: string, state: State<S>) => State<S>
   class?: ClassProp
   disabled?: boolean
@@ -56,7 +56,7 @@ const noopKeys = [
   "Super",
 ]
 
-const searchbox = <S>(options: SearchboxOptions<S, any>) => (wiring: Wiring<SearchboxData, S>) => (state: State<S>): VDOM<S> => {
+const searchbox = <S>(options: SearchboxOptions<S>) => (wiring: Wiring<SearchboxData, S>) => (state: State<S>): VDOM<S> => {
   const { disabled, search, onresults, id, ...etc } = options
 
   const x = wiring.get(state)
@@ -98,9 +98,9 @@ const searchbox = <S>(options: SearchboxOptions<S, any>) => (wiring: Wiring<Sear
   }
 
   const inputSearch = input<S>({
-    disabled,
-    value: x.value,
     type: "search",
+    value: x.value,
+    disabled,
     onfocus: (state) => wiring.set(state, { ...x, focused: true }),
     onblur: (state) => wiring.set(state, { ...x, focused: false }),
     onkeyup: (state, event) => {

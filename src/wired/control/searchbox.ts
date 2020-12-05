@@ -22,11 +22,9 @@ export type SearchboxData = {
   value: string
 }
 
-export type Searcher<S, D> = (action: Action<S, SearchboxData>) => (value: string) => EffectDescriptor<S, D>
-
 export type SearchboxOptions<S, D> = {
   id: string
-  search: Searcher<S, D>
+  search: (action: Action<S, SearchboxData>, value: string) => EffectDescriptor<S, D>
   onresults: (results: SearchboxData["results"], id: string, state: State<S>) => State<S>
   class?: ClassProp
   disabled?: boolean
@@ -76,7 +74,7 @@ const searchbox = <S>(options: SearchboxOptions<S, any>) => (wiring: Wiring<Sear
     if (r.value !== value) {
       return [
         wiring.set(state, { ...r, searching: true }),
-        search(updateResults)(r.value),
+        search(updateResults, r.value),
       ]
     }
 
@@ -94,7 +92,7 @@ const searchbox = <S>(options: SearchboxOptions<S, any>) => (wiring: Wiring<Sear
         ? wiring.set(state, { ...r, value })
         : [
           wiring.set(state, { ...r, value, searching: true }),
-          search(updateResults)(value),
+          search(updateResults, value),
         ]
     }
   }
@@ -127,7 +125,7 @@ const searchbox = <S>(options: SearchboxOptions<S, any>) => (wiring: Wiring<Sear
   })
 
   const searchResult = (result: string): VDOM<S> => {
-    return li<S>({
+    return li({
       onclick: (state: State<S>): State<S> => {
         return onresults([], id, wiring.set(state, {
           ...wiring.get(state),
@@ -162,14 +160,12 @@ const searchbox = <S>(options: SearchboxOptions<S, any>) => (wiring: Wiring<Sear
       inputSearch,
       span(
         { onclick: update(x.value) },
-        [
-          icon({
-            fas: true,
-            "fa-spinner": x.searching,
-            "fa-pulse": x.searching,
-            "fa-search": !x.searching,
-          }),
-        ],
+        [icon({
+          fas: true,
+          "fa-spinner": x.searching,
+          "fa-pulse": x.searching,
+          "fa-search": !x.searching,
+        })],
       ),
     ]),
     popupNode,

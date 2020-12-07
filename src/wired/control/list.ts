@@ -36,7 +36,7 @@ const list = <S>(options: ListOptions<S> = {}) => (wiring: Wiring<ListData, S>) 
   const item = (value: string, i: number): TableCell<S>[] => {
     const textWiring: Wiring<TextboxData, S> = {
       get: (_state) => freshTextbox(value),
-      set: (state, x) => wiring.set(state, { ...r, items: assign(i, x, r.items) }),
+      set: (state, x) => wiring.set(state, { ...r, items: assign(x, i, r.items) }),
     }
     return [
       textbox<S>({ disabled })(textWiring)(state),

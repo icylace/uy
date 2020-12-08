@@ -22,19 +22,24 @@ export type SearchboxData = {
   focused?: boolean
 }
 
+export type SearchEffectData<S> = {
+  action: Action<S, SearchboxData>
+  value: string
+}
+
 export type SearchboxOptions<S> = {
   id: string
-  search: (action: Action<S, SearchboxData>, value: string) => EffectDescriptor<S, SearchboxData>
+  search: (action: Action<S, SearchboxData>, value: string) => EffectDescriptor<S, SearchEffectData<S>>
   onresults: (results: SearchboxData["results"], id: string, state: State<S>) => State<S>
   class?: ClassProp
   disabled?: boolean
 }
 
 const freshSearchbox = (value: string): SearchboxData => ({
-  focused: false,
+  value,
   results: [],
   searching: false,
-  value,
+  focused: false,
 })
 
 // -----------------------------------------------------------------------------

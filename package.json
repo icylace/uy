@@ -34,6 +34,7 @@
     "lint:fix": "./task.sh lint:fix",
     "lint:fix-dry-run": "./task.sh lint:fix-dry-run",
     "release": "./task.sh release",
+    "reset": "./task.sh reset",
     "test": "./task.sh test",
     "watch:postcss": "./task.sh watch:postcss",
     "watch:rollup": "./task.sh watch:rollup",

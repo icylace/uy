@@ -6,9 +6,9 @@ import { option, select } from "ntml"
 import { box } from "../../wireless/container/box"
 
 export type DropdownData = {
+  value: string
   "uy-dropdown-arrow"?: boolean
   focused?: boolean
-  value: string
 }
 
 export type DropdownChoices<S> = Record<string, Content<S>>
@@ -34,23 +34,19 @@ const dropdown = <S>(options: DropdownOptions<S>) => (wiring: Wiring<DropdownDat
   const { disabled, choices, ...etc } = props
   const r = wiring.get(state)
   return box("uy-control uy-dropdown", [
-    box({
-      "uy-dropdown-arrow": true,
-      focus: !!r.focused,
-      disabled,
-    }, [
+    box({ "uy-dropdown-arrow": true, focus: r.focused, disabled }, [
       select(
         {
           value: r.value,
           disabled,
+          onblur: (state) => wiring.set(state, { ...r, focused: false }),
+          onfocus: (state) => wiring.set(state, { ...r, focused: true }),
           onchange: (state, event) => {
             if (!event) return state
             const target = event.target as HTMLInputElement
             const r = wiring.get(state)
             return wiring.set(state, { ...r, value: target.value })
           },
-          onfocus: (state) => wiring.set(state, { ...r, focused: true }),
-          onblur: (state) => wiring.set(state, { ...r, focused: false }),
           ...etc,
           class: ["uy-input", { disabled }, etc.class],
         },

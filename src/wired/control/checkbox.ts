@@ -1,7 +1,9 @@
+// import type { Focus } from "eyepiece"
 import type { ClassProp, State, VDOM } from "hyperapp"
 import type { Content } from "ntml"
 import type { Wiring } from "../../component"
 
+// import { get, set } from "eyepiece"
 import * as html from "ntml"
 import { isContent } from "ntml"
 import { box } from "../../wireless/container/box"
@@ -23,9 +25,11 @@ const freshCheckbox = (value: boolean | null | undefined): CheckboxData => {
 }
 
 const checkbox = <S>(options: CheckboxOptions<S> = {}) => (wiring: Wiring<CheckboxData, S>) => (state: State<S>): VDOM<S> => {
+// const checkbox = <S>(options: CheckboxOptions<S> = {}) => (focus: Focus) => (state: State<S>): VDOM<S> => {
   const props = isContent<S>(options) ? { label: options } : options
   const { disabled, label, ...etc } = props
   const value = wiring.get(state).value
+  // const value = get<CheckboxData>(focus)(state).value
   return box("uy-control uy-checkbox", [
     html.label({ class: { disabled } }, [
       html.input({

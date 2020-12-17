@@ -7,6 +7,7 @@ task:index() {
     'build:prod'
     'check'
     'clean'
+    'clean:all'
     'lint'
     'lint:fix'
     'lint:fix-dry-run'
@@ -135,6 +136,15 @@ task:clean() {
   echo
   echo "Cleaning the distribution folder..."
   rm -fr ./dist && mkdir ./dist
+}
+
+# ------------------------------------------------------------------------------
+
+task:clean:all() {
+  task:clean
+  echo
+  echo "Cleaning the intermiediary output folder..."
+  rm -fr ./output && mkdir ./output
 }
 
 # ------------------------------------------------------------------------------

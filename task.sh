@@ -222,9 +222,9 @@ task:reset() {
   # npm install --save hyperapp
   npm install --save icylace/hyperapp#master
 
+  npm install --save eyepiece ntml
   npm install --save remeda
   npm install --save @fortawesome/fontawesome-free
-  npm install --save ntml
   npm install --save-dev snowpack typescript rollup terser prettier
   npm install --save-dev eslint
   npm install --save-dev eslint-plugin-import eslint-plugin-json eslint-plugin-node eslint-plugin-promise

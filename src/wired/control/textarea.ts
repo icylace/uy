@@ -27,8 +27,7 @@ const textarea = <S>(options: TextareaOptions = {}) => (...focus: Focus) => (sta
       onchange: (state, event) => {
         if (!event) return state
         const target = event.target as HTMLInputElement
-        return set<State<S>>(focus)({ value: target.value })(state) ?? state
-        // return set<State<S>>(focus, "value")(target.value)(state) ?? state
+        return set<State<S>>(focus, "value")(target.value)(state) ?? state
       },
       ...etc,
       class: ["uy-input", { disabled }, etc.class],

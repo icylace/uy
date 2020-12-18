@@ -54,9 +54,8 @@ const dropdown = <S>(options: DropdownOptions<S>) => (...focus: Focus) => (state
         // - switch to using a Map object instead in order to guarantee order
         // - verify type of `x` is workable
         Object.entries(choices).map(
-          ([value, label]: [string, Content<S>]): VDOM<S> => {
-            return option({ value }, label)
-          }
+          ([value, label]: [string, Content<S>]): VDOM<S> =>
+            option({ value }, label)
         ),
       ),
     ]),

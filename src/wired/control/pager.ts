@@ -1,7 +1,8 @@
+import type { Focus } from "eyepiece"
 import type { ClassProp, State, Transform, VDOM, VNode } from "hyperapp"
 import type { Content } from "ntml"
-import type { Wiring } from "../../component"
 
+import { get, set } from "eyepiece"
 import { div, li, span, ul } from "ntml"
 import { range } from "../../utility/range"
 import { icon } from "../../wireless/indicator/icon"
@@ -37,23 +38,23 @@ const pagerMore = <S>(content: Content<S>): VDOM<S> => {
   return span({ class: "uy-pager-more" }, content)
 }
 
-const pager = <S>(options: PagerOptions) => (wiring: Wiring<PagerData, S>) => (state: State<S>): VDOM<S> => {
+const pager = <S>(options: PagerOptions) => (...focus: Focus) => (state: State<S>): VDOM<S> => {
   const { disabled, itemsPerPage, pageRange, ...etc } = options
-  const data = wiring.get(state)
+  const x = get<PagerData>(focus)(state)
   const update = (state: State<S>, value: number) => {
-    return wiring.set(state, { ...data, value })
+    return set<State<S>>(focus, "value")(value)(state) ?? state
   }
 
-  const pageCount = Math.ceil(data.itemsTotal / itemsPerPage)
+  const pageCount = Math.ceil(x.itemsTotal / itemsPerPage)
   const lastPage = pageCount - 1
 
-  const rangeStartPage = Math.max(0, data.value - pageRange)
-  const rangeFinishPage = Math.min(lastPage, data.value + pageRange)
+  const rangeStartPage = Math.max(0, x.value - pageRange)
+  const rangeFinishPage = Math.min(lastPage, x.value + pageRange)
 
   const pages = range(0, rangeFinishPage - rangeStartPage + 1).map(
     (n: number): VNode<S> => {
       const currentPage = rangeStartPage + n
-      const current = currentPage === data.value
+      const current = currentPage === x.value
       return rangeStartPage <= currentPage && currentPage <= rangeFinishPage
         ? li({
           class: ["uy-pager-nav", "uy-pager-page", current && "uy-pager-current"],
@@ -69,25 +70,25 @@ const pager = <S>(options: PagerOptions) => (wiring: Wiring<PagerData, S>) => (s
   const navFirst = pagerNav<S>(
     (state) => update(state, 0),
     [icon("fas fa-angle-double-left"), " first"],
-    data.value !== 0,
+    x.value !== 0,
   )
 
   const navPrev = pagerNav<S>(
-    (state) => update(state, Math.max(0, data.value - 1)),
+    (state) => update(state, Math.max(0, x.value - 1)),
     [icon("fas fa-angle-left"), " prev"],
-    data.value !== 0,
+    x.value !== 0,
   )
 
   const navNext = pagerNav<S>(
-    (state) => update(state, Math.min(lastPage, data.value + 1)),
+    (state) => update(state, Math.min(lastPage, x.value + 1)),
     ["next ", icon("fas fa-angle-right")],
-    data.value !== lastPage,
+    x.value !== lastPage,
   )
 
   const navLast = pagerNav<S>(
     (state) => update(state, lastPage),
     ["last ", icon("fas fa-angle-double-right")],
-    data.value !== lastPage,
+    x.value !== lastPage,
   )
 
   return div({

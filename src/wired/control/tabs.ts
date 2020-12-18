@@ -1,7 +1,8 @@
+import type { Focus } from "eyepiece"
 import type { ClassProp, EffectfulState, State, VDOM } from "hyperapp"
 import type { Content, Stuff } from "ntml"
-import type { Wiring } from "../../component"
 
+import { get, set } from "eyepiece"
 import { div, isVDOM } from "ntml"
 import { encase } from "../../utility/encase"
 import { box } from "../../wireless/container/box"
@@ -38,20 +39,17 @@ const isSelected = (activeTab: TabIndex) => <S>(item: Stuff<S>, i: number): bool
     : activeTab === i
 }
 
-const tab = <S>(wiring: Wiring<TabsData, S>, activeTab: TabIndex) => {
+const tab = <S>(focus: Focus, activeTab: TabIndex) => {
   return (item: Stuff<S>, i: number): VDOM<S> => {
     const selected = isSelected(activeTab)(item, i)
     return div({
       class: ["uy-tabs-item", { selected }],
       onclick: (state, event) => {
-        const transition = wiring.set(
-          state,
-          freshTabs(
-            isVDOM(item)
-              ? item.props["data-tab-id"] as string
-              : i
-          )
-        )
+        const transition = set<State<S>>(focus)(freshTabs(
+          isVDOM(item)
+            ? item.props["data-tab-id"] as string
+            : i
+        ))(state) ?? state
         if (!event) return transition
         if (!event.target) return transition
         return selected
@@ -64,12 +62,12 @@ const tab = <S>(wiring: Wiring<TabsData, S>, activeTab: TabIndex) => {
   }
 }
 
-const tabs = <S>(options: TabsOptions<S>) => (wiring: Wiring<TabsData, S>) => {
+const tabs = <S>(options: TabsOptions<S>) => (...focus: Focus) => {
   return (state: State<S>): VDOM<S> => {
     const props = Array.isArray(options) ? { tabList: options } : options
     const { tabList, itemsHeader, itemsFooter, disabled, ...etc } = props
 
-    const x = wiring.get(state)
+    const x = get<TabsData>(focus)(state)
     const headings = tabList.map((x: Tab<S>): Stuff<S> => x.heading)
     const panels = tabList.map((x: Tab<S>): Stuff<S> => x.panel)
 
@@ -81,7 +79,7 @@ const tabs = <S>(options: TabsOptions<S>) => (wiring: Wiring<TabsData, S>) => {
       [
         box("uy-tabs-navigation", [
           ...encase(itemsHeader),
-          box("uy-tabs-list uy-scroller", headings.map(tab(wiring, x.value))),
+          box("uy-tabs-list uy-scroller", headings.map(tab(focus, x.value))),
           ...encase(itemsFooter),
         ]),
         box("uy-tabs-panels", [

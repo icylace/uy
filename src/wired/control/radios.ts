@@ -1,7 +1,8 @@
+import type { Focus } from "eyepiece"
 import type { ClassProp, State, VDOM } from "hyperapp"
 import type { Content } from "ntml"
-import type { Wiring } from "../../component"
 
+import { get, set } from "eyepiece"
 import * as html from "ntml"
 import { box } from "../../wireless/container/box"
 
@@ -27,7 +28,7 @@ const isOnlyChoices = <S>(x: any): x is Record<string, Content<S>> => {
   return typeof x === "object" && !("choices" in x)
 }
 
-const radios = <S>(options: RadiosOptions<S>) => (wiring: Wiring<RadiosData, S>) => (state: State<S>): VDOM<S> => {
+const radios = <S>(options: RadiosOptions<S>) => (...focus: Focus) => (state: State<S>): VDOM<S> => {
   const props = isOnlyChoices<S>(options) ? { choices: options } : options
   const { disabled, choices, ...etc } = props
   return box("uy-control uy-radios",
@@ -39,12 +40,12 @@ const radios = <S>(options: RadiosOptions<S>) => (wiring: Wiring<RadiosData, S>)
           html.input({
             disabled,
             value,
-            checked: value === wiring.get(state).value,
+            checked: value === get<RadiosData>(focus)(state).value,
             type: "radio",
             onchange: (state, event) => {
               if (!event) return state
               const target = event.target as HTMLInputElement
-              return wiring.set(state, { value: target.value })
+              return set<State<S>>(focus, "value")(target.value)(state) ?? state
             },
             ...etc,
             class: ["uy-input", { disabled }, etc.class],

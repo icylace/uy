@@ -1,6 +1,7 @@
+import type { Focus } from "eyepiece"
 import type { ClassProp, State, VDOM } from "hyperapp"
-import type { Wiring } from "../../component"
 
+import { get, set } from "eyepiece"
 import * as html from "ntml"
 import { box } from "../../wireless/container/box"
 import { icon } from "../../wireless/indicator/icon"
@@ -23,14 +24,14 @@ const freshFile = (value: string): FileData => {
 
 // https://codepen.io/adamlaki/pen/VYpewx
 
-const file = <S>(options: FileOptions = {}) => (wiring: Wiring<FileData, S>) => (state: State<S>): VDOM<S> => {
+const file = <S>(options: FileOptions = {}) => (...focus: Focus) => (state: State<S>): VDOM<S> => {
   const props = typeof options === "string" ? { label: options } : options
   const { disabled, label = "Select your file...", ...etc } = props
   return box(["uy-control uy-file uy-input", { disabled }], [
     html.label({ "data-text": label }, [
       html.input({
         disabled,
-        value: wiring.get(state).value,
+        value: get<FileData>(focus)(state).value,
         type: "file",
         // TODO:
         // - probably needs to be rethought
@@ -41,7 +42,7 @@ const file = <S>(options: FileOptions = {}) => (wiring: Wiring<FileData, S>) => 
           parent.dataset.text = target.value !== ""
             ? target.value.replace(/.*(\/|\\)/, "")
             : label
-          return wiring.set(state, { value: target.value })
+          return set<State<S>>(focus, "value")(target.value)(state) ?? state
         },
         ...etc,
         class: [{ disabled }, etc.class],

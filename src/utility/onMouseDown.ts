@@ -18,6 +18,4 @@ const eventFx = (name: string) => {
   }
 }
 
-const onMouseDown = eventFx("mousedown")
-
-export { onMouseDown }
+export const onMouseDown = eventFx("mousedown")

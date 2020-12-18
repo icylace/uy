@@ -6,7 +6,7 @@ import type { EffectfulState, Payload, State, Transform } from "hyperapp"
 // https://stackoverflow.com/a/28432139
 // https://codesandbox.io/s/czee7
 //
-const onOutside = <S>(selector: string, action: Transform<S, unknown>) => {
+export const onOutside = <S>(selector: string, action: Transform<S, unknown>) => {
   return (state: State<S>, event?: Payload<Event>): State<S> | EffectfulState<S> => {
     if (!event) return state
     const el = document.querySelector(selector)
@@ -14,5 +14,3 @@ const onOutside = <S>(selector: string, action: Transform<S, unknown>) => {
     return action(state, event)
   }
 }
-
-export { onOutside }

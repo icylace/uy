@@ -1,6 +1,7 @@
+import type { Focus } from "eyepiece"
 import type { ClassProp, State, VDOM } from "hyperapp"
-import type { Wiring } from "../../component"
 
+import { get, set } from "eyepiece"
 import { input } from "ntml"
 import { box } from "../../wireless/container/box"
 
@@ -17,17 +18,17 @@ const freshTextbox = (value: string): TextboxData => {
   return { value }
 }
 
-const textbox = <S>(options: TextboxOptions = {}) => (wiring: Wiring<TextboxData, S>) => (state: State<S>): VDOM<S> => {
+const textbox = <S>(options: TextboxOptions = {}) => (...focus: Focus) => (state: State<S>): VDOM<S> => {
   const { disabled, ...etc } = options
   return box("uy-control uy-textbox", [
     input({
       disabled,
       type: "text",
-      value: wiring.get(state).value,
+      value: get<TextboxData>(focus)(state).value,
       onchange: (state, event) => {
         if (!event) return state
         const target = event.target as HTMLInputElement
-        return wiring.set(state, { value: target.value })
+        return set<State<S>>(focus, "value")(target.value)(state) ?? state
       },
       ...etc,
       class: ["uy-input", { disabled }, etc.class],

@@ -1,5 +1,3 @@
-const encase = <T>(x: T | T[]): T[] => {
+export const encase = <T>(x: T | T[]): T[] => {
   return Array.isArray(x) ? x : [x]
 }
-
-export { encase }

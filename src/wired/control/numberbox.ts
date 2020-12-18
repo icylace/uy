@@ -1,7 +1,8 @@
+import type { Focus } from "eyepiece"
 import type { ClassProp, State, VDOM } from "hyperapp"
 import type { Content } from "ntml"
-import type { Wiring } from "../../component"
 
+import { get, set } from "eyepiece"
 import * as html from "ntml"
 import { isContent } from "ntml"
 import { box } from "../../wireless/container/box"
@@ -27,27 +28,27 @@ const sanitizedNumber = (n: string): number => {
   return Math.max(0, Number.parseInt(n, 10))
 }
 
-const numberbox = <S>(options: NumberboxOptions<S> = {}) => (wiring: Wiring<NumberboxData, S>) => (state: State<S>): VDOM<S> => {
+const numberbox = <S>(options: NumberboxOptions<S> = {}) => (...focus: Focus) => (state: State<S>): VDOM<S> => {
   const props = isContent<S>(options) ? { label: options } : options
   const { disabled, label, ...etc } = props
-  const r = wiring.get(state)
+  const x = get<NumberboxData>(focus)(state)
   return box("uy-control uy-numberbox", [
-    html.label({ class: { focus: !!r.focused, disabled } }, [
+    html.label({ class: { focus: !!x.focused, disabled } }, [
       html.input({
         disabled,
         min: 0,
         type: "number",
-        value: r.value,
+        value: x.value,
         onchange: (state, event) => {
           if (!event) return state
           const target = event.target as HTMLInputElement
-          return wiring.set(state, {
-            focused: wiring.get(state).focused,
+          return set<State<S>>(focus)({
+            focused: get<NumberboxData>(focus)(state).focused,
             value: sanitizedNumber(target.value),
-          })
+          })(state) ?? state
         },
-        onfocus: (state) => wiring.set(state, { ...wiring.get(state), focused: true }),
-        onblur: (state) => wiring.set(state, { ...wiring.get(state), focused: false }),
+        onfocus: (state) => set<State<S>>(focus, "focused")(true)(state) ?? state,
+        onblur: (state) => set<State<S>>(focus, "focused")(false)(state) ?? state,
         ...etc,
         class: ["uy-input", { disabled }, etc.class],
       }),

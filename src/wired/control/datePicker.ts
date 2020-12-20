@@ -29,7 +29,7 @@ const datePicker = <S>(options: DatePickerOptions = {}) => (...focus: Focus) => 
         onchange: (state, event) => {
           if (!event) return state
           const target = event.target as HTMLInputElement
-          return set<State<S>>(focus, "value")(target.value)(state) ?? state
+          return set<State<S>>(focus, "value")(target.value)(state)
         },
         ...etc,
         class: ["uy-input", { disabled }, etc.class],
@@ -53,7 +53,7 @@ const datetimeLocalPicker = <S>(options: DatePickerOptions = {}) => (...focus: F
         onchange: (state, event) => {
           if (!event) return state
           const target = event.target as HTMLInputElement
-          return set<State<S>>(focus, "value")(target.value)(state) ?? state
+          return set<State<S>>(focus, "value")(target.value)(state)
         },
         ...etc,
         class: ["uy-input", { disabled }, etc.class],
@@ -77,7 +77,7 @@ const monthPicker = <S>(options: DatePickerOptions = {}) => (...focus: Focus) =>
         onchange: (state, event) => {
           if (!event) return state
           const target = event.target as HTMLInputElement
-          return set<State<S>>(focus, "value")(target.value)(state) ?? state
+          return set<State<S>>(focus, "value")(target.value)(state)
         },
         ...etc,
         class: ["uy-input", { disabled }, etc.class],
@@ -101,7 +101,7 @@ const timePicker = <S>(options: DatePickerOptions = {}) => (...focus: Focus) => 
         onchange: (state, event) => {
           if (!event) return state
           const target = event.target as HTMLInputElement
-          return set<State<S>>(focus, "value")(target.value)(state) ?? state
+          return set<State<S>>(focus, "value")(target.value)(state)
         },
         ...etc,
         class: ["uy-input", { disabled }, etc.class],
@@ -125,7 +125,7 @@ const weekPicker = <S>(options: DatePickerOptions = {}) => (...focus: Focus) => 
         onchange: (state, event) => {
           if (!event) return state
           const target = event.target as HTMLInputElement
-          return set<State<S>>(focus, "value")(target.value)(state) ?? state
+          return set<State<S>>(focus, "value")(target.value)(state)
         },
         ...etc,
         class: ["uy-input", { disabled }, etc.class],

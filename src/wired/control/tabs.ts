@@ -46,7 +46,7 @@ const tab = <S>(focus: Focus, activeTab: TabIndex) => {
           isVDOM(item)
             ? item.props["data-tab-id"] as string
             : i
-        ))(state) ?? state
+        ))(state)
         if (!event) return transition
         if (!event.target) return transition
         return selected

@@ -19,8 +19,7 @@ export type CheckboxOptions<S>
     disabled?: boolean
   }
 
-const freshCheckbox = (value: boolean | null | undefined): CheckboxData =>
-  ({ value })
+const freshCheckbox = (value: boolean | null | undefined): CheckboxData => ({ value })
 
 const checkbox = <S>(options: CheckboxOptions<S> = {}) => (...focus: Focus) => {
   return (state: State<S>): VDOM<S> => {
@@ -37,7 +36,7 @@ const checkbox = <S>(options: CheckboxOptions<S> = {}) => (...focus: Focus) => {
           onchange: (state, event) => {
             if (!event) return state
             const target = event.target as HTMLInputElement
-            return set<State<S>>(focus, "value")(target.checked)(state) ?? state
+            return set<State<S>>(focus, "value")(target.checked)(state)
           },
           ...etc,
           class: ["uy-input", { disabled }, etc.class],

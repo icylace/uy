@@ -74,25 +74,25 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
 
       if (r.value !== value) {
         return [
-          set<State<S>>(focus, "searching")(true)(state) ?? state,
+          set<State<S>>(focus, "searching")(true)(state),
           search(updateResults, r.value),
         ]
       }
 
       return onresults(results, id, set<State<S>>(focus)(
         (xr: SearchboxData): SearchboxData => ({ ...xr, results, searching: false })
-      )(state) ?? state)
+      )(state))
     }
 
     const update = (value: string) => (state: State<S>): State<S> | EffectfulState<S> => {
       const r = get<SearchboxData>(focus)(state)
       return r.searching
-        ? set<State<S>>(focus, "value")(value)(state) ?? state
+        ? set<State<S>>(focus, "value")(value)(state)
         : [
           set<State<S>>(focus)(
             (xr: SearchboxData): SearchboxData =>
               ({ ...xr, value, searching: true })
-          )(state) ?? state,
+          )(state),
           search(updateResults, value),
         ]
     }
@@ -101,8 +101,8 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
       type: "search",
       value: x.value,
       disabled,
-      onfocus: (state) => set<State<S>>(focus, "focused")(true)(state) ?? state,
-      onblur: (state) => set<State<S>>(focus, "focused")(false)(state) ?? state,
+      onfocus: (state) => set<State<S>>(focus, "focused")(true)(state),
+      onblur: (state) => set<State<S>>(focus, "focused")(false)(state),
       onkeyup: (state, event) => {
         if (!event) return state
         if (noopKeys.includes(event.key)) return state
@@ -131,7 +131,7 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
             set<State<S>>(focus)(
               (xr: SearchboxData): SearchboxData =>
                 ({ ...xr, value: result, results: [] })
-            )(state) ?? state
+            )(state)
           ),
       }, result)
 

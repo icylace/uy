@@ -39,10 +39,7 @@ const list = <S>(options: ListOptions<S> = {}) => (...focus: Focus) => {
         cancelButton({
           disabled,
           onclick: (state: State<S>): State<S> =>
-            set<State<S>>(focus, "items")(
-              (xr: ListData): ListData =>
-                ({ ...xr, items: exclude(i, xr.items) })
-            )(state) ?? state,
+            set<State<S>>(focus, "items")((xs: TextboxData[]) => exclude(i, xs))(state),
         }),
       ]
     }
@@ -57,7 +54,7 @@ const list = <S>(options: ListOptions<S> = {}) => (...focus: Focus) => {
             set<State<S>>(focus)(
               (xr: ListData): ListData =>
                 ({ ...xr, items: [...xr.items, freshTextbox("")] })
-            )(state) ?? state,
+            )(state),
         }),
       ],
     ]

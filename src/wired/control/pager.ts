@@ -41,7 +41,7 @@ const pager = <S>(options: PagerOptions) => (...focus: Focus) => {
     const { disabled, itemsPerPage, pageRange, ...etc } = options
     const x = get<PagerData>(focus)(state)
     const update = (state: State<S>, value: number) =>
-      set<State<S>>(focus, "value")(value)(state) ?? state
+      set<State<S>>(focus, "value")(value)(state)
 
     const pageCount = Math.ceil(x.itemsTotal / itemsPerPage)
     const lastPage = pageCount - 1

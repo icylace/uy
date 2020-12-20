@@ -38,12 +38,12 @@ const dropdown = <S>(options: DropdownOptions<S>) => (...focus: Focus) => {
           {
             value: x.value,
             disabled,
-            onblur: (state) => set<State<S>>(focus, "focused")(false)(state) ?? state,
-            onfocus: (state) => set<State<S>>(focus, "focused")(true)(state) ?? state,
+            onblur: (state) => set<State<S>>(focus, "focused")(false)(state),
+            onfocus: (state) => set<State<S>>(focus, "focused")(true)(state),
             onchange: (state, event) => {
               if (!event) return state
               const target = event.target as HTMLInputElement
-              return set<State<S>>(focus, "value")(target.value)(state) ?? state
+              return set<State<S>>(focus, "value")(target.value)(state)
             },
             ...etc,
             class: ["uy-input", { disabled }, etc.class],

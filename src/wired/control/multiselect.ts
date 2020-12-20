@@ -38,8 +38,6 @@ const multiselect = <S>(options: MultiselectOptions<S>) => (...focus: Focus) => 
   return (state: State<S>): VDOM<S> => {
     const props = isOnlyChoices<S>(options) ? { choices: options } : options
     const { disabled, choices, usingColumnMode, ...etc } = props
-
-    // const selection = new Set(get<MultiselectData>(focus)(state).value)
     return div({
       ...etc,
       class: [

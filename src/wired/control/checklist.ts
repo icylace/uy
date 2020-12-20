@@ -24,22 +24,19 @@ export type ChecklistOptions<S> = {
   disabled?: boolean
 }
 
-const freshChecklist = (items: ChecklistItem[]): ChecklistData => {
-  return { items }
-}
+const freshChecklist = (items: ChecklistItem[]): ChecklistData => ({ items })
 
 const checklist = <S>(options: ChecklistOptions<S>) => (...focus: Focus) => {
   return (state: State<S>): VDOM<S> => {
     const { disabled, renderLabel, ...etc } = options
 
-    const item = (x: ChecklistItem, i: number): TableRow<S> => {
-      return [
+    const item = (x: ChecklistItem, i: number): TableRow<S> =>
+      [
         [
           { class: { "uy-horizontal": x.id === "other" } },
           [checkbox({ label: renderLabel(x.id), disabled })(focus, i, "selected")(state)],
         ],
       ]
-    }
 
     return div(
       { ...etc, class: ["uy-checklist", { disabled }, etc.class] },

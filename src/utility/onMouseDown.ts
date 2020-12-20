@@ -12,10 +12,8 @@ const windowListener = (name: string) => {
   }
 }
 
-const eventFx = (name: string) => {
-  return <S>(action: Action<S, Event>): EffectDescriptor<S, Action<S, Event>> => {
-    return [windowListener(name), action]
-  }
-}
+const eventFx = (name: string) =>
+  <S>(action: Action<S, Event>): EffectDescriptor<S, Action<S, Event>> =>
+    [windowListener(name), action]
 
 export const onMouseDown = eventFx("mousedown")

@@ -44,10 +44,10 @@ const numberbox = <S>(options: NumberboxOptions<S> = {}) => (...focus: Focus) =>
             return set<State<S>>(focus)({
               focused: get<NumberboxData>(focus)(state).focused,
               value: sanitizedNumber(target.value),
-            })(state) ?? state
+            })(state)
           },
-          onfocus: (state) => set<State<S>>(focus, "focused")(true)(state) ?? state,
-          onblur: (state) => set<State<S>>(focus, "focused")(false)(state) ?? state,
+          onfocus: (state) => set<State<S>>(focus, "focused")(true)(state),
+          onblur: (state) => set<State<S>>(focus, "focused")(false)(state),
           ...etc,
           class: ["uy-input", { disabled }, etc.class],
         }),

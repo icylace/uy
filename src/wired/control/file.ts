@@ -41,7 +41,7 @@ const file = <S>(options: FileOptions = {}) => (...focus: Focus) => {
             parent.dataset.text = target.value !== ""
               ? target.value.replace(/.*(\/|\\)/, "")
               : label
-            return set<State<S>>(focus, "value")(target.value)(state) ?? state
+            return set<State<S>>(focus, "value")(target.value)(state)
           },
           ...etc,
           class: [{ disabled }, etc.class],

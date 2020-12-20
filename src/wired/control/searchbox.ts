@@ -84,18 +84,17 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
       )(state) ?? state)
     }
 
-    const update = (value: string) => {
-      return (state: State<S>): State<S> | EffectfulState<S> => {
-        const r = get<SearchboxData>(focus)(state)
-        return r.searching
-          ? set<State<S>>(focus, "value")(value)(state) ?? state
-          : [
-            set<State<S>>(focus)(
-              (xr: SearchboxData): SearchboxData => ({ ...xr, value, searching: true })
-            )(state) ?? state,
-            search(updateResults, value),
-          ]
-      }
+    const update = (value: string) => (state: State<S>): State<S> | EffectfulState<S> => {
+      const r = get<SearchboxData>(focus)(state)
+      return r.searching
+        ? set<State<S>>(focus, "value")(value)(state) ?? state
+        : [
+          set<State<S>>(focus)(
+            (xr: SearchboxData): SearchboxData =>
+              ({ ...xr, value, searching: true })
+          )(state) ?? state,
+          search(updateResults, value),
+        ]
     }
 
     const inputSearch = input<S>({
@@ -125,16 +124,16 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
       class: ["uy-input", { disabled }, etc.class],
     })
 
-    const searchResult = (result: string): VDOM<S> => {
-      return li({
+    const searchResult = (result: string): VDOM<S> =>
+      li({
         onclick: (state: State<S>): State<S> =>
           onresults([], id,
             set<State<S>>(focus)(
-              (xr: SearchboxData): SearchboxData => ({ ...xr, value: result, results: [] })
+              (xr: SearchboxData): SearchboxData =>
+                ({ ...xr, value: result, results: [] })
             )(state) ?? state
           ),
       }, result)
-    }
 
     const popupNode = (
       x.results.length && !disabled

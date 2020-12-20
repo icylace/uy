@@ -29,15 +29,12 @@ export type TabsOptions<S>
     disabled?: boolean
   }>
 
-const freshTabs = (value: TabIndex): TabsData => {
-  return { value }
-}
+const freshTabs = (value: TabIndex): TabsData => ({ value })
 
-const isSelected = (activeTab: TabIndex) => <S>(item: Stuff<S>, i: number): boolean => {
-  return typeof item === "object"
+const isSelected = (activeTab: TabIndex) => <S>(item: Stuff<S>, i: number): boolean =>
+  typeof item === "object"
     ? item != null && isVDOM(item) && activeTab === item.props["data-tab-id"]
     : activeTab === i
-}
 
 const tab = <S>(focus: Focus, activeTab: TabIndex) => {
   return (item: Stuff<S>, i: number): VDOM<S> => {
@@ -72,10 +69,7 @@ const tabs = <S>(options: TabsOptions<S>) => (...focus: Focus) => {
     const panels = tabList.map((x: Tab<S>): Stuff<S> => x.panel)
 
     return div(
-      {
-        ...etc,
-        class: ["uy-control uy-tabs", { disabled }, etc.class],
-      },
+      { ...etc, class: ["uy-control uy-tabs", { disabled }, etc.class] },
       [
         box("uy-tabs-navigation", [
           ...encase(itemsHeader),

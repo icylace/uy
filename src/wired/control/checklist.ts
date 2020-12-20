@@ -19,31 +19,33 @@ export type ChecklistData = {
 }
 
 export type ChecklistOptions<S> = {
+  renderLabel: (_: Content<S>) => VDOM<S>
   class?: ClassProp
   disabled?: boolean
-  renderLabel: (_: Content<S>) => VDOM<S>
 }
 
 const freshChecklist = (items: ChecklistItem[]): ChecklistData => {
   return { items }
 }
 
-const checklist = <S>(options: ChecklistOptions<S>) => (...focus: Focus) => (state: State<S>): VDOM<S> => {
-  const { disabled, renderLabel, ...etc } = options
+const checklist = <S>(options: ChecklistOptions<S>) => (...focus: Focus) => {
+  return (state: State<S>): VDOM<S> => {
+    const { disabled, renderLabel, ...etc } = options
 
-  const item = (x: ChecklistItem, i: number): TableRow<S> => {
-    return [
-      [
-        { class: { "uy-horizontal": x.id === "other" } },
-        [checkbox({ label: renderLabel(x.id), disabled })(focus, i, "selected")(state)],
-      ],
-    ]
+    const item = (x: ChecklistItem, i: number): TableRow<S> => {
+      return [
+        [
+          { class: { "uy-horizontal": x.id === "other" } },
+          [checkbox({ label: renderLabel(x.id), disabled })(focus, i, "selected")(state)],
+        ],
+      ]
+    }
+
+    return div(
+      { ...etc, class: ["uy-checklist", { disabled }, etc.class] },
+      [table({ disabled }, get<ChecklistData>(focus)(state).items.map(item))],
+    )
   }
-
-  return div(
-    { ...etc, class: ["uy-checklist", { disabled }, etc.class] },
-    [table({ disabled }, get<ChecklistData>(focus)(state).items.map(item))],
-  )
 }
 
 export { checklist, freshChecklist }

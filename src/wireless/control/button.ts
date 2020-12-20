@@ -5,10 +5,10 @@ import * as html from "ntml"
 import { box } from "../../wireless/container/box"
 
 export type ButtonOptions<S> = {
-  class?: ClassProp
-  disabled?: boolean
   label: Content<S>
   onclick: Action<S, MouseEvent>
+  class?: ClassProp
+  disabled?: boolean
 }
 
 const button = <S>(options: ButtonOptions<S>): VDOM<S> => {

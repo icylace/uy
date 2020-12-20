@@ -7,8 +7,7 @@ export type SpinnerOptions = {
   disabled?: boolean
 }
 
-const spinner = <S>(props: SpinnerOptions = {}): VDOM<S> => {
-  return span({ ...props, class: ["uy-indicator uy-spinner", props.class] })
-}
+const spinner = <S>(props: SpinnerOptions = {}): VDOM<S> =>
+  span({ ...props, class: ["uy-indicator uy-spinner", props.class] })
 
 export { spinner }

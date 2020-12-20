@@ -9,15 +9,16 @@ export type OverlayOptions = {
   disabled?: boolean
 }
 
-const overlay = <S>(options: OverlayOptions, views: View<S>[]) => (state: State<S>): VDOM<S> => {
-  const { disabled, ...etc } = options
-  return box("uy-overlay-background", [
-    div({
-      disabled,
-      ...etc,
-      class: ["uy-overlay", { disabled }, etc.class],
-    }, views.map((g) => g(state))),
-  ])
+const overlay = <S>(options: OverlayOptions, views: View<S>[]) => {
+  return (state: State<S>): VDOM<S> => {
+    const { disabled, ...etc } = options
+    return box("uy-overlay-background", [
+      div(
+        { disabled, ...etc, class: ["uy-overlay", { disabled }, etc.class] },
+        views.map((g) => g(state))
+      ),
+    ])
+  }
 }
 
 export { overlay }

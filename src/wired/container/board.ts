@@ -11,12 +11,15 @@ const cellHasProps = <S>(cell: BoardCell<S>): cell is [PropList<S>, ContentView<
   return Array.isArray(cell)
 }
 
-const board = <S>(options: TableOptions<S> = {}, rows: BoardRow<S>[]) => (state: State<S>): VDOM<S> => {
-  return table(options, rows.map(
-    (row) => row.map(
-      (cell) => cellHasProps(cell) ? [cell[0], cell[1](state)] : cell(state)
-    )
-  ))
+const board = <S>(options: TableOptions<S> = {}, rows: BoardRow<S>[]) => {
+  return (state: State<S>): VDOM<S> =>
+    table(options, rows.map(
+      (row) => row.map(
+        (cell) => cellHasProps(cell)
+          ? [cell[0], cell[1](state)]
+          : cell(state)
+      )
+    ))
 }
 
 export { board }

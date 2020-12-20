@@ -41,19 +41,16 @@ const tableHeader = <S>(orderColumn: string | null | undefined, sortDescending: 
   }
 }
 
-const hasPropList = <S>(x: TableCell<S>): x is [PropList<S>, Content<S>] => {
-  return Array.isArray(x)
-}
+const hasPropList = <S>(x: TableCell<S>): x is [PropList<S>, Content<S>] =>
+  Array.isArray(x)
 
-const tableCell = <S>(x: TableCell<S>): VDOM<S> => {
-  return hasPropList(x)
+const tableCell = <S>(x: TableCell<S>): VDOM<S> =>
+  hasPropList(x)
     ? html.td(x[0], x[1])
     : html.td(x)
-}
 
-const tableRow = <S>(row: TableRow<S>): VDOM<S> => {
-  return html.tr(row.map(tableCell))
-}
+const tableRow = <S>(row: TableRow<S>): VDOM<S> =>
+  html.tr(row.map(tableCell))
 
 const table = <S>(options: TableOptions<S> = {}, rows: TableRow<S>[]): VDOM<S> => {
   const props = Array.isArray(options) ? { headers: options } : options

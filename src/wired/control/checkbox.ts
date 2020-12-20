@@ -14,37 +14,38 @@ export type CheckboxData = {
 export type CheckboxOptions<S>
   = Content<S>
   | {
+    label?: Content<S>
     class?: ClassProp
     disabled?: boolean
-    label?: Content<S>
   }
 
-const freshCheckbox = (value: boolean | null | undefined): CheckboxData => {
-  return { value }
-}
+const freshCheckbox = (value: boolean | null | undefined): CheckboxData =>
+  ({ value })
 
-const checkbox = <S>(options: CheckboxOptions<S> = {}) => (...focus: Focus) => (state: State<S>): VDOM<S> => {
-  const props = isContent<S>(options) ? { label: options } : options
-  const { disabled, label, ...etc } = props
-  const value = get<CheckboxData>(focus)(state).value
-  return box("uy-control uy-checkbox", [
-    html.label({ class: { disabled } }, [
-      html.input({
-        disabled,
-        checked: !!value,
-        indeterminate: value == null,
-        type: "checkbox",
-        onchange: (state, event) => {
-          if (!event) return state
-          const target = event.target as HTMLInputElement
-          return set<State<S>>(focus, "value")(target.checked)(state) ?? state
-        },
-        ...etc,
-        class: ["uy-input", { disabled }, etc.class],
-      }),
-      label ? html.span(label) : null,
-    ]),
-  ])
+const checkbox = <S>(options: CheckboxOptions<S> = {}) => (...focus: Focus) => {
+  return (state: State<S>): VDOM<S> => {
+    const props = isContent<S>(options) ? { label: options } : options
+    const { disabled, label, ...etc } = props
+    const value = get<CheckboxData>(focus)(state).value
+    return box("uy-control uy-checkbox", [
+      html.label({ class: { disabled } }, [
+        html.input({
+          disabled,
+          checked: !!value,
+          indeterminate: value == null,
+          type: "checkbox",
+          onchange: (state, event) => {
+            if (!event) return state
+            const target = event.target as HTMLInputElement
+            return set<State<S>>(focus, "value")(target.checked)(state) ?? state
+          },
+          ...etc,
+          class: ["uy-input", { disabled }, etc.class],
+        }),
+        label ? html.span(label) : null,
+      ]),
+    ])
+  }
 }
 
 export { checkbox, freshCheckbox }

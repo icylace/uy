@@ -14,25 +14,25 @@ export type TextareaOptions = {
   disabled?: boolean
 }
 
-const freshTextarea = (value: string): TextareaData => {
-  return { value }
-}
+const freshTextarea = (value: string): TextareaData => ({ value })
 
-const textarea = <S>(options: TextareaOptions = {}) => (...focus: Focus) => (state: State<S>): VDOM<S> => {
-  const { disabled, ...etc } = options
-  return box("uy-control uy-textarea", [
-    html.textarea({
-      disabled,
-      value: get<TextareaData>(focus)(state).value,
-      onchange: (state, event) => {
-        if (!event) return state
-        const target = event.target as HTMLInputElement
-        return set<State<S>>(focus, "value")(target.value)(state) ?? state
-      },
-      ...etc,
-      class: ["uy-input", { disabled }, etc.class],
-    }),
-  ])
+const textarea = <S>(options: TextareaOptions = {}) => (...focus: Focus) => {
+  return (state: State<S>): VDOM<S> => {
+    const { disabled, ...etc } = options
+    return box("uy-control uy-textarea", [
+      html.textarea({
+        disabled,
+        value: get<TextareaData>(focus)(state).value,
+        onchange: (state, event) => {
+          if (!event) return state
+          const target = event.target as HTMLInputElement
+          return set<State<S>>(focus, "value")(target.value)(state) ?? state
+        },
+        ...etc,
+        class: ["uy-input", { disabled }, etc.class],
+      }),
+    ])
+  }
 }
 
 export { freshTextarea, textarea }

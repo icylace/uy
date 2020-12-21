@@ -3,8 +3,8 @@ import type { ClassProp, State, VDOM } from "hyperapp"
 
 import { get, set } from "eyepiece"
 import * as html from "ntml"
-import { box } from "../../wireless/container/box"
-import { icon } from "../../wireless/indicator/icon"
+import { box } from "../container/box"
+import { icon } from "../indicator/icon"
 
 export type FileData = {
   value: string

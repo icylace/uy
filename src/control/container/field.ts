@@ -5,7 +5,7 @@ import type { ContentView } from "../../types"
 import * as html from "ntml"
 import { isContent } from "ntml"
 import { encase } from "../../utility/encase"
-import { box } from "../../wireless/container/box"
+import { box } from "./box"
 
 export type FieldOptions<S>
   = Content<S>

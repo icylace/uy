@@ -5,7 +5,7 @@ import type { Content, Stuff } from "ntml"
 import { get, set } from "eyepiece"
 import { div, isVDOM } from "ntml"
 import { encase } from "../../utility/encase"
-import { box } from "../../wireless/container/box"
+import { box } from "../container/box"
 import { scrollIntoView } from "./tabs.effect"
 
 export type TabIndex = number | string

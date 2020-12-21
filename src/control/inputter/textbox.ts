@@ -2,26 +2,27 @@ import type { Focus } from "eyepiece"
 import type { ClassProp, State, VDOM } from "hyperapp"
 
 import { get, set } from "eyepiece"
-import * as html from "ntml"
-import { box } from "../../wireless/container/box"
+import { input } from "ntml"
+import { box } from "../container/box"
 
-export type TextareaData = {
+export type TextboxData = {
   value: string
 }
 
-export type TextareaOptions = {
+export type TextboxOptions = {
   class?: ClassProp
   disabled?: boolean
 }
 
-const freshTextarea = (value: string): TextareaData => ({ value })
+const freshTextbox = (value: string): TextboxData => ({ value })
 
-const textarea = <S>(options: TextareaOptions = {}) => (...focus: Focus) => {
+const textbox = <S>(options: TextboxOptions = {}) => (...focus: Focus) => {
   return (state: State<S>): VDOM<S> => {
     const { disabled, ...etc } = options
-    return box("uy-control uy-textarea", [
-      html.textarea({
-        value: get<TextareaData>(focus)(state).value,
+    return box("uy-control uy-textbox", [
+      input({
+        value: get<TextboxData>(focus)(state).value,
+        type: "text",
         disabled,
         onchange: (state, event) => {
           if (!event) return state
@@ -35,4 +36,4 @@ const textarea = <S>(options: TextareaOptions = {}) => (...focus: Focus) => {
   }
 }
 
-export { freshTextarea, textarea }
+export { freshTextbox, textbox }

@@ -4,7 +4,7 @@ import type { Content } from "ntml"
 
 import { get, set } from "eyepiece"
 import { option, select } from "ntml"
-import { box } from "../../wireless/container/box"
+import { box } from "../container/box"
 
 export type DropdownData = {
   value: string

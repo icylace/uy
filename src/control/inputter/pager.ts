@@ -5,7 +5,7 @@ import type { Content } from "ntml"
 import { get, set } from "eyepiece"
 import { div, li, span, ul } from "ntml"
 import { range } from "../../utility/range"
-import { icon } from "../../wireless/indicator/icon"
+import { icon } from "../indicator/icon"
 
 export type PagerData = {
   itemsTotal: number

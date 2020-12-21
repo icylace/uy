@@ -2,7 +2,7 @@ import type { Action, ClassProp, VDOM } from "hyperapp"
 import type { Content } from "ntml"
 
 import * as html from "ntml"
-import { box } from "../../wireless/container/box"
+import { box } from "../container/box"
 
 export type ButtonOptions<S> = {
   label: Content<S>

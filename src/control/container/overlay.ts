@@ -1,7 +1,7 @@
 import type { ClassProp, State, VDOM, View } from "hyperapp"
 
 import { div } from "ntml"
-import { box } from "../../wireless/container/box"
+import { box } from "./box"
 
 export type OverlayOptions = {
   [_: string]: unknown

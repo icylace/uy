@@ -32,34 +32,33 @@ input control states:
 
 /* -------------------------------------------------------------------------- */
 
-@import url(./wired/container/field.css);
-@import url(./wired/container/fieldset.css);
-@import url(./wired/container/overlay.css);
-@import url(./wired/container/row.css);
+@import url(./theme/button/button.css);
+@import url(./theme/button/cancelButton.css);
 
-@import url(./wired/control/checkbox.css);
-@import url(./wired/control/checklist.css);
-@import url(./wired/control/datePicker.css);
-@import url(./wired/control/dropdown.css);
-@import url(./wired/control/file.css);
-@import url(./wired/control/list.css);
-@import url(./wired/control/multiselect.css);
-@import url(./wired/control/numberbox.css);
-@import url(./wired/control/pager.css);
-@import url(./wired/control/radios.css);
-@import url(./wired/control/searchbox.css);
-@import url(./wired/control/tabs.css);
-@import url(./wired/control/textarea.css);
-@import url(./wired/control/textbox.css);
+@import url(./theme/container/field.css);
+@import url(./theme/container/fieldset.css);
+@import url(./theme/container/overlay.css);
+@import url(./theme/container/popup.css);
+@import url(./theme/container/row.css);
+@import url(./theme/container/table.css);
 
-@import url(./wireless/container/popup.css);
-@import url(./wireless/container/table.css);
+@import url(./theme/indicator/icon.css);
+@import url(./theme/indicator/spinner.css);
 
-@import url(./wireless/control/button.css);
-@import url(./wireless/control/cancelButton.css);
-
-@import url(./wireless/indicator/icon.css);
-@import url(./wireless/indicator/spinner.css);
+@import url(./theme/inputter/checkbox.css);
+@import url(./theme/inputter/checklist.css);
+@import url(./theme/inputter/datePicker.css);
+@import url(./theme/inputter/dropdown.css);
+@import url(./theme/inputter/file.css);
+@import url(./theme/inputter/list.css);
+@import url(./theme/inputter/multiselect.css);
+@import url(./theme/inputter/numberbox.css);
+@import url(./theme/inputter/pager.css);
+@import url(./theme/inputter/radios.css);
+@import url(./theme/inputter/searchbox.css);
+@import url(./theme/inputter/tabs.css);
+@import url(./theme/inputter/textarea.css);
+@import url(./theme/inputter/textbox.css);
 
 /* -------------------------------------------------------------------------- */
 

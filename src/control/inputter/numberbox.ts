@@ -5,7 +5,7 @@ import type { Content } from "ntml"
 import { get, set } from "eyepiece"
 import * as html from "ntml"
 import { isContent } from "ntml"
-import { box } from "../../wireless/container/box"
+import { box } from "../container/box"
 
 export type NumberboxData = {
   focused?: boolean

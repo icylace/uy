@@ -3,7 +3,7 @@ import type { Content } from "ntml"
 
 import * as html from "ntml"
 import { isAction } from "../../utility/isAction"
-import { box } from "../../wireless/container/box"
+import { box } from "../container/box"
 
 export type CancelButtonOptions<S>
   = Action<S, MouseEvent>

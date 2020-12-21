@@ -3,7 +3,7 @@ import type { ClassProp, State, VDOM } from "hyperapp"
 
 import { get, set } from "eyepiece"
 import { input } from "ntml"
-import { box } from "../../wireless/container/box"
+import { box } from "../container/box"
 
 export type DatePickerData = {
   value: string

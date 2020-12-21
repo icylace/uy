@@ -1,12 +1,12 @@
 import type { Focus } from "eyepiece"
 import type { ClassProp, State, VDOM } from "hyperapp"
 import type { Content } from "ntml"
-import type { TableRow } from "../../wireless/container/table"
+import type { TableRow } from "../container/table"
 import type { CheckboxData } from "./checkbox"
 
 import { get } from "eyepiece"
 import { div } from "ntml"
-import { table } from "../../wireless/container/table"
+import { table } from "../container/table"
 import { checkbox } from "./checkbox"
 
 export type ChecklistItem = {

@@ -6,9 +6,9 @@ import type {
 
 import { get, set } from "eyepiece"
 import { input, label, li, span, ul } from "ntml"
-import { popup } from "../../wireless/container/popup"
-import { box } from "../../wireless/container/box"
-import { icon } from "../../wireless/indicator/icon"
+import { popup } from "../container/popup"
+import { box } from "../container/box"
+import { icon } from "../indicator/icon"
 
 export type SearchboxData = {
   value: string

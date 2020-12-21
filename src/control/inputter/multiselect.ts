@@ -4,7 +4,7 @@ import type { Content } from "ntml"
 import type { CheckboxData } from "./checkbox"
 
 import { div } from "ntml"
-import { box } from "../../wireless/container/box"
+import { box } from "../container/box"
 import { checkbox, freshCheckbox } from "./checkbox"
 
 export type MultiselectData = {

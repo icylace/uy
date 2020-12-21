@@ -1,15 +1,15 @@
 import type { Focus } from "eyepiece"
 import type { ClassProp, State, VDOM } from "hyperapp"
 import type { Stuff } from "ntml"
-import type { TableCell } from "../../wireless/container/table"
+import type { TableCell } from "../container/table"
 import type { TextboxData } from "./textbox"
 
 import { get, set } from "eyepiece"
 import { div } from "ntml"
 import { exclude } from "../../utility/exclude"
-import { table } from "../../wireless/container/table"
-import { button } from "../../wireless/control/button"
-import { cancelButton } from "../../wireless/control/cancelButton"
+import { table } from "../container/table"
+import { button } from "../button/button"
+import { cancelButton } from "../button/cancelButton"
 import { textbox, freshTextbox } from "./textbox"
 
 export type ListData = {

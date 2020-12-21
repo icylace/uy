@@ -14,7 +14,7 @@ export type CancelButtonOptions<S>
     disabled?: boolean
   }
 
-const cancelButton = <S>(options: CancelButtonOptions<S>): VDOM<S> => {
+export const cancelButton = <S>(options: CancelButtonOptions<S>): VDOM<S> => {
   const props = isAction<S, MouseEvent>(options) ? { onclick: options } : options
   const { disabled, onclick, label = "✕", ...etc } = props
   return box("uy-control uy-cancelButton", [
@@ -27,5 +27,3 @@ const cancelButton = <S>(options: CancelButtonOptions<S>): VDOM<S> => {
     }, label),
   ])
 }
-
-export { cancelButton }

@@ -11,7 +11,7 @@ export type ButtonOptions<S> = {
   disabled?: boolean
 }
 
-const button = <S>(options: ButtonOptions<S>): VDOM<S> => {
+export const button = <S>(options: ButtonOptions<S>): VDOM<S> => {
   const { disabled, label, onclick, ...etc } = options
   return box("uy-control uy-button", [
     html.button({
@@ -23,5 +23,3 @@ const button = <S>(options: ButtonOptions<S>): VDOM<S> => {
     }, label),
   ])
 }
-
-export { button }

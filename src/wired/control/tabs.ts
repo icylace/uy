@@ -43,16 +43,12 @@ const tab = <S>(focus: Focus, activeTab: TabIndex) => {
       class: ["uy-tabs-item", { selected }],
       onclick: (state, event) => {
         const transition = set<State<S>>(focus)(freshTabs(
-          isVDOM(item)
-            ? item.props["data-tab-id"] as string
-            : i
+          isVDOM(item) ? item.props["data-tab-id"] as string : i
         ))(state)
         if (!event) return transition
         if (!event.target) return transition
         return selected
-          ? Array.isArray(transition)
-            ? [...transition, scrollIntoView(event.target as HTMLElement)] as EffectfulState<S>
-            : [transition, scrollIntoView(event.target as HTMLElement)] as EffectfulState<S>
+          ? [...encase(transition), scrollIntoView(event.target as HTMLElement)] as EffectfulState<S>
           : transition
       },
     }, item)

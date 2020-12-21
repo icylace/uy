@@ -30,7 +30,7 @@ const isOnlyChoices = <S>(x: any): x is Record<string, Content<S>> =>
 const dropdown = <S>(options: DropdownOptions<S>) => (...focus: Focus) => {
   return (state: State<S>): VDOM<S> => {
     const props = isOnlyChoices<S>(options) ? { choices: options } : options
-    const { disabled, choices, ...etc } = props
+    const { choices, disabled, ...etc } = props
     const x = get<DropdownData>(focus)(state)
     return box("uy-control uy-dropdown", [
       box({ "uy-dropdown-arrow": true, focus: x.focused, disabled }, [
@@ -38,8 +38,8 @@ const dropdown = <S>(options: DropdownOptions<S>) => (...focus: Focus) => {
           {
             value: x.value,
             disabled,
-            onblur: (state) => set<State<S>>(focus, "focused")(false)(state),
-            onfocus: (state) => set<State<S>>(focus, "focused")(true)(state),
+            onblur: set<State<S>>(focus, "focused")(false),
+            onfocus: set<State<S>>(focus, "focused")(true),
             onchange: (state, event) => {
               if (!event) return state
               const target = event.target as HTMLInputElement
@@ -51,10 +51,7 @@ const dropdown = <S>(options: DropdownOptions<S>) => (...focus: Focus) => {
           // TODO:
           // - switch to using a Map object instead in order to guarantee order
           // - verify type of `x` is workable
-          Object.entries(choices).map(
-            ([value, label]: [string, Content<S>]): VDOM<S> =>
-              option({ value }, label)
-          ),
+          Object.entries(choices).map(([value, label]) => option({ value }, label)),
         ),
       ]),
     ])

@@ -18,7 +18,7 @@ export type FieldOptions<S>
 export const field = <S>(options: FieldOptions<S>, views: ContentView<S>[]) => {
   return (state: State<S>): VDOM<S> => {
     const props = isContent<S>(options) ? { label: options } : options
-    const { disabled, label, ...etc } = props
+    const { label, disabled, ...etc } = props
     return box("uy-field", [
       html.label(
         { ...etc, class: [{ disabled }, etc.class] },

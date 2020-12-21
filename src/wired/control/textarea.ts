@@ -21,8 +21,8 @@ const textarea = <S>(options: TextareaOptions = {}) => (...focus: Focus) => {
     const { disabled, ...etc } = options
     return box("uy-control uy-textarea", [
       html.textarea({
-        disabled,
         value: get<TextareaData>(focus)(state).value,
+        disabled,
         onchange: (state, event) => {
           if (!event) return state
           const target = event.target as HTMLInputElement

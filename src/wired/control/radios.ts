@@ -28,7 +28,7 @@ const isOnlyChoices = <S>(x: any): x is Record<string, Content<S>> =>
 const radios = <S>(options: RadiosOptions<S>) => (...focus: Focus) => {
   return (state: State<S>): VDOM<S> => {
     const props = isOnlyChoices<S>(options) ? { choices: options } : options
-    const { disabled, choices, ...etc } = props
+    const { choices, disabled, ...etc } = props
     return box("uy-control uy-radios",
       // TODO:
       // - switch to using a Map object instead in order to guarantee order
@@ -36,10 +36,10 @@ const radios = <S>(options: RadiosOptions<S>) => (...focus: Focus) => {
         ([value, label]: [string, Content<S>]): VDOM<S> => {
           return html.label({ class: { disabled } }, [
             html.input({
-              disabled,
               value,
               checked: value === get<RadiosData>(focus)(state).value,
               type: "radio",
+              disabled,
               onchange: (state, event) => {
                 if (!event) return state
                 const target = event.target as HTMLInputElement

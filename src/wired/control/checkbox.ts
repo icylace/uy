@@ -24,15 +24,15 @@ const freshCheckbox = (value: boolean | null | undefined): CheckboxData => ({ va
 const checkbox = <S>(options: CheckboxOptions<S> = {}) => (...focus: Focus) => {
   return (state: State<S>): VDOM<S> => {
     const props = isContent<S>(options) ? { label: options } : options
-    const { disabled, label, ...etc } = props
+    const { label, disabled, ...etc } = props
     const value = get<CheckboxData>(focus)(state).value
     return box("uy-control uy-checkbox", [
       html.label({ class: { disabled } }, [
         html.input({
-          disabled,
+          type: "checkbox",
           checked: !!value,
           indeterminate: value == null,
-          type: "checkbox",
+          disabled,
           onchange: (state, event) => {
             if (!event) return state
             const target = event.target as HTMLInputElement

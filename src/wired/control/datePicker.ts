@@ -23,9 +23,9 @@ const datePicker = <S>(options: DatePickerOptions = {}) => (...focus: Focus) => 
     const { disabled, ...etc } = options
     return box("uy-control uy-datePicker", [
       input({
-        disabled,
-        value: get<DatePickerData>(focus)(state).value,
         type: "date",
+        value: get<DatePickerData>(focus)(state).value,
+        disabled,
         onchange: (state, event) => {
           if (!event) return state
           const target = event.target as HTMLInputElement
@@ -47,9 +47,9 @@ const datetimeLocalPicker = <S>(options: DatePickerOptions = {}) => (...focus: F
     const { disabled, ...etc } = options
     return box("uy-control uy-datePicker", [
       input({
-        disabled,
-        value: get<DatePickerData>(focus)(state).value,
         type: "datetime-local",
+        value: get<DatePickerData>(focus)(state).value,
+        disabled,
         onchange: (state, event) => {
           if (!event) return state
           const target = event.target as HTMLInputElement
@@ -71,9 +71,9 @@ const monthPicker = <S>(options: DatePickerOptions = {}) => (...focus: Focus) =>
     const { disabled, ...etc } = options
     return box("uy-control uy-datePicker", [
       input({
-        disabled,
-        value: get<DatePickerData>(focus)(state).value,
         type: "month",
+        value: get<DatePickerData>(focus)(state).value,
+        disabled,
         onchange: (state, event) => {
           if (!event) return state
           const target = event.target as HTMLInputElement
@@ -95,9 +95,9 @@ const timePicker = <S>(options: DatePickerOptions = {}) => (...focus: Focus) => 
     const { disabled, ...etc } = options
     return box("uy-control uy-datePicker", [
       input({
-        disabled,
-        value: get<DatePickerData>(focus)(state).value,
         type: "time",
+        value: get<DatePickerData>(focus)(state).value,
+        disabled,
         onchange: (state, event) => {
           if (!event) return state
           const target = event.target as HTMLInputElement
@@ -119,9 +119,9 @@ const weekPicker = <S>(options: DatePickerOptions = {}) => (...focus: Focus) => 
     const { disabled, ...etc } = options
     return box("uy-control uy-datePicker", [
       input({
-        disabled,
-        value: get<DatePickerData>(focus)(state).value,
         type: "week",
+        value: get<DatePickerData>(focus)(state).value,
+        disabled,
         onchange: (state, event) => {
           if (!event) return state
           const target = event.target as HTMLInputElement

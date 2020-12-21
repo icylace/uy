@@ -30,30 +30,27 @@ const freshList = (items: string[]): ListData =>
 const list = <S>(options: ListOptions<S> = {}) => (...focus: Focus) => {
   return (state: State<S>): VDOM<S> => {
     const props = Array.isArray(options) ? { headers: options } : options
-    const { disabled, headers, ...etc } = props
+    const { headers, disabled, ...etc } = props
     const xr = get<ListData>(focus)(state)
 
-    const item = (_value: TextboxData, i: number): TableCell<S>[] => {
-      return [
-        textbox<S>({ disabled })(focus, "items", i)(state),
-        cancelButton({
-          disabled,
-          onclick: (state: State<S>): State<S> =>
-            set<State<S>>(focus, "items")((xs: TextboxData[]) => exclude(i, xs))(state),
-        }),
-      ]
-    }
+    const item = (_value: TextboxData, i: number): TableCell<S>[] => [
+      textbox<S>({ disabled })(focus, "items", i)(state),
+      cancelButton({
+        disabled,
+        onclick: (state: State<S>): State<S> =>
+          set<State<S>>(focus, "items")((xs: TextboxData[]) => exclude(i, xs))(state),
+      }),
+    ]
 
     const grower: TableCell<S>[] = [
       [
         { class: "uy-list-adder", colspan: 2 },
         button({
-          disabled,
           label: "+ Add",
+          disabled,
           onclick: (state: State<S>): State<S> =>
             set<State<S>>(focus)(
-              (xr: ListData): ListData =>
-                ({ ...xr, items: [...xr.items, freshTextbox("")] })
+              (xr: ListData) => ({ ...xr, items: [...xr.items, freshTextbox("")] })
             )(state),
         }),
       ],
@@ -63,7 +60,7 @@ const list = <S>(options: ListOptions<S> = {}) => (...focus: Focus) => {
       { ...etc, class: ["uy-control uy-list", { disabled }, etc.class] },
       [
         table(
-          { disabled, headers, sortDescending: false, },
+          { headers, disabled, sortDescending: false, },
           [...xr.items.map(item), grower]
         ),
       ],

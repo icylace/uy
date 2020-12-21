@@ -25,13 +25,13 @@ const freshFile = (value: string): FileData => ({ value })
 const file = <S>(options: FileOptions = {}) => (...focus: Focus) => {
   return (state: State<S>): VDOM<S> => {
     const props = typeof options === "string" ? { label: options } : options
-    const { disabled, label = "Select your file...", ...etc } = props
+    const { label = "Select your file...", disabled, ...etc } = props
     return box(["uy-control uy-file uy-input", { disabled }], [
       html.label({ "data-text": label }, [
         html.input({
-          disabled,
-          value: get<FileData>(focus)(state).value,
           type: "file",
+          value: get<FileData>(focus)(state).value,
+          disabled,
           // TODO:
           // - probably needs to be rethought
           onchange: (state, event) => {
@@ -46,7 +46,7 @@ const file = <S>(options: FileOptions = {}) => (...focus: Focus) => {
           ...etc,
           class: [{ disabled }, etc.class],
         }),
-        html.span([icon("fas fa-file-upload"), " Upload"]),
+        html.span([icon("fas fa-file-upload"), "Upload"]),
       ]),
     ])
   }

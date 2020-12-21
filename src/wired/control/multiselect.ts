@@ -25,9 +25,12 @@ export type MultiselectOptions<S>
 const freshMultiselect = <S>(choices: MultiselectChoices<S>, value: string[]): MultiselectData => {
   const data = Object.fromEntries(Object.entries(choices).map(([k, _]) => [k, freshCheckbox(false)]))
   return {
-    value: value.reduce((xr: Record<string, CheckboxData>, x: string): Record<string, CheckboxData> => {
-      return { ...xr, [x]: freshCheckbox(true) }
-    }, data),
+    value: value.reduce(
+      (xr: Record<string, CheckboxData>, x: string) => {
+        return { ...xr, [x]: freshCheckbox(true) }
+      },
+      data
+    ),
   }
 }
 
@@ -48,8 +51,7 @@ const multiselect = <S>(options: MultiselectOptions<S>) => (...focus: Focus) => 
     }, [
       box("uy-multiselect-options",
         Object.entries(choices).map(
-          ([value, label]: [string, Content<S>]): VDOM<S> =>
-            checkbox({ disabled, label })(focus, value)(state)
+          ([value, label]) => checkbox({ disabled, label })(focus, value)(state)
         ),
       ),
     ])

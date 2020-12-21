@@ -58,7 +58,7 @@ const noopKeys = [
 
 const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
   return (state: State<S>): VDOM<S> => {
-    const { disabled, search, onresults, id, ...etc } = options
+    const { search, onresults, id, disabled, ...etc } = options
 
     const x = get<SearchboxData>(focus)(state)
 
@@ -80,7 +80,7 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
       }
 
       return onresults(results, id, set<State<S>>(focus)(
-        (xr: SearchboxData): SearchboxData => ({ ...xr, results, searching: false })
+        (xr: SearchboxData) => ({ ...xr, results, searching: false })
       )(state))
     }
 
@@ -89,20 +89,19 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
       return r.searching
         ? set<State<S>>(focus, "value")(value)(state)
         : [
-          set<State<S>>(focus)(
-            (xr: SearchboxData): SearchboxData =>
-              ({ ...xr, value, searching: true })
-          )(state),
-          search(updateResults, value),
-        ]
+            set<State<S>>(focus)(
+              (xr: SearchboxData) => ({ ...xr, value, searching: true })
+            )(state),
+            search(updateResults, value),
+          ]
     }
 
     const inputSearch = input<S>({
-      type: "search",
       value: x.value,
+      type: "search",
       disabled,
-      onfocus: (state) => set<State<S>>(focus, "focused")(true)(state),
-      onblur: (state) => set<State<S>>(focus, "focused")(false)(state),
+      onfocus: set<State<S>>(focus, "focused")(true),
+      onblur: set<State<S>>(focus, "focused")(false),
       onkeyup: (state, event) => {
         if (!event) return state
         if (noopKeys.includes(event.key)) return state
@@ -129,8 +128,7 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
         onclick: (state: State<S>): State<S> =>
           onresults([], id,
             set<State<S>>(focus)(
-              (xr: SearchboxData): SearchboxData =>
-                ({ ...xr, value: result, results: [] })
+              (xr: SearchboxData) => ({ ...xr, value: result, results: [] })
             )(state)
           ),
       }, result)
@@ -139,10 +137,12 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
       x.results.length && !disabled
         ? popup(
           { disabled, id },
-          [ul(
-            { class: "uy-searchbox-results uy-scroller" },
-            x.results.map(searchResult),
-          )]
+          [
+            ul(
+              { class: "uy-searchbox-results uy-scroller" },
+              x.results.map(searchResult),
+            ),
+          ]
         )
         : null
     ) as VNode<S>
@@ -159,12 +159,14 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
         inputSearch,
         span(
           { onclick: update(x.value) },
-          [icon({
-            fas: true,
-            "fa-spinner": x.searching,
-            "fa-pulse": x.searching,
-            "fa-search": !x.searching,
-          })],
+          [
+            icon({
+              fas: true,
+              "fa-spinner": x.searching,
+              "fa-pulse": x.searching,
+              "fa-search": !x.searching,
+            }),
+          ],
         ),
       ]),
       popupNode,

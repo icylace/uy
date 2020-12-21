@@ -34,10 +34,12 @@ const numberbox = <S>(options: NumberboxOptions<S> = {}) => (...focus: Focus) =>
     return box("uy-control uy-numberbox", [
       html.label({ class: { focus: !!x.focused, disabled } }, [
         html.input({
-          disabled,
-          min: 0,
           type: "number",
+          min: 0,
           value: x.value,
+          disabled,
+          onfocus: set<State<S>>(focus, "focused")(true),
+          onblur: set<State<S>>(focus, "focused")(false),
           onchange: (state, event) => {
             if (!event) return state
             const target = event.target as HTMLInputElement
@@ -46,8 +48,6 @@ const numberbox = <S>(options: NumberboxOptions<S> = {}) => (...focus: Focus) =>
               value: sanitizedNumber(target.value),
             })(state)
           },
-          onfocus: (state) => set<State<S>>(focus, "focused")(true)(state),
-          onblur: (state) => set<State<S>>(focus, "focused")(false)(state),
           ...etc,
           class: ["uy-input", { disabled }, etc.class],
         }),

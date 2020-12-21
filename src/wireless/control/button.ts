@@ -12,12 +12,12 @@ export type ButtonOptions<S> = {
 }
 
 export const button = <S>(options: ButtonOptions<S>): VDOM<S> => {
-  const { disabled, label, onclick, ...etc } = options
+  const { label, onclick, disabled, ...etc } = options
   return box("uy-control uy-button", [
     html.button({
       type: "button",
-      disabled,
       onclick,
+      disabled,
       ...etc,
       class: [{ disabled }, etc.class],
     }, label),

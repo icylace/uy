@@ -14,7 +14,7 @@ export type PopupOptions
 
 export const popup = <S>(options: PopupOptions, contents: Content<S>): VDOM<S> => {
   const props = typeof options === "string" ? { id: options } : options
-  const { disabled, id, ...etc } = props
+  const { id, disabled, ...etc } = props
   return div(
     { id, ...etc, class: ["uy-popup", { disabled }, etc.class] },
     contents

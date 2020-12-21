@@ -38,9 +38,9 @@ const pagerMore = <S>(content: Content<S>): VDOM<S> =>
 
 const pager = <S>(options: PagerOptions) => (...focus: Focus) => {
   return (state: State<S>): VDOM<S> => {
-    const { disabled, itemsPerPage, pageRange, ...etc } = options
+    const { itemsPerPage, pageRange, disabled, ...etc } = options
     const x = get<PagerData>(focus)(state)
-    const update = (state: State<S>, value: number) =>
+    const update = (value: number) => (state: State<S>) =>
       set<State<S>>(focus, "value")(value)(state)
 
     const pageCount = Math.ceil(x.itemsTotal / itemsPerPage)
@@ -55,8 +55,8 @@ const pager = <S>(options: PagerOptions) => (...focus: Focus) => {
         const current = currentPage === x.value
         return rangeStartPage <= currentPage && currentPage <= rangeFinishPage
           ? li({
-            class: ["uy-pager-nav", "uy-pager-page", current && "uy-pager-current"],
-            onclick: (state) => update(state, currentPage),
+            class: ["uy-pager-nav uy-pager-page", current && "uy-pager-current"],
+            onclick: update(currentPage),
           }, span(currentPage + 1))
           : null
       },
@@ -66,33 +66,30 @@ const pager = <S>(options: PagerOptions) => (...focus: Focus) => {
     const moreNext = pagerMore<S>(rangeFinishPage < lastPage ? "..." : "")
 
     const navFirst = pagerNav<S>(
-      (state) => update(state, 0),
-      [icon("fas fa-angle-double-left"), " first"],
+      update(0),
+      [icon("fas fa-angle-double-left"), "first"],
       x.value !== 0,
     )
 
     const navPrev = pagerNav<S>(
-      (state) => update(state, Math.max(0, x.value - 1)),
-      [icon("fas fa-angle-left"), " prev"],
+      update(Math.max(0, x.value - 1)),
+      [icon("fas fa-angle-left"), "prev"],
       x.value !== 0,
     )
 
     const navNext = pagerNav<S>(
-      (state) => update(state, Math.min(lastPage, x.value + 1)),
-      ["next ", icon("fas fa-angle-right")],
+      update(Math.min(lastPage, x.value + 1)),
+      ["next", icon("fas fa-angle-right")],
       x.value !== lastPage,
     )
 
     const navLast = pagerNav<S>(
-      (state) => update(state, lastPage),
-      ["last ", icon("fas fa-angle-double-right")],
+      update(lastPage),
+      ["last", icon("fas fa-angle-double-right")],
       x.value !== lastPage,
     )
 
-    return div({
-      ...etc,
-      class: ["uy-control uy-pager", { disabled }, etc.class],
-    }, [
+    return div({ ...etc, class: ["uy-control uy-pager", { disabled }, etc.class] }, [
       ul([
         li(navFirst),
         li(navPrev),

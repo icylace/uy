@@ -52,7 +52,7 @@ const tableRow = <S>(row: TableRow<S>): VDOM<S> =>
 
 const table = <S>(options: TableOptions<S> = {}, rows: TableRow<S>[]): VDOM<S> => {
   const props = Array.isArray(options) ? { headers: options } : options
-  const { disabled, headers, orderColumn, sortDescending, ...etc } = props
+  const { headers, orderColumn, sortDescending, disabled, ...etc } = props
   return box(["uy-control uy-table", { disabled }], [
     html.table(etc, [
       Array.isArray(headers) && headers.length

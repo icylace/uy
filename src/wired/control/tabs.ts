@@ -33,7 +33,7 @@ const freshTabs = (value: TabIndex): TabsData => ({ value })
 
 const isSelected = (activeTab: TabIndex) => <S>(item: Stuff<S>, i: number): boolean =>
   typeof item === "object"
-    ? item != null && isVDOM(item) && activeTab === item.props["data-tab-id"]
+    ? item != null && isVDOM(item) && activeTab === (item.props["data-tab-id"] as string)
     : activeTab === i
 
 const tab = <S>(focus: Focus, activeTab: TabIndex) => {
@@ -45,10 +45,12 @@ const tab = <S>(focus: Focus, activeTab: TabIndex) => {
         const transition = set<State<S>>(focus)(freshTabs(
           isVDOM(item) ? item.props["data-tab-id"] as string : i
         ))(state)
-        if (!event) return transition
-        if (!event.target) return transition
-        return selected
-          ? [...encase(transition), scrollIntoView(event.target as HTMLElement)] as EffectfulState<S>
+        return !event ? transition
+          : !event.target ? transition
+          : selected ? [
+              ...encase(transition),
+              scrollIntoView(event.target as HTMLElement),
+            ] as EffectfulState<S>
           : transition
       },
     }, item)
@@ -60,20 +62,20 @@ const tabs = <S>(options: TabsOptions<S>) => (...focus: Focus) => {
     const props = Array.isArray(options) ? { tabList: options } : options
     const { tabList, itemsHeader, itemsFooter, disabled, ...etc } = props
 
-    const x = get<TabsData>(focus)(state)
-    const headings = tabList.map((x: Tab<S>): Stuff<S> => x.heading)
-    const panels = tabList.map((x: Tab<S>): Stuff<S> => x.panel)
+    const x = get<TabsData>(focus)(state).value
+    const headings = tabList.map((tab) => tab.heading)
+    const panels = tabList.map((tab) => tab.panel)
 
     return div(
       { ...etc, class: ["uy-control uy-tabs", { disabled }, etc.class] },
       [
         box("uy-tabs-navigation", [
           ...encase(itemsHeader),
-          box("uy-tabs-list uy-scroller", headings.map(tab(focus, x.value))),
+          box("uy-tabs-list uy-scroller", headings.map(tab(focus, x))),
           ...encase(itemsFooter),
         ]),
         box("uy-tabs-panels", [
-          panels[headings.findIndex(isSelected(x.value))],
+          panels[headings.findIndex(isSelected(x))],
         ]),
       ],
     )

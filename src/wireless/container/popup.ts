@@ -7,12 +7,12 @@ export type PopupOptions
   = string
   | {
     [_: string]: unknown
+    id: string
     class?: ClassProp
     disabled?: boolean
-    id: string
   }
 
-const popup = <S>(options: PopupOptions, contents: Content<S>): VDOM<S> => {
+export const popup = <S>(options: PopupOptions, contents: Content<S>): VDOM<S> => {
   const props = typeof options === "string" ? { id: options } : options
   const { disabled, id, ...etc } = props
   return div(
@@ -20,5 +20,3 @@ const popup = <S>(options: PopupOptions, contents: Content<S>): VDOM<S> => {
     contents
   )
 }
-
-export { popup }

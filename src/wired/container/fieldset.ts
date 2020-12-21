@@ -8,9 +8,9 @@ export type FieldsetOptions<S>
   = Content<S>
   | {
     [_: string]: unknown
+    label?: Content<S>
     class?: ClassProp
     disabled?: boolean
-    label?: Content<S>
   }
 
 // TODO:

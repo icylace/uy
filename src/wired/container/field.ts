@@ -10,9 +10,9 @@ import { box } from "../../wireless/container/box"
 export type FieldOptions<S>
   = Content<S>
   | {
+    label?: Content<S>
     class?: ClassProp
     disabled?: boolean
-    label?: Content<S>
   }
 
 export const field = <S>(options: FieldOptions<S>, views: ContentView<S>[]) => {

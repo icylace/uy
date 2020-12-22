@@ -32,9 +32,13 @@ export type TabsOptions<S>
 const freshTabs = (value: TabIndex): TabsData => ({ value })
 
 const isSelected = (activeTab: TabIndex) => <S>(item: Stuff<S>, i: number): boolean =>
-  typeof item === "object"
-    ? item != null && isVDOM(item) && activeTab === (item.props["data-tab-id"] as string)
-    : activeTab === i
+  (
+    typeof item === "object"
+    && item != null
+    && isVDOM(item)
+    && activeTab === (item.props["data-tab-id"] as string)
+  )
+  || activeTab === i
 
 const tab = <S>(focus: Focus, activeTab: TabIndex) => {
   return (item: Stuff<S>, i: number): VDOM<S> => {
@@ -43,9 +47,7 @@ const tab = <S>(focus: Focus, activeTab: TabIndex) => {
       class: ["uy-tabs-item", { selected }],
       onclick: (state, event) => {
         const transition = set<State<S>>(focus)(freshTabs(
-          isVDOM(item) && "data-tab-id" in item.props
-            ? item.props["data-tab-id"] as string
-            : i
+          isVDOM(item) ? item.props["data-tab-id"] as string : i
         ))(state)
         return !event ? transition
           : !event.target ? transition

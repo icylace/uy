@@ -40,7 +40,7 @@ const isOnlyChoices = <S>(x: any): x is Record<string, Content<S>> =>
 const multiselect = <S>(options: MultiselectOptions<S>) => (...focus: Focus) => {
   return (state: State<S>): VDOM<S> => {
     const props = isOnlyChoices<S>(options) ? { choices: options } : options
-    const { disabled, choices, usingColumnMode, ...etc } = props
+    const { choices, usingColumnMode, disabled, ...etc } = props
     return div({
       ...etc,
       class: [
@@ -51,7 +51,7 @@ const multiselect = <S>(options: MultiselectOptions<S>) => (...focus: Focus) => 
     }, [
       box("uy-multiselect-options",
         Object.entries(choices).map(
-          ([value, label]) => checkbox({ disabled, label })(focus, value)(state)
+          ([value, label]) => checkbox({ label, disabled })(focus, "value", value)(state)
         ),
       ),
     ])

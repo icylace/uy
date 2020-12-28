@@ -1,5 +1,5 @@
 import type { Focus } from "eyepiece"
-import type { ClassProp, State, Transform, VDOM } from "hyperapp"
+import type { ActionTransform, ClassProp, State, VDOM } from "hyperapp"
 import type { Content } from "ntml"
 
 import { get, set } from "eyepiece"
@@ -17,7 +17,7 @@ export type CheckboxOptions<S>
   = Content<S>
   | {
     label?: Content<S>
-    onchange?: Transform<S, CheckboxValue>
+    onchange?: ActionTransform<S, CheckboxValue>
     class?: ClassProp
     disabled?: boolean
   }

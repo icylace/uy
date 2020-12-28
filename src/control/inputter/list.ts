@@ -1,5 +1,5 @@
 import type { Focus } from "eyepiece"
-import type { ClassProp, State, Transform, VDOM } from "hyperapp"
+import type { ActionTransform, ClassProp, State, VDOM } from "hyperapp"
 import type { Stuff } from "ntml"
 import type { TableCell } from "../container/table"
 import type { TextboxData, TextboxValue } from "./textbox"
@@ -20,7 +20,7 @@ export type ListOptions<S>
   = Stuff<S>[]
   | {
     headers?: Stuff<S>[]
-    onchange?: Transform<S, TextboxValue>
+    onchange?: ActionTransform<S, TextboxValue>
     class?: ClassProp
     disabled?: boolean
   }

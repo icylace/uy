@@ -1,5 +1,5 @@
 import type { Focus } from "eyepiece"
-import type { ClassProp, State, Transform, VDOM } from "hyperapp"
+import type { ActionTransform, ClassProp, State, VDOM } from "hyperapp"
 
 import { get, set } from "eyepiece"
 import { input } from "ntml"
@@ -12,7 +12,7 @@ export type DatePickerData = {
 }
 
 export type DatePickerOptions<S> = {
-  onchange?: Transform<S, DatePickerValue>
+  onchange?: ActionTransform<S, DatePickerValue>
   class?: ClassProp
   disabled?: boolean
 }

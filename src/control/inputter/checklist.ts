@@ -1,5 +1,5 @@
 import type { Focus } from "eyepiece"
-import type { ClassProp, State, Transform, VDOM } from "hyperapp"
+import type { ActionTransform, ClassProp, State, VDOM } from "hyperapp"
 import type { Content } from "ntml"
 import type { TableRow } from "../container/table"
 import type { CheckboxData, CheckboxValue } from "./checkbox"
@@ -20,7 +20,7 @@ export type ChecklistData = {
 
 export type ChecklistOptions<S> = {
   renderLabel: (_: Content<S>) => VDOM<S>
-  onchange?: Transform<S, CheckboxValue>
+  onchange?: ActionTransform<S, CheckboxValue>
   class?: ClassProp
   disabled?: boolean
 }

@@ -1,5 +1,5 @@
 import type { Focus } from "eyepiece"
-import type { ClassProp, State, Transform, VDOM } from "hyperapp"
+import type { ActionTransform, ClassProp, State, VDOM } from "hyperapp"
 
 import { get, set } from "eyepiece"
 import * as html from "ntml"
@@ -12,12 +12,12 @@ export type TextareaData = {
 }
 
 export type TextareaOptions<S> = {
-  onchange?: Transform<S, TextareaValue>
+  onchange?: ActionTransform<S, TextareaValue>
   class?: ClassProp
   disabled?: boolean
 }
 
-const freshTextarea = (value: string): TextareaData => ({ value })
+const freshTextarea = (value: TextareaValue): TextareaData => ({ value })
 
 const textarea = <S>(options: TextareaOptions<S> = {}) => (...focus: Focus) => {
   return (state: State<S>): VDOM<S> => {

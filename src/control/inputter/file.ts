@@ -1,5 +1,5 @@
 import type { Focus } from "eyepiece"
-import type { ClassProp, State, Transform, VDOM } from "hyperapp"
+import type { ActionTransform, ClassProp, State, VDOM } from "hyperapp"
 
 import { get, set } from "eyepiece"
 import * as html from "ntml"
@@ -16,7 +16,7 @@ export type FileOptions<S>
   = string
   | {
     label?: string
-    onchange?: Transform<S, FileValue>
+    onchange?: ActionTransform<S, FileValue>
     class?: ClassProp
     disabled?: boolean
   }

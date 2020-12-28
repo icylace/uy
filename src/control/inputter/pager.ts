@@ -1,5 +1,5 @@
 import type { Focus } from "eyepiece"
-import type { ActionTransform, ClassProp, State, Transform, VDOM, VNode } from "hyperapp"
+import type { ActionTransform, ClassProp, State, VDOM, VNode } from "hyperapp"
 import type { Content } from "ntml"
 
 import { get, set } from "eyepiece"
@@ -17,12 +17,12 @@ export type PagerData = {
 export type PagerOptions<S> = {
   itemsPerPage: number
   pageRange: number
-  onclick?: Transform<S, PagerValue>
+  onclick?: ActionTransform<S, PagerValue>
   class?: ClassProp
   disabled?: boolean
 }
 
-const freshPager = (itemsTotal: number, value: number): PagerData =>
+const freshPager = (itemsTotal: number, value: PagerValue): PagerData =>
   ({ value, itemsTotal })
 
 const pagerNav = <S>(onclick: ActionTransform<S>, content: Content<S>, active: boolean): VDOM<S> =>

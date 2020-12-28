@@ -1,5 +1,5 @@
 import type { Focus } from "eyepiece"
-import type { ClassProp, State, Transform, VDOM } from "hyperapp"
+import type { ActionTransform, ClassProp, State, VDOM } from "hyperapp"
 import type { Content } from "ntml"
 import type { CheckboxData, CheckboxValue } from "./checkbox"
 
@@ -18,7 +18,7 @@ export type MultiselectOptions<S>
   | {
     choices: MultiselectChoices<S>
     usingColumnMode?: boolean
-    onchange?: Transform<S, CheckboxValue>
+    onchange?: ActionTransform<S, CheckboxValue>
     class?: ClassProp
     disabled?: boolean
   }

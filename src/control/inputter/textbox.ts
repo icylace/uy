@@ -1,5 +1,5 @@
 import type { Focus } from "eyepiece"
-import type { ClassProp, State, Transform, VDOM } from "hyperapp"
+import type { ActionTransform, ClassProp, State, VDOM } from "hyperapp"
 
 import { get, set } from "eyepiece"
 import { input } from "ntml"
@@ -12,12 +12,12 @@ export type TextboxData = {
 }
 
 export type TextboxOptions<S> = {
-  onchange?: Transform<S, TextboxValue>
+  onchange?: ActionTransform<S, TextboxValue>
   class?: ClassProp
   disabled?: boolean
 }
 
-const freshTextbox = (value: string): TextboxData => ({ value })
+const freshTextbox = (value: TextboxValue): TextboxData => ({ value })
 
 const textbox = <S>(options: TextboxOptions<S> = {}) => (...focus: Focus) => {
   return (state: State<S>): VDOM<S> => {

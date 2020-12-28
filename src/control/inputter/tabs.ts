@@ -1,5 +1,5 @@
 import type { Focus } from "eyepiece"
-import type { ClassProp, StateWithEffects, State, Transform, VDOM } from "hyperapp"
+import type { ClassProp, State, StateWithEffects, Transform, VDOM } from "hyperapp"
 import type { Content, Stuff } from "ntml"
 
 import { get, set } from "eyepiece"

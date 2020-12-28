@@ -1,5 +1,5 @@
 import type { Focus } from "eyepiece"
-import type { ClassProp, State, Transform, VDOM } from "hyperapp"
+import type { ActionTransform, ClassProp, State, VDOM } from "hyperapp"
 import type { Content } from "ntml"
 
 import { get, set } from "eyepiece"
@@ -18,7 +18,7 @@ export type RadiosOptions<S>
   = RadiosChoices<S>
   | {
     choices: RadiosChoices<S>
-    onchange?: Transform<S, RadiosValue>
+    onchange?: ActionTransform<S, RadiosValue>
     class?: ClassProp
     disabled?: boolean
   }

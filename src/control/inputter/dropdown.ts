@@ -1,5 +1,5 @@
 import type { Focus } from "eyepiece"
-import type { ClassProp, State, Transform, VDOM } from "hyperapp"
+import type { ActionTransform, ClassProp, State, VDOM } from "hyperapp"
 import type { Content } from "ntml"
 
 import { get, set } from "eyepiece"
@@ -20,7 +20,7 @@ export type DropdownOptions<S>
   = DropdownChoices<S>
   | {
     choices: DropdownChoices<S>
-    onchange?: Transform<S, DropdownValue>
+    onchange?: ActionTransform<S, DropdownValue>
     class?: ClassProp
     disabled?: boolean
   }

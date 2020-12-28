@@ -7,8 +7,10 @@ import { popup } from "../container/popup"
 import { box } from "../container/box"
 import { icon } from "../indicator/icon"
 
+export type SearchboxValue = string
+
 export type SearchboxData = {
-  value: string
+  value: SearchboxValue
   results: string[]
   searching: boolean
   focused?: boolean
@@ -16,18 +18,18 @@ export type SearchboxData = {
 
 export type SearchEffectData<S> = {
   action: Action<S, SearchboxData>
-  value: string
+  value: SearchboxValue
 }
 
 export type SearchboxOptions<S> = {
   id: string
-  search: (action: Action<S, SearchboxData>, value: string) => EffectDescriptor<S, SearchEffectData<S>>
+  search: (action: Action<S, SearchboxData>, value: SearchboxValue) => EffectDescriptor<S, SearchEffectData<S>>
   onresults: (results: SearchboxData["results"], id: string, state: State<S>) => State<S>
   class?: ClassProp
   disabled?: boolean
 }
 
-const freshSearchbox = (value: string): SearchboxData => ({
+const freshSearchbox = (value: SearchboxValue): SearchboxData => ({
   value,
   results: [],
   searching: false,

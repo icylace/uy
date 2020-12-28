@@ -6,7 +6,7 @@ import { get, set } from "eyepiece"
 import { div, isVDOM } from "ntml"
 import { encase } from "../../utility/encase"
 import { box } from "../container/box"
-import { scrollIntoView } from "./tabs.effect"
+import { scrollIntoView } from "../effect/scrollIntoView"
 
 export type TabIndex = number | string
 

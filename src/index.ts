@@ -26,6 +26,8 @@ export * from "./control/container/popup"
 export * from "./control/container/row"
 export * from "./control/container/table"
 
+export * from "./control/effect/scrollIntoView"
+
 export * from "./control/indicator/icon"
 export * from "./control/indicator/spinner"
 

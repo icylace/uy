@@ -1,8 +1,8 @@
 import type { Focus } from "eyepiece"
-import type { ClassProp, State, VDOM } from "hyperapp"
+import type { ClassProp, State, Transform, VDOM } from "hyperapp"
 import type { Stuff } from "ntml"
 import type { TableCell } from "../container/table"
-import type { TextboxData } from "./textbox"
+import type { TextboxData, TextboxValue } from "./textbox"
 
 import { get, set } from "eyepiece"
 import { div } from "ntml"
@@ -20,6 +20,7 @@ export type ListOptions<S>
   = Stuff<S>[]
   | {
     headers?: Stuff<S>[]
+    onchange?: Transform<S, TextboxValue>
     class?: ClassProp
     disabled?: boolean
   }
@@ -30,15 +31,17 @@ const freshList = (items: string[]): ListData =>
 const list = <S>(options: ListOptions<S> = {}) => (...focus: Focus) => {
   return (state: State<S>): VDOM<S> => {
     const props = Array.isArray(options) ? { headers: options } : options
-    const { headers, disabled, ...etc } = props
+    const { headers, onchange, disabled, ...etc } = props
     const xr = get<ListData>(focus)(state)
 
     const item = (_value: TextboxData, i: number): TableCell<S>[] => [
-      textbox<S>({ disabled })(focus, "items", i)(state),
+      textbox<S>({ onchange, disabled })(focus, "items", i)(state),
       cancelButton({
         disabled,
-        onclick: (state: State<S>): State<S> =>
-          set<State<S>>(focus, "items")((xs: TextboxData[]) => exclude(i, xs))(state),
+        onclick: (state) => {
+          const nextState = set<State<S>>(focus, "items")(exclude(i))(state)
+          return onchange ? onchange(nextState) : nextState
+        },
       }),
     ]
 
@@ -48,10 +51,12 @@ const list = <S>(options: ListOptions<S> = {}) => (...focus: Focus) => {
         button({
           label: "+ Add",
           disabled,
-          onclick: (state: State<S>): State<S> =>
-            set<State<S>>(focus)(
-              (xr: ListData) => ({ ...xr, items: [...xr.items, freshTextbox("")] })
-            )(state),
+          onclick: (state) => {
+            const nextState = set<State<S>>(focus, "items")(
+              (xs: TextboxData[]) => [...xs, freshTextbox("")]
+            )(state)
+            return onchange ? onchange(nextState) : nextState
+          },
         }),
       ],
     ]

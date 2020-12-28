@@ -1,5 +1,5 @@
 import type { Focus } from "eyepiece"
-import type { ClassProp, EffectfulState, State, VDOM } from "hyperapp"
+import type { ClassProp, StateWithEffects, State, Transform, VDOM } from "hyperapp"
 import type { Content, Stuff } from "ntml"
 
 import { get, set } from "eyepiece"
@@ -23,9 +23,10 @@ export type TabsOptions<S>
   = Tab<S>[]
   | Readonly<{
     tabList: Tab<S>[]
-    class?: ClassProp
     itemsHeader?: Content<S>
     itemsFooter?: Content<S>
+    onclick?: Transform<S, TabIndex>
+    class?: ClassProp
     disabled?: boolean
   }>
 
@@ -40,24 +41,24 @@ const isSelected = (activeTab: TabIndex) => <S>(item: Stuff<S>, i: number): bool
   )
   || activeTab === i
 
-const tab = <S>(focus: Focus, activeTab: TabIndex) => {
+const tab = <S>(focus: Focus, activeTab: TabIndex, onclick?: Transform<S>) => {
   return (item: Stuff<S>, i: number): VDOM<S> => {
     const selected = isSelected(activeTab)(item, i)
     return div({
       class: ["uy-tabs-item", { selected }],
       onclick: (state, event) => {
-        const transition = set<State<S>>(focus)(freshTabs(
+        if (!event) return state
+        const target = event.target as HTMLInputElement
+        const nextValue = freshTabs(
           isVDOM(item) && "data-tab-id" in item.props
             ? item.props["data-tab-id"] as string
             : i
-        ))(state)
-        return !event ? transition
-          : !event.target ? transition
-          : selected ? [
-              ...encase(transition),
-              scrollIntoView(event.target as HTMLElement),
-            ] as EffectfulState<S>
+        )
+        const transition = set<State<S>>(focus)(nextValue)(state)
+        const nextState = selected
+          ? [...encase(transition), scrollIntoView(target)] as StateWithEffects<S>
           : transition
+        return onclick ? onclick(nextState, nextValue) : nextState
       },
     }, item)
   }
@@ -66,7 +67,7 @@ const tab = <S>(focus: Focus, activeTab: TabIndex) => {
 const tabs = <S>(options: TabsOptions<S>) => (...focus: Focus) => {
   return (state: State<S>): VDOM<S> => {
     const props = Array.isArray(options) ? { tabList: options } : options
-    const { tabList, itemsHeader, itemsFooter, disabled, ...etc } = props
+    const { tabList, itemsHeader, itemsFooter, onclick, disabled, ...etc } = props
 
     const x = get<TabsData>(focus)(state).value
     const headings = tabList.map((tab) => tab.heading)
@@ -77,7 +78,7 @@ const tabs = <S>(options: TabsOptions<S>) => (...focus: Focus) => {
       [
         box("uy-tabs-navigation", [
           ...encase(itemsHeader),
-          box("uy-tabs-list uy-scroller", headings.map(tab(focus, x))),
+          box("uy-tabs-list uy-scroller", headings.map(tab<S>(focus, x, onclick))),
           ...encase(itemsFooter),
         ]),
         box("uy-tabs-panels", [

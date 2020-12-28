@@ -1,13 +1,15 @@
 import type { Focus } from "eyepiece"
-import type { ClassProp, State, VDOM } from "hyperapp"
+import type { ClassProp, State, Transform, VDOM } from "hyperapp"
 import type { Content } from "ntml"
 
 import { get, set } from "eyepiece"
 import { option, select } from "ntml"
 import { box } from "../container/box"
 
+export type DropdownValue = string
+
 export type DropdownData = {
-  value: string
+  value: DropdownValue
   "uy-dropdown-arrow"?: boolean
   focused?: boolean
 }
@@ -18,11 +20,13 @@ export type DropdownOptions<S>
   = DropdownChoices<S>
   | {
     choices: DropdownChoices<S>
+    onchange?: Transform<S, DropdownValue>
     class?: ClassProp
     disabled?: boolean
   }
 
-const freshDropdown = (value: string): DropdownData => ({ value, focused: false })
+const freshDropdown = (value: DropdownValue): DropdownData =>
+  ({ value, focused: false })
 
 const isOnlyChoices = <S>(x: any): x is Record<string, Content<S>> =>
   typeof x === "object" && !("choices" in x)
@@ -30,7 +34,7 @@ const isOnlyChoices = <S>(x: any): x is Record<string, Content<S>> =>
 const dropdown = <S>(options: DropdownOptions<S>) => (...focus: Focus) => {
   return (state: State<S>): VDOM<S> => {
     const props = isOnlyChoices<S>(options) ? { choices: options } : options
-    const { choices, disabled, ...etc } = props
+    const { choices, onchange, disabled, ...etc } = props
     const x = get<DropdownData>(focus)(state)
     return box("uy-control uy-dropdown", [
       box({ "uy-dropdown-arrow": true, focus: x.focused, disabled }, [
@@ -43,7 +47,9 @@ const dropdown = <S>(options: DropdownOptions<S>) => (...focus: Focus) => {
             onchange: (state, event) => {
               if (!event) return state
               const target = event.target as HTMLInputElement
-              return set<State<S>>(focus, "value")(target.value)(state)
+              const nextValue = target.value
+              const nextState = set<State<S>>(focus, "value")(nextValue)(state)
+              return onchange ? onchange(nextState, nextValue) : nextState
             },
             ...etc,
             class: ["uy-input", { disabled }, etc.class],

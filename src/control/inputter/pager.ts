@@ -1,5 +1,5 @@
 import type { Focus } from "eyepiece"
-import type { ClassProp, State, Transform, VDOM, VNode } from "hyperapp"
+import type { ActionTransform, ClassProp, State, Transform, VDOM, VNode } from "hyperapp"
 import type { Content } from "ntml"
 
 import { get, set } from "eyepiece"
@@ -7,14 +7,17 @@ import { div, li, span, ul } from "ntml"
 import { range } from "../../utility/range"
 import { icon } from "../indicator/icon"
 
+export type PagerValue = number
+
 export type PagerData = {
   itemsTotal: number
-  value: number
+  value: PagerValue
 }
 
-export type PagerOptions = {
+export type PagerOptions<S> = {
   itemsPerPage: number
   pageRange: number
+  onclick?: Transform<S, PagerValue>
   class?: ClassProp
   disabled?: boolean
 }
@@ -22,26 +25,23 @@ export type PagerOptions = {
 const freshPager = (itemsTotal: number, value: number): PagerData =>
   ({ value, itemsTotal })
 
-const pagerNav = <S>(
-  handler: Transform<S>,
-  content: Content<S>,
-  active: boolean,
-): VDOM<S> => {
-  return span({
+const pagerNav = <S>(onclick: ActionTransform<S>, content: Content<S>, active: boolean): VDOM<S> =>
+  span({
     class: ["uy-pager-nav", !active && "uy-pager-nav-inactive"],
-    ...active ? { onclick: handler } : {},
+    ...(active ? { onclick } : {}),
   }, content)
-}
 
 const pagerMore = <S>(content: Content<S>): VDOM<S> =>
   span({ class: "uy-pager-more" }, content)
 
-const pager = <S>(options: PagerOptions) => (...focus: Focus) => {
+const pager = <S>(options: PagerOptions<S>) => (...focus: Focus) => {
   return (state: State<S>): VDOM<S> => {
-    const { itemsPerPage, pageRange, disabled, ...etc } = options
+    const { itemsPerPage, pageRange, onclick, disabled, ...etc } = options
     const x = get<PagerData>(focus)(state)
-    const update = (value: number) => (state: State<S>) =>
-      set<State<S>>(focus, "value")(value)(state)
+    const update = (value: any) => (state: State<S>) => {
+      const nextState = set<State<S>>(focus, "value")(value)(state)
+      return onclick ? onclick(nextState, value) : nextState
+    }
 
     const pageCount = Math.ceil(x.itemsTotal / itemsPerPage)
     const lastPage = pageCount - 1

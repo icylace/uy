@@ -1,13 +1,10 @@
-import type { EffectfulState, Payload, State, Transform } from "hyperapp"
-
-// A transition is a state transformation with any effects to run.
-export type Transition<S> = State<S> | EffectfulState<S>
+import type { Payload, StateFormat, Transform } from "hyperapp"
 
 export const unite = <S, P = any>(
   transformation: Transform<S>,
-  transition: Transition<S>,
+  transition: StateFormat<S>,
   payload?: Payload<P>
-): Transition<S> => {
+): StateFormat<S> => {
   if (!Array.isArray(transition)) {
     return transformation(transition, payload)
   }

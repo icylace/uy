@@ -1,26 +1,29 @@
 import type { Focus } from "eyepiece"
-import type { ClassProp, State, VDOM } from "hyperapp"
+import type { ClassProp, State, Transform, VDOM } from "hyperapp"
 
 import { get, set } from "eyepiece"
 import { input } from "ntml"
 import { box } from "../container/box"
 
+export type DatePickerValue = string
+
 export type DatePickerData = {
-  value: string
+  value: DatePickerValue
 }
 
-export type DatePickerOptions = {
+export type DatePickerOptions<S> = {
+  onchange?: Transform<S, DatePickerValue>
   class?: ClassProp
   disabled?: boolean
 }
 
 // -----------------------------------------------------------------------------
 
-const freshDatePicker = (value: string): DatePickerData => ({ value })
+const freshDatePicker = (value: DatePickerValue): DatePickerData => ({ value })
 
-const datePicker = <S>(options: DatePickerOptions = {}) => (...focus: Focus) => {
+const datePicker = <S>(options: DatePickerOptions<S> = {}) => (...focus: Focus) => {
   return (state: State<S>): VDOM<S> => {
-    const { disabled, ...etc } = options
+    const { onchange, disabled, ...etc } = options
     return box("uy-control uy-datePicker", [
       input({
         type: "date",
@@ -29,7 +32,9 @@ const datePicker = <S>(options: DatePickerOptions = {}) => (...focus: Focus) => 
         onchange: (state, event) => {
           if (!event) return state
           const target = event.target as HTMLInputElement
-          return set<State<S>>(focus, "value")(target.value)(state)
+          const nextValue = target.value
+          const nextState = set<State<S>>(focus, "value")(nextValue)(state)
+          return onchange ? onchange(nextState, nextValue) : nextState
         },
         ...etc,
         class: ["uy-input", { disabled }, etc.class],
@@ -42,9 +47,9 @@ const datePicker = <S>(options: DatePickerOptions = {}) => (...focus: Focus) => 
 
 const freshDatetimeLocalPicker = (value: string): DatePickerData => ({ value })
 
-const datetimeLocalPicker = <S>(options: DatePickerOptions = {}) => (...focus: Focus) => {
+const datetimeLocalPicker = <S>(options: DatePickerOptions<S> = {}) => (...focus: Focus) => {
   return (state: State<S>): VDOM<S> => {
-    const { disabled, ...etc } = options
+    const { onchange, disabled, ...etc } = options
     return box("uy-control uy-datePicker", [
       input({
         type: "datetime-local",
@@ -53,7 +58,9 @@ const datetimeLocalPicker = <S>(options: DatePickerOptions = {}) => (...focus: F
         onchange: (state, event) => {
           if (!event) return state
           const target = event.target as HTMLInputElement
-          return set<State<S>>(focus, "value")(target.value)(state)
+          const nextValue = target.value
+          const nextState = set<State<S>>(focus, "value")(nextValue)(state)
+          return onchange ? onchange(nextState, nextValue) : nextState
         },
         ...etc,
         class: ["uy-input", { disabled }, etc.class],
@@ -66,9 +73,9 @@ const datetimeLocalPicker = <S>(options: DatePickerOptions = {}) => (...focus: F
 
 const freshMonthPicker = (value: string): DatePickerData => ({ value })
 
-const monthPicker = <S>(options: DatePickerOptions = {}) => (...focus: Focus) => {
+const monthPicker = <S>(options: DatePickerOptions<S> = {}) => (...focus: Focus) => {
   return (state: State<S>): VDOM<S> => {
-    const { disabled, ...etc } = options
+    const { onchange, disabled, ...etc } = options
     return box("uy-control uy-datePicker", [
       input({
         type: "month",
@@ -77,7 +84,9 @@ const monthPicker = <S>(options: DatePickerOptions = {}) => (...focus: Focus) =>
         onchange: (state, event) => {
           if (!event) return state
           const target = event.target as HTMLInputElement
-          return set<State<S>>(focus, "value")(target.value)(state)
+          const nextValue = target.value
+          const nextState = set<State<S>>(focus, "value")(nextValue)(state)
+          return onchange ? onchange(nextState, nextValue) : nextState
         },
         ...etc,
         class: ["uy-input", { disabled }, etc.class],
@@ -90,9 +99,9 @@ const monthPicker = <S>(options: DatePickerOptions = {}) => (...focus: Focus) =>
 
 const freshTimePicker = (value: string): DatePickerData => ({ value })
 
-const timePicker = <S>(options: DatePickerOptions = {}) => (...focus: Focus) => {
+const timePicker = <S>(options: DatePickerOptions<S> = {}) => (...focus: Focus) => {
   return (state: State<S>): VDOM<S> => {
-    const { disabled, ...etc } = options
+    const { onchange, disabled, ...etc } = options
     return box("uy-control uy-datePicker", [
       input({
         type: "time",
@@ -101,7 +110,9 @@ const timePicker = <S>(options: DatePickerOptions = {}) => (...focus: Focus) => 
         onchange: (state, event) => {
           if (!event) return state
           const target = event.target as HTMLInputElement
-          return set<State<S>>(focus, "value")(target.value)(state)
+          const nextValue = target.value
+          const nextState = set<State<S>>(focus, "value")(nextValue)(state)
+          return onchange ? onchange(nextState, nextValue) : nextState
         },
         ...etc,
         class: ["uy-input", { disabled }, etc.class],
@@ -114,9 +125,9 @@ const timePicker = <S>(options: DatePickerOptions = {}) => (...focus: Focus) => 
 
 const freshWeekPicker = (value: string): DatePickerData => ({ value })
 
-const weekPicker = <S>(options: DatePickerOptions = {}) => (...focus: Focus) => {
+const weekPicker = <S>(options: DatePickerOptions<S> = {}) => (...focus: Focus) => {
   return (state: State<S>): VDOM<S> => {
-    const { disabled, ...etc } = options
+    const { onchange, disabled, ...etc } = options
     return box("uy-control uy-datePicker", [
       input({
         type: "week",
@@ -125,7 +136,9 @@ const weekPicker = <S>(options: DatePickerOptions = {}) => (...focus: Focus) => 
         onchange: (state, event) => {
           if (!event) return state
           const target = event.target as HTMLInputElement
-          return set<State<S>>(focus, "value")(target.value)(state)
+          const nextValue = target.value
+          const nextState = set<State<S>>(focus, "value")(nextValue)(state)
+          return onchange ? onchange(nextState, nextValue) : nextState
         },
         ...etc,
         class: ["uy-input", { disabled }, etc.class],

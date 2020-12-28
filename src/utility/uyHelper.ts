@@ -1,8 +1,8 @@
 import type {
   Dispatch,
-  EffectfulState,
   Payload,
   State,
+  StateWithEffects,
   Transform,
   // Subscriber,
 } from "hyperapp"
@@ -35,7 +35,7 @@ import { onMouseDown } from "./onMouseDown"
 export type Handlers<S> = (state: State<S>) => Transform<S, Event>[]
 
 const uyMouseDownSubscriptionAction = <S>(getHandlers: Handlers<S>) =>
-  (state: State<S>, _props?: Payload<unknown>): EffectfulState<S> =>
+  (state: State<S>, _props?: Payload<unknown>): StateWithEffects<S> =>
     [state, onMouseDown(handleUsing(getHandlers(state)))]
 
 const uyMouseDownSubscription = <S>(getHandlers: Handlers<S>) => (dispatch: Dispatch<S>): void => {

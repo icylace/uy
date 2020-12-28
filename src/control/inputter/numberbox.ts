@@ -1,5 +1,5 @@
 import type { Focus } from "eyepiece"
-import type { ClassProp, State, VDOM } from "hyperapp"
+import type { ClassProp, State, Transform, VDOM } from "hyperapp"
 import type { Content } from "ntml"
 
 import { get, set } from "eyepiece"
@@ -7,20 +7,23 @@ import * as html from "ntml"
 import { isContent } from "ntml"
 import { box } from "../container/box"
 
+export type NumberboxValue = number
+
 export type NumberboxData = {
   focused?: boolean
-  value: number
+  value: NumberboxValue
 }
 
 export type NumberboxOptions<S>
   = Content<S>
   | {
     label?: Content<S>
+    onchange?: Transform<S, NumberboxValue>
     class?: ClassProp
     disabled?: boolean
   }
 
-const freshNumberbox = (value: number): NumberboxData =>
+const freshNumberbox = (value: NumberboxValue): NumberboxData =>
   ({ value, focused: false })
 
 const sanitizedNumber = (n: string): number =>
@@ -29,10 +32,10 @@ const sanitizedNumber = (n: string): number =>
 const numberbox = <S>(options: NumberboxOptions<S> = {}) => (...focus: Focus) => {
   return (state: State<S>): VDOM<S> => {
     const props = isContent<S>(options) ? { label: options } : options
-    const { disabled, label, ...etc } = props
+    const { label, onchange, disabled, ...etc } = props
     const x = get<NumberboxData>(focus)(state)
     return box("uy-control uy-numberbox", [
-      html.label({ class: { focus: !!x.focused, disabled } }, [
+      html.label({ class: { focus: x.focused, disabled } }, [
         html.input({
           type: "number",
           min: 0,
@@ -43,10 +46,12 @@ const numberbox = <S>(options: NumberboxOptions<S> = {}) => (...focus: Focus) =>
           onchange: (state, event) => {
             if (!event) return state
             const target = event.target as HTMLInputElement
-            return set<State<S>>(focus)({
+            const nextValue = sanitizedNumber(target.value)
+            const nextState = set<State<S>>(focus)({
               focused: get<NumberboxData>(focus)(state).focused,
-              value: sanitizedNumber(target.value),
+              value: nextValue,
             })(state)
+            return onchange ? onchange(nextState, nextValue) : nextState
           },
           ...etc,
           class: ["uy-input", { disabled }, etc.class],

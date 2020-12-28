@@ -1,6 +1,6 @@
 import type { Focus } from "eyepiece"
 import type {
-  Action, ClassProp, EffectDescriptor, EffectfulState,
+  Action, ClassProp, EffectDescriptor, StateWithEffects,
   Payload, State, VDOM, VNode,
 } from "hyperapp"
 
@@ -62,7 +62,7 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
 
     const x = get<SearchboxData>(focus)(state)
 
-    const updateResults = (state: State<S>, props?: Payload<SearchboxData>): State<S> | EffectfulState<S> => {
+    const updateResults = (state: State<S>, props?: Payload<SearchboxData>): State<S> | StateWithEffects<S> => {
       const r = get<SearchboxData>(focus)(state)
 
       const { value, results } = props ?? { value: "", results: [] }
@@ -84,7 +84,7 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
       )(state))
     }
 
-    const update = (value: string) => (state: State<S>): State<S> | EffectfulState<S> => {
+    const update = (value: string) => (state: State<S>): State<S> | StateWithEffects<S> => {
       const r = get<SearchboxData>(focus)(state)
       return r.searching
         ? set<State<S>>(focus, "value")(value)(state)

@@ -1,7 +1,7 @@
 import type { Focus } from "eyepiece"
-import type { ClassProp, State, VDOM } from "hyperapp"
+import type { ClassProp, State, Transform, VDOM } from "hyperapp"
 import type { Content } from "ntml"
-import type { CheckboxData } from "./checkbox"
+import type { CheckboxData, CheckboxValue } from "./checkbox"
 
 import { div } from "ntml"
 import { box } from "../container/box"
@@ -18,6 +18,7 @@ export type MultiselectOptions<S>
   | {
     choices: MultiselectChoices<S>
     usingColumnMode?: boolean
+    onchange?: Transform<S, CheckboxValue>
     class?: ClassProp
     disabled?: boolean
   }
@@ -40,7 +41,7 @@ const isOnlyChoices = <S>(x: any): x is Record<string, Content<S>> =>
 const multiselect = <S>(options: MultiselectOptions<S>) => (...focus: Focus) => {
   return (state: State<S>): VDOM<S> => {
     const props = isOnlyChoices<S>(options) ? { choices: options } : options
-    const { choices, usingColumnMode, disabled, ...etc } = props
+    const { choices, usingColumnMode, onchange, disabled, ...etc } = props
     return div({
       ...etc,
       class: [
@@ -51,7 +52,7 @@ const multiselect = <S>(options: MultiselectOptions<S>) => (...focus: Focus) => 
     }, [
       box("uy-multiselect-options",
         Object.entries(choices).map(
-          ([value, label]) => checkbox({ label, disabled })(focus, "value", value)(state)
+          ([value, label]) => checkbox({ label, onchange, disabled })(focus, "value", value)(state)
         ),
       ),
     ])

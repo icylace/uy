@@ -1,13 +1,15 @@
 import type { Focus } from "eyepiece"
-import type { ClassProp, State, VDOM } from "hyperapp"
+import type { ClassProp, State, Transform, VDOM } from "hyperapp"
 import type { Content } from "ntml"
 
 import { get, set } from "eyepiece"
 import * as html from "ntml"
 import { box } from "../container/box"
 
+export type RadiosValue = string
+
 export type RadiosData = {
-  value: string
+  value: RadiosValue
 }
 
 export type RadiosChoices<S> = Record<string, Content<S>>
@@ -16,11 +18,12 @@ export type RadiosOptions<S>
   = RadiosChoices<S>
   | {
     choices: RadiosChoices<S>
+    onchange?: Transform<S, RadiosValue>
     class?: ClassProp
     disabled?: boolean
   }
 
-const freshRadios = (value: string): RadiosData => ({ value })
+const freshRadios = (value: RadiosValue): RadiosData => ({ value })
 
 const isOnlyChoices = <S>(x: any): x is Record<string, Content<S>> =>
   typeof x === "object" && !("choices" in x)
@@ -28,7 +31,7 @@ const isOnlyChoices = <S>(x: any): x is Record<string, Content<S>> =>
 const radios = <S>(options: RadiosOptions<S>) => (...focus: Focus) => {
   return (state: State<S>): VDOM<S> => {
     const props = isOnlyChoices<S>(options) ? { choices: options } : options
-    const { choices, disabled, ...etc } = props
+    const { choices, onchange, disabled, ...etc } = props
     return box("uy-control uy-radios",
       // TODO:
       // - switch to using a Map object instead in order to guarantee order
@@ -43,7 +46,9 @@ const radios = <S>(options: RadiosOptions<S>) => (...focus: Focus) => {
               onchange: (state, event) => {
                 if (!event) return state
                 const target = event.target as HTMLInputElement
-                return set<State<S>>(focus, "value")(target.value)(state)
+                const nextValue = target.value
+                const nextState = set<State<S>>(focus, "value")(nextValue)(state)
+                return onchange ? onchange(nextState, nextValue) : nextState
               },
               ...etc,
               class: ["uy-input", { disabled }, etc.class],

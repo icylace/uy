@@ -18,7 +18,7 @@ import { onMouseDown } from "./onMouseDown"
 //   uyMousedownHandlers: new Map([
 //     [
 //       "detectOutsideAction",
-//       (state: State<S>, event: Payload<Event>): State<S> | EffectfulState<S> => {
+//       (state: State<S>, event: Payload<Event>): StateFormat<S> => {
 //         const detectionsOutside: Transform<S, Event>[] = Array.from(state.uyInsiders).map(
 //           ([insider, f]: [string, Transform<S>]): Transform<S, Event> => {
 //             return onOutside(`#${insider}`, (state) => uyInsidersRemove("uyInsiders")(insider, f(state)))

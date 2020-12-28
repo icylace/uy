@@ -24,8 +24,8 @@ const textbox = <S>(options: TextboxOptions<S> = {}) => (...focus: Focus) => {
     const { onchange, disabled, ...etc } = options
     return box("uy-control uy-textbox", [
       input({
-        value: get<TextboxData>(focus)(state).value,
         type: "text",
+        value: get<TextboxData>(focus)(state).value,
         disabled,
         onchange: (state, event) => {
           if (!event) return state

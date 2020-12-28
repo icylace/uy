@@ -1,8 +1,5 @@
 import type { Focus } from "eyepiece"
-import type {
-  Action, ClassProp, EffectDescriptor, StateWithEffects,
-  Payload, State, VDOM, VNode,
-} from "hyperapp"
+import type { Action, ClassProp, EffectDescriptor, StateFormat, Payload, State, VDOM, VNode } from "hyperapp"
 
 import { get, set } from "eyepiece"
 import { input, label, li, span, ul } from "ntml"
@@ -62,7 +59,7 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
 
     const x = get<SearchboxData>(focus)(state)
 
-    const updateResults = (state: State<S>, props?: Payload<SearchboxData>): State<S> | StateWithEffects<S> => {
+    const updateResults = (state: State<S>, props?: Payload<SearchboxData>): StateFormat<S> => {
       const r = get<SearchboxData>(focus)(state)
 
       const { value, results } = props ?? { value: "", results: [] }
@@ -84,7 +81,7 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
       )(state))
     }
 
-    const update = (value: string) => (state: State<S>): State<S> | StateWithEffects<S> => {
+    const update = (value: string) => (state: State<S>): StateFormat<S> => {
       const r = get<SearchboxData>(focus)(state)
       return r.searching
         ? set<State<S>>(focus, "value")(value)(state)

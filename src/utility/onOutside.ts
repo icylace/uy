@@ -1,4 +1,4 @@
-import type { Payload, State, StateWithEffects, Transform } from "hyperapp"
+import type { Payload, State, StateFormat, Transform } from "hyperapp"
 
 // Invokes an action when an event occurs outside of a certain element.
 //
@@ -7,7 +7,7 @@ import type { Payload, State, StateWithEffects, Transform } from "hyperapp"
 // https://codesandbox.io/s/czee7
 //
 export const onOutside = <S>(selector: string, action: Transform<S, unknown>) => {
-  return (state: State<S>, event?: Payload<Event>): State<S> | StateWithEffects<S> => {
+  return (state: State<S>, event?: Payload<Event>): StateFormat<S> => {
     if (!event) return state
     const el = document.querySelector(selector)
     if (!el || el.contains(event.target as Element)) return state

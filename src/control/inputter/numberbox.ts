@@ -5,6 +5,7 @@ import type { Content } from "ntml"
 import { get, set } from "eyepiece"
 import * as html from "ntml"
 import { isContent } from "ntml"
+import { Blur, Ogle } from "../action/helper"
 import { box } from "../container/box"
 
 export type NumberboxValue = number
@@ -41,8 +42,8 @@ const numberbox = <S>(options: NumberboxOptions<S> = {}) => (...focus: Focus) =>
           min: 0,
           value: x.value,
           disabled,
-          onfocus: set<State<S>>(focus, "focused")(true),
-          onblur: set<State<S>>(focus, "focused")(false),
+          onblur: Blur(focus),
+          onfocus: Ogle(focus),
           onchange: (state, event) => {
             if (!event) return state
             const target = event.target as HTMLInputElement

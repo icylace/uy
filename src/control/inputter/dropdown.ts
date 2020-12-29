@@ -4,6 +4,7 @@ import type { Content } from "ntml"
 
 import { get, set } from "eyepiece"
 import { option, select } from "ntml"
+import { Blur, Ogle } from "../action/helper"
 import { box } from "../container/box"
 
 export type DropdownValue = string
@@ -31,6 +32,7 @@ const freshDropdown = (value: DropdownValue): DropdownData =>
 const isOnlyChoices = <S>(x: any): x is Record<string, Content<S>> =>
   typeof x === "object" && !("choices" in x)
 
+
 const dropdown = <S>(options: DropdownOptions<S>) => (...focus: Focus) => {
   return (state: State<S>): VDOM<S> => {
     const props = isOnlyChoices<S>(options) ? { choices: options } : options
@@ -42,8 +44,8 @@ const dropdown = <S>(options: DropdownOptions<S>) => (...focus: Focus) => {
           {
             value: x.value,
             disabled,
-            onblur: set<State<S>>(focus, "focused")(false),
-            onfocus: set<State<S>>(focus, "focused")(true),
+            onblur: Blur(focus),
+            onfocus: Ogle(focus),
             onchange: (state, event) => {
               if (!event) return state
               const target = event.target as HTMLInputElement

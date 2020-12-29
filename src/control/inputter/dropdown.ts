@@ -4,7 +4,7 @@ import type { Content } from "ntml"
 
 import { get, set } from "eyepiece"
 import { option, select } from "ntml"
-import { Blur, Ogle } from "../action/helper"
+import { Defocus, Refocus } from "../action/helper"
 import { box } from "../container/box"
 
 export type DropdownValue = string
@@ -44,8 +44,8 @@ const dropdown = <S>(options: DropdownOptions<S>) => (...focus: Focus) => {
           {
             value: x.value,
             disabled,
-            onblur: Blur(focus),
-            onfocus: Ogle(focus),
+            onblur: Defocus(focus),
+            onfocus: Refocus(focus),
             onchange: (state, event) => {
               if (!event) return state
               const target = event.target as HTMLInputElement

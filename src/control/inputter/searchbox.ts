@@ -3,7 +3,7 @@ import type { Action, ClassProp, EffectDescriptor, StateFormat, Payload, State, 
 
 import { get, set } from "eyepiece"
 import { input, label, li, span, ul } from "ntml"
-import { Blur, Ogle } from "../action/helper"
+import { Defocus, Refocus } from "../action/helper"
 import { popup } from "../container/popup"
 import { box } from "../container/box"
 import { icon } from "../indicator/icon"
@@ -100,8 +100,8 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
       value: x.value,
       type: "search",
       disabled,
-      onblur: Blur(focus),
-      onfocus: Ogle<S>(focus),
+      onblur: Defocus(focus),
+      onfocus: Refocus<S>(focus),
       onkeyup: (state, event) => {
         if (!event) return state
         if (noopKeys.includes(event.key)) return state

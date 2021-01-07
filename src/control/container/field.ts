@@ -1,10 +1,11 @@
 import type { ClassProp, State, VDOM } from "hyperapp"
 import type { Content } from "ntml"
-import type { ContentView } from "../../types"
+import type { ContentView } from "../../utility/hyperappHelper/render"
 
 import * as html from "ntml"
 import { isContent } from "ntml"
 import { encase } from "../../utility/encase"
+import { render } from "../../utility/hyperappHelper/render"
 import { box } from "./box"
 
 export type FieldOptions<S>
@@ -22,8 +23,7 @@ export const field = <S>(options: FieldOptions<S>, views: ContentView<S>[]) => {
     return box("uy-field", [
       html.label(
         { ...etc, class: [{ disabled }, etc.class] },
-        [...encase(label), ...views.map((view) => view(state))],
-      ),
+        [...encase(label), ...views.map((view) => render(view)(state))]),
     ])
   }
 }

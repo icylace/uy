@@ -2,7 +2,7 @@ import type { Action, ClassProp, VDOM } from "hyperapp"
 import type { Content } from "ntml"
 
 import * as html from "ntml"
-import { isAction } from "../../utility/isAction"
+import { isAction } from "../../utility/uyHelper/isAction"
 import { box } from "../container/box"
 
 export type CancelButtonOptions<S>

@@ -1,6 +1,6 @@
 import type { Payload, Transform, StateFormat } from "hyperapp"
 
-import { unite } from "./unite"
+import { unite } from "../hyperappHelper/unite"
 
 // Invokes a collection of event handlers for the same event.
 export const handleUsing = <S>(handlers: Transform<S, Event>[]) =>

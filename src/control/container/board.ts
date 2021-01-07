@@ -1,7 +1,8 @@
 import type { PropList, State, VDOM } from "hyperapp"
-import type { ContentView } from "../../types"
+import type { ContentView } from "../../utility/hyperappHelper/render"
 import type { TableOptions } from "./table"
 
+import { render } from "../../utility/hyperappHelper/render"
 import { table } from "./table"
 
 export type BoardCell<S> = ContentView<S> | [PropList<S>, ContentView<S>]
@@ -14,7 +15,9 @@ export const board = <S>(options: TableOptions<S> = {}, rows: BoardRow<S>[]) => 
   return (state: State<S>): VDOM<S> => {
     return table(options, rows.map(
       (row) => row.map(
-        (cell) => cellHasProps(cell) ? [cell[0], cell[1](state)] : cell(state)
+        (cell) => cellHasProps(cell)
+          ? [cell[0], render(cell[1])(state)]
+          : render(cell)(state)
       )
     ))
   }

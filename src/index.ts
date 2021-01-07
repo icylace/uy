@@ -1,16 +1,15 @@
-export * from "./types"
-
 export * from "./utility/assign"
 export * from "./utility/delist"
 export * from "./utility/encase"
 export * from "./utility/exclude"
-export * from "./utility/handleUsing"
-export * from "./utility/isAction"
-export * from "./utility/onMouseDown"
-export * from "./utility/onOutside"
 export * from "./utility/range"
-export * from "./utility/unite"
-export * from "./utility/uyHelper"
+export * from "./utility/hyperappHelper/render"
+export * from "./utility/hyperappHelper/unite"
+export * from "./utility/uyHelper/handleUsing"
+export * from "./utility/uyHelper/isAction"
+export * from "./utility/uyHelper/onMouseDown"
+export * from "./utility/uyHelper/onOutside"
+export * from "./utility/uyHelper/uyMouseDownSubscription"
 
 export * from "./control/action/helper"
 

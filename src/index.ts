@@ -9,6 +9,7 @@ export * from "./utility/uyHelper/handleUsing"
 export * from "./utility/uyHelper/isAction"
 export * from "./utility/uyHelper/onMouseDown"
 export * from "./utility/uyHelper/onOutside"
+export * from "./utility/uyHelper/toggle"
 export * from "./utility/uyHelper/uyMouseDownSubscription"
 
 export * from "./control/action/helper"

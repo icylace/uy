@@ -1,3 +1,6 @@
+// TODO:
+// - `list` -> `textlist`
+
 import type { Focus } from "eyepiece"
 import type { ActionTransform, ClassProp, State, VDOM } from "hyperapp"
 import type { Stuff } from "ntml"

@@ -1,5 +1,12 @@
 import type { Focus } from "eyepiece"
-import type { Action, ClassProp, EffectDescriptor, StateFormat, Payload, State, VDOM, VNode } from "hyperapp"
+import type {
+  Action,
+  ClassProp,
+  Effect,
+  MaybeVDOM,
+  StateWithEffects,
+  VDOM,
+} from "hyperapp"
 
 import { get, set } from "eyepiece"
 import { input, label, li, span, ul } from "ntml"
@@ -24,8 +31,8 @@ export type SearchEffectData<S> = {
 
 export type SearchboxOptions<S> = {
   id: string
-  search: (action: Action<S, SearchboxData>, value: SearchboxValue) => EffectDescriptor<S, SearchEffectData<S>>
-  onresults: (results: SearchboxData["results"], id: string, state: State<S>) => State<S>
+  search: (action: Action<S, SearchboxData>, value: SearchboxValue) => Effect<S, SearchEffectData<S>>
+  onresults: (results: SearchboxData["results"], id: string, state: S) => S
   class?: ClassProp
   disabled?: boolean
 }
@@ -57,12 +64,12 @@ const noopKeys = [
 ]
 
 const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
-  return (state: State<S>): VDOM<S> => {
+  return (state: S): VDOM<S> => {
     const { search, onresults, id, disabled, ...etc } = options
 
     const x = get<SearchboxData>(focus)(state)
 
-    const updateResults = (state: State<S>, props?: Payload<SearchboxData>): StateFormat<S> => {
+    const updateResults = (state: S, props?: SearchboxData): StateWithEffects<S> => {
       const r = get<SearchboxData>(focus)(state)
 
       const { value, results } = props ?? { value: "", results: [] }
@@ -74,22 +81,24 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
 
       if (r.value !== value) {
         return [
-          set<State<S>>(focus, "searching")(true)(state),
+          set<S>(focus, "searching")(true)(state),
           search(updateResults, r.value),
         ]
       }
 
-      return onresults(results, id, set<State<S>>(focus)(
-        (xr: SearchboxData) => ({ ...xr, results, searching: false })
-      )(state))
+      return [
+        onresults(results, id, set<S>(focus)(
+          (xr: SearchboxData) => ({ ...xr, results, searching: false })
+        )(state)),
+      ]
     }
 
-    const update = (value: string) => (state: State<S>): StateFormat<S> => {
+    const update = (value: string) => (state: S): StateWithEffects<S> => {
       const r = get<SearchboxData>(focus)(state)
       return r.searching
-        ? set<State<S>>(focus, "value")(value)(state)
+        ? [set<S>(focus, "value")(value)(state)]
         : [
-            set<State<S>>(focus)(
+            set<S>(focus)(
               (xr: SearchboxData) => ({ ...xr, value, searching: true })
             )(state),
             search(updateResults, value),
@@ -103,7 +112,6 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
       onblur: Defocus(focus),
       onfocus: Refocus<S>(focus),
       onkeyup: (state, event) => {
-        if (!event) return state
         if (noopKeys.includes(event.key)) return state
         const target = event.target as HTMLInputElement
         return update(target.value)(state)
@@ -115,7 +123,6 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
       // the `keyup` event.
       // https://stackoverflow.com/a/25569880
       onsearch: (state, event) => {
-        if (!event) return state
         const target = event.target as HTMLInputElement
         return update(target.value)(state)
       },
@@ -125,9 +132,9 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
 
     const searchResult = (result: string): VDOM<S> =>
       li({
-        onclick: (state: State<S>): State<S> =>
+        onclick: (state: S): S =>
           onresults([], id,
-            set<State<S>>(focus)(
+            set<S>(focus)(
               (xr: SearchboxData) => ({ ...xr, value: result, results: [] })
             )(state)
           ),
@@ -145,7 +152,7 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
           ]
         )
         : null
-    ) as VNode<S>
+    ) as MaybeVDOM<S>
 
     return box(["uy-control uy-searchbox", { disabled }] , [
       label({

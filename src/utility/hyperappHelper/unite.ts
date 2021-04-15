@@ -1,10 +1,11 @@
-import type { Payload, StateFormat, Transform } from "hyperapp"
+import type { StateWithEffects } from "hyperapp"
+import type { Transform } from "./types"
 
 export const unite = <S, P = any>(
   transformation: Transform<S>,
-  transition: StateFormat<S>,
-  payload?: Payload<P>
-): StateFormat<S> => {
+  transition: S | StateWithEffects<S>,
+  payload?: P
+): S | StateWithEffects<S> => {
   if (!Array.isArray(transition)) {
     return transformation(transition, payload)
   }

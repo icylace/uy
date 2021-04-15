@@ -7,8 +7,8 @@ import { box } from "./box"
 
 export type TableCell<S> = Stuff<S> | [PropList<S>, Content<S>]
 export type TableRow<S> = TableCell<S>[]
-export type TableOptions<S>
-  = TableRow<S>
+export type TableOptions<S> =
+  | TableRow<S>
   | {
     [_: string]: unknown
     class?: ClassProp

@@ -2,7 +2,7 @@
 // - `list` -> `textlist`
 
 import type { Focus } from "eyepiece"
-import type { ActionTransform, ClassProp, State, VDOM } from "hyperapp"
+import type { Action, ClassProp, VDOM } from "hyperapp"
 import type { Stuff } from "ntml"
 import type { TableCell } from "../container/table"
 import type { TextboxData, TextboxValue } from "./textbox"
@@ -19,11 +19,11 @@ export type ListData = {
   items: TextboxData[]
 }
 
-export type ListOptions<S>
-  = Stuff<S>[]
+export type ListOptions<S> =
+  | Stuff<S>[]
   | {
     headers?: Stuff<S>[]
-    onchange?: ActionTransform<S, TextboxValue>
+    onchange?: Action<S, TextboxValue>
     class?: ClassProp
     disabled?: boolean
   }
@@ -32,7 +32,7 @@ const freshList = (items: string[]): ListData =>
   ({ items: items.map(freshTextbox) })
 
 const list = <S>(options: ListOptions<S> = {}) => (...focus: Focus) => {
-  return (state: State<S>): VDOM<S> => {
+  return (state: S): VDOM<S> => {
     const props = Array.isArray(options) ? { headers: options } : options
     const { headers, onchange, disabled, ...etc } = props
     const xr = get<ListData>(focus)(state)
@@ -42,7 +42,7 @@ const list = <S>(options: ListOptions<S> = {}) => (...focus: Focus) => {
       cancelButton({
         disabled,
         onclick: (state) => {
-          const nextState = set<State<S>>(focus, "items")(exclude(i))(state)
+          const nextState = set<S>(focus, "items")(exclude(i))(state)
           return onchange ? onchange(nextState) : nextState
         },
       }),
@@ -55,7 +55,7 @@ const list = <S>(options: ListOptions<S> = {}) => (...focus: Focus) => {
           label: "+ Add",
           disabled,
           onclick: (state) => {
-            const nextState = set<State<S>>(focus, "items")(
+            const nextState = set<S>(focus, "items")(
               (xs: TextboxData[]) => [...xs, freshTextbox("")]
             )(state)
             return onchange ? onchange(nextState) : nextState

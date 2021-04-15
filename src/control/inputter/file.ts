@@ -2,7 +2,7 @@
 // - `file` -> `fileUpload`
 
 import type { Focus } from "eyepiece"
-import type { ActionTransform, ClassProp, State, VDOM } from "hyperapp"
+import type { Action, ClassProp, VDOM } from "hyperapp"
 
 import { get, set } from "eyepiece"
 import * as html from "ntml"
@@ -15,11 +15,11 @@ export type FileData = {
   value: FileValue
 }
 
-export type FileOptions<S>
-  = string
+export type FileOptions<S> =
+  | string
   | {
     label?: string
-    onchange?: ActionTransform<S, FileValue>
+    onchange?: Action<S, FileValue>
     class?: ClassProp
     disabled?: boolean
   }
@@ -29,7 +29,7 @@ const freshFile = (value: FileValue): FileData => ({ value })
 // https://codepen.io/adamlaki/pen/VYpewx
 
 const file = <S>(options: FileOptions<S> = {}) => (...focus: Focus) => {
-  return (state: State<S>): VDOM<S> => {
+  return (state: S): VDOM<S> => {
     const props = typeof options === "string" ? { label: options } : options
     const { label = "Select your file...", onchange, disabled, ...etc } = props
     return box(["uy-control uy-file uy-input", { disabled }], [
@@ -41,7 +41,6 @@ const file = <S>(options: FileOptions<S> = {}) => (...focus: Focus) => {
           // TODO:
           // - probably needs to be rethought
           onchange: (state, event) => {
-            if (!event) return state
             const target = event.target as HTMLInputElement
 
             const parent = target.parentNode as HTMLElement
@@ -50,7 +49,7 @@ const file = <S>(options: FileOptions<S> = {}) => (...focus: Focus) => {
               : label
 
             const nextValue = target.value
-            const nextState = set<State<S>>(focus, "value")(nextValue)(state)
+            const nextState = set<S>(focus, "value")(nextValue)(state)
             return onchange ? onchange(nextState, nextValue) : nextState
           },
           ...etc,

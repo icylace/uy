@@ -1,5 +1,5 @@
 import type { Focus } from "eyepiece"
-import type { ActionTransform, ClassProp, State, VDOM } from "hyperapp"
+import type { Action, ClassProp, VDOM } from "hyperapp"
 
 import { get, set } from "eyepiece"
 import { input } from "ntml"
@@ -12,7 +12,7 @@ export type TextboxData = {
 }
 
 export type TextboxOptions<S> = {
-  onchange?: ActionTransform<S, TextboxValue>
+  onchange?: Action<S, TextboxValue>
   class?: ClassProp
   disabled?: boolean
 }
@@ -20,7 +20,7 @@ export type TextboxOptions<S> = {
 const freshTextbox = (value: TextboxValue): TextboxData => ({ value })
 
 const textbox = <S>(options: TextboxOptions<S> = {}) => (...focus: Focus) => {
-  return (state: State<S>): VDOM<S> => {
+  return (state: S): VDOM<S> => {
     const { onchange, disabled, ...etc } = options
     return box("uy-control uy-textbox", [
       input({
@@ -31,7 +31,7 @@ const textbox = <S>(options: TextboxOptions<S> = {}) => (...focus: Focus) => {
           if (!event) return state
           const target = event.target as HTMLInputElement
           const nextValue = target.value
-          const nextState = set<State<S>>(focus, "value")(nextValue)(state)
+          const nextState = set<S>(focus, "value")(nextValue)(state)
           return onchange ? onchange(nextState, nextValue) : nextState
         },
         ...etc,

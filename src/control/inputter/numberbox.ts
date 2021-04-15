@@ -1,5 +1,5 @@
 import type { Focus } from "eyepiece"
-import type { ActionTransform, ClassProp, State, VDOM } from "hyperapp"
+import type { Action, ClassProp, VDOM } from "hyperapp"
 import type { Content } from "ntml"
 
 import { get, set } from "eyepiece"
@@ -15,11 +15,11 @@ export type NumberboxData = {
   value: NumberboxValue
 }
 
-export type NumberboxOptions<S>
-  = Content<S>
+export type NumberboxOptions<S> =
+  | Content<S>
   | {
     label?: Content<S>
-    onchange?: ActionTransform<S, NumberboxValue>
+    onchange?: Action<S, NumberboxValue>
     class?: ClassProp
     disabled?: boolean
   }
@@ -31,7 +31,7 @@ const sanitizedNumber = (n: string): number =>
   Math.max(0, Number.parseInt(n, 10))
 
 const numberbox = <S>(options: NumberboxOptions<S> = {}) => (...focus: Focus) => {
-  return (state: State<S>): VDOM<S> => {
+  return (state: S): VDOM<S> => {
     const props = isContent<S>(options) ? { label: options } : options
     const { label, onchange, disabled, ...etc } = props
     const x = get<NumberboxData>(focus)(state)
@@ -45,10 +45,9 @@ const numberbox = <S>(options: NumberboxOptions<S> = {}) => (...focus: Focus) =>
           onblur: Defocus(focus),
           onfocus: Refocus(focus),
           onchange: (state, event) => {
-            if (!event) return state
             const target = event.target as HTMLInputElement
             const nextValue = sanitizedNumber(target.value)
-            const nextState = set<State<S>>(focus)({
+            const nextState = set<S>(focus)({
               focused: get<NumberboxData>(focus)(state).focused,
               value: nextValue,
             })(state)

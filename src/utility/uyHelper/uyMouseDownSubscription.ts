@@ -1,4 +1,5 @@
 import type {
+  Action,
   Dispatch,
   Payload,
   State,
@@ -34,12 +35,16 @@ import { onMouseDown } from "./onMouseDown"
 
 export type Handlers<S> = (state: State<S>) => Transform<S, Event>[]
 
-const uyMouseDownSubscriptionAction = <S>(getHandlers: Handlers<S>) =>
-  (state: State<S>, _props?: Payload<unknown>): StateWithEffects<S> =>
+const uyMouseDownSubscriberAction = <S>(getHandlers: Handlers<S>) =>
+  (state: State<S>, _props?: Payload<unknown>): StateWithEffects<S, Action<S, Event>> =>
     [state, onMouseDown(handleUsing(getHandlers(state)))]
 
-const uyMouseDownSubscription = <S>(getHandlers: Handlers<S>) => (dispatch: Dispatch<S>): void => {
-  window.requestAnimationFrame(() => dispatch(uyMouseDownSubscriptionAction(getHandlers)))
+const uyMouseDownSubscription = <S>(getHandlers: Handlers<S>) => {
+  return (dispatch: Dispatch<S>): void => {
+    window.requestAnimationFrame(
+      () => dispatch(uyMouseDownSubscriberAction(getHandlers))
+    )
+  }
 }
 
 export { uyMouseDownSubscription }

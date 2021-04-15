@@ -1,5 +1,5 @@
 import type { Focus } from "eyepiece"
-import type { ActionTransform, ClassProp, State, VDOM } from "hyperapp"
+import type { Action, ClassProp, VDOM } from "hyperapp"
 import type { Content } from "ntml"
 
 import { get, set } from "eyepiece"
@@ -14,11 +14,11 @@ export type RadiosData = {
 
 export type RadiosChoices<S> = Record<string, Content<S>>
 
-export type RadiosOptions<S>
-  = RadiosChoices<S>
+export type RadiosOptions<S> =
+  | RadiosChoices<S>
   | {
     choices: RadiosChoices<S>
-    onchange?: ActionTransform<S, RadiosValue>
+    onchange?: Action<S, RadiosValue>
     class?: ClassProp
     disabled?: boolean
   }
@@ -29,7 +29,7 @@ const isOnlyChoices = <S>(x: any): x is Record<string, Content<S>> =>
   typeof x === "object" && !("choices" in x)
 
 const radios = <S>(options: RadiosOptions<S>) => (...focus: Focus) => {
-  return (state: State<S>): VDOM<S> => {
+  return (state: S): VDOM<S> => {
     const props = isOnlyChoices<S>(options) ? { choices: options } : options
     const { choices, onchange, disabled, ...etc } = props
     return box("uy-control uy-radios",
@@ -44,10 +44,9 @@ const radios = <S>(options: RadiosOptions<S>) => (...focus: Focus) => {
               type: "radio",
               disabled,
               onchange: (state, event) => {
-                if (!event) return state
                 const target = event.target as HTMLInputElement
                 const nextValue = target.value
-                const nextState = set<State<S>>(focus, "value")(nextValue)(state)
+                const nextState = set<S>(focus, "value")(nextValue)(state)
                 return onchange ? onchange(nextState, nextValue) : nextState
               },
               ...etc,

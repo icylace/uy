@@ -1,5 +1,5 @@
 import type { Focus } from "eyepiece"
-import type { ActionTransform, ClassProp, State, VDOM } from "hyperapp"
+import type { Action, ClassProp, VDOM } from "hyperapp"
 import type { Content } from "ntml"
 
 import { get, set } from "eyepiece"
@@ -13,11 +13,11 @@ export type CheckboxData = {
   value: CheckboxValue
 }
 
-export type CheckboxOptions<S>
-  = Content<S>
+export type CheckboxOptions<S> =
+  | Content<S>
   | {
     label?: Content<S>
-    onchange?: ActionTransform<S, CheckboxValue>
+    onchange?: Action<S, CheckboxValue>
     class?: ClassProp
     disabled?: boolean
   }
@@ -25,7 +25,7 @@ export type CheckboxOptions<S>
 const freshCheckbox = (value: CheckboxValue): CheckboxData => ({ value })
 
 const checkbox = <S>(options: CheckboxOptions<S> = {}) => (...focus: Focus) => {
-  return (state: State<S>): VDOM<S> => {
+  return (state: S): VDOM<S> => {
     const props = isContent<S>(options) ? { label: options } : options
     const { label, onchange, disabled, ...etc } = props
     const value = get<CheckboxData>(focus)(state).value
@@ -37,10 +37,9 @@ const checkbox = <S>(options: CheckboxOptions<S> = {}) => (...focus: Focus) => {
           indeterminate: value == null,
           disabled,
           onchange: (state, event) => {
-            if (!event) return state
             const target = event.target as HTMLInputElement
             const nextValue = target.checked
-            const nextState = set<State<S>>(focus, "value")(nextValue)(state)
+            const nextState = set<S>(focus, "value")(nextValue)(state)
             return onchange ? onchange(nextState, nextValue) : nextState
           },
           ...etc,

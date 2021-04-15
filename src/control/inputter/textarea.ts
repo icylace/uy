@@ -1,5 +1,5 @@
 import type { Focus } from "eyepiece"
-import type { ActionTransform, ClassProp, State, VDOM } from "hyperapp"
+import type { Action, ClassProp, VDOM } from "hyperapp"
 
 import { get, set } from "eyepiece"
 import * as html from "ntml"
@@ -12,7 +12,7 @@ export type TextareaData = {
 }
 
 export type TextareaOptions<S> = {
-  onchange?: ActionTransform<S, TextareaValue>
+  onchange?: Action<S, TextareaValue>
   class?: ClassProp
   disabled?: boolean
 }
@@ -20,17 +20,16 @@ export type TextareaOptions<S> = {
 const freshTextarea = (value: TextareaValue): TextareaData => ({ value })
 
 const textarea = <S>(options: TextareaOptions<S> = {}) => (...focus: Focus) => {
-  return (state: State<S>): VDOM<S> => {
+  return (state: S): VDOM<S> => {
     const { onchange, disabled, ...etc } = options
     return box("uy-control uy-textarea", [
       html.textarea({
         value: get<TextareaData>(focus)(state).value,
         disabled,
         onchange: (state, event) => {
-          if (!event) return state
           const target = event.target as HTMLInputElement
           const nextValue = target.value
-          const nextState = set<State<S>>(focus, "value")(nextValue)(state)
+          const nextState = set<S>(focus, "value")(nextValue)(state)
           return onchange ? onchange(nextState, nextValue) : nextState
         },
         ...etc,

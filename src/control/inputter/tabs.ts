@@ -1,6 +1,7 @@
 import type { Focus } from "eyepiece"
-import type { ClassProp, State, StateWithEffects, Transform, VDOM } from "hyperapp"
+import type { ClassProp, StateWithEffects, VDOM } from "hyperapp"
 import type { Content, Stuff } from "ntml"
+import type { Transform } from "../../utility/hyperappHelper/types"
 
 import { get, set } from "eyepiece"
 import { div, isVDOM } from "ntml"
@@ -19,8 +20,8 @@ export type Tab<S> = Readonly<{
   panel: Stuff<S>
 }>
 
-export type TabsOptions<S>
-  = Tab<S>[]
+export type TabsOptions<S> =
+  | Tab<S>[]
   | Readonly<{
     tabList: Tab<S>[]
     itemsHeader?: Content<S>
@@ -47,16 +48,17 @@ const tab = <S>(focus: Focus, activeTab: TabIndex, onclick?: Transform<S>) => {
     return div({
       class: ["uy-tabs-item", { selected }],
       onclick: (state, event) => {
-        if (!event) return state
         const target = event.target as HTMLInputElement
         const nextValue = freshTabs(
           isVDOM(item) && "data-tab-id" in item.props
             ? item.props["data-tab-id"] as string
             : i
         )
-        const transition = set<State<S>>(focus)(nextValue)(state)
+        const transition = set<S>(focus)(nextValue)(state)
         const nextState = selected
-          ? [...encase(transition), scrollIntoView(target)] as StateWithEffects<S>
+          // TODO: get rid of this if possible
+          // ? [...encase(transition), scrollIntoView(target)] as StateWithEffects<S>
+          ? [transition, scrollIntoView(target)] as StateWithEffects<S>
           : transition
         return onclick ? onclick(nextState, nextValue) : nextState
       },
@@ -65,7 +67,7 @@ const tab = <S>(focus: Focus, activeTab: TabIndex, onclick?: Transform<S>) => {
 }
 
 const tabs = <S>(options: TabsOptions<S>) => (...focus: Focus) => {
-  return (state: State<S>): VDOM<S> => {
+  return (state: S): VDOM<S> => {
     const props = Array.isArray(options) ? { tabList: options } : options
     const { tabList, itemsHeader, itemsFooter, onclick, disabled, ...etc } = props
 

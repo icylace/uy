@@ -3,8 +3,8 @@ import type { Content } from "ntml"
 
 import { div } from "ntml"
 
-export type PopupOptions
-  = string
+export type PopupOptions =
+  | string
   | {
     [_: string]: unknown
     id: string

@@ -5,8 +5,8 @@ import * as html from "ntml"
 import { isAction } from "../../utility/uyHelper/isAction"
 import { box } from "../container/box"
 
-export type CancelButtonOptions<S>
-  = Action<S, MouseEvent>
+export type CancelButtonOptions<S> =
+  | Action<S, MouseEvent>
   | {
     onclick: Action<S, MouseEvent>
     label?: Content<S>

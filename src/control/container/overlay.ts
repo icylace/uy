@@ -1,4 +1,4 @@
-import type { ClassProp, State, VDOM, View } from "hyperapp"
+import type { ClassProp, VDOM, View } from "hyperapp"
 
 import { div } from "ntml"
 import { box } from "./box"
@@ -10,7 +10,7 @@ export type OverlayOptions = {
 }
 
 export const overlay = <S>(options: OverlayOptions, views: View<S>[]) => {
-  return (state: State<S>): VDOM<S> => {
+  return (state: S): VDOM<S> => {
     const { disabled, ...etc } = options
     return box("uy-overlay-background", [
       div(

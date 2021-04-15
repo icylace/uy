@@ -1,5 +1,5 @@
 import type { Focus } from "eyepiece"
-import type { ActionTransform, ClassProp, State, VDOM, VNode } from "hyperapp"
+import type { Action, ClassProp, MaybeVDOM, VDOM } from "hyperapp"
 import type { Content } from "ntml"
 
 import { get, set } from "eyepiece"
@@ -17,7 +17,7 @@ export type PagerData = {
 export type PagerOptions<S> = {
   itemsPerPage: number
   pageRange: number
-  onclick?: ActionTransform<S, PagerValue>
+  onclick?: Action<S, PagerValue>
   class?: ClassProp
   disabled?: boolean
 }
@@ -25,7 +25,7 @@ export type PagerOptions<S> = {
 const freshPager = (itemsTotal: number, value: PagerValue): PagerData =>
   ({ value, itemsTotal })
 
-const pagerNav = <S>(onclick: ActionTransform<S>, content: Content<S>, active: boolean): VDOM<S> =>
+const pagerNav = <S>(onclick: Action<S>, content: Content<S>, active: boolean): VDOM<S> =>
   span({
     class: ["uy-pager-nav", !active && "uy-pager-nav-inactive"],
     ...(active ? { onclick } : {}),
@@ -35,11 +35,11 @@ const pagerMore = <S>(content: Content<S>): VDOM<S> =>
   span({ class: "uy-pager-more" }, content)
 
 const pager = <S>(options: PagerOptions<S>) => (...focus: Focus) => {
-  return (state: State<S>): VDOM<S> => {
+  return (state: S): VDOM<S> => {
     const { itemsPerPage, pageRange, onclick, disabled, ...etc } = options
     const x = get<PagerData>(focus)(state)
-    const update = (value: any) => (state: State<S>) => {
-      const nextState = set<State<S>>(focus, "value")(value)(state)
+    const update = (value: any) => (state: S) => {
+      const nextState = set<S>(focus, "value")(value)(state)
       return onclick ? onclick(nextState, value) : nextState
     }
 
@@ -50,7 +50,7 @@ const pager = <S>(options: PagerOptions<S>) => (...focus: Focus) => {
     const rangeFinishPage = Math.min(lastPage, x.value + pageRange)
 
     const pages = range(0, rangeFinishPage - rangeStartPage + 1).map(
-      (n: number): VNode<S> => {
+      (n: number): MaybeVDOM<S> => {
         const currentPage = rangeStartPage + n
         const current = currentPage === x.value
         return rangeStartPage <= currentPage && currentPage <= rangeFinishPage

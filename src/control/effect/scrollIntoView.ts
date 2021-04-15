@@ -1,7 +1,7 @@
-import type { Dispatch, EffectDescriptor, Payload } from "hyperapp"
+import type { Dispatch, Effect } from "hyperapp"
 
-const runScrollIntoView = <S>(_dispatch: Dispatch<S>, el?: Payload<Element>): void =>
+const runScrollIntoView = <S>(_dispatch: Dispatch<S>, el?: Element): void =>
   el?.scrollIntoView({ behavior: "smooth", block: "nearest" })
 
-export const scrollIntoView = <S>(el: Payload<Element>): EffectDescriptor<S, Element> =>
+export const scrollIntoView = <S>(el: Element): Effect<S, Element> =>
   [runScrollIntoView, el]

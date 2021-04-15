@@ -1,11 +1,11 @@
-import type { ClassProp, State, VDOM, View } from "hyperapp"
+import type { ClassProp, VDOM, View } from "hyperapp"
 import type { Content } from "ntml"
 
 import * as html from "ntml"
 import { isContent } from "ntml"
 
-export type FieldsetOptions<S>
-  = Content<S>
+export type FieldsetOptions<S> =
+  | Content<S>
   | {
     [_: string]: unknown
     label?: Content<S>
@@ -18,7 +18,7 @@ export type FieldsetOptions<S>
 //   - the renaming is to distinguish from the plain `fieldset` HTML element
 
 export const fieldset = <S>(options: FieldsetOptions<S>, views: View<S>[]) => {
-  return (state: State<S>): VDOM<S> => {
+  return (state: S): VDOM<S> => {
     const props = isContent<S>(options) ? { label: options } : options
     const { label, disabled, ...etc } = props
     const contents = views.map((g) => g(state))

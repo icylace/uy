@@ -1,5 +1,5 @@
 import type { Focus } from "eyepiece"
-import type { ActionTransform, ClassProp, State, VDOM } from "hyperapp"
+import type { Action, ClassProp, VDOM } from "hyperapp"
 import type { Content } from "ntml"
 import type { CheckboxData, CheckboxValue } from "./checkbox"
 
@@ -13,18 +13,23 @@ export type MultiselectData = {
 
 export type MultiselectChoices<S> = Record<string, Content<S>>
 
-export type MultiselectOptions<S>
-  = MultiselectChoices<S>
+export type MultiselectOptions<S> =
+  | MultiselectChoices<S>
   | {
     choices: MultiselectChoices<S>
     usingColumnMode?: boolean
-    onchange?: ActionTransform<S, CheckboxValue>
+    onchange?: Action<S, CheckboxValue>
     class?: ClassProp
     disabled?: boolean
   }
 
-const freshMultiselect = <S>(choices: MultiselectChoices<S>, value: string[]): MultiselectData => {
-  const data = Object.fromEntries(Object.entries(choices).map(([k, _]) => [k, freshCheckbox(false)]))
+const freshMultiselect = <S>(
+  choices: MultiselectChoices<S>,
+  value: string[]
+): MultiselectData => {
+  const data = Object.fromEntries(
+    Object.entries(choices).map(([k, _]) => [k, freshCheckbox(false)])
+  )
   return {
     value: value.reduce(
       (xr: Record<string, CheckboxData>, x: string) => {
@@ -39,7 +44,7 @@ const isOnlyChoices = <S>(x: any): x is Record<string, Content<S>> =>
   typeof x === "object" && !("choices" in x)
 
 const multiselect = <S>(options: MultiselectOptions<S>) => (...focus: Focus) => {
-  return (state: State<S>): VDOM<S> => {
+  return (state: S): VDOM<S> => {
     const props = isOnlyChoices<S>(options) ? { choices: options } : options
     const { choices, usingColumnMode, onchange, disabled, ...etc } = props
     return div({
@@ -52,7 +57,8 @@ const multiselect = <S>(options: MultiselectOptions<S>) => (...focus: Focus) => 
     }, [
       box("uy-multiselect-options",
         Object.entries(choices).map(
-          ([value, label]) => checkbox({ label, onchange, disabled })(focus, "value", value)(state)
+          ([value, label]) =>
+            checkbox({ label, onchange, disabled })(focus, "value", value)(state)
         ),
       ),
     ])

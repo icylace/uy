@@ -43,7 +43,7 @@ const list = <S>(options: ListOptions<S> = {}) => (...focus: Focus) => {
         disabled,
         onclick: (state) => {
           const nextState = set<S>(focus, "items")(exclude(i))(state)
-          return onchange ? onchange(nextState) : nextState
+          return onchange ? onchange(nextState, "") : nextState
         },
       }),
     ]
@@ -58,7 +58,7 @@ const list = <S>(options: ListOptions<S> = {}) => (...focus: Focus) => {
             const nextState = set<S>(focus, "items")(
               (xs: TextboxData[]) => [...xs, freshTextbox("")]
             )(state)
-            return onchange ? onchange(nextState) : nextState
+            return onchange ? onchange(nextState, "") : nextState
           },
         }),
       ],

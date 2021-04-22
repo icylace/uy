@@ -1,4 +1,4 @@
-import type { ClassProp, VDOM, View } from "hyperapp"
+import type { ClassProp, VNode } from "hyperapp"
 import type { Content } from "ntml"
 
 import * as html from "ntml"
@@ -17,8 +17,8 @@ export type FieldsetOptions<S> =
 // - `fieldset` -> `fields`
 //   - the renaming is to distinguish from the plain `fieldset` HTML element
 
-export const fieldset = <S>(options: FieldsetOptions<S>, views: View<S>[]) => {
-  return (state: S): VDOM<S> => {
+export const fieldset = <S>(options: FieldsetOptions<S>, views: ((state: S) => VNode<S>)[]) => {
+  return (state: S): VNode<S> => {
     const props = isContent<S>(options) ? { label: options } : options
     const { label, disabled, ...etc } = props
     const contents = views.map((g) => g(state))

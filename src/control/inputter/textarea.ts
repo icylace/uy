@@ -1,5 +1,5 @@
 import type { Focus } from "eyepiece"
-import type { Action, ClassProp, VDOM } from "hyperapp"
+import type { Action, ClassProp, VNode } from "hyperapp"
 
 import { get, set } from "eyepiece"
 import * as html from "ntml"
@@ -20,7 +20,7 @@ export type TextareaOptions<S> = {
 const freshTextarea = (value: TextareaValue): TextareaData => ({ value })
 
 const textarea = <S>(options: TextareaOptions<S> = {}) => (...focus: Focus) => {
-  return (state: S): VDOM<S> => {
+  return (state: S): VNode<S> => {
     const { onchange, disabled, ...etc } = options
     return box("uy-control uy-textarea", [
       html.textarea({

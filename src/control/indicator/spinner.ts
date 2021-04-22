@@ -1,4 +1,4 @@
-import type { ClassProp, VDOM } from "hyperapp"
+import type { ClassProp, VNode } from "hyperapp"
 
 import { span } from "ntml"
 
@@ -7,5 +7,5 @@ export type SpinnerOptions = {
   disabled?: boolean
 }
 
-export const spinner = <S>(props: SpinnerOptions = {}): VDOM<S> =>
+export const spinner = <S>(props: SpinnerOptions = {}): VNode<S> =>
   span({ ...props, class: ["uy-indicator uy-spinner", props.class] })

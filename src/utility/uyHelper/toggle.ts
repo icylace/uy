@@ -1,7 +1,12 @@
 import type { Focus } from "eyepiece"
-import type { MaybeVDOM, State } from "hyperapp"
+import type { MaybeVNode } from "hyperapp"
 
 import { get } from "eyepiece"
 
-export const toggle = (...focus: Focus) => <S>(component: (_: State<S>) => MaybeVDOM<S>) => (state: State<S>): MaybeVDOM<S> =>
-  get<boolean>(focus)(state) && component(state)
+export const toggle = (...focus: Focus) => {
+  return <S>(component: (_: S) => MaybeVNode<S>) => {
+    return (state: S): MaybeVNode<S> => {
+      return get<boolean>(focus)(state) && component(state)
+    }
+  }
+}

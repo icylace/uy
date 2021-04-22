@@ -1,5 +1,5 @@
 import type { Focus } from "eyepiece"
-import type { Action, ClassProp, VDOM } from "hyperapp"
+import type { Action, ClassProp, VNode } from "hyperapp"
 import type { Content } from "ntml"
 
 import { get, set } from "eyepiece"
@@ -31,7 +31,7 @@ const sanitizedNumber = (n: string): number =>
   Math.max(0, Number.parseInt(n, 10))
 
 const numberbox = <S>(options: NumberboxOptions<S> = {}) => (...focus: Focus) => {
-  return (state: S): VDOM<S> => {
+  return (state: S): VNode<S> => {
     const props = isContent<S>(options) ? { label: options } : options
     const { label, onchange, disabled, ...etc } = props
     const x = get<NumberboxData>(focus)(state)

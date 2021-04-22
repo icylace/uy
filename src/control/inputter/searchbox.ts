@@ -1,12 +1,6 @@
 import type { Focus } from "eyepiece"
-import type {
-  Action,
-  ClassProp,
-  Effect,
-  MaybeVDOM,
-  StateWithEffects,
-  VDOM,
-} from "hyperapp"
+import type { Action, ClassProp, Effect, MaybeVNode, VNode } from "hyperapp"
+import type { StateWithEffects } from "../../utility/hyperappHelper/types"
 
 import { get, set } from "eyepiece"
 import { input, label, li, span, ul } from "ntml"
@@ -64,7 +58,7 @@ const noopKeys = [
 ]
 
 const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
-  return (state: S): VDOM<S> => {
+  return (state: S): VNode<S> => {
     const { search, onresults, id, disabled, ...etc } = options
 
     const x = get<SearchboxData>(focus)(state)
@@ -130,7 +124,7 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
       class: ["uy-input", { disabled }, etc.class],
     })
 
-    const searchResult = (result: string): VDOM<S> =>
+    const searchResult = (result: string): VNode<S> =>
       li({
         onclick: (state: S): S =>
           onresults([], id,
@@ -152,7 +146,7 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
           ]
         )
         : null
-    ) as MaybeVDOM<S>
+    ) as MaybeVNode<S>
 
     return box(["uy-control uy-searchbox", { disabled }] , [
       label({

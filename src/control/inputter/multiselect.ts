@@ -1,5 +1,5 @@
 import type { Focus } from "eyepiece"
-import type { Action, ClassProp, VDOM } from "hyperapp"
+import type { Action, ClassProp, VNode } from "hyperapp"
 import type { Content } from "ntml"
 import type { CheckboxData, CheckboxValue } from "./checkbox"
 
@@ -44,7 +44,7 @@ const isOnlyChoices = <S>(x: any): x is Record<string, Content<S>> =>
   typeof x === "object" && !("choices" in x)
 
 const multiselect = <S>(options: MultiselectOptions<S>) => (...focus: Focus) => {
-  return (state: S): VDOM<S> => {
+  return (state: S): VNode<S> => {
     const props = isOnlyChoices<S>(options) ? { choices: options } : options
     const { choices, usingColumnMode, onchange, disabled, ...etc } = props
     return div({

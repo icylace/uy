@@ -230,7 +230,7 @@ task:reset() {
 
   # TODO:
   # npm install --save hyperapp
-  npm install --save icylace/hyperapp#types
+  npm install --save icylace/hyperapp#types6
 
   npm install --save eyepiece ntml
   npm install --save remeda

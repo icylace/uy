@@ -1,5 +1,5 @@
 import type { Focus } from "eyepiece"
-import type { Action, ClassProp, MaybeVDOM, VDOM } from "hyperapp"
+import type { Action, ClassProp, MaybeVNode, VNode } from "hyperapp"
 import type { Content } from "ntml"
 
 import { get, set } from "eyepiece"
@@ -25,17 +25,17 @@ export type PagerOptions<S> = {
 const freshPager = (itemsTotal: number, value: PagerValue): PagerData =>
   ({ value, itemsTotal })
 
-const pagerNav = <S>(onclick: Action<S>, content: Content<S>, active: boolean): VDOM<S> =>
+const pagerNav = <S>(onclick: Action<S>, content: Content<S>, active: boolean): VNode<S> =>
   span({
     class: ["uy-pager-nav", !active && "uy-pager-nav-inactive"],
     ...(active ? { onclick } : {}),
   }, content)
 
-const pagerMore = <S>(content: Content<S>): VDOM<S> =>
+const pagerMore = <S>(content: Content<S>): VNode<S> =>
   span({ class: "uy-pager-more" }, content)
 
 const pager = <S>(options: PagerOptions<S>) => (...focus: Focus) => {
-  return (state: S): VDOM<S> => {
+  return (state: S): VNode<S> => {
     const { itemsPerPage, pageRange, onclick, disabled, ...etc } = options
     const x = get<PagerData>(focus)(state)
     const update = (value: any) => (state: S) => {
@@ -49,8 +49,8 @@ const pager = <S>(options: PagerOptions<S>) => (...focus: Focus) => {
     const rangeStartPage = Math.max(0, x.value - pageRange)
     const rangeFinishPage = Math.min(lastPage, x.value + pageRange)
 
-    const pages = range(0, rangeFinishPage - rangeStartPage + 1).map(
-      (n: number): MaybeVDOM<S> => {
+    const pages = range(0, rangeFinishPage - rangeStartPage + 1)
+      .map((n: number): MaybeVNode<S> => {
         const currentPage = rangeStartPage + n
         const current = currentPage === x.value
         return rangeStartPage <= currentPage && currentPage <= rangeFinishPage
@@ -59,31 +59,30 @@ const pager = <S>(options: PagerOptions<S>) => (...focus: Focus) => {
             onclick: update(currentPage),
           }, span(currentPage + 1))
           : null
-      },
-    )
+      })
 
     const morePrev = pagerMore<S>(rangeStartPage > 0 ? "..." : "")
     const moreNext = pagerMore<S>(rangeFinishPage < lastPage ? "..." : "")
 
-    const navFirst = pagerNav<S>(
+    const navFirst = pagerNav(
       update(0),
       [icon("fas fa-angle-double-left"), "first"],
       x.value !== 0,
     )
 
-    const navPrev = pagerNav<S>(
+    const navPrev = pagerNav(
       update(Math.max(0, x.value - 1)),
       [icon("fas fa-angle-left"), "prev"],
       x.value !== 0,
     )
 
-    const navNext = pagerNav<S>(
+    const navNext = pagerNav(
       update(Math.min(lastPage, x.value + 1)),
       ["next", icon("fas fa-angle-right")],
       x.value !== lastPage,
     )
 
-    const navLast = pagerNav<S>(
+    const navLast = pagerNav(
       update(lastPage),
       ["last", icon("fas fa-angle-double-right")],
       x.value !== lastPage,

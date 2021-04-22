@@ -1,5 +1,5 @@
 import type { Focus } from "eyepiece"
-import type { Action, ClassProp, VDOM } from "hyperapp"
+import type { Action, ClassProp, VNode } from "hyperapp"
 
 import { get, set } from "eyepiece"
 import { input } from "ntml"
@@ -20,7 +20,7 @@ export type TextboxOptions<S> = {
 const freshTextbox = (value: TextboxValue): TextboxData => ({ value })
 
 const textbox = <S>(options: TextboxOptions<S> = {}) => (...focus: Focus) => {
-  return (state: S): VDOM<S> => {
+  return (state: S): VNode<S> => {
     const { onchange, disabled, ...etc } = options
     return box("uy-control uy-textbox", [
       input({

@@ -2,7 +2,7 @@
 // - `list` -> `textlist`
 
 import type { Focus } from "eyepiece"
-import type { Action, ClassProp, VDOM } from "hyperapp"
+import type { Action, ClassProp, VNode } from "hyperapp"
 import type { Stuff } from "ntml"
 import type { TableCell } from "../container/table"
 import type { TextboxData, TextboxValue } from "./textbox"
@@ -32,7 +32,7 @@ const freshList = (items: string[]): ListData =>
   ({ items: items.map(freshTextbox) })
 
 const list = <S>(options: ListOptions<S> = {}) => (...focus: Focus) => {
-  return (state: S): VDOM<S> => {
+  return (state: S): VNode<S> => {
     const props = Array.isArray(options) ? { headers: options } : options
     const { headers, onchange, disabled, ...etc } = props
     const xr = get<ListData>(focus)(state)

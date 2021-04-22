@@ -1,5 +1,5 @@
 import type { Focus } from "eyepiece"
-import type { Action, ClassProp, VDOM } from "hyperapp"
+import type { Action, ClassProp, VNode } from "hyperapp"
 import type { Content } from "ntml"
 
 import { get, set } from "eyepiece"
@@ -33,7 +33,7 @@ const isOnlyChoices = <S>(x: any): x is Record<string, Content<S>> =>
   typeof x === "object" && !("choices" in x)
 
 const dropdown = <S>(options: DropdownOptions<S>) => (...focus: Focus) => {
-  return (state: S): VDOM<S> => {
+  return (state: S): VNode<S> => {
     const props = isOnlyChoices<S>(options) ? { choices: options } : options
     const { choices, onchange, disabled, ...etc } = props
     const x = get<DropdownData>(focus)(state)

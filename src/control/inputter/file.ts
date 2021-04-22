@@ -2,7 +2,7 @@
 // - `file` -> `fileUpload`
 
 import type { Focus } from "eyepiece"
-import type { Action, ClassProp, VDOM } from "hyperapp"
+import type { Action, ClassProp, VNode } from "hyperapp"
 
 import { get, set } from "eyepiece"
 import * as html from "ntml"
@@ -29,7 +29,7 @@ const freshFile = (value: FileValue): FileData => ({ value })
 // https://codepen.io/adamlaki/pen/VYpewx
 
 const file = <S>(options: FileOptions<S> = {}) => (...focus: Focus) => {
-  return (state: S): VDOM<S> => {
+  return (state: S): VNode<S> => {
     const props = typeof options === "string" ? { label: options } : options
     const { label = "Select your file...", onchange, disabled, ...etc } = props
     return box(["uy-control uy-file uy-input", { disabled }], [

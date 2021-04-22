@@ -1,4 +1,4 @@
-import type { ClassProp, VDOM } from "hyperapp"
+import type { ClassProp, VNode } from "hyperapp"
 import type { Content } from "ntml"
 import type { ContentView } from "../../utility/hyperappHelper/render"
 
@@ -17,7 +17,7 @@ export type FieldOptions<S> =
   }
 
 export const field = <S>(options: FieldOptions<S>, views: ContentView<S>[]) => {
-  return (state: S): VDOM<S> => {
+  return (state: S): VNode<S> => {
     const props = isContent<S>(options) ? { label: options } : options
     const { label, disabled, ...etc } = props
     return box("uy-field", [

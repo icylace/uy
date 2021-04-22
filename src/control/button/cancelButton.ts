@@ -1,4 +1,4 @@
-import type { Action, ClassProp, VDOM } from "hyperapp"
+import type { Action, ClassProp, VNode } from "hyperapp"
 import type { Content } from "ntml"
 
 import * as html from "ntml"
@@ -14,7 +14,7 @@ export type CancelButtonOptions<S> =
     disabled?: boolean
   }
 
-export const cancelButton = <S>(options: CancelButtonOptions<S>): VDOM<S> => {
+export const cancelButton = <S>(options: CancelButtonOptions<S>): VNode<S> => {
   const props = isAction<S, MouseEvent>(options) ? { onclick: options } : options
   const { label = "✕", onclick, disabled, ...etc } = props
   return box("uy-control uy-cancelButton", [

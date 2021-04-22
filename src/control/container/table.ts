@@ -1,11 +1,11 @@
-import type { ClassProp, PropList, VDOM } from "hyperapp"
+import type { ClassProp, Props, VNode } from "hyperapp"
 import type { Content, Stuff } from "ntml"
 
 import * as html from "ntml"
 import { icon } from "../indicator/icon"
 import { box } from "./box"
 
-export type TableCell<S> = Stuff<S> | [PropList<S>, Content<S>]
+export type TableCell<S> = Stuff<S> | [Props<S>, Content<S>]
 export type TableRow<S> = TableCell<S>[]
 export type TableOptions<S> =
   | TableRow<S>
@@ -19,8 +19,8 @@ export type TableOptions<S> =
   }
 
 const tableHeader = <S>(orderColumn: string | null | undefined, sortDescending: boolean | null | undefined) => {
-  return (header: TableCell<S>): VDOM<S> => {
-    const props = (Array.isArray(header) ? header[0] : {}) as PropList<S>
+  return (header: TableCell<S>): VNode<S> => {
+    const props = (Array.isArray(header) ? header[0] : {}) as Props<S>
     const headerContents: Stuff<S>[] = (Array.isArray(header) ? header[1] : [header]) as Stuff<S>[]
     const column = props && "data-column" in props && props["data-column"]
     const sorting = orderColumn != null && orderColumn === column
@@ -41,16 +41,16 @@ const tableHeader = <S>(orderColumn: string | null | undefined, sortDescending: 
   }
 }
 
-const hasPropList = <S>(x: TableCell<S>): x is [PropList<S>, Content<S>] =>
+const hasPropList = <S>(x: TableCell<S>): x is [Props<S>, Content<S>] =>
   Array.isArray(x)
 
-const tableCell = <S>(x: TableCell<S>): VDOM<S> =>
+const tableCell = <S>(x: TableCell<S>): VNode<S> =>
   hasPropList(x) ? html.td(x[0], x[1]) : html.td(x)
 
-const tableRow = <S>(row: TableRow<S>): VDOM<S> =>
+const tableRow = <S>(row: TableRow<S>): VNode<S> =>
   html.tr(row.map(tableCell))
 
-const table = <S>(options: TableOptions<S> = {}, rows: TableRow<S>[]): VDOM<S> => {
+const table = <S>(options: TableOptions<S> = {}, rows: TableRow<S>[]): VNode<S> => {
   const props = Array.isArray(options) ? { headers: options } : options
   const { headers, orderColumn, sortDescending, disabled, ...etc } = props
   return box(["uy-control uy-table", { disabled }], [

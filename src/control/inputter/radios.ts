@@ -1,5 +1,5 @@
 import type { Focus } from "eyepiece"
-import type { Action, ClassProp, VDOM } from "hyperapp"
+import type { Action, ClassProp, VNode } from "hyperapp"
 import type { Content } from "ntml"
 
 import { get, set } from "eyepiece"
@@ -29,14 +29,14 @@ const isOnlyChoices = <S>(x: any): x is Record<string, Content<S>> =>
   typeof x === "object" && !("choices" in x)
 
 const radios = <S>(options: RadiosOptions<S>) => (...focus: Focus) => {
-  return (state: S): VDOM<S> => {
+  return (state: S): VNode<S> => {
     const props = isOnlyChoices<S>(options) ? { choices: options } : options
     const { choices, onchange, disabled, ...etc } = props
     return box("uy-control uy-radios",
       // TODO:
       // - switch to using a Map object instead in order to guarantee order
       Object.entries(choices).map(
-        ([value, label]: [string, Content<S>]): VDOM<S> => {
+        ([value, label]: [string, Content<S>]): VNode<S> => {
           return html.label({ class: { disabled } }, [
             html.input({
               value,

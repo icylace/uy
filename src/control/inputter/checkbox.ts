@@ -1,5 +1,5 @@
 import type { Focus } from "eyepiece"
-import type { Action, ClassProp, VDOM } from "hyperapp"
+import type { Action, ClassProp, VNode } from "hyperapp"
 import type { Content } from "ntml"
 
 import { get, set } from "eyepiece"
@@ -25,7 +25,7 @@ export type CheckboxOptions<S> =
 const freshCheckbox = (value: CheckboxValue): CheckboxData => ({ value })
 
 const checkbox = <S>(options: CheckboxOptions<S> = {}) => (...focus: Focus) => {
-  return (state: S): VDOM<S> => {
+  return (state: S): VNode<S> => {
     const props = isContent<S>(options) ? { label: options } : options
     const { label, onchange, disabled, ...etc } = props
     const value = get<CheckboxData>(focus)(state).value

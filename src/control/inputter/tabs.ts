@@ -1,7 +1,7 @@
 import type { Focus } from "eyepiece"
-import type { ClassProp, StateWithEffects, VDOM } from "hyperapp"
+import type { ClassProp, VNode } from "hyperapp"
 import type { Content, Stuff } from "ntml"
-import type { Transform } from "../../utility/hyperappHelper/types"
+import type { StateWithEffects, Transform } from "../../utility/hyperappHelper/types"
 
 import { get, set } from "eyepiece"
 import { div, isVDOM } from "ntml"
@@ -43,7 +43,7 @@ const isSelected = (activeTab: TabIndex) => <S>(item: Stuff<S>, i: number): bool
   || activeTab === i
 
 const tab = <S>(focus: Focus, activeTab: TabIndex, onclick?: Transform<S>) => {
-  return (item: Stuff<S>, i: number): VDOM<S> => {
+  return (item: Stuff<S>, i: number): VNode<S> => {
     const selected = isSelected(activeTab)(item, i)
     return div({
       class: ["uy-tabs-item", { selected }],
@@ -67,7 +67,7 @@ const tab = <S>(focus: Focus, activeTab: TabIndex, onclick?: Transform<S>) => {
 }
 
 const tabs = <S>(options: TabsOptions<S>) => (...focus: Focus) => {
-  return (state: S): VDOM<S> => {
+  return (state: S): VNode<S> => {
     const props = Array.isArray(options) ? { tabList: options } : options
     const { tabList, itemsHeader, itemsFooter, onclick, disabled, ...etc } = props
 

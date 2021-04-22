@@ -1,4 +1,4 @@
-import type { ClassProp, VDOM } from "hyperapp"
+import type { ClassProp, VNode } from "hyperapp"
 import type { Content } from "ntml"
 
 import { div } from "ntml"
@@ -12,7 +12,7 @@ export type PopupOptions =
     disabled?: boolean
   }
 
-export const popup = <S>(options: PopupOptions, contents: Content<S>): VDOM<S> => {
+export const popup = <S>(options: PopupOptions, contents: Content<S>): VNode<S> => {
   const props = typeof options === "string" ? { id: options } : options
   const { id, disabled, ...etc } = props
   return div(

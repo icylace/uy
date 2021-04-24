@@ -228,10 +228,7 @@ task:reset() {
 
   update_json '.dependencies = {} | .devDependencies = {}' ./package.json
 
-  # TODO:
-  # npm install --save hyperapp
-  npm install --save icylace/hyperapp#types8
-
+  npm install --save hyperapp
   npm install --save eyepiece ntml
   npm install --save remeda
   npm install --save @fortawesome/fontawesome-free

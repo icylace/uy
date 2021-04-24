@@ -43,8 +43,8 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.3",
     "eyepiece": "^0.0.6",
-    "hyperapp": "github:icylace/hyperapp#types8",
-    "ntml": "^0.1.52",
+    "hyperapp": "^2.0.17",
+    "ntml": "^0.1.53",
     "remeda": "^0.0.27"
   },
   "publishConfig": {

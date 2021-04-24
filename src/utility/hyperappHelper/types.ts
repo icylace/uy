@@ -1,8 +1,15 @@
-import type { Action, CustomPayloads, Dispatch, Effect, MaybeVNode } from "hyperapp"
-
-export type Props<T, S, P> = CustomPayloads<S, P> & T
+import type {
+  Action,
+  CustomPayloads,
+  Dispatch,
+  Effect,
+  MaybeVNode,
+  Unsubscribe,
+} from "hyperapp"
 
 export type ActionWithPayload<S, P = any> = [action: Action<S, P>, payload: P]
+
+export type CustomProps<T, S, P> = CustomPayloads<S, P> & T
 
 // An effecter is where side effects and any additional dispatching may occur.
 export type Effecter<S, P> = (dispatch: Dispatch<S>, payload: P) => void | Promise<void>
@@ -17,11 +24,11 @@ export type StateWithEffects<S, P = any> = [state: S, ...effects: Effect<S, P>[]
 // A subscriber reacts to subscription updates.
 export type Subscriber<S, P> = (dispatch: Dispatch<S>, payload: P) => void | Unsubscribe
 
-// An unsubscribe function cleans up a canceled subscription.
-export type Unsubscribe = () => void
-
 // A transform carries out the transition from one state to another.
 export type Transform<S, P = any> = (state: StateFormat<S>, payload: P) => StateFormat<S>
 
-export type ViewComponent<S, Props> = <X>(props: CustomPayloads<S, X> & Props, content: MaybeVNode<S>[]) => MaybeVNode<S>
+export type ViewComponent<S, P> = <X>(
+  props: CustomPayloads<S, X> & P,
+  content: MaybeVNode<S>[],
+) => MaybeVNode<S>
 // Credit: https://github.com/jorgebucaran/hyperapp/discussions/1052#discussioncomment-630744

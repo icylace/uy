@@ -228,20 +228,29 @@ task:reset() {
 
   update_json '.dependencies = {} | .devDependencies = {}' ./package.json
 
-  npm install --save hyperapp
-  npm install --save eyepiece ntml
-  npm install --save remeda
   npm install --save @fortawesome/fontawesome-free
-  npm install --save-dev snowpack typescript rollup terser prettier
-  npm install --save-dev eslint
-  npm install --save-dev eslint-plugin-import eslint-plugin-json eslint-plugin-node eslint-plugin-promise
-  npm install --save-dev eslint-config-prettier eslint-plugin-prettier
-  npm install --save-dev eslint-config-standard eslint-plugin-standard
-  npm install --save-dev eslint-import-resolver-typescript
-  npm install --save-dev @typescript-eslint/eslint-plugin @typescript-eslint/parser
+  npm install --save eyepiece
+  npm install --save hyperapp
+  npm install --save ntml
+  # npm install --save remeda
+
+  # npm install --save-dev snowpack typescript rollup terser prettier
+  npm install --save-dev typescript
+  # npm install --save-dev prettier
+
+  # npm install --save-dev eslint
+  # npm install --save-dev eslint-plugin-import eslint-plugin-json eslint-plugin-node eslint-plugin-promise
+  # npm install --save-dev eslint-config-prettier eslint-plugin-prettier
+  # npm install --save-dev eslint-config-standard eslint-plugin-standard
+  # npm install --save-dev eslint-import-resolver-typescript
+  # npm install --save-dev @typescript-eslint/eslint-plugin @typescript-eslint/parser
   # npm install --save-dev jest ts-jest
-  npm install --save-dev postcss cssnano
-  npm install --save-dev postcss-cli postcss-import postcss-reporter postcss-preset-env
+
+  # npm install --save-dev postcss cssnano
+  # npm install --save-dev postcss-cli postcss-import postcss-reporter postcss-preset-env
+  npm install --save-dev postcss-reporter postcss-preset-env
+
+  npm install --save-dev vite
 
   task:prepare
 }

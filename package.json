@@ -43,34 +43,16 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.3",
     "eyepiece": "^0.0.6",
-    "hyperapp": "^2.0.17",
-    "ntml": "^0.1.53",
-    "remeda": "^0.0.27"
+    "hyperapp": "^2.0.18",
+    "ntml": "^0.1.54"
   },
   "publishConfig": {
     "access": "public"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^4.22.0",
-    "@typescript-eslint/parser": "^4.22.0",
-    "cssnano": "^5.0.1",
-    "eslint": "^7.25.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-import-resolver-typescript": "^2.4.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-json": "^2.1.2",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^3.4.0",
-    "eslint-plugin-promise": "^5.1.0",
-    "postcss": "^8.2.12",
-    "postcss-cli": "^8.3.1",
-    "postcss-import": "^14.0.1",
     "postcss-preset-env": "^6.7.0",
     "postcss-reporter": "^7.0.2",
-    "prettier": "^2.2.1",
-    "rollup": "^2.45.2",
-    "snowpack": "^3.3.5",
-    "terser": "^5.6.1",
-    "typescript": "^4.2.4"
+    "typescript": "^4.3.2",
+    "vite": "^2.3.4"
   }
 }

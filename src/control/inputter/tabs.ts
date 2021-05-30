@@ -38,7 +38,8 @@ const isSelected = (activeTab: TabIndex) => <S>(item: Stuff<S>, i: number): bool
     typeof item === "object"
     && item != null
     && isVDOM(item)
-    && activeTab === (item.props["data-tab-id"] as string)
+    // TODO:
+    // && activeTab === (item.props["data-tab-id"] as string)
   )
   || activeTab === i
 
@@ -50,9 +51,11 @@ const tab = <S>(focus: Focus, activeTab: TabIndex, onclick?: Transform<S>) => {
       onclick: (state, event) => {
         const target = event.target as HTMLInputElement
         const nextValue = freshTabs(
-          isVDOM(item) && "data-tab-id" in item.props
-            ? item.props["data-tab-id"] as string
-            : i
+          i
+          // TODO:
+          // isVDOM(item) && "data-tab-id" in item.props
+          //   ? item.props["data-tab-id"] as string
+          //   : i
         )
         const transition = set<S>(focus)(nextValue)(state)
         const nextState = selected

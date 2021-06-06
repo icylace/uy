@@ -1,5 +1,5 @@
 import type { ClassProp, VNode } from "hyperapp"
-import type { Content } from "ntml"
+import type { Content } from "../../types"
 import type { ContentView } from "../../utility/hyperappHelper/render"
 
 import { h } from "hyperapp"

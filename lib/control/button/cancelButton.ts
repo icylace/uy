@@ -1,5 +1,5 @@
 import type { Action, ClassProp, VNode } from "hyperapp"
-import type { Content } from "ntml"
+import type { Content } from "../../types"
 
 import { h } from "hyperapp"
 import { isAction } from "../../utility/uyHelper/isAction"

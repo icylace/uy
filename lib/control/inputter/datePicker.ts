@@ -50,7 +50,7 @@ const datetimeLocalPicker = <S>(options: DatePickerOptions<S> = {}) => (...focus
   return (state: S): VNode<S> => {
     const { onchange, disabled, ...etc } = options
     return box("uy-control uy-datePicker", [
-      input({
+      h("input", {
         type: "datetime-local",
         value: get<DatePickerData>(focus)(state).value,
         disabled,
@@ -125,7 +125,7 @@ const weekPicker = <S>(options: DatePickerOptions<S> = {}) => (...focus: Focus) 
   return (state: S): VNode<S> => {
     const { onchange, disabled, ...etc } = options
     return box("uy-control uy-datePicker", [
-      input({
+      h("input", {
         type: "week",
         value: get<DatePickerData>(focus)(state).value,
         disabled,

@@ -1,10 +1,9 @@
 import type { Focus } from "eyepiece"
 import type { Action, ClassProp, VNode } from "hyperapp"
-import type { Content } from "ntml"
+import type { Content } from "../../types"
 
 import { get, set } from "eyepiece"
 import { h } from "hyperapp"
-import * as html from "ntml"
 import { isContent } from "ntml"
 import { box } from "../container/box"
 

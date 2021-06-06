@@ -1,11 +1,11 @@
-import type { ClassProp, Props, VNode } from "hyperapp"
-import type { Content, Stuff } from "ntml"
+import type { ClassProp, Props, MaybeVNode, VNode } from "hyperapp"
+import type { Content } from "../../types"
 
 import { h } from "hyperapp"
 import { icon } from "../indicator/icon"
 import { box } from "./box"
 
-export type TableCell<S> = Stuff<S> | [Props<S>, Content<S>]
+export type TableCell<S> = MaybeVNode<S> | [Props<S>, Content<S>]
 export type TableRow<S> = TableCell<S>[]
 export type TableOptions<S> =
   | TableRow<S>
@@ -21,7 +21,7 @@ export type TableOptions<S> =
 const tableHeader = <S>(orderColumn: string | null | undefined, sortDescending: boolean | null | undefined) => {
   return (header: TableCell<S>): VNode<S> => {
     const props = (Array.isArray(header) ? header[0] : {}) as Props<S>
-    const headerContents: Stuff<S>[] = (Array.isArray(header) ? header[1] : [header]) as Stuff<S>[]
+    const headerContents: MaybeVNode<S>[] = (Array.isArray(header) ? header[1] : [header]) as MaybeVNode<S>[]
     const column = props && "data-column" in props && props["data-column"]
     const sorting = orderColumn != null && orderColumn === column
     return h("th", {

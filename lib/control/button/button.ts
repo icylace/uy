@@ -1,5 +1,5 @@
 import type { ClassProp, EventActions, VNode } from "hyperapp"
-import type { Content } from "ntml"
+import type { Content } from "../../types"
 
 import { h } from "hyperapp"
 import { box } from "../container/box"

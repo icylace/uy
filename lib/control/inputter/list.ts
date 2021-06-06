@@ -2,13 +2,12 @@
 // - `list` -> `textlist`
 
 import type { Focus } from "eyepiece"
-import type { Action, ClassProp, VNode } from "hyperapp"
-import type { Stuff } from "ntml"
+import type { Action, ClassProp, MaybeVNode, VNode } from "hyperapp"
 import type { TableCell } from "../container/table"
 import type { TextboxData, TextboxValue } from "./textbox"
 
 import { get, set } from "eyepiece"
-import { h } from "hyperapp"
+import { h, text } from "hyperapp"
 import { exclude } from "../../utility/exclude"
 import { table } from "../container/table"
 import { button } from "../button/button"
@@ -20,9 +19,9 @@ export type ListData = {
 }
 
 export type ListOptions<S> =
-  | Stuff<S>[]
+  | MaybeVNode<S>[]
   | {
-    headers?: Stuff<S>[]
+    headers?: MaybeVNode<S>[]
     onchange?: Action<S, TextboxValue>
     class?: ClassProp
     disabled?: boolean
@@ -52,7 +51,7 @@ const list = <S>(options: ListOptions<S> = {}) => (...focus: Focus) => {
       [
         { class: "uy-list-adder", colspan: 2 },
         button({
-          label: "+ Add",
+          label: text("+ Add"),
           disabled,
           onclick: (state) => {
             const nextState = set<S>(focus, "items")(
@@ -68,10 +67,10 @@ const list = <S>(options: ListOptions<S> = {}) => (...focus: Focus) => {
       ...etc,
       class: ["uy-control uy-list", { disabled }, etc.class],
     }, [
-      table(
-        { headers, disabled, sortDescending: false, },
-        [...xr.items.map(item), grower]
-      ),
+      table({ headers, disabled, sortDescending: false, }, [
+        ...xr.items.map(item),
+        grower,
+      ]),
     ])
   }
 }

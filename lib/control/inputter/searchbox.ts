@@ -3,7 +3,7 @@ import type { Action, ClassProp, Effect, MaybeVNode, VNode } from "hyperapp"
 import type { StateWithEffects } from "../../utility/hyperappHelper/types"
 
 import { get, set } from "eyepiece"
-import { h } from "hyperapp"
+import { h, text } from "hyperapp"
 import { Defocus, Refocus } from "../action/helper"
 import { popup } from "../container/popup"
 import { box } from "../container/box"
@@ -132,16 +132,13 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
               (xr: SearchboxData) => ({ ...xr, value: result, results: [] })
             )(state)
           ),
-      }, result)
+      }, text(result))
 
     const popupNode = (
       x.results.length && !disabled
-        ? popup(
-          { disabled, id },
-          [
+        ? popup({ disabled, id }, [
             h("ul", { class: "uy-searchbox-results uy-scroller" }, x.results.map(searchResult)),
-          ]
-        )
+          ])
         : null
     ) as MaybeVNode<S>
 

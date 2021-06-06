@@ -1,6 +1,6 @@
 import type { Focus } from "eyepiece"
 import type { Action, ClassProp, MaybeVNode, VNode } from "hyperapp"
-import type { Content } from "ntml"
+import type { Content } from "../../types"
 
 import { get, set } from "eyepiece"
 import { h, text } from "hyperapp"
@@ -61,30 +61,30 @@ const pager = <S>(options: PagerOptions<S>) => (...focus: Focus) => {
           : null
       })
 
-    const morePrev = pagerMore<S>(rangeStartPage > 0 ? "..." : "")
-    const moreNext = pagerMore<S>(rangeFinishPage < lastPage ? "..." : "")
+    const morePrev = pagerMore<S>(text(rangeStartPage > 0 ? "..." : ""))
+    const moreNext = pagerMore<S>(text(rangeFinishPage < lastPage ? "..." : ""))
 
     const navFirst = pagerNav(
       update(0),
-      [icon("fas fa-angle-double-left"), "first"],
+      [icon("fas fa-angle-double-left"), text("first")],
       x.value !== 0,
     )
 
     const navPrev = pagerNav(
       update(Math.max(0, x.value - 1)),
-      [icon("fas fa-angle-left"), "prev"],
+      [icon("fas fa-angle-left"), text("prev")],
       x.value !== 0,
     )
 
     const navNext = pagerNav(
       update(Math.min(lastPage, x.value + 1)),
-      ["next", icon("fas fa-angle-right")],
+      [text("next"), icon("fas fa-angle-right")],
       x.value !== lastPage,
     )
 
     const navLast = pagerNav(
       update(lastPage),
-      ["last", icon("fas fa-angle-double-right")],
+      [text("last"), icon("fas fa-angle-double-right")],
       x.value !== lastPage,
     )
 

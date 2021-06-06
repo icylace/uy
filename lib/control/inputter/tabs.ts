@@ -1,6 +1,6 @@
 import type { Focus } from "eyepiece"
-import type { ClassProp, VNode } from "hyperapp"
-import type { Content, Stuff } from "ntml"
+import type { ClassProp, MaybeVNode, VNode } from "hyperapp"
+import type { Content } from "../../types"
 import type { StateWithEffects, Transform } from "../../utility/hyperappHelper/types"
 
 import { get, set } from "eyepiece"
@@ -17,8 +17,8 @@ export type TabsData = Readonly<{
 }>
 
 export type Tab<S> = Readonly<{
-  heading: Stuff<S>
-  panel: Stuff<S>
+  heading: MaybeVNode<S>
+  panel: MaybeVNode<S>
 }>
 
 export type TabsOptions<S> =
@@ -34,7 +34,7 @@ export type TabsOptions<S> =
 
 const freshTabs = (value: TabIndex): TabsData => ({ value })
 
-const isSelected = (activeTab: TabIndex) => <S>(item: Stuff<S>, i: number): boolean =>
+const isSelected = (activeTab: TabIndex) => <S>(item: MaybeVNode<S>, i: number): boolean =>
   (
     typeof item === "object"
     && item != null
@@ -45,7 +45,7 @@ const isSelected = (activeTab: TabIndex) => <S>(item: Stuff<S>, i: number): bool
   || activeTab === i
 
 const tab = <S>(focus: Focus, activeTab: TabIndex, onclick?: Transform<S>) => {
-  return (item: Stuff<S>, i: number): VNode<S> => {
+  return (item: MaybeVNode<S>, i: number): VNode<S> => {
     const selected = isSelected(activeTab)(item, i)
     return h("div", {
       class: ["uy-tabs-item", { selected }],

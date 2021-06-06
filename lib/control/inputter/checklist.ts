@@ -19,7 +19,7 @@ export type ChecklistData = {
 }
 
 export type ChecklistOptions<S> = {
-  renderLabel: (_: Content<S>) => Content<S>
+  renderLabel: (_: string) => Content<S>
   onchange?: Action<S, CheckboxValue>
   class?: ClassProp
   disabled?: boolean

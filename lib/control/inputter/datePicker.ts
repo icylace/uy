@@ -75,7 +75,7 @@ const monthPicker = <S>(options: DatePickerOptions<S> = {}) => (...focus: Focus)
   return (state: S): VNode<S> => {
     const { onchange, disabled, ...etc } = options
     return box("uy-control uy-datePicker", [
-      input({
+      h("input", {
         type: "month",
         value: get<DatePickerData>(focus)(state).value,
         disabled,
@@ -100,7 +100,7 @@ const timePicker = <S>(options: DatePickerOptions<S> = {}) => (...focus: Focus) 
   return (state: S): VNode<S> => {
     const { onchange, disabled, ...etc } = options
     return box("uy-control uy-datePicker", [
-      input({
+      h("input", {
         type: "time",
         value: get<DatePickerData>(focus)(state).value,
         disabled,

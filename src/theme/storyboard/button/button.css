@@ -1,0 +1,35 @@
+.uy-button > button {
+  margin: 0;
+  padding: 0.3em 1.2em;
+}
+
+.uy-button > button {
+  background-color: var(--uy-button-bg-color);
+  border-color: var(--uy-button-border-color);
+  border-style: solid;
+  border-width: var(--uy-border-width);
+  color: var(--uy-button-color);
+  font-family: var(--uy-font-family);
+  font-size: var(--uy-font-size);
+  outline: 0;
+}
+.uy-button > button:hover {
+  background-color: var(--uy-button-bg-color--hover);
+  border-color: var(--uy-button-border-color--hover);
+  color: var(--uy-button-color--hover);
+}
+.uy-button > button:focus {
+  background-color: var(--uy-button-bg-color--focus);
+  border-color: var(--uy-button-border-color--focus);
+  color: var(--uy-button-color--focus);
+}
+.uy-button > button:active {
+  background-color: var(--uy-button-bg-color--active);
+  border-color: var(--uy-button-border-color--active);
+  color: var(--uy-button-color--active);
+}
+.uy-button > button:disabled {
+  background-color: var(--uy-button-bg-color--disabled);
+  border-color: var(--uy-button-border-color--disabled);
+  color: var(--uy-button-color--disabled);
+}

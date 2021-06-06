@@ -1,0 +1,40 @@
+.uy-checkbox > label {
+  font-family: var(--uy-font-family);
+  font-size: var(--uy-font-size);
+}
+
+.uy-checkbox > label > input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  margin: 0;
+  padding: 0.75em;
+}
+.uy-checkbox > label > input[type="checkbox"]:checked:before {
+  content: var(--icon-check);
+  font-family: var(--icon-font);
+  font-weight: 900;
+}
+/* .uy-checkbox > label > input[type="checkbox"]:indeterminate:before {
+  content: "\f147";
+  font-family: var(--icon-font);
+} */
+.uy-checkbox > label > input[type="checkbox"]:hover {
+  color: var(--uy-input-color--hover);
+}
+.uy-checkbox > label > input[type="checkbox"]:focus {
+  color: var(--uy-input-color--focus);
+}
+.uy-checkbox > label > input[type="checkbox"]:active {
+  color: var(--uy-input-color--active);
+}
+.uy-checkbox > label > input[type="checkbox"]:disabled {
+  color: var(--uy-input-color--disabled);
+}
+
+.uy-checkbox > label.disabled {
+  color: var(--uy-label-color--disabled);
+}
+
+.uy-checkbox > label > span {
+  margin-left: var(--uy-input-padding);
+}

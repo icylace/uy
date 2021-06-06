@@ -1,0 +1,52 @@
+.uy-radios > label {
+  font-family: var(--uy-font-family);
+  font-size: var(--uy-font-size);
+}
+
+.uy-radios > label > input[type="radio"] {
+  align-items: center;
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  float: left;
+  justify-content: center;
+  margin: 0;
+  padding: 0.75em;
+  position: relative;
+}
+.uy-radios > label > input[type="radio"]:before {
+  position: absolute;
+}
+.uy-radios > label > input[type="radio"]:checked:before {
+  /* TODO: */
+  content: var(--icon-circle);
+
+  font-family: var(--icon-font);
+  font-weight: 900;
+}
+/* .uy-radios > label > input[type="radio"]:indeterminate:before {
+  content: "\f147";
+  font-family: var(--icon-font);
+} */
+.uy-radios > label > input[type="radio"]:hover {
+  color: var(--uy-input-color--hover);
+}
+.uy-radios > label > input[type="radio"]:focus {
+  color: var(--uy-input-color--focus);
+}
+.uy-radios > label > input[type="radio"]:active {
+  color: var(--uy-input-color--active);
+}
+.uy-radios > label > input[type="radio"]:disabled {
+  color: var(--uy-input-color--disabled);
+}
+
+.uy-radios > label.disabled {
+  color: var(--uy-label-color--disabled);
+}
+
+.uy-radios > label > span {
+  margin-left: var(--uy-input-padding);
+}

@@ -1,0 +1,78 @@
+/* https://speckyboy.com/open-source-css-javascript-select-box-snippets/ */
+
+.uy-dropdown {
+  --arrow-bg-color: var(--uy-button-bg-color);
+  --arrow-bg-color--hover: var(--uy-button-bg-color--hover);
+  --arrow-bg-color--focus: var(--uy-button-bg-color--focus);
+  --arrow-bg-color--active: var(--uy-button-bg-color--active);
+  --arrow-bg-color--disabled: var(--uy-button-bg-color--disabled);
+
+  --arrow-color: var(--uy-button-color);
+  --arrow-color--hover: var(--uy-button-color--hover);
+  --arrow-color--focus: var(--uy-button-color--focus);
+  --arrow-color--active: var(--uy-button-color--active);
+  --arrow-color--disabled: var(--uy-button-color--disabled);
+
+  --arrow-border-size: var(--uy-border-width);
+  --arrow-cover-width: calc(var(--uy-font-size) * 1.5);
+
+  --input-padding: var(--uy-border-width);
+}
+
+/* Custom dropdown arrow cover. */
+.uy-dropdown-arrow:before {
+  background-color: var(--arrow-bg-color);
+  bottom: calc(var(--arrow-border-size) + var(--input-padding));
+  right: calc(var(--arrow-border-size) + var(--input-padding));
+  top: calc(var(--arrow-border-size) + var(--input-padding));
+  width: var(--arrow-cover-width);
+}
+.uy-dropdown-arrow:hover:before {
+  background-color: var(--arrow-bg-color--hover);
+}
+.uy-dropdown-arrow.focus:before {
+  background-color: var(--arrow-bg-color--focus);
+}
+.uy-dropdown-arrow:active:before {
+  background-color: var(--arrow-bg-color--active);
+}
+.uy-dropdown-arrow.disabled:before {
+  background-color: var(--arrow-bg-color--disabled);
+}
+
+/* Custom drop-down arrow. */
+.uy-dropdown-arrow:after {
+  color: var(--arrow-color);
+  /* https://graphemica.com/%E2%96%BC */
+  content: "▼";
+  /* https://fontawesome.com/icons/caret-down */
+  /* content: var(--icon-check); */
+  /* font-family: var(--icon-font); */
+  font-size: 0.7em;
+  margin-top: -0.5em;
+  right: calc(
+    (var(--arrow-cover-width) - var(--arrow-border-size)) / 2 - var(--uy-input-padding) + (var(--input-padding) * 1.5)
+  );
+  top: 50%;
+}
+.uy-dropdown-arrow:hover:after {
+  color: var(--arrow-color--hover);
+}
+.uy-dropdown-arrow.focus:after {
+  color: var(--arrow-color--focus);
+}
+.uy-dropdown-arrow:active:after {
+  color: var(--arrow-color--active);
+}
+.uy-dropdown-arrow.disabled:after {
+  color: var(--arrow-color--disabled);
+}
+
+.uy-dropdown select {
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 0;
+  border-width: var(--uy-border-width);
+  padding: var(--uy-input-padding);
+  padding-right: calc(var(--uy-input-padding) * 2 + var(--arrow-cover-width));
+}

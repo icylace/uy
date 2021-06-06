@@ -1,0 +1,48 @@
+.uy-numberbox {
+  --label-bg-color--disabled: var(--color-gray--62__50);
+}
+
+.uy-numberbox > label.hover input[type="number"] {
+  background-color: var(--uy-input-bg-color--hover);
+  border-color: var(--uy-input-border-color--hover);
+  color: var(--uy-input-color--hover);
+}
+.uy-numberbox > label:active input[type="number"] {
+  background-color: var(--uy-input-bg-color--active);
+  border-color: var(--uy-input-border-color--active);
+  color: var(--uy-input-color--active);
+}
+
+.uy-numberbox > label span {
+  background-color: var(--uy-input-border-color);
+  border-color: var(--uy-input-border-color);
+  color: var(--uy-button-color);
+  padding-left: 0.4em;
+  padding-right: 0.4em;
+  font-family: var(--uy-font-family);
+  font-size: var(--uy-font-size);
+}
+.uy-numberbox > label:hover span {
+  background-color: var(--uy-input-border-color--hover);
+  border-color: var(--uy-input-border-color--hover);
+  color: var(--uy-button-color--hover);
+}
+.uy-numberbox > label.focus span {
+  background-color: var(--uy-input-border-color--focus);
+  border-color: var(--uy-input-border-color--focus);
+  color: var(--uy-button-color--focus);
+}
+.uy-numberbox > label:active span {
+  background-color: var(--uy-input-border-color--active);
+  border-color: var(--uy-input-border-color--active);
+  color: var(--uy-button-color--active);
+}
+.uy-numberbox > label.disabled span {
+  background-color: var(--uy-input-border-color--disabled);
+  border-color: var(--uy-input-border-color--disabled);
+  color: var(--uy-button-color--disabled);
+}
+
+.uy-numberbox > label > input[type="number"] {
+  width: 5em;
+}

@@ -1,215 +1,222 @@
+@import url("/src/theme/storyboard/color.css");
+@import url("/src/theme/storyboard/font.css");
+
+@import url("/src/theme/storyboard/button/button.css");
+@import url("/src/theme/storyboard/button/cancelButton.css");
+
+@import url("/src/theme/storyboard/container/field.css");
+@import url("/src/theme/storyboard/container/fieldset.css");
+@import url("/src/theme/storyboard/container/overlay.css");
+@import url("/src/theme/storyboard/container/popup.css");
+@import url("/src/theme/storyboard/container/table.css");
+@import url("/src/theme/storyboard/container/ui.css");
+
+@import url("/src/theme/storyboard/indicator/icon.css");
+@import url("/src/theme/storyboard/indicator/spinner.css");
+
+@import url("/src/theme/storyboard/inputter/checkbox.css");
+@import url("/src/theme/storyboard/inputter/checklist.css");
+@import url("/src/theme/storyboard/inputter/datePicker.css");
+@import url("/src/theme/storyboard/inputter/dropdown.css");
+@import url("/src/theme/storyboard/inputter/file.css");
+@import url("/src/theme/storyboard/inputter/list.css");
+@import url("/src/theme/storyboard/inputter/multiselect.css");
+@import url("/src/theme/storyboard/inputter/numberbox.css");
+@import url("/src/theme/storyboard/inputter/pager.css");
+@import url("/src/theme/storyboard/inputter/radios.css");
+@import url("/src/theme/storyboard/inputter/searchbox.css");
+@import url("/src/theme/storyboard/inputter/tabs.css");
+@import url("/src/theme/storyboard/inputter/textarea.css");
+@import url("/src/theme/storyboard/inputter/textbox.css");
+
+/* -------------------------------------------------------------------------- */
+
+@font-face {
+  font-family: 'Font Awesome 5 Brands';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("./assets/webfonts/fa-brands-400.eot");
+  src: url("./assets/webfonts/fa-brands-400.eot?#iefix") format("embedded-opentype"),
+       url("./assets/webfonts/fa-brands-400.woff2") format("woff2"),
+       url("./assets/webfonts/fa-brands-400.woff") format("woff"),
+       url("./assets/webfonts/fa-brands-400.ttf") format("truetype"),
+       url("./assets/webfonts/fa-brands-400.svg#fontawesome") format("svg");
+}
+
+@font-face {
+  font-family: 'Font Awesome 5 Free';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("./assets/webfonts/fa-regular-400.eot");
+  src: url("./assets/webfonts/fa-regular-400.eot?#iefix") format("embedded-opentype"),
+       url("./assets/webfonts/fa-regular-400.woff2") format("woff2"),
+       url("./assets/webfonts/fa-regular-400.woff") format("woff"),
+       url("./assets/webfonts/fa-regular-400.ttf") format("truetype"),
+       url("./assets/webfonts/fa-regular-400.svg#fontawesome") format("svg");
+}
+
+@font-face {
+  font-family: 'Font Awesome 5 Free';
+  font-style: normal;
+  font-weight: 900;
+  font-display: block;
+  src: url("./assets/webfonts/fa-solid-900.eot");
+  src: url("./assets/webfonts/fa-solid-900.eot?#iefix") format("embedded-opentype"),
+       url("./assets/webfonts/fa-solid-900.woff2") format("woff2"),
+       url("./assets/webfonts/fa-solid-900.woff") format("woff"),
+       url("./assets/webfonts/fa-solid-900.ttf") format("truetype"),
+       url("./assets/webfonts/fa-solid-900.svg#fontawesome") format("svg");
+}
+
+/* -------------------------------------------------------------------------- */
+
+:root {
+  --uy-container-color: hsl(148, 100%, 45%);
+  --uy-container-color--hover: hsl(199, 100%, 75%);
+  --uy-container-color--focus: hsl(270, 100%, 75%);
+  --uy-container-color--active: hsl(0, 100%, 75%);
+  --uy-container-color--disabled: hsl(0, 0%, 45%);
+
+  --uy-container-bg-color: hsl(148, 100%, 25%);
+  --uy-container-bg-color--hover: hsl(199, 100%, 45%);
+  --uy-container-bg-color--focus: hsl(270, 100%, 45%);
+  --uy-container-bg-color--active: hsl(0, 100%, 45%);
+  --uy-container-bg-color--disabled: hsl(0, 0%, 25%);
+
+  --uy-container-border-color: hsl(148, 100%, 20%);
+  --uy-container-border-color--hover: hsl(199, 100%, 40%);
+  --uy-container-border-color--focus: hsl(270, 100%, 40%);
+  --uy-container-border-color--active: hsl(0, 100%, 40%);
+  --uy-container-border-color--disabled: hsl(0, 0%, 20%);
+
+  /* ------------------------------------------------------------------------ */
+
+  --uy-input-color: hsl(148, 100%, 45%);
+  --uy-input-color--hover: hsl(199, 100%, 75%);
+  --uy-input-color--focus: hsl(270, 100%, 75%);
+  --uy-input-color--active: hsl(0, 100%, 75%);
+  --uy-input-color--disabled: hsl(0, 0%, 45%);
+
+  --uy-input-bg-color: hsl(148, 100%, 25%);
+  --uy-input-bg-color--hover: hsl(199, 100%, 45%);
+  --uy-input-bg-color--focus: hsl(270, 100%, 45%);
+  --uy-input-bg-color--active: hsl(0, 100%, 45%);
+  --uy-input-bg-color--disabled: hsl(0, 0%, 25%);
+
+  --uy-input-border-color: hsl(148, 100%, 20%);
+  --uy-input-border-color--hover: hsl(199, 100%, 40%);
+  --uy-input-border-color--focus: hsl(270, 100%, 40%);
+  --uy-input-border-color--active: hsl(0, 100%, 40%);
+  --uy-input-border-color--disabled: hsl(0, 0%, 20%);
+
+  /* ------------------------------------------------------------------------ */
+
+  --uy-button-color: hsl(148, 100%, 40%);
+  --uy-button-color--hover: hsl(199, 100%, 60%);
+  --uy-button-color--focus: hsl(270, 100%, 70%);
+  --uy-button-color--active: hsl(0, 100%, 60%);
+  --uy-button-color--disabled: hsl(0, 0%, 40%);
+
+  --uy-button-bg-color: hsl(148, 100%, 15%);
+  --uy-button-bg-color--hover: hsl(199, 100%, 35%);
+  --uy-button-bg-color--focus: hsl(270, 100%, 35%);
+  --uy-button-bg-color--active: hsl(0, 100%, 35%);
+  --uy-button-bg-color--disabled: hsl(0, 0%, 20%);
+
+  --uy-button-border-color: hsl(148, 100%, 20%);
+  --uy-button-border-color--hover: hsl(199, 100%, 40%);
+  --uy-button-border-color--focus: hsl(270, 100%, 40%);
+  --uy-button-border-color--active: hsl(0, 100%, 40%);
+  --uy-button-border-color--disabled: hsl(0, 0%, 25%);
+
+  /* ------------------------------------------------------------------------ */
+
+  --uy-selected-color: hsl(240, 100%, 85%);
+  --uy-selected-color--hover: hsl(34, 100%, 80%);
+  --uy-selected-color--focus: hsl(300, 100%, 80%);
+  --uy-selected-color--active: hsl(61, 100%, 30%);
+  --uy-selected-color--disabled: hsl(0, 0%, 60%);
+
+  --uy-selected-bg-color: hsl(240, 100%, 50%);
+  --uy-selected-bg-color--hover: hsl(34, 100%, 50%);
+  --uy-selected-bg-color--focus: hsl(300, 100%, 40%);
+  --uy-selected-bg-color--active: hsl(61, 100%, 50%);
+  --uy-selected-bg-color--disabled: hsl(0, 0%, 30%);
+
+  --uy-selected-border-color: hsl(240, 100%, 70%);
+  --uy-selected-border-color--hover: hsl(34, 100%, 40%);
+  --uy-selected-border-color--focus: hsl(300, 100%, 30%);
+  --uy-selected-border-color--active: hsl(61, 100%, 40%);
+  --uy-selected-border-color--disabled: hsl(0, 0%, 40%);
+
+  /* ------------------------------------------------------------------------ */
+
+  --uy-label-color: hsl(148, 100%, 40%);
+  --uy-label-color--hover: hsl(199, 100%, 60%);
+  --uy-label-color--focus: hsl(270, 100%, 60%);
+  --uy-label-color--active: hsl(0, 100%, 60%);
+  --uy-label-color--disabled: hsl(0, 0%, 20%);
+
+  /* ------------------------------------------------------------------------ */
+
+  --uy-font-family: var(--font-verdana-like);
+  --uy-font-size: 1.1rem;
+
+  /* ------------------------------------------------------------------------ */
+
+  --uy-border-width: 2px;
+  --uy-border: var(--uy-border-width) solid var(--uy-input-border-color);
+  --uy-input-padding: 0.25em;
+}
+
+/* -------------------------------------------------------------------------- */
+
+body {
+  background-color: #444;
+}
+
+* + .uy-control-storyboard {
+  margin-top: 1em;
+}
+
+.uy-control-storyboard > * + .uy-row {
+  margin-top: 0.5em;
+}
+
 /*
 
-TODO:
+:read-only {
+  outline: 1px dashed orange;
+}
 
-- codify a default theme
-
-
-
-
-uy
-
-- uy-control: An interactive component.
-- uy-container: A component meant to contain other components.
-- uy-indicator: A component meant to display information.
-- uy-input: The element of a control that accepts user input data.
-- uy-clicky: The element of a control that can be clicked.
-
-input control modes:
-- regular
-- selected
-- required
-
-input control states:
-- normal
-- hover
-- active
-- focus
-- locked
-- busy
-- disabled
-- clean
-- dirty
-- invalid
-- error
+:read-write {
+  outline: 1px dashed purple;
+}
 
 */
 
 /* -------------------------------------------------------------------------- */
 
-@import url(./theme/default/button/button.css);
-@import url(./theme/default/button/cancelButton.css);
+/* https://codepen.io/MathieuRichard/pen/HAgnm */
 
-@import url(./theme/default/container/field.css);
-@import url(./theme/default/container/fieldset.css);
-@import url(./theme/default/container/overlay.css);
-@import url(./theme/default/container/popup.css);
-@import url(./theme/default/container/row.css);
-@import url(./theme/default/container/table.css);
-
-@import url(./theme/default/indicator/icon.css);
-@import url(./theme/default/indicator/spinner.css);
-
-@import url(./theme/default/inputter/checkbox.css);
-@import url(./theme/default/inputter/checklist.css);
-@import url(./theme/default/inputter/datePicker.css);
-@import url(./theme/default/inputter/dropdown.css);
-@import url(./theme/default/inputter/file.css);
-@import url(./theme/default/inputter/list.css);
-@import url(./theme/default/inputter/multiselect.css);
-@import url(./theme/default/inputter/numberbox.css);
-@import url(./theme/default/inputter/pager.css);
-@import url(./theme/default/inputter/radios.css);
-@import url(./theme/default/inputter/searchbox.css);
-@import url(./theme/default/inputter/tabs.css);
-@import url(./theme/default/inputter/textarea.css);
-@import url(./theme/default/inputter/textbox.css);
-
-/* -------------------------------------------------------------------------- */
-
-/* .hidden {
-  display: none !important;
-} */
-
-.disabled {
-  pointer-events: none !important;
+.uy-scroller::-webkit-scrollbar {
+  width: 15px;
 }
 
-.locked {
-  pointer-events: none;
-}
-
-/* -------------------------------------------------------------------------- */
-
-.uy-container {
-  background-color: var(--uy-container-bg-color);
-  border-color: var(--uy-container-border-color);
-  border-style: solid;
-  border-width: var(--uy-border-width);
-  color: var(--uy-container-color);
-  font-family: var(--uy-font-family);
-  font-size: var(--uy-font-size);
-  padding: var(--uy-container-padding);
-  outline: 0;
-}
-.uy-container.hover,
-.uy-container:hover {
-  background-color: var(--uy-container-bg-color--hover);
-  border-color: var(--uy-container-border-color--hover);
-  color: var(--uy-container-color--hover);
-}
-.uy-container.focus,
-.uy-container:focus {
-  background-color: var(--uy-container-bg-color--focus);
-  border-color: var(--uy-container-border-color--focus);
-  color: var(--uy-container-color--focus);
-}
-.uy-container.active,
-.uy-container:active {
-  background-color: var(--uy-container-bg-color--active);
-  border-color: var(--uy-container-border-color--active);
-  color: var(--uy-container-color--active);
-}
-.uy-container.disabled,
-.uy-container:disabled {
-  background-color: var(--uy-container-bg-color--disabled);
-  border-color: var(--uy-container-border-color--disabled);
-  color: var(--uy-container-color--disabled);
-  pointer-events: none;
-}
-.uy-container.locked {
-  border-color: var(--uy-container-border-color--disabled);
-}
-
-/* -------------------------------------------------------------------------- */
-
-.uy-input {
+.uy-scroller::-webkit-scrollbar-thumb {
   background-color: var(--uy-input-bg-color);
-  border-color: var(--uy-input-border-color);
-  border-style: solid;
-  border-width: var(--uy-border-width);
-  color: var(--uy-input-color);
-  cursor: pointer;
-  font-family: var(--uy-font-family);
-  font-size: var(--uy-font-size);
-  padding: var(--uy-input-padding);
-  outline: 0;
+  border: var(--uy-border-width) solid var(--uy-input-border-color);
 }
-.uy-input.hover,
-.uy-input:hover {
-  background-color: var(--uy-input-bg-color--hover);
-  border-color: var(--uy-input-border-color--hover);
-  color: var(--uy-input-color--hover);
-}
-.uy-input.focus,
-.uy-input:focus {
-  background-color: var(--uy-input-bg-color--focus);
-  border-color: var(--uy-input-border-color--focus);
-  color: var(--uy-input-color--focus);
-}
-.uy-input.active,
-.uy-input:active {
-  background-color: var(--uy-input-bg-color--active);
-  border-color: var(--uy-input-border-color--active);
-  color: var(--uy-input-color--active);
-}
-.uy-input.disabled,
-.uy-input:disabled {
+.disabled .uy-scroller::-webkit-scrollbar-thumb {
   background-color: var(--uy-input-bg-color--disabled);
   border-color: var(--uy-input-border-color--disabled);
-  color: var(--uy-input-color--disabled);
-  pointer-events: none;
-}
-.uy-input.locked {
-  border-color: var(--uy-input-border-color--disabled);
-  pointer-events: none;
 }
 
-/* -------------------------------------------------------------------------- */
-
-.uy-clicky {
-  cursor: pointer;
+.uy-scroller::-webkit-scrollbar-track {
+  background-color: var(--uy-input-border-color);
 }
-
-/* -------------------------------------------------------------------------- */
-
-/* .uy-horizontal {
-  align-items: center;
-  display: flex;
-}
-
-.uy-horizontal > * + * {
-  margin-left: 0.5em;
-}
-
-.uy-horizontal > * + .uy-checkbox-wrapper {
-  margin-left: 2em;
-}
-
-.uy-table .uy-horizontal .uy-textbox-wrapper {
-  margin-left: 0.5em;
-}
-
-.uy-table .uy-horizontal .uy-textbox {
-  width: 10em;
-} */
-
-/* -------------------------------------------------------------------------- */
-
-.only-print {
-  display: none !important;
-}
-
-@media print {
-  .no-print {
-    display: none !important;
-  }
-
-  .only-print {
-    display: block !important;
-  }
-
-  .break-before {
-    page-break-before: always;
-  }
+.disabled .uy-scroller::-webkit-scrollbar-track {
+  background-color: var(--uy-input-border-color--disabled);
 }

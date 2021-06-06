@@ -1,0 +1,39 @@
+.uy-pager > ul {
+  padding: 0;
+}
+
+.uy-pager-nav {
+  background-color: var(--color-blue-violet--95);
+  border: 1px solid var(--color-blue-violet--60);
+  color: var(--color-blue-violet--60);
+  cursor: pointer;
+  padding: 0.7em 1em;
+}
+.disabled .uy-pager-nav {
+  background-color: var(--uy-input-border-color--disabled);
+  border-color: var(--uy-input-border-color--disabled);
+  color: var(--uy-button-color--disabled);
+}
+
+.uy-pager-nav-inactive {
+  cursor: default;
+  opacity: 0.5;
+}
+
+.uy-pager-more {
+  padding: 0.7em 0.5em;
+}
+.disabled .uy-pager-more {
+  color: var(--uy-button-color--disabled);
+}
+
+.uy-pager-current {
+  background-color: var(--color-blue-violet--60);
+  color: white;
+  cursor: default;
+}
+.disabled .uy-pager-current {
+  background-color: var(--uy-button-border-color--disabled);
+  border-color: var(--uy-button-border-color--disabled);
+  color: var(--uy-button-color--disabled);
+}

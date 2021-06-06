@@ -1,5 +1,11 @@
 # https://git-scm.com/docs/gitignore
 
+node_modules
+.DS_Store
+dist
+dist-ssr
+*.local
+
 # Generated files suitable for public distribution.
 dist/
 

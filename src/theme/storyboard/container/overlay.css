@@ -1,0 +1,6 @@
+.uy-overlay {
+  background-color: white;
+  height: min(300px, 80vh);
+  padding: var(--uy-input-padding);
+  width: min(300px, 80vw);
+}

@@ -59,67 +59,73 @@ task:index() {
 
 # ------------------------------------------------------------------------------
 
-task:build:dev() {
-  task:clean
+# task:build:dev() {
+#   task:clean
 
-  echo
-  echo "Compiling TypeScript for development..."
-  npx tsc --build
+#   echo
+#   echo "Compiling TypeScript for development..."
+#   npx tsc --build
 
-  # Exit if errors found.
-  [ $? != 0 ] && return
+#   # Exit if errors found.
+#   [ $? != 0 ] && return
 
-  npx rollup --config
-  # task:_snowpack
+#   npx rollup --config
+#   # task:_snowpack
 
-  echo
-  echo "Copying compiled JavaScript to the distribution folder..."
-  # https://stackoverflow.com/a/1313688/1935675
-  rsync --archive ./output/typescript/ ./dist --exclude=tsconfig.tsbuildinfo
+#   echo
+#   echo "Copying compiled JavaScript to the distribution folder..."
+#   # https://stackoverflow.com/a/1313688/1935675
+#   rsync --archive ./output/typescript/ ./dist --exclude=tsconfig.tsbuildinfo
 
-  echo
-  echo "Compiling CSS for development..."
-  npx postcss ./src/index.css --output ./dist/index.css
-}
+#   echo
+#   echo "Compiling CSS for development..."
+#   npx postcss ./src/index.css --output ./dist/index.css
+# }
 
 # ------------------------------------------------------------------------------
 
-task:build:prod() {
-  task:clean
+# task:build:prod() {
+#   task:clean
 
-  echo
-  echo "Compiling TypeScript for production..."
-  npx tsc --build --incremental false
+#   echo
+#   echo "Compiling TypeScript for production..."
+#   npx tsc --build --incremental false
 
-  # Exit if errors found.
-  [ $? != 0 ] && return
+#   # Exit if errors found.
+#   [ $? != 0 ] && return
 
-  npx rollup --config --environment prod
-  # task:_snowpack
+#   npx rollup --config --environment prod
+#   # task:_snowpack
 
-  echo
-  echo "Copying compiled JavaScript to the distribution folder..."
-  # https://stackoverflow.com/a/1313688
-  rsync --archive ./output/typescript/ ./dist --exclude=tsconfig.tsbuildinfo
+#   echo
+#   echo "Copying compiled JavaScript to the distribution folder..."
+#   # https://stackoverflow.com/a/1313688
+#   rsync --archive ./output/typescript/ ./dist --exclude=tsconfig.tsbuildinfo
 
-  echo
-  echo "Compiling CSS for production..."
-  npx postcss ./src/index.css --output ./dist/index.css --env prod
+#   echo
+#   echo "Compiling CSS for production..."
+#   npx postcss ./src/index.css --output ./dist/index.css --env prod
 
-  echo
-  echo "Minifying and gzipping ES modules..."
-  npx terser --ecma 6 --compress --mangle --module --output ./dist/index.esm.min.js -- ./dist/index.esm.js
-  gzip --best --to-stdout ./dist/index.esm.min.js > ./dist/index.esm.min.js.gz
+#   echo
+#   echo "Minifying and gzipping ES modules..."
+#   npx terser --ecma 6 --compress --mangle --module --output ./dist/index.esm.min.js -- ./dist/index.esm.js
+#   gzip --best --to-stdout ./dist/index.esm.min.js > ./dist/index.esm.min.js.gz
 
-  # echo
-  # echo "Minifying and gzipping UMD modules..."
-  # npx terser --ecma 6 --compress --mangle --output ./dist/index.umd.min.js -- ./dist/index.umd.js
-  # gzip --best --to-stdout ./dist/index.umd.min.js > ./dist/index.umd.min.js.gz
+#   # echo
+#   # echo "Minifying and gzipping UMD modules..."
+#   # npx terser --ecma 6 --compress --mangle --output ./dist/index.umd.min.js -- ./dist/index.umd.js
+#   # gzip --best --to-stdout ./dist/index.umd.min.js > ./dist/index.umd.min.js.gz
 
-  # TODO:
-  # echo
-  # echo "Generating types..."
-  # npx tsc --declaration --emitDeclarationOnly --incremental false --module amd --outFile ./dist/index.js
+#   # TODO:
+#   # echo
+#   # echo "Generating types..."
+#   # npx tsc --declaration --emitDeclarationOnly --incremental false --module amd --outFile ./dist/index.js
+# }
+
+# ------------------------------------------------------------------------------
+
+task:build() {
+  npx vite build
 }
 
 # ------------------------------------------------------------------------------
@@ -128,6 +134,12 @@ task:check() {
   echo
   echo "Typechecking TypeScript code..."
   npx tsc --noEmit --incremental false
+}
+
+# ------------------------------------------------------------------------------
+
+task:dev() {
+  npx vite
 }
 
 # ------------------------------------------------------------------------------
@@ -231,7 +243,7 @@ task:reset() {
   npm install --save @fortawesome/fontawesome-free
   npm install --save eyepiece
   npm install --save hyperapp
-  npm install --save ntml
+  # npm install --save ntml
   # npm install --save remeda
 
   # npm install --save-dev snowpack typescript rollup terser prettier
@@ -251,6 +263,8 @@ task:reset() {
   npm install --save-dev postcss-reporter postcss-preset-env
 
   npm install --save-dev vite
+
+  npm install --save-dev remeda axios
 
   task:prepare
 }

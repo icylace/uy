@@ -1,0 +1,15 @@
+:root {
+  /* https://gist.github.com/don1138/5761014 */
+  --font-verdana-like: "Corbel", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans",
+    "Bitstream Vera Sans", "Liberation Sans", "Verdana", "Verdana Ref", sans-serif;
+
+  /* ------------------------------------------------------------------------ */
+
+  --icon-font: "Font Awesome 5 Free";
+
+  /* https://fontawesome.com/icons/check */
+  --icon-check: "\f00c";
+
+  /* https://fontawesome.com/icons/circle */
+  --icon-circle: "\f111";
+}

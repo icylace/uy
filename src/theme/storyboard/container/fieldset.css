@@ -1,0 +1,23 @@
+.uy-fieldset {
+  border: var(--uy-border-width) solid var(--uy-input-border-color);
+  font-family: var(--uy-font-family);
+  font-size: var(--uy-font-size);
+}
+.uy-fieldset.locked {
+  border-color: var(--uy-input-border-color--disabled);
+}
+.uy-fieldset:disabled {
+  background-color: var(--uy-input-bg-color--disabled);
+  border-color: var(--uy-input-border-color--disabled);
+  color: var(--uy-input-color--disabled);
+}
+
+.uy-fieldset legend {
+  margin-bottom: 0.5em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
+.uy-fieldset > legend + * + * {
+  margin-top: 0.5em;
+}

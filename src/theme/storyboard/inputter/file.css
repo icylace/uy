@@ -1,0 +1,69 @@
+/* BAsed on: */
+/* https://codepen.io/adamlaki/pen/VYpewx */
+
+.uy-file {
+  --input-padding: var(--uy-border-width);
+
+  --button-border-color: var(--uy-button-bg-color);
+  --button-border-color--hover: var(--uy-button-bg-color--hover);
+  --button-border-color--focus: var(--uy-button-bg-color--focus);
+  --button-border-color--active: var(--uy-button-bg-color--active);
+  --button-border-color--disabled: var(--uy-button-bg-color--disabled);
+}
+
+.uy-file > label {
+  padding: var(--input-padding);
+}
+.uy-file > label.focus {
+  background-color: var(--uy-input-bg-color--focus);
+  border-color: var(--uy-input-border-color--focus);
+  color: var(--uy-input-color--focus);
+}
+.uy-file > label.disabled {
+  background-color: var(--uy-input-bg-color--disabled);
+  border-color: var(--uy-input-border-color--disabled);
+  color: var(--uy-input-color--disabled);
+}
+
+.uy-file > label:after {
+  margin-right: 0.5em;
+  white-space: nowrap;
+}
+.uy-file > label.active:after {
+  background-color: var(--uy-input-bg-color--active);
+  border-color: var(--uy-input-border-color--active);
+  color: var(--uy-input-color--active);
+}
+
+.uy-file > label > .uy-clicky {
+  background-color: var(--uy-button-bg-color);
+  border-color: var(--button-border-color);
+  color: var(--uy-button-color);
+  font-size: 0.75em;
+  margin-right: 0.5em;
+  padding-bottom: 0.3em;
+  padding-left: 0.75em;
+  padding-right: 0.75em;
+  padding-top: 0.3em;
+  white-space: nowrap;
+}
+/* .uy-file > label:hover > .uy-clicky {
+  background-color: var(--uy-button-bg-color--hover);
+  border-color: var(--button-border-color--hover);
+  color: var(--uy-button-color--hover);
+}
+.uy-file > label.focus > .uy-clicky {
+  background-color: var(--uy-button-bg-color--focus);
+  border-color: var(--button-border-color--focus);
+  color: var(--uy-button-color--focus);
+}
+.uy-file > label:active > .uy-clicky {
+  background-color: var(--uy-button-bg-color--active);
+  border-color: var(--button-border-color--active);
+  color: var(--uy-button-color--active);
+}
+.uy-file > label.disabled > .uy-clicky {
+  background-color: var(--uy-button-bg-color--disabled);
+  border-color: var(--button-border-color--disabled);
+  color: var(--uy-button-color--disabled);
+} */

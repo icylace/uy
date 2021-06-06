@@ -1,0 +1,215 @@
+/*
+
+TODO:
+
+- codify a default theme
+
+
+
+
+uy
+
+- uy-control: An interactive component.
+- uy-container: A component meant to contain other components.
+- uy-indicator: A component meant to display information.
+- uy-input: The element of a control that accepts user input data.
+- uy-clicky: The element of a control that can be clicked.
+
+input control modes:
+- regular
+- selected
+- required
+
+input control states:
+- normal
+- hover
+- active
+- focus
+- locked
+- busy
+- disabled
+- clean
+- dirty
+- invalid
+- error
+
+*/
+
+/* -------------------------------------------------------------------------- */
+
+@import url(./theme/default/button/button.css);
+@import url(./theme/default/button/cancelButton.css);
+
+@import url(./theme/default/container/field.css);
+@import url(./theme/default/container/fieldset.css);
+@import url(./theme/default/container/overlay.css);
+@import url(./theme/default/container/popup.css);
+@import url(./theme/default/container/row.css);
+@import url(./theme/default/container/table.css);
+
+@import url(./theme/default/indicator/icon.css);
+@import url(./theme/default/indicator/spinner.css);
+
+@import url(./theme/default/inputter/checkbox.css);
+@import url(./theme/default/inputter/checklist.css);
+@import url(./theme/default/inputter/datePicker.css);
+@import url(./theme/default/inputter/dropdown.css);
+@import url(./theme/default/inputter/file.css);
+@import url(./theme/default/inputter/list.css);
+@import url(./theme/default/inputter/multiselect.css);
+@import url(./theme/default/inputter/numberbox.css);
+@import url(./theme/default/inputter/pager.css);
+@import url(./theme/default/inputter/radios.css);
+@import url(./theme/default/inputter/searchbox.css);
+@import url(./theme/default/inputter/tabs.css);
+@import url(./theme/default/inputter/textarea.css);
+@import url(./theme/default/inputter/textbox.css);
+
+/* -------------------------------------------------------------------------- */
+
+/* .hidden {
+  display: none !important;
+} */
+
+.disabled {
+  pointer-events: none !important;
+}
+
+.locked {
+  pointer-events: none;
+}
+
+/* -------------------------------------------------------------------------- */
+
+.uy-container {
+  background-color: var(--uy-container-bg-color);
+  border-color: var(--uy-container-border-color);
+  border-style: solid;
+  border-width: var(--uy-border-width);
+  color: var(--uy-container-color);
+  font-family: var(--uy-font-family);
+  font-size: var(--uy-font-size);
+  padding: var(--uy-container-padding);
+  outline: 0;
+}
+.uy-container.hover,
+.uy-container:hover {
+  background-color: var(--uy-container-bg-color--hover);
+  border-color: var(--uy-container-border-color--hover);
+  color: var(--uy-container-color--hover);
+}
+.uy-container.focus,
+.uy-container:focus {
+  background-color: var(--uy-container-bg-color--focus);
+  border-color: var(--uy-container-border-color--focus);
+  color: var(--uy-container-color--focus);
+}
+.uy-container.active,
+.uy-container:active {
+  background-color: var(--uy-container-bg-color--active);
+  border-color: var(--uy-container-border-color--active);
+  color: var(--uy-container-color--active);
+}
+.uy-container.disabled,
+.uy-container:disabled {
+  background-color: var(--uy-container-bg-color--disabled);
+  border-color: var(--uy-container-border-color--disabled);
+  color: var(--uy-container-color--disabled);
+  pointer-events: none;
+}
+.uy-container.locked {
+  border-color: var(--uy-container-border-color--disabled);
+}
+
+/* -------------------------------------------------------------------------- */
+
+.uy-input {
+  background-color: var(--uy-input-bg-color);
+  border-color: var(--uy-input-border-color);
+  border-style: solid;
+  border-width: var(--uy-border-width);
+  color: var(--uy-input-color);
+  cursor: pointer;
+  font-family: var(--uy-font-family);
+  font-size: var(--uy-font-size);
+  padding: var(--uy-input-padding);
+  outline: 0;
+}
+.uy-input.hover,
+.uy-input:hover {
+  background-color: var(--uy-input-bg-color--hover);
+  border-color: var(--uy-input-border-color--hover);
+  color: var(--uy-input-color--hover);
+}
+.uy-input.focus,
+.uy-input:focus {
+  background-color: var(--uy-input-bg-color--focus);
+  border-color: var(--uy-input-border-color--focus);
+  color: var(--uy-input-color--focus);
+}
+.uy-input.active,
+.uy-input:active {
+  background-color: var(--uy-input-bg-color--active);
+  border-color: var(--uy-input-border-color--active);
+  color: var(--uy-input-color--active);
+}
+.uy-input.disabled,
+.uy-input:disabled {
+  background-color: var(--uy-input-bg-color--disabled);
+  border-color: var(--uy-input-border-color--disabled);
+  color: var(--uy-input-color--disabled);
+  pointer-events: none;
+}
+.uy-input.locked {
+  border-color: var(--uy-input-border-color--disabled);
+  pointer-events: none;
+}
+
+/* -------------------------------------------------------------------------- */
+
+.uy-clicky {
+  cursor: pointer;
+}
+
+/* -------------------------------------------------------------------------- */
+
+/* .uy-horizontal {
+  align-items: center;
+  display: flex;
+}
+
+.uy-horizontal > * + * {
+  margin-left: 0.5em;
+}
+
+.uy-horizontal > * + .uy-checkbox-wrapper {
+  margin-left: 2em;
+}
+
+.uy-table .uy-horizontal .uy-textbox-wrapper {
+  margin-left: 0.5em;
+}
+
+.uy-table .uy-horizontal .uy-textbox {
+  width: 10em;
+} */
+
+/* -------------------------------------------------------------------------- */
+
+.only-print {
+  display: none !important;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  .only-print {
+    display: block !important;
+  }
+
+  .break-before {
+    page-break-before: always;
+  }
+}

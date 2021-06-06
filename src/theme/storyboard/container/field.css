@@ -1,0 +1,22 @@
+.uy-field.uy-field {
+  border: 0;
+}
+
+.uy-field > label {
+  color: var(--uy-label-color);
+  font-family: var(--uy-font-family);
+  font-size: var(--uy-font-size);
+  outline: 0;
+}
+.uy-field > label:hover {
+  color: var(--uy-label-color--hover);
+}
+.uy-field > label:focus {
+  color: var(--uy-label-color--focus);
+}
+.uy-field > label:active {
+  color: var(--uy-label-color--active);
+}
+.uy-field > label.disabled {
+  color: var(--uy-label-color--disabled);
+}

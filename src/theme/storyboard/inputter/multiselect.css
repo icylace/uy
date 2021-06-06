@@ -1,0 +1,25 @@
+.uy-multiselect {
+  border: var(--uy-border-width) solid var(--uy-input-border-color);
+  overflow: auto;
+  padding: var(--uy-input-padding);
+}
+.uy-multiselect.disabled {
+  border-color: var(--uy-input-border-color--disabled);
+}
+/* .uy-multiselect.locked {
+  border-color: var(--uy-input-border-color--disabled);
+} */
+
+.uy-multiselect-options > .uy-checkbox + .uy-checkbox {
+  margin-top: var(--uy-input-padding);
+}
+
+.uy-multiselect--grid-mode > .uy-multiselect-options {
+  display: grid;
+  grid-gap: var(--uy-input-padding);
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+}
+
+.uy-multiselect--grid-mode > .uy-multiselect-options > .uy-checkbox + .uy-checkbox {
+  margin-top: 0;
+}

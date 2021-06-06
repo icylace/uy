@@ -1,0 +1,26 @@
+.uy-cancelButton > button {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--color-alizarin-crimson--40);
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 0.2em 0.4em;
+}
+.uy-cancelButton > button:hover {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--color-alizarin-crimson--50);
+}
+.uy-cancelButton > button:focus {
+  background-color: transparent;
+  color: var(--color-alizarin-crimson--50);
+}
+.uy-cancelButton > button:active {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--color-alizarin-crimson--50);
+}
+.uy-cancelButton > button:disabled {
+  background-color: transparent;
+  border-color: transparent;
+}

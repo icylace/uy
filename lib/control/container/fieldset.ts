@@ -1,8 +1,8 @@
 import type { ClassProp, VNode } from "hyperapp"
-import type { Content } from "../../types"
+import type { Content } from "../../utility/hyperappHelper/content"
 
 import { h } from "hyperapp"
-import { isContent } from "ntml"
+import { c, isContent } from "../../utility/hyperappHelper/content"
 
 export type FieldsetOptions<S> =
   | Content<S>
@@ -26,6 +26,6 @@ export const fieldset = <S>(options: FieldsetOptions<S>, views: ((state: S) => V
       disabled,
       ...etc,
       class: ["uy-fieldset", { disabled }, etc.class],
-    }, label ? [h("legend", {}, label), ...contents] : contents)
+    }, label ? [h("legend", {}, c(label)), ...contents] : contents)
   }
 }

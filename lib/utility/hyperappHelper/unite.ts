@@ -1,21 +1,27 @@
-import type { StateFormat, Transform } from "./types"
+import type { Effect } from "hyperapp"
+
+type StateWithEffects<S, P = any> = [state: S, ...effects: Effect<S, P>[]]
+type StateFormat<S, P = any> = S | StateWithEffects<S, P>
+
+// A transform carries out the transition from one state to another.
+type Transform<S, P = any> = (state: StateFormat<S>, payload: P) => StateFormat<S>
 
 export const unite = <S, P = any>(
-  transformation: Transform<S>,
-  transition: StateFormat<S>,
+  transform: Transform<S>,
+  stateForm: StateFormat<S>,
   payload?: P
 ): StateFormat<S> => {
-  if (!Array.isArray(transition)) {
-    return transformation(transition, payload)
+  if (!Array.isArray(stateForm)) {
+    return transform(stateForm, payload)
   }
 
-  const [state, ...effects] = transition
-  const nextTransition = transformation(state, payload)
+  const [state, ...effects] = stateForm
+  const nextStateForm = transform(state, payload)
 
-  if (!Array.isArray(nextTransition)) {
-    return [nextTransition, ...effects]
+  if (!Array.isArray(nextStateForm)) {
+    return [nextStateForm, ...effects]
   }
 
-  const [nextState, ...nextEffects] = nextTransition
+  const [nextState, ...nextEffects] = nextStateForm
   return [nextState, ...effects, ...nextEffects]
 }

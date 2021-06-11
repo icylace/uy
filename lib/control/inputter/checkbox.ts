@@ -1,10 +1,10 @@
 import type { Focus } from "eyepiece"
 import type { Action, ClassProp, VNode } from "hyperapp"
-import type { Content } from "../../types"
+import type { Content } from "../../utility/hyperappHelper/content"
 
 import { get, set } from "eyepiece"
 import { h } from "hyperapp"
-import { isContent } from "ntml"
+import { c, isContent } from "../../utility/hyperappHelper/content"
 import { box } from "../container/box"
 
 export type CheckboxValue = boolean | null | undefined
@@ -45,7 +45,7 @@ const checkbox = <S>(options: CheckboxOptions<S> = {}) => (...focus: Focus) => {
           ...etc,
           class: ["uy-input", { disabled }, etc.class],
         }),
-        label ? h("span", {}, label) : null,
+        label ? h("span", {}, c(label)) : null,
       ]),
     ])
   }

@@ -1,10 +1,11 @@
 import type { Focus } from "eyepiece"
 import type { ClassProp, MaybeVNode, VNode } from "hyperapp"
-import type { Content } from "../../types"
+import type { Content } from "../../utility/hyperappHelper/content"
 import type { StateWithEffects, Transform } from "../../utility/hyperappHelper/types"
 
 import { get, set } from "eyepiece"
 import { h } from "hyperapp"
+import { c } from "../../utility/hyperappHelper/content"
 import { isVDOM } from "ntml"
 import { encase } from "../../utility/encase"
 import { box } from "../container/box"
@@ -84,9 +85,9 @@ const tabs = <S>(options: TabsOptions<S>) => (...focus: Focus) => {
       class: ["uy-control uy-tabs", { disabled }, etc.class],
     }, [
       box("uy-tabs-navigation", [
-        ...encase(itemsHeader),
+        ...encase(c(itemsHeader)),
         box("uy-tabs-list uy-scroller", headings.map(tab<S>(focus, x, onclick))),
-        ...encase(itemsFooter),
+        ...encase(c(itemsFooter)),
       ]),
       box("uy-tabs-panels", [
         panels[headings.findIndex(isSelected(x))],

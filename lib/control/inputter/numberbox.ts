@@ -1,10 +1,10 @@
 import type { Focus } from "eyepiece"
 import type { Action, ClassProp, VNode } from "hyperapp"
-import type { Content } from "../../types"
+import type { Content } from "../../utility/hyperappHelper/content"
 
 import { get, set } from "eyepiece"
 import { h } from "hyperapp"
-import { isContent } from "ntml"
+import { c, isContent } from "../../utility/hyperappHelper/content"
 import { Defocus, Refocus } from "../action/helper"
 import { box } from "../container/box"
 
@@ -57,7 +57,7 @@ const numberbox = <S>(options: NumberboxOptions<S> = {}) => (...focus: Focus) =>
           class: ["uy-input", { disabled }, etc.class],
         }),
         label != null
-          ? h("span", { class: { "uy-input": true, disabled } }, label)
+          ? h("span", { class: { "uy-input": true, disabled } }, c(label))
           : null,
       ]),
     ])

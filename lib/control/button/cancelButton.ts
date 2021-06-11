@@ -1,8 +1,9 @@
 import type { Action, ClassProp, VNode } from "hyperapp"
-import type { Content } from "../../types"
+import type { Content } from "../../utility/hyperappHelper/content"
 
 import { h, text } from "hyperapp"
-import { isAction } from "../../utility/uyHelper/isAction"
+import { c } from "../../utility/hyperappHelper/content"
+import { isAction } from "../../utility/hyperappHelper/isAction"
 import { box } from "../container/box"
 
 export type CancelButtonOptions<S> =
@@ -24,6 +25,6 @@ export const cancelButton = <S>(options: CancelButtonOptions<S>): VNode<S> => {
       disabled,
       ...etc,
       class: [{ disabled }, etc.class],
-    }, label),
+    }, c(label)),
   ])
 }

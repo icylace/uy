@@ -1,7 +1,8 @@
 import type { ClassProp, EventActions, VNode } from "hyperapp"
-import type { Content } from "../../types"
+import type { Content } from "../../utility/hyperappHelper/content"
 
 import { h } from "hyperapp"
+import { c } from "../../utility/hyperappHelper/content"
 import { box } from "../container/box"
 
 export type ButtonOptions<S> = {
@@ -20,6 +21,6 @@ export const button = <S>(options: ButtonOptions<S>): VNode<S> => {
       disabled,
       ...etc,
       class: [{ disabled }, etc.class],
-    }, label),
+    }, c(label)),
   ])
 }

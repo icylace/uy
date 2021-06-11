@@ -14,7 +14,7 @@ const overlayNormal = overlay({ class: "test-uy-overlay" }, [
 ])
 const overlayDisabled = overlay(
   { disabled: true },
-  [column<Story>([always("OVERLAY CONTENTS")])]
+  [column<Story>([always(text("OVERLAY CONTENTS"))])]
 )
 
 const view =

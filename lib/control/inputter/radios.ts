@@ -1,9 +1,10 @@
 import type { Focus } from "eyepiece"
 import type { Action, ClassProp, VNode } from "hyperapp"
-import type { Content } from "../../types"
+import type { Content } from "../../utility/hyperappHelper/content"
 
 import { get, set } from "eyepiece"
 import { h } from "hyperapp"
+import { c } from "../../utility/hyperappHelper/content"
 import { box } from "../container/box"
 
 export type RadiosValue = string
@@ -52,7 +53,7 @@ const radios = <S>(options: RadiosOptions<S>) => (...focus: Focus) => {
               ...etc,
               class: ["uy-input", { disabled }, etc.class],
             }),
-            label != null ? h("span", {}, label) : null,
+            label != null ? h("span", {}, c(label)) : null,
           ])
         }
       ),

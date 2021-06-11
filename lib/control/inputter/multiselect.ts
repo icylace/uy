@@ -1,6 +1,6 @@
 import type { Focus } from "eyepiece"
 import type { Action, ClassProp, VNode } from "hyperapp"
-import type { Content } from "../../types"
+import type { Content } from "../../utility/hyperappHelper/content"
 import type { CheckboxData, CheckboxValue } from "./checkbox"
 
 import { h } from "hyperapp"

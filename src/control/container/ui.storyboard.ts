@@ -12,9 +12,9 @@ const freshState = (state: Story): Story => state
 const view =
   panel("uy-control-storyboard", [
     (_state: Story) => text("TEST1"),
-    row([always(text("TEST1")), always(text("TEST2")), always(text("TEST3"))]),
-    column([always(text("AAA")), always(text("BBB")), always(text("CCC"))]),
-    row([always(text("111")), always(text("222")), always(text("333"))]),
+    row<Story>([always(text("TEST1")), always(text("TEST2")), always(text("TEST3"))]),
+    column<Story>([always(text("AAA")), always(text("BBB")), always(text("CCC"))]),
+    row<Story>([always(text("111")), always(text("222")), always(text("333"))]),
   ])
 
 export { freshState, view }

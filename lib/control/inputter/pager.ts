@@ -1,9 +1,10 @@
 import type { Focus } from "eyepiece"
 import type { Action, ClassProp, MaybeVNode, VNode } from "hyperapp"
-import type { Content } from "../../types"
+import type { Content } from "../../utility/hyperappHelper/content"
 
 import { get, set } from "eyepiece"
 import { h, text } from "hyperapp"
+import { c } from "../../utility/hyperappHelper/content"
 import { range } from "../../utility/range"
 import { icon } from "../indicator/icon"
 
@@ -29,10 +30,10 @@ const pagerNav = <S>(onclick: Action<S>, content: Content<S>, active: boolean): 
   h("span", {
     class: ["uy-pager-nav", !active && "uy-pager-nav-inactive"],
     ...(active ? { onclick } : {}),
-  }, content)
+  }, c(content))
 
 const pagerMore = <S>(content: Content<S>): VNode<S> =>
-  h("span", { class: "uy-pager-more" }, content)
+  h("span", { class: "uy-pager-more" }, c(content))
 
 const pager = <S>(options: PagerOptions<S>) => (...focus: Focus) => {
   return (state: S): VNode<S> => {

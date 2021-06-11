@@ -1,9 +1,10 @@
 import type { Focus } from "eyepiece"
 import type { Action, ClassProp, VNode } from "hyperapp"
-import type { Content } from "../../types"
+import type { Content } from "../../utility/hyperappHelper/content"
 
 import { get, set } from "eyepiece"
 import { h } from "hyperapp"
+import { c } from "../../utility/hyperappHelper/content"
 import { Defocus, Refocus } from "../action/helper"
 import { box } from "../container/box"
 
@@ -57,7 +58,7 @@ const dropdown = <S>(options: DropdownOptions<S>) => (...focus: Focus) => {
           // TODO:
           // - switch to using a Map object instead in order to guarantee order
           // - verify type of `x` is workable
-          Object.entries(choices).map(([value, label]) => h("option", { value }, label)),
+          Object.entries(choices).map(([value, label]) => h("option", { value }, c(label))),
         ),
       ]),
     ])

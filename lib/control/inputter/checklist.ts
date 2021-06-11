@@ -1,6 +1,6 @@
 import type { Focus } from "eyepiece"
 import type { Action, ClassProp, VNode } from "hyperapp"
-import type { Content } from "../../types"
+import type { Content } from "../../utility/hyperappHelper/content"
 import type { TableRow } from "../container/table"
 import type { CheckboxData, CheckboxValue } from "./checkbox"
 
@@ -34,7 +34,13 @@ const checklist = <S>(options: ChecklistOptions<S>) => (...focus: Focus) => {
     const item = (x: ChecklistItem, i: number): TableRow<S> => [
       [
         { class: { "uy-horizontal": x.id === "other" } },
-        [checkbox({ label: renderLabel(x.id), onchange, disabled })(focus, i, "selected")(state)],
+        [
+          checkbox({
+            label: renderLabel(x.id),
+            onchange,
+            disabled,
+          })(focus, i, "selected")(state),
+        ],
       ],
     ]
 

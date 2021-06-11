@@ -1,11 +1,12 @@
 import type { ClassProp, Props, MaybeVNode, VNode } from "hyperapp"
-import type { Content } from "../../types"
+import type { Content } from "../../utility/hyperappHelper/content"
 
 import { h } from "hyperapp"
+import { c } from "../../utility/hyperappHelper/content"
 import { icon } from "../indicator/icon"
 import { box } from "./box"
 
-export type TableCell<S> = MaybeVNode<S> | [Props<S>, Content<S>]
+export type TableCell<S> = Content<S> | [Props<S>, Content<S>]
 export type TableRow<S> = TableCell<S>[]
 export type TableOptions<S> =
   | TableRow<S>
@@ -45,7 +46,7 @@ const hasPropList = <S>(x: TableCell<S>): x is [Props<S>, Content<S>] =>
   Array.isArray(x)
 
 const tableCell = <S>(x: TableCell<S>): VNode<S> =>
-  hasPropList(x) ? h("td", x[0], x[1]) : h("td", {}, x)
+  hasPropList(x) ? h("td", x[0], c(x[1])) : h("td", {}, c(x))
 
 const tableRow = <S>(row: TableRow<S>): VNode<S> =>
   h("tr", {}, row.map(tableCell))

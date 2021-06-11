@@ -4,12 +4,12 @@ import "@fortawesome/fontawesome-free/css/solid.css"
 import "@icylace/uy/dist/index.css"
 import "/index.css"
 
-import type { TypedH } from "hyperapp"
-import type { Story } from "./types"
+// import type { TypedH } from "hyperapp"
+// import type { Story } from "./types"
 
-import { h as ha } from "hyperapp"
+// import { h as ha } from "hyperapp"
 
-const h: TypedH<Story> = ha
+// const h: TypedH<Story> = ha
 
 // // import type { State, Subscriber, Transform, View } from "hyperapp"
 // // import type { State, Transform, View } from "hyperapp"

@@ -1,3 +1,4 @@
+import type { VNode } from "hyperapp"
 import type { Story } from "../../types"
 
 import { checkbox, freshCheckbox, panel, row, toggle } from "../../../lib/main"

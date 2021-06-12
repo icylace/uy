@@ -1,6 +1,8 @@
+import type { VNode } from "hyperapp"
 import type { Story } from "../../types"
 
-import { field, freshTextbox, panel, row, textbox, toggle } from "../../../lib/main"
+import { h } from "hyperapp"
+import { field, freshTextbox, textbox } from "../../../lib/main"
 import { readout } from "../../utility/readout"
 
 const freshState = (state: Story): Story =>
@@ -25,25 +27,25 @@ const field3Disabled = field({ label: "FIELD3", disabled: true }, [
   textbox<Story>({ disabled: true })("field", "textbox"),
 ])
 
-const view =
-  panel("uy-storyboard-showcase-panel", [
-    panel("uy-storyboard-showcase-section", [
-      panel("uy-storyboard-showcase-section-view", [
-        row([
-        toggle("showingNormal")(field1Normal),
-          toggle("showingDisabled")(field1Disabled),
+const view = (state: Story): VNode<Story> =>
+  h("section", { class: "uy-storyboard-showcase-panel" }, [
+    h("section", {}, [
+      h("section", {}, [
+        h("section", {}, [
+          state.showingNormal && field1Normal(state),
+          state.showingDisabled && field1Disabled(state),
         ]),
-        row([
-          toggle("showingNormal")(field2Normal),
-          toggle("showingDisabled")(field2Disabled),
+        h("section", {}, [
+          state.showingNormal && field2Normal(state),
+          state.showingDisabled && field2Disabled(state),
         ]),
-        row([
-          toggle("showingNormal")(field3Normal),
-          toggle("showingDisabled")(field3Disabled),
+        h("section", {}, [
+          state.showingNormal && field3Normal(state),
+          state.showingDisabled && field3Disabled(state),
         ]),
       ]),
-      panel("uy-storyboard-showcase-section-view", [
-        readout("field"),
+      h("section", {}, [
+        readout("field")(state),
       ]),
     ]),
   ])

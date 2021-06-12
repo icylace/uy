@@ -1,6 +1,7 @@
 // TODO:
 // - get rid of this ?
 
+import type { VNode } from "hyperapp"
 import type { Story } from "../../types"
 
 import { text } from "hyperapp"

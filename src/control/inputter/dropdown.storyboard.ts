@@ -1,3 +1,4 @@
+import type { VNode } from "hyperapp"
 import type { Story } from "../../types"
 
 import { dropdown, freshDropdown, panel, row, toggle } from "../../../lib/main"

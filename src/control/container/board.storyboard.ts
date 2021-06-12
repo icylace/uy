@@ -1,3 +1,4 @@
+import type { VNode } from "hyperapp"
 import type { BoardRow } from "../../../lib/main"
 import type { Story } from "../../types"
 

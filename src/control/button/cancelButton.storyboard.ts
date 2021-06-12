@@ -1,6 +1,8 @@
+import type { VNode } from "hyperapp"
 import type { Story } from "../../types"
 
-import { cancelButton, panel, row } from "../../../lib/main"
+import { h } from "hyperapp"
+import { cancelButton } from "../../../lib/main"
 import { readout } from "../../utility/readout"
 
 const freshState = (state: Story): Story =>
@@ -13,18 +15,18 @@ const cancelButton1Normal = cancelButton(onclick)
 const cancelButton2Normal = cancelButton({ onclick })
 const cancelButtonDisabled = cancelButton({ onclick, disabled: true })
 
-const view =
-  panel<Story>("uy-storyboard-showcase-panel", [
-    panel("uy-storyboard-showcase-section", [
-      panel("uy-storyboard-showcase-section-view", [
-        row([
-          (state) => state.showingNormal && cancelButton1Normal,
-          (state) => state.showingNormal && cancelButton2Normal,
-          (state) => state.showingDisabled && cancelButtonDisabled,
+const view = (state: Story): VNode<Story> =>
+  h("section", { class: "uy-storyboard-showcase-panel" }, [
+    h("section", {}, [
+      h("section", {}, [
+        h("section", {}, [
+          state.showingNormal && cancelButton1Normal,
+          state.showingNormal && cancelButton2Normal,
+          state.showingDisabled && cancelButtonDisabled,
         ]),
       ]),
-      panel("uy-storyboard-showcase-section-data", [
-        readout("cancelButton"),
+      h("section", {}, [
+        readout("cancelButton")(state),
       ]),
     ]),
   ])

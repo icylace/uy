@@ -1,5 +1,6 @@
 // TODO:
 
+import type { VNode } from "hyperapp"
 import type { Story } from "../../types"
 
 import { freshMultiselect, multiselect, panel, row, toggle } from "../../../lib/main"

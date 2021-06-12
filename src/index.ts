@@ -123,12 +123,18 @@ const storyboardView = (state: Story): VNode<Story> =>
           text("disabled"),
         ]),
         h("div", { class: "uy-storyboard-switcher" }, [
+          h("ul", {}, [
+            h("li", {}, [
+              h("p", {}, text("All")),
+            ]),
+            h("li", {}, [
+              h("p", {}, text("Buttons")),
+            ]),
+          ]),
         ]),
       ]),
     ]),
-    h("div", { class: "uy-storyboard-showcase" }, [
-      ...storyboards.map((x) => x.view(state)),
-    ]),
+    h("div", { class: "uy-storyboard-showcase" }, storyboards.map((x) => x.view(state))),
   ])
 
 // const getHandlers = (state: Story): Transform<Story, Event>[] => {

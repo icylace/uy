@@ -255,6 +255,9 @@ body {
 }
 
 .uy-storyboard .uy-storyboard-showcase-panel {
+}
+
+.uy-storyboard .uy-storyboard-showcase-section {
   display: flex;
   justify-content: space-between;
 }

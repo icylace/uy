@@ -6,16 +6,22 @@ import { readout } from "../../utility/readout"
 const freshState = (state: Story): Story =>
   ({ ...state, textarea: freshTextarea("") })
 
-const textareaNormal = textarea()("textarea")
-const textareaDisabled = textarea({ disabled: true })("textarea")
+const textareaNormal = textarea<Story>()("textarea")
+const textareaDisabled = textarea<Story>({ disabled: true })("textarea")
 
 const view =
-  panel("uy-control-storyboard", [
-    row([
-      toggle("showingNormal")(textareaNormal),
-      toggle("showingDisabled")(textareaDisabled),
+  panel("uy-storyboard-showcase-panel", [
+    panel("uy-storyboard-showcase-section", [
+      panel("uy-storyboard-showcase-section-view", [
+        row([
+          toggle("showingNormal")(textareaNormal),
+          toggle("showingDisabled")(textareaDisabled),
+        ]),
+      ]),
+      panel("uy-storyboard-showcase-section-data", [
+        readout("textarea"),
+      ]),
     ]),
-    readout("textarea"),
   ])
 
 export { freshState, view }

@@ -24,14 +24,18 @@ const fieldset2Disabled = fieldset<Story>(
 )
 
 const view =
-  panel("uy-control-storyboard", [
-    row([
-      toggle("showingNormal")(fieldset1Normal),
-      toggle("showingDisabled")(fieldset1Disabled),
-    ]),
-    row([
-      toggle("showingNormal")(fieldset2Normal),
-      toggle("showingDisabled")(fieldset2Disabled),
+  panel("uy-storyboard-showcase-panel", [
+    panel("uy-storyboard-showcase-section", [
+      panel("uy-storyboard-showcase-section-view", [
+        row([
+          toggle("showingNormal")(fieldset1Normal),
+          toggle("showingDisabled")(fieldset1Disabled),
+        ]),
+        row([
+          toggle("showingNormal")(fieldset2Normal),
+          toggle("showingDisabled")(fieldset2Disabled),
+        ]),
+      ]),
     ]),
   ])
 

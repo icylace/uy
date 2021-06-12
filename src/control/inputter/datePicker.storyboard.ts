@@ -45,36 +45,66 @@ const weekPicker3 = weekPicker<Story>({ disabled: true })("weekPicker")
 // -----------------------------------------------------------------------------
 
 const view =
-  panel("uy-control-storyboard", [
-    row([
-      toggle("showingNormal")(datePicker1),
-      toggle("showingDisabled")(datePicker3),
+  panel("uy-storyboard-showcase-panel", [
+    panel("uy-storyboard-showcase-section", [
+      panel("uy-storyboard-showcase-section-view", [
+        row([
+          toggle("showingNormal")(datePicker1),
+          toggle("showingDisabled")(datePicker3),
+        ]),
+      ]),
+      panel("uy-storyboard-showcase-section-data", [
+        readout("datePicker"),
+      ]),
     ]),
-    readout("datePicker"),
 
-    row([
-      toggle("showingNormal")(datetimeLocalPicker1),
-      toggle("showingDisabled")(datetimeLocalPicker3),
+    panel("uy-storyboard-showcase-section", [
+      panel("uy-storyboard-showcase-section-view", [
+        row([
+          toggle("showingNormal")(datetimeLocalPicker1),
+          toggle("showingDisabled")(datetimeLocalPicker3),
+        ]),
+      ]),
+      panel("uy-storyboard-showcase-section-data", [
+        readout("datetimeLocalPicker"),
+      ]),
     ]),
-    readout("datetimeLocalPicker"),
 
-    row([
-      toggle("showingNormal")(monthPicker1),
-      toggle("showingDisabled")(monthPicker3),
+    panel("uy-storyboard-showcase-section", [
+      panel("uy-storyboard-showcase-section-view", [
+        row([
+          toggle("showingNormal")(monthPicker1),
+          toggle("showingDisabled")(monthPicker3),
+        ]),
+      ]),
+      panel("uy-storyboard-showcase-section-data", [
+        readout("monthPicker"),
+      ]),
     ]),
-    readout("monthPicker"),
 
-    row([
-      toggle("showingNormal")(timePicker1),
-      toggle("showingDisabled")(timePicker3),
+    panel("uy-storyboard-showcase-section", [
+      panel("uy-storyboard-showcase-section-view", [
+        row([
+          toggle("showingNormal")(timePicker1),
+          toggle("showingDisabled")(timePicker3),
+        ]),
+      ]),
+      panel("uy-storyboard-showcase-section-data", [
+        readout("timePicker"),
+      ]),
     ]),
-    readout("timePicker"),
 
-    row([
-      toggle("showingNormal")(weekPicker1),
-      toggle("showingDisabled")(weekPicker3),
+    panel("uy-storyboard-showcase-section", [
+      panel("uy-storyboard-showcase-section-view", [
+        row([
+          toggle("showingNormal")(weekPicker1),
+          toggle("showingDisabled")(weekPicker3),
+        ]),
+      ]),
+      panel("uy-storyboard-showcase-section-data", [
+        readout("weekPicker"),
+      ]),
     ]),
-    readout("weekPicker"),
   ])
 
 export { freshState, view }

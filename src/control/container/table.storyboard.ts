@@ -23,17 +23,23 @@ const table2Normal2 = table({ headers, orderColumn: null, sortDescending: false 
 const table2Disabled = table({ headers, orderColumn: null, sortDescending: false, disabled: true }, dummyTable)
 
 const view =
-  panel("uy-control-storyboard", [
-    row([
-      (state: Story) => state.showingNormal && table1Normal,
-      (state: Story) => state.showingDisabled && table1Disabled,
+  panel("uy-storyboard-showcase-panel", [
+    panel("uy-storyboard-showcase-section", [
+      panel("uy-storyboard-showcase-section-view", [
+        row([
+          (state: Story) => state.showingNormal && table1Normal,
+          (state: Story) => state.showingDisabled && table1Disabled,
+        ]),
+        row([
+          (state: Story) => state.showingNormal && table2Normal1,
+          (state: Story) => state.showingNormal && table2Normal2,
+          (state: Story) => state.showingDisabled && table2Disabled,
+        ]),
+      ]),
+      panel<Story>("uy-storyboard-showcase-section-data", [
+        // readout("table"),
+      ]),
     ]),
-    row([
-      (state: Story) => state.showingNormal && table2Normal1,
-      (state: Story) => state.showingNormal && table2Normal2,
-      (state: Story) => state.showingDisabled && table2Disabled,
-    ]),
-    // readout("table"),
   ])
 
 export { freshState, view }

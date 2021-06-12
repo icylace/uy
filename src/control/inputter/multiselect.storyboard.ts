@@ -50,36 +50,54 @@ const freshState = (state: Story): Story => ({
   multiselect3: freshMultiselect(options3, [3, 4].map(String)),
 })
 
-const multiselect1st1 = multiselect(options1)("multiselect1")
-const multiselect1st2 = multiselect({ choices: options1 })("multiselect1")
-const multiselect1st3 = multiselect({ choices: options1, disabled: true })("multiselect1")
+const multiselect1st1 = multiselect<Story>(options1)("multiselect1")
+const multiselect1st2 = multiselect<Story>({ choices: options1 })("multiselect1")
+const multiselect1st3 = multiselect<Story>({ choices: options1, disabled: true })("multiselect1")
 
-const multiselect2nd1 = multiselect({ choices: options2, usingColumnMode: false })("multiselect2")
-const multiselect2nd3 = multiselect({ choices: options2, usingColumnMode: false, disabled: true })("multiselect2")
+const multiselect2nd1 = multiselect<Story>({ choices: options2, usingColumnMode: false })("multiselect2")
+const multiselect2nd3 = multiselect<Story>({ choices: options2, usingColumnMode: false, disabled: true })("multiselect2")
 
-const multiselect3rd1 = multiselect({ choices: options3, usingColumnMode: true })("multiselect3")
-const multiselect3rd3 = multiselect({ choices: options3, usingColumnMode: true, disabled: true })("multiselect3")
+const multiselect3rd1 = multiselect<Story>({ choices: options3, usingColumnMode: true })("multiselect3")
+const multiselect3rd3 = multiselect<Story>({ choices: options3, usingColumnMode: true, disabled: true })("multiselect3")
 
 const view =
-  panel("uy-control-storyboard", [
-    row([
-      toggle("showingNormal")(multiselect1st1),
-      toggle("showingNormal")(multiselect1st2),
-      toggle("showingDisabled")(multiselect1st3),
+  panel("uy-storyboard-showcase-panel", [
+    panel("uy-storyboard-showcase-section", [
+      panel("uy-storyboard-showcase-section-view", [
+        row([
+          toggle("showingNormal")(multiselect1st1),
+          toggle("showingNormal")(multiselect1st2),
+          toggle("showingDisabled")(multiselect1st3),
+        ]),
+      ]),
+      panel("uy-storyboard-showcase-section-data", [
+        readout("multiselect1"),
+      ]),
     ]),
-    readout("multiselect1"),
 
-    row([
-      toggle("showingNormal")(multiselect2nd1),
-      toggle("showingDisabled")(multiselect2nd3),
+    panel("uy-storyboard-showcase-section", [
+      panel("uy-storyboard-showcase-section-view", [
+        row([
+          toggle("showingNormal")(multiselect2nd1),
+          toggle("showingDisabled")(multiselect2nd3),
+        ]),
+      ]),
+      panel("uy-storyboard-showcase-section-data", [
+        readout("multiselect2"),
+      ]),
     ]),
-    readout("multiselect2"),
 
-    row([
-      toggle("showingNormal")(multiselect3rd1),
-      toggle("showingDisabled")(multiselect3rd3),
+    panel("uy-storyboard-showcase-section", [
+      panel("uy-storyboard-showcase-section-view", [
+        row([
+          toggle("showingNormal")(multiselect3rd1),
+          toggle("showingDisabled")(multiselect3rd3),
+        ]),
+      ]),
+      panel("uy-storyboard-showcase-section-data", [
+        readout("multiselect3"),
+      ]),
     ]),
-    readout("multiselect3"),
   ])
 
 export { freshState, view }

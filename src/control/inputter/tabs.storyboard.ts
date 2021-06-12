@@ -52,13 +52,19 @@ const tabs2Normal = tabs({ itemsHeader, itemsFooter, tabList })("tabs")
 const tabsDisabled = tabs({ itemsHeader, itemsFooter, tabList: R.clone(tabList), disabled: true })("tabs")
 
 const view =
-  panel("uy-control-storyboard", [
-    column([
-      toggle("showingNormal")(tabs1Normal),
-      toggle("showingNormal")(tabs2Normal),
-      toggle("showingDisabled")(tabsDisabled),
+  panel("uy-storyboard-showcase-panel", [
+    panel("uy-storyboard-showcase-section", [
+      panel("uy-storyboard-showcase-section-view", [
+        column([
+          toggle("showingNormal")(tabs1Normal),
+          toggle("showingNormal")(tabs2Normal),
+          toggle("showingDisabled")(tabsDisabled),
+        ]),
+      ]),
+      panel("uy-storyboard-showcase-section-data", [
+        readout("tabs"),
+      ]),
     ]),
-    readout("tabs"),
   ])
 
 export { freshState, view }

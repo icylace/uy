@@ -28,13 +28,19 @@ const searchboxNormal = searchbox({ id, search, onresults })("searchbox")
 const searchboxDisabled = searchbox({ id, search, onresults, disabled: true })("searchbox")
 
 const view =
-  panel("uy-control-storyboard", [
-    row([
-      toggle("showingNormal")(searchboxNormal),
-      toggle("showingDisabled")(searchboxDisabled),
+  panel("uy-storyboard-showcase-panel", [
+    panel("uy-storyboard-showcase-section", [
+      panel("uy-storyboard-showcase-section-view", [
+        row([
+          toggle("showingNormal")(searchboxNormal),
+          toggle("showingDisabled")(searchboxDisabled),
+        ]),
+      ]),
+      panel("uy-storyboard-showcase-section-data", [
+        readout("searchbox"),
+        readout("searchboxResultsIDs"),
+      ]),
     ]),
-    readout("searchbox"),
-    readout("searchboxResultsIDs"),
   ])
 
 export { freshState, view }

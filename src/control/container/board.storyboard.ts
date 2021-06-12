@@ -8,8 +8,8 @@ import { board, panel, row, toggle } from "../../../lib/main"
 const freshState = (state: Story): Story => state
 
 const dummyTable: BoardRow<Story>[] = [
-  [(_state: Story) => h<Story>("p", {}, text("123")), (_state: Story) => h<Story>("p", {}, text("uihew"))],
-  [(_state: Story) => h<Story>("p", {}, text("mnb,mnb")), (_state: Story) => h<Story>("p", {}, text("uihew"))],
+  [(_state) => h<Story>("p", {}, text("123")), (_state) => h<Story>("p", {}, text("uihew"))],
+  [(_state) => h<Story>("p", {}, text("mnb,mnb")), (_state) => h<Story>("p", {}, text("uihew"))],
 ]
 
 const board1Normal = board({ orderColumn: null, sortDescending: false }, dummyTable)
@@ -22,17 +22,23 @@ const board2Normal2 = board({ headers, orderColumn: null, sortDescending: false 
 const board2Disabled = board({ headers, orderColumn: null, sortDescending: false, disabled: true }, dummyTable)
 
 const view =
-  panel("uy-control-storyboard", [
-    row([
-      toggle("showingNormal")(board1Normal),
-      toggle("showingDisabled")(board1Disabled),
+  panel<Story>("uy-storyboard-showcase-panel", [
+    panel("uy-storyboard-showcase-section", [
+      panel("uy-storyboard-showcase-section-view", [
+        row([
+          toggle("showingNormal")(board1Normal),
+          toggle("showingDisabled")(board1Disabled),
+        ]),
+        row([
+          toggle("showingNormal")(board2Normal1),
+          toggle("showingNormal")(board2Normal2),
+          toggle("showingDisabled")(board2Disabled),
+        ]),
+      ]),
+      panel("uy-storyboard-showcase-section-data", [
+        // readout("board"),
+      ]),
     ]),
-    row([
-      toggle("showingNormal")(board2Normal1),
-      toggle("showingNormal")(board2Normal2),
-      toggle("showingDisabled")(board2Disabled),
-    ]),
-    // readout("board"),
   ])
 
 export { freshState, view }

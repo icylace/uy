@@ -18,11 +18,15 @@ const overlayDisabled = overlay(
 )
 
 const view =
-  panel("uy-control-storyboard", [
-    row([
-      toggle("showingNormal")(overlayNormal),
-      toggle("showingDisabled")(overlayDisabled),
-    ]),
+  panel("uy-storyboard-showcase-panel", [
+    panel("uy-storyboard-showcase-section", [
+      panel("uy-storyboard-showcase-section-view", [
+        row([
+          toggle("showingNormal")(overlayNormal),
+          toggle("showingDisabled")(overlayDisabled),
+        ]),
+      ]),
+    ])
   ])
 
 export { freshState, view }

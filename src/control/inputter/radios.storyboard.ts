@@ -14,18 +14,24 @@ const choices = {
   five: "FIVE",
 }
 
-const radios1Normal = radios(choices)("radios")
-const radios2Normal = radios({ choices })("radios")
-const radiosDisabled = radios({ choices, disabled: true })("radios")
+const radios1Normal = radios<Story>(choices)("radios")
+const radios2Normal = radios<Story>({ choices })("radios")
+const radiosDisabled = radios<Story>({ choices, disabled: true })("radios")
 
 const view =
-  panel("uy-control-storyboard", [
-    row([
-      toggle("showingNormal")(radios1Normal),
-      toggle("showingNormal")(radios2Normal),
-      toggle("showingDisabled")(radiosDisabled),
+  panel("uy-storyboard-showcase-panel", [
+    panel("uy-storyboard-showcase-section", [
+      panel("uy-storyboard-showcase-section-view", [
+        row([
+          toggle("showingNormal")(radios1Normal),
+          toggle("showingNormal")(radios2Normal),
+          toggle("showingDisabled")(radiosDisabled),
+        ]),
+      ]),
+      panel("uy-storyboard-showcase-section-data", [
+        readout("radios"),
+      ]),
     ]),
-    readout("radios"),
   ])
 
 export { freshState, view }

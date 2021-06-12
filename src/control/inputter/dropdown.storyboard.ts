@@ -50,18 +50,30 @@ const dropdown2Normal = dropdown<Story>({ choices: choices2 })("dropdown2")
 const dropdown2Disabled = dropdown<Story>({ choices: choices2, disabled: true })("dropdown2")
 
 const view =
-  panel("uy-control-storyboard", [
-    row([
-      toggle("showingNormal")(dropdown1Normal),
-      toggle("showingDisabled")(dropdown1Disabled),
+panel("uy-storyboard-showcase-panel", [
+  panel("uy-storyboard-showcase-section", [
+    panel("uy-storyboard-showcase-section-view", [
+      row([
+        toggle("showingNormal")(dropdown1Normal),
+        toggle("showingDisabled")(dropdown1Disabled),
+      ]),
     ]),
-    readout("dropdown1"),
+    panel("uy-storyboard-showcase-section-data", [
+      readout("dropdown1"),
+    ]),
+  ]),
 
-    row([
-      toggle("showingNormal")(dropdown2Normal),
-      toggle("showingDisabled")(dropdown2Disabled),
+  panel("uy-storyboard-showcase-section", [
+    panel("uy-storyboard-showcase-section-view", [
+      row([
+        toggle("showingNormal")(dropdown2Normal),
+        toggle("showingDisabled")(dropdown2Disabled),
+      ]),
     ]),
-    readout("dropdown2"),
-  ])
+    panel("uy-storyboard-showcase-section-data", [
+      readout("dropdown2"),
+    ]),
+  ]),
+])
 
 export { freshState, view }

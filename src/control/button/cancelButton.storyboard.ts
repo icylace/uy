@@ -14,13 +14,19 @@ const cancelButton2Normal = cancelButton({ onclick })
 const cancelButtonDisabled = cancelButton({ onclick, disabled: true })
 
 const view =
-  panel("uy-control-storyboard", [
-    row([
-      (state: Story) => state.showingNormal && cancelButton1Normal,
-      (state: Story) => state.showingNormal && cancelButton2Normal,
-      (state: Story) => state.showingDisabled && cancelButtonDisabled,
+  panel<Story>("uy-storyboard-showcase-panel", [
+    panel("uy-storyboard-showcase-section", [
+      panel("uy-storyboard-showcase-section-view", [
+        row([
+          (state) => state.showingNormal && cancelButton1Normal,
+          (state) => state.showingNormal && cancelButton2Normal,
+          (state) => state.showingDisabled && cancelButtonDisabled,
+        ]),
+      ]),
+      panel("uy-storyboard-showcase-section-data", [
+        readout("cancelButton"),
+      ]),
     ]),
-    readout("cancelButton"),
   ])
 
 export { freshState, view }

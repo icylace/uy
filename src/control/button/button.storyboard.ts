@@ -13,12 +13,18 @@ const buttonNormal = button({ label: "TEST", onclick })
 const buttonDisabled = button({ label: "TEST", onclick, disabled: true })
 
 const view =
-  panel("uy-control-storyboard", [
-    row([
-      (state: Story) => state.showingNormal && buttonNormal,
-      (state: Story) => state.showingDisabled && buttonDisabled,
+  panel<Story>("uy-storyboard-showcase-panel", [
+    panel("uy-storyboard-showcase-section", [
+      panel("uy-storyboard-showcase-section-view", [
+        row([
+          (state) => state.showingNormal && buttonNormal,
+          (state) => state.showingDisabled && buttonDisabled,
+        ]),
+      ]),
+      panel("uy-storyboard-showcase-section-data", [
+        readout("button"),
+      ]),
     ]),
-    readout("button"),
   ])
 
 export { freshState, view }

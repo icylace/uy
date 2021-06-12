@@ -11,13 +11,19 @@ const popupNormal: VNode<Story> = popup("popupNormal", text("TEST"))
 const popupDisabled: VNode<Story> = popup({ id: "popupDisabled", disabled: true }, text("TEST"))
 
 const view =
-  panel("uy-control-storyboard", [
-    row<Story>([
-      (state: Story) => state.showingNormal && popupNormal,
-      (state: Story) => state.showingDisabled && popupDisabled,
+  panel("uy-storyboard-showcase-panel", [
+    panel("uy-storyboard-showcase-section", [
+      panel<Story>("uy-storyboard-showcase-section-view", [
+        row([
+          (state) => state.showingNormal && popupNormal,
+          (state) => state.showingDisabled && popupDisabled,
+        ]),
+      ]),
+      panel("uy-storyboard-showcase-section-data", [
+        // readout ("uy", "insideEl"),
+        readout("popup"),
+      ]),
     ]),
-    // readout ("uy", "insideEl"),
-    readout("popup"),
   ])
 
 export { freshState, view }

@@ -2,7 +2,7 @@ import type { VNode } from "hyperapp"
 import type { Story } from "../../types"
 
 import { h, text } from "hyperapp"
-import { fieldset, row, toggle } from "../../../lib/main"
+import { fieldset } from "../../../lib/main"
 import { always } from "../../utility/always"
 
 const freshState = (state: Story): Story => {

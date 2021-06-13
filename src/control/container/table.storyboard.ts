@@ -3,7 +3,7 @@ import type { TableRow } from "../../../lib/main"
 import type { Story } from "../../types"
 
 import { h } from "hyperapp"
-import { panel, row, table } from "../../../lib/main"
+import { table } from "../../../lib/main"
 // import { readout } from "../../utility"
 
 const freshState = (state: Story): Story => state

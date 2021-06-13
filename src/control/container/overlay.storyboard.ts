@@ -2,7 +2,7 @@ import type { VNode } from "hyperapp"
 import type { Story } from "../../types"
 
 import { h, text } from "hyperapp"
-import { box, column, overlay, spinner, toggle } from "../../../lib/main"
+import { box, column, overlay, spinner } from "../../../lib/main"
 import { always } from "../../utility/always"
 
 const freshState = (state: Story): Story => state

@@ -1,7 +1,8 @@
 import type { VNode } from "hyperapp"
 import type { Story } from "../../types"
 
-import { checkbox, freshCheckbox, panel, row, toggle } from "../../../lib/main"
+import { h } from "hyperapp"
+import { checkbox, freshCheckbox } from "../../../lib/main"
 import { readout } from "../../utility/readout"
 
 const freshState = (state: Story): Story =>
@@ -16,21 +17,21 @@ const checkbox2Disabled = checkbox<Story>({ label: "CHECK TEST", disabled: true 
 // TODO:
 // - try out indeterminate state
 
-const view =
-  panel("uy-storyboard-showcase-panel", [
-    panel("uy-storyboard-showcase-section", [
-      panel("uy-storyboard-showcase-section-view", [
-        row([
-          toggle("showingNormal")(checkbox1Normal),
-          toggle("showingDisabled")(checkbox1Disabled),
+const view = (state: Story): VNode<Story> =>
+  h("section", { class: "uy-storyboard-showcase-panel" }, [
+    h("section", {}, [
+      h("section", {}, [
+        h("section", {}, [
+          state.showingNormal && checkbox1Normal(state),
+          state.showingDisabled && checkbox1Disabled(state),
         ]),
-        row([
-          toggle("showingNormal")(checkbox2Normal),
-          toggle("showingDisabled")(checkbox2Disabled),
+        h("section", {}, [
+          state.showingNormal && checkbox2Normal(state),
+          state.showingDisabled && checkbox2Disabled(state),
         ]),
       ]),
-      panel("uy-storyboard-showcase-section-data", [
-        readout("checkbox"),
+      h("section", {}, [
+        readout("checkbox")(state),
       ]),
     ]),
   ])

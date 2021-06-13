@@ -1,7 +1,8 @@
 import type { VNode } from "hyperapp"
 import type { Story } from "../../types"
 
-import { freshNumberbox, numberbox, panel, row, toggle } from "../../../lib/main"
+import { h } from "hyperapp"
+import { freshNumberbox, numberbox } from "../../../lib/main"
 import { readout } from "../../utility/readout"
 
 const freshState = (state: Story): Story =>
@@ -11,18 +12,18 @@ const numberbox1Normal = numberbox<Story>("UNIT")("numberbox")
 const numberbox2Normal = numberbox<Story>({ label: "UNIT" })("numberbox")
 const numberboxDisabled = numberbox<Story>({ label: "UNIT", disabled: true })("numberbox")
 
-const view =
-  panel("uy-storyboard-showcase-panel", [
-    panel("uy-storyboard-showcase-section", [
-      panel("uy-storyboard-showcase-section-view", [
-        row([
-          toggle("showingNormal")(numberbox1Normal),
-          toggle("showingNormal")(numberbox2Normal),
-          toggle("showingDisabled")(numberboxDisabled),
+const view = (state: Story): VNode<Story> =>
+  h("section", { class: "uy-storyboard-showcase-panel" }, [
+    h("section", {}, [
+      h("section", {}, [
+        h("section", {}, [
+          state.showingNormal && numberbox1Normal(state),
+          state.showingNormal && numberbox2Normal(state),
+          state.showingDisabled && numberboxDisabled(state),
         ]),
       ]),
-      panel("uy-storyboard-showcase-section-data", [
-        readout("numberbox"),
+      h("section", {}, [
+        readout("numberbox")(state),
       ]),
     ]),
   ])

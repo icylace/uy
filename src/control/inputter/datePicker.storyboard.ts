@@ -10,13 +10,11 @@ import {
   freshTimePicker,
   freshWeekPicker,
   monthPicker,
-  panel,
-  row,
   timePicker,
-  toggle,
   weekPicker,
 } from "../../../lib/main"
 
+import { h } from "hyperapp"
 import { readout } from "../../utility/readout"
 
 const freshState = (state: Story): Story => ({
@@ -45,65 +43,65 @@ const weekPicker3 = weekPicker<Story>({ disabled: true })("weekPicker")
 
 // -----------------------------------------------------------------------------
 
-const view =
-  panel("uy-storyboard-showcase-panel", [
-    panel("uy-storyboard-showcase-section", [
-      panel("uy-storyboard-showcase-section-view", [
-        row([
-          toggle("showingNormal")(datePicker1),
-          toggle("showingDisabled")(datePicker3),
+const view = (state: Story): VNode<Story> =>
+  h("section", { class: "uy-storyboard-showcase-panel" }, [
+    h("section", {}, [
+      h("section", {}, [
+        h("section", {}, [
+          state.showingNormal && datePicker1(state),
+          state.showingDisabled && datePicker3(state),
         ]),
       ]),
-      panel("uy-storyboard-showcase-section-data", [
-        readout("datePicker"),
+      h("section", {}, [
+        readout("datePicker")(state),
       ]),
     ]),
 
-    panel("uy-storyboard-showcase-section", [
-      panel("uy-storyboard-showcase-section-view", [
-        row([
-          toggle("showingNormal")(datetimeLocalPicker1),
-          toggle("showingDisabled")(datetimeLocalPicker3),
+    h("section", {}, [
+      h("section", {}, [
+        h("section", {}, [
+          state.showingNormal && datetimeLocalPicker1(state),
+          state.showingDisabled && datetimeLocalPicker3(state),
         ]),
       ]),
-      panel("uy-storyboard-showcase-section-data", [
-        readout("datetimeLocalPicker"),
+      h("section", {}, [
+        readout("datetimeLocalPicker")(state),
       ]),
     ]),
 
-    panel("uy-storyboard-showcase-section", [
-      panel("uy-storyboard-showcase-section-view", [
-        row([
-          toggle("showingNormal")(monthPicker1),
-          toggle("showingDisabled")(monthPicker3),
+    h("section", {}, [
+      h("section", {}, [
+        h("section", {}, [
+          state.showingNormal && monthPicker1(state),
+          state.showingDisabled && monthPicker3(state),
         ]),
       ]),
-      panel("uy-storyboard-showcase-section-data", [
-        readout("monthPicker"),
+      h("section", {}, [
+        readout("monthPicker")(state),
       ]),
     ]),
 
-    panel("uy-storyboard-showcase-section", [
-      panel("uy-storyboard-showcase-section-view", [
-        row([
-          toggle("showingNormal")(timePicker1),
-          toggle("showingDisabled")(timePicker3),
+    h("section", {}, [
+      h("section", {}, [
+        h("section", {}, [
+          state.showingNormal && timePicker1(state),
+          state.showingDisabled && timePicker3(state),
         ]),
       ]),
-      panel("uy-storyboard-showcase-section-data", [
-        readout("timePicker"),
+      h("section", {}, [
+        readout("timePicker")(state),
       ]),
     ]),
 
-    panel("uy-storyboard-showcase-section", [
-      panel("uy-storyboard-showcase-section-view", [
-        row([
-          toggle("showingNormal")(weekPicker1),
-          toggle("showingDisabled")(weekPicker3),
+    h("section", {}, [
+      h("section", {}, [
+        h("section", {}, [
+          state.showingNormal && weekPicker1(state),
+          state.showingDisabled && weekPicker3(state),
         ]),
       ]),
-      panel("uy-storyboard-showcase-section-data", [
-        readout("weekPicker"),
+      h("section", {}, [
+        readout("weekPicker")(state),
       ]),
     ]),
   ])

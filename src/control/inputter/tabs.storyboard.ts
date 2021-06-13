@@ -4,7 +4,7 @@ import type { Story } from "../../types"
 
 import { h, text } from "hyperapp"
 import * as R from "remeda"
-import { box, column, freshTabs, panel, tabs, toggle } from "../../../lib/main"
+import { box, freshTabs, tabs } from "../../../lib/main"
 import { readout } from "../../utility/readout"
 
 const freshState = (state: Story): Story =>
@@ -52,18 +52,18 @@ const tabs1Normal = tabs(tabList)("tabs")
 const tabs2Normal = tabs({ itemsHeader, itemsFooter, tabList })("tabs")
 const tabsDisabled = tabs({ itemsHeader, itemsFooter, tabList: R.clone(tabList), disabled: true })("tabs")
 
-const view =
-  panel("uy-storyboard-showcase-panel", [
-    panel("uy-storyboard-showcase-section", [
-      panel("uy-storyboard-showcase-section-view", [
-        column([
-          toggle("showingNormal")(tabs1Normal),
-          toggle("showingNormal")(tabs2Normal),
-          toggle("showingDisabled")(tabsDisabled),
+const view = (state: Story): VNode<Story> =>
+  h("section", { class: "uy-storyboard-showcase-panel" }, [
+    h("section", {}, [
+      h("section", {}, [
+        h("section", {}, [
+          state.showingNormal && tabs1Normal(state),
+          state.showingNormal && tabs2Normal(state),
+          state.showingDisabled && tabsDisabled(state),
         ]),
       ]),
-      panel("uy-storyboard-showcase-section-data", [
-        readout("tabs"),
+      h("section", {}, [
+        readout("tabs")(state),
       ]),
     ]),
   ])

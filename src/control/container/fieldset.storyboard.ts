@@ -1,8 +1,8 @@
 import type { VNode } from "hyperapp"
 import type { Story } from "../../types"
 
-import { text } from "hyperapp"
-import { fieldset, panel, row, toggle } from "../../../lib/main"
+import { h, text } from "hyperapp"
+import { fieldset, row, toggle } from "../../../lib/main"
 import { always } from "../../utility/always"
 
 const freshState = (state: Story): Story => {
@@ -24,17 +24,17 @@ const fieldset2Disabled = fieldset<Story>(
   [always(text("FIELDSET CONTENTS"))]
 )
 
-const view =
-  panel("uy-storyboard-showcase-panel", [
-    panel("uy-storyboard-showcase-section", [
-      panel("uy-storyboard-showcase-section-view", [
-        row([
-          toggle("showingNormal")(fieldset1Normal),
-          toggle("showingDisabled")(fieldset1Disabled),
+const view = (state: Story): VNode<Story> =>
+  h("section", { class: "uy-storyboard-showcase-panel" }, [
+    h("section", {}, [
+      h("section", {}, [
+        h("section", {}, [
+          state.showingNormal && fieldset1Normal(state),
+          state.showingDisabled && fieldset1Disabled(state),
         ]),
-        row([
-          toggle("showingNormal")(fieldset2Normal),
-          toggle("showingDisabled")(fieldset2Disabled),
+        h("section", {}, [
+          state.showingNormal && fieldset2Normal(state),
+          state.showingDisabled && fieldset2Disabled(state),
         ]),
       ]),
     ]),

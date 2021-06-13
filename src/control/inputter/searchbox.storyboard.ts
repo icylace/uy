@@ -2,9 +2,9 @@ import type { VNode } from "hyperapp"
 import type { SearchboxData, Transform } from "../../../lib/main"
 import type { Story } from "../../types"
 
-import { freshSearchbox, panel, row, searchbox, toggle } from "../../../lib/main"
+import { h } from "hyperapp"
+import { freshSearchbox, searchbox } from "../../../lib/main"
 import { readout } from "../../utility/readout"
-
 import { search } from "../effect/search"
 
 const freshState = (state: Story): Story => ({
@@ -28,18 +28,18 @@ const onresults = (results: SearchboxData["results"], id: string, state: Story):
 const searchboxNormal = searchbox({ id, search, onresults })("searchbox")
 const searchboxDisabled = searchbox({ id, search, onresults, disabled: true })("searchbox")
 
-const view =
-  panel("uy-storyboard-showcase-panel", [
-    panel("uy-storyboard-showcase-section", [
-      panel("uy-storyboard-showcase-section-view", [
-        row([
-          toggle("showingNormal")(searchboxNormal),
-          toggle("showingDisabled")(searchboxDisabled),
+const view = (state: Story): VNode<Story> =>
+  h("section", { class: "uy-storyboard-showcase-panel" }, [
+    h("section", {}, [
+      h("section", {}, [
+        h("section", {}, [
+          state.showingNormal && searchboxNormal(state),
+          state.showingDisabled && searchboxDisabled(state),
         ]),
       ]),
-      panel("uy-storyboard-showcase-section-data", [
-        readout("searchbox"),
-        readout("searchboxResultsIDs"),
+      h("section", {}, [
+        readout("searchbox")(state),
+        readout("searchboxResultsIDs")(state),
       ]),
     ]),
   ])

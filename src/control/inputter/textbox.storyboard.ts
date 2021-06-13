@@ -1,7 +1,8 @@
 import type { VNode } from "hyperapp"
 import type { Story } from "../../types"
 
-import { panel, row, freshTextbox, textbox, toggle } from "../../../lib/main"
+import { h } from "hyperapp"
+import { freshTextbox, textbox } from "../../../lib/main"
 import { readout } from "../../utility/readout"
 
 const freshState = (state: Story): Story =>
@@ -10,17 +11,17 @@ const freshState = (state: Story): Story =>
 const textboxNormal = textbox<Story>()("textbox")
 const textboxDisabled = textbox<Story>({ disabled: true })("textbox")
 
-const view =
-  panel("uy-storyboard-showcase-panel", [
-    panel("uy-storyboard-showcase-section", [
-      panel("uy-storyboard-showcase-section-view", [
-        row([
-          toggle("showingNormal")(textboxNormal),
-          toggle("showingDisabled")(textboxDisabled),
+const view = (state: Story): VNode<Story> =>
+  h("section", { class: "uy-storyboard-showcase-panel" }, [
+    h("section", {}, [
+      h("section", {}, [
+        h("section", {}, [
+          state.showingNormal && textboxNormal(state),
+          state.showingDisabled && textboxDisabled(state),
         ]),
       ]),
-      panel("uy-storyboard-showcase-section-data", [
-        readout("textbox"),
+      h("section", {}, [
+        readout("textbox")(state),
       ]),
     ]),
   ])

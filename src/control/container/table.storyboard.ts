@@ -2,6 +2,7 @@ import type { VNode } from "hyperapp"
 import type { TableRow } from "../../../lib/main"
 import type { Story } from "../../types"
 
+import { h } from "hyperapp"
 import { panel, row, table } from "../../../lib/main"
 // import { readout } from "../../utility"
 
@@ -23,22 +24,22 @@ const table2Normal1 = table(headers, dummyTable)
 const table2Normal2 = table({ headers, orderColumn: null, sortDescending: false }, dummyTable)
 const table2Disabled = table({ headers, orderColumn: null, sortDescending: false, disabled: true }, dummyTable)
 
-const view =
-  panel("uy-storyboard-showcase-panel", [
-    panel("uy-storyboard-showcase-section", [
-      panel("uy-storyboard-showcase-section-view", [
-        row([
-          (state: Story) => state.showingNormal && table1Normal,
-          (state: Story) => state.showingDisabled && table1Disabled,
+const view = (state: Story): VNode<Story> =>
+  h("section", { class: "uy-storyboard-showcase-panel" }, [
+    h("section", {}, [
+      h("section", {}, [
+        h("section", {}, [
+          state.showingNormal && table1Normal,
+          state.showingDisabled && table1Disabled,
         ]),
-        row([
-          (state: Story) => state.showingNormal && table2Normal1,
-          (state: Story) => state.showingNormal && table2Normal2,
-          (state: Story) => state.showingDisabled && table2Disabled,
+        h("section", {}, [
+          state.showingNormal && table2Normal1,
+          state.showingNormal && table2Normal2,
+          state.showingDisabled && table2Disabled,
         ]),
       ]),
-      panel<Story>("uy-storyboard-showcase-section-data", [
-        // readout("table"),
+      h("section", {}, [
+        // readout("table")(state),
       ]),
     ]),
   ])

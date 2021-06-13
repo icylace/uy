@@ -3,7 +3,8 @@
 import type { VNode } from "hyperapp"
 import type { Story } from "../../types"
 
-import { freshMultiselect, multiselect, panel, row, toggle } from "../../../lib/main"
+import { h } from "hyperapp"
+import { freshMultiselect, multiselect } from "../../../lib/main"
 import { readout } from "../../utility/readout"
 
 const options1 = {
@@ -61,42 +62,42 @@ const multiselect2nd3 = multiselect<Story>({ choices: options2, usingColumnMode:
 const multiselect3rd1 = multiselect<Story>({ choices: options3, usingColumnMode: true })("multiselect3")
 const multiselect3rd3 = multiselect<Story>({ choices: options3, usingColumnMode: true, disabled: true })("multiselect3")
 
-const view =
-  panel("uy-storyboard-showcase-panel", [
-    panel("uy-storyboard-showcase-section", [
-      panel("uy-storyboard-showcase-section-view", [
-        row([
-          toggle("showingNormal")(multiselect1st1),
-          toggle("showingNormal")(multiselect1st2),
-          toggle("showingDisabled")(multiselect1st3),
+const view = (state: Story): VNode<Story> =>
+  h("section", { class: "uy-storyboard-showcase-panel" }, [
+    h("section", {}, [
+      h("section", {}, [
+        h("section", {}, [
+          state.showingNormal && multiselect1st1(state),
+          state.showingNormal && multiselect1st2(state),
+          state.showingDisabled && multiselect1st3(state),
         ]),
       ]),
-      panel("uy-storyboard-showcase-section-data", [
-        readout("multiselect1"),
+      h("section", {}, [
+        readout("multiselect1")(state),
       ]),
     ]),
 
-    panel("uy-storyboard-showcase-section", [
-      panel("uy-storyboard-showcase-section-view", [
-        row([
-          toggle("showingNormal")(multiselect2nd1),
-          toggle("showingDisabled")(multiselect2nd3),
+    h("section", {}, [
+      h("section", {}, [
+        h("section", {}, [
+          state.showingNormal && multiselect2nd1(state),
+          state.showingDisabled && multiselect2nd3(state),
         ]),
       ]),
-      panel("uy-storyboard-showcase-section-data", [
-        readout("multiselect2"),
+      h("section", {}, [
+        readout("multiselect2")(state),
       ]),
     ]),
 
-    panel("uy-storyboard-showcase-section", [
-      panel("uy-storyboard-showcase-section-view", [
-        row([
-          toggle("showingNormal")(multiselect3rd1),
-          toggle("showingDisabled")(multiselect3rd3),
+    h("section", {}, [
+      h("section", {}, [
+        h("section", {}, [
+          state.showingNormal && multiselect3rd1(state),
+          state.showingDisabled && multiselect3rd3(state),
         ]),
       ]),
-      panel("uy-storyboard-showcase-section-data", [
-        readout("multiselect3"),
+      h("section", {}, [
+        readout("multiselect3")(state),
       ]),
     ]),
   ])

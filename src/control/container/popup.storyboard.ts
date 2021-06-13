@@ -1,8 +1,8 @@
 import type { VNode } from "hyperapp"
 import type { Story } from "../../types"
 
-import { text } from "hyperapp"
-import { panel, popup, row } from "../../../lib/main"
+import { h, text } from "hyperapp"
+import { popup } from "../../../lib/main"
 import { readout } from "../../utility/readout"
 
 const freshState = (state: Story): Story => state
@@ -10,18 +10,18 @@ const freshState = (state: Story): Story => state
 const popupNormal: VNode<Story> = popup("popupNormal", text("TEST"))
 const popupDisabled: VNode<Story> = popup({ id: "popupDisabled", disabled: true }, text("TEST"))
 
-const view =
-  panel("uy-storyboard-showcase-panel", [
-    panel("uy-storyboard-showcase-section", [
-      panel<Story>("uy-storyboard-showcase-section-view", [
-        row([
-          (state) => state.showingNormal && popupNormal,
-          (state) => state.showingDisabled && popupDisabled,
+const view = (state: Story): VNode<Story> =>
+  h("section", { class: "uy-storyboard-showcase-panel" }, [
+    h("section", {}, [
+      h("section", {}, [
+        h("section", {}, [
+          state.showingNormal && popupNormal,
+          state.showingDisabled && popupDisabled,
         ]),
       ]),
-      panel("uy-storyboard-showcase-section-data", [
-        // readout ("uy", "insideEl"),
-        readout("popup"),
+      h("section", {}, [
+        // readout ("uy", "insideEl")(state),
+        readout("popup")(state),
       ]),
     ]),
   ])

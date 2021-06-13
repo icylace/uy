@@ -1,7 +1,8 @@
 import type { VNode } from "hyperapp"
 import type { Story } from "../../types"
 
-import { icon, panel, row } from "../../../lib/main"
+import { h } from "hyperapp"
+import { icon } from "../../../lib/main"
 
 const freshState = (state: Story): Story => state
 
@@ -15,11 +16,21 @@ const icon7 = (): VNode<Story> => icon("fas fa-angle-left")
 const icon8 = (): VNode<Story> => icon("fas fa-angle-right")
 const icon9 = (): VNode<Story> => icon("fas fa-angle-double-right")
 
-const view =
-  panel("uy-storyboard-showcase-panel", [
-    panel("uy-storyboard-showcase-section", [
-      panel("uy-storyboard-showcase-section-view", [
-        row([icon1, icon2, icon3, icon4, icon5, icon6, icon7, icon8, icon9]),
+const view = (_state: Story): VNode<Story> =>
+  h("section", { class: "uy-storyboard-showcase-panel" }, [
+    h("section", {}, [
+      h("section", {}, [
+        h("section", {}, [
+          icon1(),
+          icon2(),
+          icon3(),
+          icon4(),
+          icon5(),
+          icon6(),
+          icon7(),
+          icon8(),
+          icon9(),
+        ]),
       ]),
     ]),
   ])

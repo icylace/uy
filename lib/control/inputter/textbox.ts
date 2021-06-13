@@ -28,7 +28,6 @@ const textbox = <S>(options: TextboxOptions<S> = {}) => (...focus: Focus) => {
         value: get<TextboxData>(focus)(state).value,
         disabled,
         onchange: (state, event) => {
-          if (!event) return state
           const target = event.target as HTMLInputElement
           const nextValue = target.value
           const nextState = set<S>(focus, "value")(nextValue)(state)

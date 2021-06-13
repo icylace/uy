@@ -32,31 +32,31 @@ import { h, app, text } from "hyperapp"
 import * as buttonStoryboard from "./control/button/button.storyboard"
 import * as cancelButtonStoryboard from "./control/button/cancelButton.storyboard"
 
-// import * as boardStoryboard from "./control/container/board.storyboard"
-import * as fieldStoryboard from "./control/container/field.storyboard"
-import * as fieldsetStoryboard from "./control/container/fieldset.storyboard"
-// import * as overlayStoryboard from "./control/container/overlay.storyboard"
-import * as popupStoryboard from "./control/container/popup.storyboard"
-// import * as tableStoryboard from "./control/container/table.storyboard"
-import * as uiStoryboard from "./control/container/ui.storyboard"
+// // import * as boardStoryboard from "./control/container/board.storyboard"
+// import * as fieldStoryboard from "./control/container/field.storyboard"
+// import * as fieldsetStoryboard from "./control/container/fieldset.storyboard"
+// // import * as overlayStoryboard from "./control/container/overlay.storyboard"
+// import * as popupStoryboard from "./control/container/popup.storyboard"
+// // import * as tableStoryboard from "./control/container/table.storyboard"
+// import * as uiStoryboard from "./control/container/ui.storyboard"
 
 // import * as iconStoryboard from "./control/indicator/icon.storyboard"
 // import * as spinnerStoryboard from "./control/indicator/spinner.storyboard"
 
-import * as checkboxStoryboard from "./control/inputter/checkbox.storyboard"
-import * as checklistStoryboard from "./control/inputter/checklist.storyboard"
-import * as datePickerStoryboard from "./control/inputter/datePicker.storyboard"
-import * as dropdownStoryboard from "./control/inputter/dropdown.storyboard"
-import * as fileStoryboard from "./control/inputter/file.storyboard"
-import * as listStoryboard from "./control/inputter/list.storyboard"
-import * as multiselectStoryboard from "./control/inputter/multiselect.storyboard"
-import * as numberboxStoryboard from "./control/inputter/numberbox.storyboard"
-import * as pagerStoryboard from "./control/inputter/pager.storyboard"
-import * as radiosStoryboard from "./control/inputter/radios.storyboard"
-import * as searchboxStoryboard from "./control/inputter/searchbox.storyboard"
-import * as tabsStoryboard from "./control/inputter/tabs.storyboard"
-import * as textareaStoryboard from "./control/inputter/textarea.storyboard"
-import * as textboxStoryboard from "./control/inputter/textbox.storyboard"
+// import * as checkboxStoryboard from "./control/inputter/checkbox.storyboard"
+// import * as checklistStoryboard from "./control/inputter/checklist.storyboard"
+// import * as datePickerStoryboard from "./control/inputter/datePicker.storyboard"
+// import * as dropdownStoryboard from "./control/inputter/dropdown.storyboard"
+// import * as fileStoryboard from "./control/inputter/file.storyboard"
+// import * as listStoryboard from "./control/inputter/list.storyboard"
+// import * as multiselectStoryboard from "./control/inputter/multiselect.storyboard"
+// import * as numberboxStoryboard from "./control/inputter/numberbox.storyboard"
+// import * as pagerStoryboard from "./control/inputter/pager.storyboard"
+// import * as radiosStoryboard from "./control/inputter/radios.storyboard"
+// import * as searchboxStoryboard from "./control/inputter/searchbox.storyboard"
+// import * as tabsStoryboard from "./control/inputter/tabs.storyboard"
+// import * as textareaStoryboard from "./control/inputter/textarea.storyboard"
+// import * as textboxStoryboard from "./control/inputter/textbox.storyboard"
 
 export type Storyboard = {
   freshState: (_: Story) => Story
@@ -64,31 +64,31 @@ export type Storyboard = {
 }
 
 const storyboards: Storyboard[] = [
-  // boardStoryboard,
-  fieldStoryboard,
-  fieldsetStoryboard,
-  // overlayStoryboard,
-  popupStoryboard,
-  // tableStoryboard,
-  uiStoryboard,
+  // // boardStoryboard,
+  // fieldStoryboard,
+  // fieldsetStoryboard,
+  // // overlayStoryboard,
+  // popupStoryboard,
+  // // tableStoryboard,
+  // uiStoryboard,
 
   buttonStoryboard,
   cancelButtonStoryboard,
 
-  checkboxStoryboard,
-  checklistStoryboard,
-  datePickerStoryboard,
-  dropdownStoryboard,
-  fileStoryboard,
-  listStoryboard,
-  multiselectStoryboard,
-  numberboxStoryboard,
-  pagerStoryboard,
-  radiosStoryboard,
-  searchboxStoryboard,
-  tabsStoryboard,
-  textareaStoryboard,
-  textboxStoryboard,
+  // checkboxStoryboard,
+  // checklistStoryboard,
+  // datePickerStoryboard,
+  // dropdownStoryboard,
+  // fileStoryboard,
+  // listStoryboard,
+  // multiselectStoryboard,
+  // numberboxStoryboard,
+  // pagerStoryboard,
+  // radiosStoryboard,
+  // searchboxStoryboard,
+  // tabsStoryboard,
+  // textareaStoryboard,
+  // textboxStoryboard,
 
   // iconStoryboard,
   // spinnerStoryboard,
@@ -98,27 +98,31 @@ const storyboardView = (state: Story): VNode<Story> =>
   h("div", { class: "uy-storyboard" }, [
     h("div", { class: "uy-storyboard-shelf" }, [
       h("div", { class: "uy-storyboard-sidebar" }, [
-        h("label", {}, [
-          h("input", {
-            type: "checkbox",
-            checked: state.showingNormal,
-            onclick: (state, event) => ({
-              ...state,
-              showingNormal: (event.target as HTMLInputElement).checked,
+        h("div", {}, [
+          h("label", {}, [
+            h("input", {
+              type: "checkbox",
+              checked: state.showingNormal,
+              onclick: (state, event) => ({
+                ...state,
+                showingNormal: (event.target as HTMLInputElement).checked,
+              }),
             }),
-          }),
-          text("normal"),
+            text("normal"),
+          ]),
         ]),
-        h("label", {}, [
-          h("input", {
-            type: "checkbox",
-            checked: state.showingDisabled,
-            onclick: (state, event) => ({
-              ...state,
-              showingDisabled: (event.target as HTMLInputElement).checked,
+        h("div", {}, [
+          h("label", {}, [
+            h("input", {
+              type: "checkbox",
+              checked: state.showingDisabled,
+              onclick: (state, event) => ({
+                ...state,
+                showingDisabled: (event.target as HTMLInputElement).checked,
+              }),
             }),
-          }),
-          text("disabled"),
+            text("disabled"),
+          ]),
         ]),
         h("div", { class: "uy-storyboard-switcher" }, [
           h("ul", {}, [

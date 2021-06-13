@@ -22,12 +22,12 @@ import "./index.css"
 
 // import type { State, Subscriber, Transform, View } from "hyperapp"
 // import type { State, Transform, View } from "hyperapp"
-import type { TypedH, VNode } from "hyperapp"
+import type { VNode } from "hyperapp"
 // import type { Transform } from "../lib/main"
 import type { Story } from "./types"
 
-import { h as ha, app, text } from "hyperapp"
-// // import { panel, uyMouseDownSubscription } from "../lib/main"
+import { h, app, text } from "hyperapp"
+// import { panel, uyMouseDownSubscription } from "../lib/main"
 
 import * as buttonStoryboard from "./control/button/button.storyboard"
 import * as cancelButtonStoryboard from "./control/button/cancelButton.storyboard"
@@ -57,8 +57,6 @@ import * as searchboxStoryboard from "./control/inputter/searchbox.storyboard"
 import * as tabsStoryboard from "./control/inputter/tabs.storyboard"
 import * as textareaStoryboard from "./control/inputter/textarea.storyboard"
 import * as textboxStoryboard from "./control/inputter/textbox.storyboard"
-
-const h: TypedH<Story> = ha
 
 export type Storyboard = {
   freshState: (_: Story) => Story

@@ -14,9 +14,6 @@ export * from "./utility/uyHelper/uyMouseDownSubscription"
 
 export * from "./control/action/helper"
 
-export * from "./control/button/button"
-export * from "./control/button/cancelButton"
-
 export * from "./control/container/board"
 export * from "./control/container/box"
 export * from "./control/container/column"
@@ -47,3 +44,6 @@ export * from "./control/inputter/searchbox"
 export * from "./control/inputter/tabs"
 export * from "./control/inputter/textarea"
 export * from "./control/inputter/textbox"
+
+export * from "./control/presser/button"
+export * from "./control/presser/cancelButton"

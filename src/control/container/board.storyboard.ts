@@ -9,8 +9,8 @@ import { board } from "../../../lib/main"
 const freshState = (state: Story): Story => state
 
 const dummyTable: BoardRow<Story>[] = [
-  [(_state) => h<Story>("p", {}, text("123")), (_state) => h<Story>("p", {}, text("uihew"))],
-  [(_state) => h<Story>("p", {}, text("mnb,mnb")), (_state) => h<Story>("p", {}, text("uihew"))],
+  [h<Story>("p", {}, text("123")), h<Story>("p", {}, text("uihew"))],
+  [h<Story>("p", {}, text("mnb,mnb")), h<Story>("p", {}, text("uihew"))],
 ]
 
 const board1Normal = board({ orderColumn: null, sortDescending: false }, dummyTable)

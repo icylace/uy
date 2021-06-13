@@ -1,7 +1,6 @@
 import type { Effect } from "hyperapp"
 
-type StateWithEffects<S, P = any> = [state: S, ...effects: Effect<S, P>[]]
-type StateFormat<S, P = any> = S | StateWithEffects<S, P>
+type StateFormat<S, P = any> = S | [state: S, ...effects: Effect<S, P>[]]
 
 // A transform carries out the transition from one state to another.
 type Transform<S, P = any> = (state: StateFormat<S>, payload: P) => StateFormat<S>

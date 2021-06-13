@@ -37,9 +37,6 @@ input control states:
 
 /* -------------------------------------------------------------------------- */
 
-@import url(./theme/default/button/button.css);
-@import url(./theme/default/button/cancelButton.css);
-
 @import url(./theme/default/container/field.css);
 @import url(./theme/default/container/fieldset.css);
 @import url(./theme/default/container/overlay.css);
@@ -64,6 +61,9 @@ input control states:
 @import url(./theme/default/inputter/tabs.css);
 @import url(./theme/default/inputter/textarea.css);
 @import url(./theme/default/inputter/textbox.css);
+
+@import url(./theme/default/presser/button.css);
+@import url(./theme/default/presser/cancelButton.css);
 
 /* -------------------------------------------------------------------------- */
 

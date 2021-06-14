@@ -19,7 +19,7 @@ export type ChecklistData = {
 }
 
 export type ChecklistOptions<S> = {
-  renderLabel: (_: string) => Content<S>
+  renderLabel: (_: Content<S>) => Content<S>
   onchange?: Action<S, CheckboxValue>
   class?: ClassProp
   disabled?: boolean
@@ -47,9 +47,7 @@ const checklist = <S>(options: ChecklistOptions<S>) => (...focus: Focus) => {
     return h("div", {
       ...etc,
       class: ["uy-checklist", { disabled }, etc.class],
-    }, [
-      table({ disabled }, get<ChecklistData>(focus)(state).items.map(item)),
-    ])
+    }, table({ disabled }, get<ChecklistData>(focus)(state).items.map(item)))
   }
 }
 

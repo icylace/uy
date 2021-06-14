@@ -3,11 +3,19 @@ import type { Content } from "../../../lib/main"
 import type { Story } from "../../types"
 
 import { h } from "hyperapp"
-import { c, checklist, freshChecklist } from "../../../lib/main"
+import { c, checklist, freshCheckbox, freshChecklist } from "../../../lib/main"
 import { readout } from "../../utility/readout"
 
-const freshState = (state: Story): Story =>
-  ({ ...state, checklist: freshChecklist([]) })
+// const freshState = (state: Story): Story =>
+//   ({ ...state, checklist: freshChecklist([]) })
+
+const freshState = (state: Story): Story => ({
+  ...state,
+  checklist: freshChecklist([{
+    id: "sdfsdfsdfsd",
+    selected: freshCheckbox(true),
+  }]),
+})
 
 const renderLabel = <S>(label: Content<S>): Content<S> => h("div", {}, c(label))
 

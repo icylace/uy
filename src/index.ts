@@ -43,8 +43,8 @@ import * as cancelButtonStoryboard from "./control/button/cancelButton.storyboar
 // import * as iconStoryboard from "./control/indicator/icon.storyboard"
 // import * as spinnerStoryboard from "./control/indicator/spinner.storyboard"
 
-// import * as checkboxStoryboard from "./control/inputter/checkbox.storyboard"
-// import * as checklistStoryboard from "./control/inputter/checklist.storyboard"
+import * as checkboxStoryboard from "./control/inputter/checkbox.storyboard"
+import * as checklistStoryboard from "./control/inputter/checklist.storyboard"
 // import * as datePickerStoryboard from "./control/inputter/datePicker.storyboard"
 // import * as dropdownStoryboard from "./control/inputter/dropdown.storyboard"
 // import * as fileStoryboard from "./control/inputter/file.storyboard"
@@ -75,8 +75,8 @@ const storyboards: Storyboard[] = [
   buttonStoryboard,
   cancelButtonStoryboard,
 
-  // checkboxStoryboard,
-  // checklistStoryboard,
+  checkboxStoryboard,
+  checklistStoryboard,
   // datePickerStoryboard,
   // dropdownStoryboard,
   // fileStoryboard,
@@ -126,12 +126,8 @@ const storyboardView = (state: Story): VNode<Story> =>
         ]),
         h("div", { class: "uy-storyboard-switcher" }, [
           h("ul", {}, [
-            h("li", {}, [
-              h("p", {}, text("All")),
-            ]),
-            h("li", {}, [
-              h("p", {}, text("Buttons")),
-            ]),
+            h("li", {}, h("p", {}, text("All"))),
+            h("li", {}, h("p", {}, text("Buttons"))),
           ]),
         ]),
       ]),

@@ -1,10 +1,10 @@
-.uy-spinner:before {
+.uy-busy:before {
   border: 2px solid var(--color-gray--85);
   border-top-color: var(--color-gray--15);
 }
 
 /* -------------------------------------------------------------------------- */
 
-.storyboard-uy-spinner {
+.storyboard-uy-busy {
   position: relative;
 }

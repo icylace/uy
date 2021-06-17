@@ -2,14 +2,14 @@ import type { VNode } from "hyperapp"
 import type { Story } from "../../types"
 
 import { h, text } from "hyperapp"
-import { overlay, spinner } from "../../../lib/main"
+import { overlay, busy } from "../../../lib/main"
 import { always } from "../../utility/always"
 
 const freshState = (state: Story): Story => state
 
 const overlayNormal = overlay({ class: "test-uy-overlay" }, [
   always(h("h3", {}, [text("Test Process")])),
-  always(h("div", { class: "spinner-wrapper" }, [spinner()])),
+  always(h("div", { class: "busy-wrapper" }, [busy()])),
 ])
 const overlayDisabled = overlay(
   { disabled: true },

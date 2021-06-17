@@ -2,14 +2,14 @@ import type { VNode } from "hyperapp"
 import type { Story } from "../../types"
 
 import { h, text } from "hyperapp"
-import { spinner } from "../../../lib/main"
+import { busy } from "../../../lib/main"
 
 const freshState = (state: Story): Story => state
 
 const spinner1 = (): VNode<Story> =>
-  h("div", { class: "storyboard-uy-spinner" }, [
+  h("div", { class: "storyboard-uy-busy" }, [
     text("TEST"),
-    spinner(),
+    busy(),
     text("TEST"),
   ])
 

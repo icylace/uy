@@ -26,8 +26,8 @@ export * from "./control/container/table"
 
 export * from "./control/effect/scrollIntoView"
 
+export * from "./control/indicator/busy"
 export * from "./control/indicator/icon"
-export * from "./control/indicator/spinner"
 
 export * from "./control/inputter/checkbox"
 export * from "./control/inputter/checklist"

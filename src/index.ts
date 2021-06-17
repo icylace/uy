@@ -31,8 +31,8 @@ import * as cancelButtonStoryboard from "./control/button/cancelButton.storyboar
 // // import * as tableStoryboard from "./control/container/table.storyboard"
 // import * as uiStoryboard from "./control/container/ui.storyboard"
 
+// import * as busyStoryboard from "./control/indicator/busy.storyboard"
 // import * as iconStoryboard from "./control/indicator/icon.storyboard"
-// import * as spinnerStoryboard from "./control/indicator/spinner.storyboard"
 
 import * as checkboxStoryboard from "./control/inputter/checkbox.storyboard"
 
@@ -88,7 +88,7 @@ const storyboards: Storyboard[] = [
   // textboxStoryboard,
 
   // iconStoryboard,
-  // spinnerStoryboard,
+  // busyStoryboard,
 ]
 
 const storyboardView = (state: Story): VNode<Story> =>

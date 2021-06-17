@@ -11,8 +11,8 @@
 @import url("/src/theme/storyboard/container/table.css");
 @import url("/src/theme/storyboard/container/ui.css");
 
+@import url("/src/theme/storyboard/indicator/busy.css");
 @import url("/src/theme/storyboard/indicator/icon.css");
-@import url("/src/theme/storyboard/indicator/spinner.css");
 
 @import url("/src/theme/storyboard/inputter/checkbox.css");
 @import url("/src/theme/storyboard/inputter/checklist.css");

@@ -1,14 +1,14 @@
 /* Based on: */
 /* https://stephanwagner.me/only-css-loading-spinner */
 
-@keyframes uy-spinner {
+@keyframes uy-bust {
   to {
     transform: rotate(360deg);
   }
 }
 
-.uy-spinner:before {
-  animation: uy-spinner 0.6s linear infinite;
+.uy-bust:before {
+  animation: uy-bust 0.6s linear infinite;
   border-radius: 50%;
   border-top-color: black;
   border: 1px solid white;

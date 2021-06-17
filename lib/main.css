@@ -44,8 +44,8 @@ input control states:
 @import url(./theme/storyboard/container/popup.css);
 @import url(./theme/storyboard/container/table.css);
 
+@import url(./theme/storyboard/indicator/busy.css);
 @import url(./theme/storyboard/indicator/icon.css);
-@import url(./theme/storyboard/indicator/spinner.css);
 
 @import url(./theme/storyboard/inputter/checkbox.css);
 @import url(./theme/storyboard/inputter/checklist.css);

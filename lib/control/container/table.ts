@@ -1,11 +1,11 @@
 import type { ClassProp, Props, MaybeVNode, VNode } from "hyperapp"
-import type { Content } from "../../utility/hyperappHelper/content"
+import type { Content, View } from "../../utility/hyperappHelper/content"
 
 import { h } from "hyperapp"
 import { c } from "../../utility/hyperappHelper/content"
 import { icon } from "../indicator/icon"
 
-export type TableCell<S> = Content<S> | [Props<S>, Content<S>]
+export type TableCell<S> = Content<S> | View<S> | [Props<S>, Content<S> | View<S>]
 export type TableRow<S> = TableCell<S>[]
 export type TableOptions<S> =
   | TableRow<S>
@@ -41,26 +41,30 @@ const tableHeader = <S>(orderColumn: string | null | undefined, sortDescending: 
   }
 }
 
-const hasPropList = <S>(x: TableCell<S>): x is [Props<S>, Content<S>] =>
+const hasPropList = <S>(x: TableCell<S>): x is [Props<S>, Content<S> | View<S>] =>
   Array.isArray(x)
 
-const tableCell = <S>(x: TableCell<S>): VNode<S> =>
-  hasPropList(x) ? h("td", x[0], c(x[1])) : h("td", {}, c(x))
+const tableCell = <S>(x: TableCell<S>) => (state: S): VNode<S> =>
+  hasPropList(x)
+    ? h("td", x[0], typeof x[1] === "function" ? c(x[1](state)) : c(x[1]))
+    : h("td", {}, typeof x === "function" ? c(x(state)) : c(x))
 
-const tableRow = <S>(row: TableRow<S>): VNode<S> =>
-  h("tr", {}, row.map(tableCell))
+const tableRow = <S>(row: TableRow<S>) => (state: S): VNode<S> =>
+  h("tr", {}, row.map((cell) => tableCell(cell)(state)))
 
-const table = <S>(options: TableOptions<S> = {}, rows: TableRow<S>[]): VNode<S> => {
-  const props = Array.isArray(options) ? { headers: options } : options
-  const { headers, orderColumn, sortDescending, disabled, ...etc } = props
-  return h("div", { class: ["uy-control uy-table", { disabled }] }, [
-    h("table", etc, [
-      Array.isArray(headers) && headers.length
-        ? h("thead", {}, headers.map(tableHeader(orderColumn, sortDescending)))
-        : null,
-      h("tbody", {}, rows.map(tableRow)),
-    ]),
-  ])
+const table = <S>(options: TableOptions<S> = {}, rows: TableRow<S>[]) => {
+  return (state: S): VNode<S> => {
+    const props = Array.isArray(options) ? { headers: options } : options
+    const { headers, orderColumn, sortDescending, disabled, ...etc } = props
+    return h("div", { class: ["uy-control uy-table", { disabled }] }, [
+      h("table", etc, [
+        Array.isArray(headers) && headers.length
+          ? h("thead", {}, headers.map(tableHeader(orderColumn, sortDescending)))
+          : null,
+        h("tbody", {}, rows.map((row) => tableRow(row)(state))),
+      ]),
+    ])
+  }
 }
 
 export { table }

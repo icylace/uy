@@ -23,13 +23,12 @@ import { h, app, text } from "hyperapp"
 import * as buttonStoryboard from "./control/button/button.storyboard"
 import * as cancelButtonStoryboard from "./control/button/cancelButton.storyboard"
 
-// // import * as boardStoryboard from "./control/container/board.storyboard"
 // import * as fieldStoryboard from "./control/container/field.storyboard"
 // import * as fieldsetStoryboard from "./control/container/fieldset.storyboard"
 // // import * as overlayStoryboard from "./control/container/overlay.storyboard"
+// import * as panelStoryboard from "./control/container/panel.storyboard"
 // import * as popupStoryboard from "./control/container/popup.storyboard"
 // // import * as tableStoryboard from "./control/container/table.storyboard"
-// import * as uiStoryboard from "./control/container/ui.storyboard"
 
 // import * as busyStoryboard from "./control/indicator/busy.storyboard"
 // import * as iconStoryboard from "./control/indicator/icon.storyboard"
@@ -58,13 +57,12 @@ export type Storyboard = {
 }
 
 const storyboards: Storyboard[] = [
-  // // boardStoryboard,
   // fieldStoryboard,
   // fieldsetStoryboard,
   // // overlayStoryboard,
+  // panelStoryboard,
   // popupStoryboard,
   // // tableStoryboard,
-  // uiStoryboard,
 
   buttonStoryboard,
   cancelButtonStoryboard,

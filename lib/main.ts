@@ -17,7 +17,6 @@ export * from "./utility/uyHelper/uyMouseDownSubscription"
 export * from "./control/action/helper"
 
 export * from "./control/container/board"
-export * from "./control/container/box"
 export * from "./control/container/field"
 export * from "./control/container/fieldset"
 export * from "./control/container/overlay"

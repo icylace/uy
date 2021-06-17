@@ -4,8 +4,8 @@ import type { Content } from "../../utility/hyperappHelper/content"
 
 import { get, set } from "eyepiece"
 import { h, text } from "hyperapp"
-import { c } from "../../utility/hyperappHelper/content"
 import { range } from "../../utility/range"
+import { c } from "../../utility/hyperappHelper/content"
 import { icon } from "../indicator/icon"
 
 export type PagerValue = number

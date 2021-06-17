@@ -4,6 +4,9 @@ import type { TableOptions } from "./table"
 
 import { table } from "./table"
 
+// TODO:
+// - move state stuff into `table` then remove `board`
+
 export type BoardCell<S> = MaybeVNode<S> | View<S> | [Props<S>, MaybeVNode<S> | View<S>]
 export type BoardRow<S> = BoardCell<S>[]
 

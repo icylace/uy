@@ -36,36 +36,7 @@ input control states:
 
 */
 
-/* -------------------------------------------------------------------------- */
-
-@import url(./theme/storyboard/container/field.css);
-@import url(./theme/storyboard/container/fieldset.css);
-@import url(./theme/storyboard/container/overlay.css);
-@import url(./theme/storyboard/container/popup.css);
-@import url(./theme/storyboard/container/table.css);
-
-@import url(./theme/storyboard/indicator/busy.css);
-@import url(./theme/storyboard/indicator/icon.css);
-
-@import url(./theme/storyboard/inputter/checkbox.css);
-@import url(./theme/storyboard/inputter/checklist.css);
-@import url(./theme/storyboard/inputter/datePicker.css);
-@import url(./theme/storyboard/inputter/dropdown.css);
-@import url(./theme/storyboard/inputter/file.css);
-@import url(./theme/storyboard/inputter/list.css);
-@import url(./theme/storyboard/inputter/multiselect.css);
-@import url(./theme/storyboard/inputter/numberbox.css);
-@import url(./theme/storyboard/inputter/pager.css);
-@import url(./theme/storyboard/inputter/radios.css);
-@import url(./theme/storyboard/inputter/searchbox.css);
-@import url(./theme/storyboard/inputter/tabs.css);
-@import url(./theme/storyboard/inputter/textarea.css);
-@import url(./theme/storyboard/inputter/textbox.css);
-
-@import url(./theme/storyboard/presser/button.css);
-@import url(./theme/storyboard/presser/cancelButton.css);
-
-/* -------------------------------------------------------------------------- */
+@import url(./theme/default/default.css);
 
 /* .hidden {
   display: none !important;

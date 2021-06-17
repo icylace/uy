@@ -1,11 +1,8 @@
-// TODO:
-// - get rid of this ?
-
 import type { VNode } from "hyperapp"
 import type { Story } from "../../types"
 
 import { h, text } from "hyperapp"
-import { column, panel, row } from "../../../lib/main"
+import { panel } from "../../../lib/main"
 import { always } from "../../utility/always"
 
 const freshState = (state: Story): Story => state

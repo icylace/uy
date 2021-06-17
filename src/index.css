@@ -1,33 +1,4 @@
-@import url("/src/theme/diagnostic/color.css");
-@import url("/src/theme/diagnostic/font.css");
-
-@import url("/src/theme/diagnostic/button/button.css");
-@import url("/src/theme/diagnostic/button/cancelButton.css");
-
-@import url("/src/theme/diagnostic/container/field.css");
-@import url("/src/theme/diagnostic/container/fieldset.css");
-@import url("/src/theme/diagnostic/container/overlay.css");
-@import url("/src/theme/diagnostic/container/popup.css");
-@import url("/src/theme/diagnostic/container/table.css");
-@import url("/src/theme/diagnostic/container/ui.css");
-
-@import url("/src/theme/diagnostic/indicator/busy.css");
-@import url("/src/theme/diagnostic/indicator/icon.css");
-
-@import url("/src/theme/diagnostic/inputter/checkbox.css");
-@import url("/src/theme/diagnostic/inputter/checklist.css");
-@import url("/src/theme/diagnostic/inputter/datePicker.css");
-@import url("/src/theme/diagnostic/inputter/dropdown.css");
-@import url("/src/theme/diagnostic/inputter/file.css");
-@import url("/src/theme/diagnostic/inputter/list.css");
-@import url("/src/theme/diagnostic/inputter/multiselect.css");
-@import url("/src/theme/diagnostic/inputter/numberbox.css");
-@import url("/src/theme/diagnostic/inputter/pager.css");
-@import url("/src/theme/diagnostic/inputter/radios.css");
-@import url("/src/theme/diagnostic/inputter/searchbox.css");
-@import url("/src/theme/diagnostic/inputter/tabs.css");
-@import url("/src/theme/diagnostic/inputter/textarea.css");
-@import url("/src/theme/diagnostic/inputter/textbox.css");
+@import url("/src/theme/diagnostic/diagnostic.css");
 
 /* -------------------------------------------------------------------------- */
 

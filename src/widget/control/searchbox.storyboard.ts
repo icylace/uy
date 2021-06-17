@@ -5,7 +5,7 @@ import type { Story } from "../../types"
 import { h } from "hyperapp"
 import { freshSearchbox, searchbox } from "../../../lib/main"
 import { readout } from "../../utility/readout"
-import { search } from "../effect/search"
+import { search } from "../../effect/search"
 
 const freshState = (state: Story): Story => ({
   ...state,

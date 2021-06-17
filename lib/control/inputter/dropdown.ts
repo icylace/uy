@@ -6,7 +6,6 @@ import { get, set } from "eyepiece"
 import { h } from "hyperapp"
 import { c } from "../../utility/hyperappHelper/content"
 import { Defocus, Refocus } from "../action/helper"
-import { box } from "../container/box"
 
 export type DropdownValue = string
 
@@ -38,8 +37,8 @@ const dropdown = <S>(options: DropdownOptions<S>) => (...focus: Focus) => {
     const props = isOnlyChoices<S>(options) ? { choices: options } : options
     const { choices, onchange, disabled, ...etc } = props
     const x = get<DropdownData>(focus)(state)
-    return box("uy-control uy-dropdown", [
-      box({ "uy-dropdown-arrow": true, focus: x.focused, disabled }, [
+    return h("div", { class: "uy-control uy-dropdown" }, [
+      h("div", { class: { "uy-dropdown-arrow": true, focus: x.focused, disabled } }, [
         h("select",
           {
             value: x.value,

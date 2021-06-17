@@ -2,6 +2,7 @@ import type { ClassProp, VNode } from "hyperapp"
 import type { Content } from "../../utility/hyperappHelper/content"
 
 import { h } from "hyperapp"
+import { using } from "../../utility/using"
 import { c, isContent } from "../../utility/hyperappHelper/content"
 
 export type FieldsetOptions<S> =
@@ -21,7 +22,7 @@ export const fieldset = <S>(options: FieldsetOptions<S>, views: ((state: S) => V
   return (state: S): VNode<S> => {
     const props = isContent<S>(options) ? { label: options } : options
     const { label, disabled, ...etc } = props
-    const contents = views.map((g) => g(state))
+    const contents = using(views)(state)
     return h("fieldset", {
       disabled,
       ...etc,

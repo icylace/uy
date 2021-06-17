@@ -4,7 +4,6 @@ import type { Content } from "../../utility/hyperappHelper/content"
 import { h } from "hyperapp"
 import { c } from "../../utility/hyperappHelper/content"
 import { icon } from "../indicator/icon"
-import { box } from "./box"
 
 export type TableCell<S> = Content<S> | [Props<S>, Content<S>]
 export type TableRow<S> = TableCell<S>[]
@@ -54,7 +53,7 @@ const tableRow = <S>(row: TableRow<S>): VNode<S> =>
 const table = <S>(options: TableOptions<S> = {}, rows: TableRow<S>[]): VNode<S> => {
   const props = Array.isArray(options) ? { headers: options } : options
   const { headers, orderColumn, sortDescending, disabled, ...etc } = props
-  return box(["uy-control uy-table", { disabled }], [
+  return h("div", { class: ["uy-control uy-table", { disabled }] }, [
     h("table", etc, [
       Array.isArray(headers) && headers.length
         ? h("thead", {}, headers.map(tableHeader(orderColumn, sortDescending)))

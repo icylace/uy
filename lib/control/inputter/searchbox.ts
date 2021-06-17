@@ -6,7 +6,6 @@ import { get, set } from "eyepiece"
 import { h, text } from "hyperapp"
 import { Defocus, Refocus } from "../action/helper"
 import { popup } from "../container/popup"
-import { box } from "../container/box"
 import { icon } from "../indicator/icon"
 
 export type SearchboxValue = string
@@ -142,7 +141,7 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
         : null
     ) as MaybeVNode<S>
 
-    return box(["uy-control uy-searchbox", { disabled }] , [
+    return h("div", { class: ["uy-control uy-searchbox", { disabled }] }, [
       h("label", {
         class: {
           "uy-searchbox-label": true,

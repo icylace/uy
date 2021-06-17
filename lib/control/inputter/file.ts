@@ -6,7 +6,6 @@ import type { Action, ClassProp, VNode } from "hyperapp"
 
 import { get, set } from "eyepiece"
 import { h, text } from "hyperapp"
-import { box } from "../container/box"
 import { icon } from "../indicator/icon"
 
 export type FileValue = string
@@ -32,7 +31,7 @@ const file = <S>(options: FileOptions<S> = {}) => (...focus: Focus) => {
   return (state: S): VNode<S> => {
     const props = typeof options === "string" ? { label: options } : options
     const { label = "Select your file...", onchange, disabled, ...etc } = props
-    return box(["uy-control uy-file uy-input", { disabled }], [
+    return h("div", { class: ["uy-control uy-file uy-input", { disabled }] }, [
       h("label", { "data-text": label }, [
         h("input", {
           type: "file",

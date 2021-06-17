@@ -3,7 +3,6 @@ import type { Content } from "../../utility/hyperappHelper/content"
 
 import { h } from "hyperapp"
 import { c } from "../../utility/hyperappHelper/content"
-import { box } from "../container/box"
 
 export type ButtonOptions<S> = {
   label: Content<S>
@@ -14,7 +13,7 @@ export type ButtonOptions<S> = {
 
 export const button = <S>(options: ButtonOptions<S>): VNode<S> => {
   const { label, onclick, disabled, ...etc } = options
-  return box("uy-control uy-button", [
+  return h("div", { class: "uy-control uy-button" }, [
     h("button", {
       type: "button",
       onclick,

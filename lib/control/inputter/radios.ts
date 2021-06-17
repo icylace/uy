@@ -5,7 +5,6 @@ import type { Content } from "../../utility/hyperappHelper/content"
 import { get, set } from "eyepiece"
 import { h } from "hyperapp"
 import { c } from "../../utility/hyperappHelper/content"
-import { box } from "../container/box"
 
 export type RadiosValue = string
 
@@ -33,7 +32,7 @@ const radios = <S>(options: RadiosOptions<S>) => (...focus: Focus) => {
   return (state: S): VNode<S> => {
     const props = isOnlyChoices<S>(options) ? { choices: options } : options
     const { choices, onchange, disabled, ...etc } = props
-    return box("uy-control uy-radios",
+    return h("div", { class: "uy-control uy-radios" },
       // TODO:
       // - switch to using a Map object instead in order to guarantee order
       Object.entries(choices).map(

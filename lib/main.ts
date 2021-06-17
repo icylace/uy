@@ -18,13 +18,11 @@ export * from "./control/action/helper"
 
 export * from "./control/container/board"
 export * from "./control/container/box"
-export * from "./control/container/column"
 export * from "./control/container/field"
 export * from "./control/container/fieldset"
 export * from "./control/container/overlay"
 export * from "./control/container/panel"
 export * from "./control/container/popup"
-export * from "./control/container/row"
 export * from "./control/container/table"
 
 export * from "./control/effect/scrollIntoView"
@@ -49,3 +47,4 @@ export * from "./control/inputter/textbox"
 
 export * from "./control/presser/button"
 export * from "./control/presser/cancelButton"
+export * from "./control/presser/pressLayer"

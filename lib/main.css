@@ -14,6 +14,7 @@ uy
 - uy-indicator: A component meant to display information.
 - uy-input: The element of a control that accepts user input data.
 - uy-clicky: The element of a control that can be clicked.
+- uy-presser: The element of a control that can be clicked.
 
 input control modes:
 - regular
@@ -37,33 +38,32 @@ input control states:
 
 /* -------------------------------------------------------------------------- */
 
-@import url(./theme/default/container/field.css);
-@import url(./theme/default/container/fieldset.css);
-@import url(./theme/default/container/overlay.css);
-@import url(./theme/default/container/popup.css);
-@import url(./theme/default/container/row.css);
-@import url(./theme/default/container/table.css);
+@import url(./theme/storyboard/container/field.css);
+@import url(./theme/storyboard/container/fieldset.css);
+@import url(./theme/storyboard/container/overlay.css);
+@import url(./theme/storyboard/container/popup.css);
+@import url(./theme/storyboard/container/table.css);
 
-@import url(./theme/default/indicator/icon.css);
-@import url(./theme/default/indicator/spinner.css);
+@import url(./theme/storyboard/indicator/icon.css);
+@import url(./theme/storyboard/indicator/spinner.css);
 
-@import url(./theme/default/inputter/checkbox.css);
-@import url(./theme/default/inputter/checklist.css);
-@import url(./theme/default/inputter/datePicker.css);
-@import url(./theme/default/inputter/dropdown.css);
-@import url(./theme/default/inputter/file.css);
-@import url(./theme/default/inputter/list.css);
-@import url(./theme/default/inputter/multiselect.css);
-@import url(./theme/default/inputter/numberbox.css);
-@import url(./theme/default/inputter/pager.css);
-@import url(./theme/default/inputter/radios.css);
-@import url(./theme/default/inputter/searchbox.css);
-@import url(./theme/default/inputter/tabs.css);
-@import url(./theme/default/inputter/textarea.css);
-@import url(./theme/default/inputter/textbox.css);
+@import url(./theme/storyboard/inputter/checkbox.css);
+@import url(./theme/storyboard/inputter/checklist.css);
+@import url(./theme/storyboard/inputter/datePicker.css);
+@import url(./theme/storyboard/inputter/dropdown.css);
+@import url(./theme/storyboard/inputter/file.css);
+@import url(./theme/storyboard/inputter/list.css);
+@import url(./theme/storyboard/inputter/multiselect.css);
+@import url(./theme/storyboard/inputter/numberbox.css);
+@import url(./theme/storyboard/inputter/pager.css);
+@import url(./theme/storyboard/inputter/radios.css);
+@import url(./theme/storyboard/inputter/searchbox.css);
+@import url(./theme/storyboard/inputter/tabs.css);
+@import url(./theme/storyboard/inputter/textarea.css);
+@import url(./theme/storyboard/inputter/textbox.css);
 
-@import url(./theme/default/presser/button.css);
-@import url(./theme/default/presser/cancelButton.css);
+@import url(./theme/storyboard/presser/button.css);
+@import url(./theme/storyboard/presser/cancelButton.css);
 
 /* -------------------------------------------------------------------------- */
 

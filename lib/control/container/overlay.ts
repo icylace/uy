@@ -2,7 +2,7 @@ import type { ClassProp, VNode } from "hyperapp"
 import type { View } from "../../utility/hyperappHelper/content"
 
 import { h } from "hyperapp"
-import { box } from "./box"
+import { using } from "../../utility/using"
 
 export type OverlayOptions = {
   [_: string]: unknown
@@ -13,12 +13,12 @@ export type OverlayOptions = {
 export const overlay = <S>(options: OverlayOptions, views: View<S>[]) => {
   return (state: S): VNode<S> => {
     const { disabled, ...etc } = options
-    return box("uy-overlay-background", [
+    return h("div", { class: "uy-overlay-background" }, [
       h("div", {
         disabled,
         ...etc,
         class: ["uy-overlay", { disabled }, etc.class],
-      }, views.map((g) => g(state))),
+      }, using(views)(state)),
     ])
   }
 }

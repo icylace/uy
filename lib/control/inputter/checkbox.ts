@@ -5,7 +5,6 @@ import type { Content } from "../../utility/hyperappHelper/content"
 import { get, set } from "eyepiece"
 import { h } from "hyperapp"
 import { c, isContent } from "../../utility/hyperappHelper/content"
-import { box } from "../container/box"
 
 export type CheckboxValue = boolean | null | undefined
 
@@ -29,7 +28,7 @@ const checkbox = <S>(options: CheckboxOptions<S> = {}) => (...focus: Focus) => {
     const props = isContent<S>(options) ? { label: options } : options
     const { label, onchange, disabled, ...etc } = props
     const value = get<CheckboxData>(focus)(state).value
-    return box("uy-control uy-checkbox", [
+    return h("div", { class: "uy-control uy-checkbox" }, [
       h("label", { class: { disabled } }, [
         h("input", {
           type: "checkbox",

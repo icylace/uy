@@ -8,7 +8,6 @@ import { h } from "hyperapp"
 import { c } from "../../utility/hyperappHelper/content"
 import { isVDOM } from "ntml"
 import { encase } from "../../utility/encase"
-import { box } from "../container/box"
 import { scrollIntoView } from "../effect/scrollIntoView"
 
 export type TabIndex = number | string
@@ -84,12 +83,16 @@ const tabs = <S>(options: TabsOptions<S>) => (...focus: Focus) => {
       ...etc,
       class: ["uy-control uy-tabs", { disabled }, etc.class],
     }, [
-      box("uy-tabs-navigation", [
+      h("div", { class: "uy-tabs-navigation" }, [
         ...encase(c(itemsHeader)),
-        box("uy-tabs-list uy-scroller", headings.map(tab<S>(focus, x, onclick))),
+        h(
+          "div",
+          { class: "uy-tabs-list uy-scroller" },
+          headings.map(tab<S>(focus, x, onclick))
+        ),
         ...encase(c(itemsFooter)),
       ]),
-      box("uy-tabs-panels", [
+      h("div", { class: "uy-tabs-panels" }, [
         panels[headings.findIndex(isSelected(x))],
       ]),
     ])

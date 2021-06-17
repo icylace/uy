@@ -3,7 +3,6 @@ import type { Action, ClassProp, VNode } from "hyperapp"
 
 import { get, set } from "eyepiece"
 import { h } from "hyperapp"
-import { box } from "../container/box"
 
 export type TextareaValue = string
 
@@ -22,7 +21,7 @@ const freshTextarea = (value: TextareaValue): TextareaData => ({ value })
 const textarea = <S>(options: TextareaOptions<S> = {}) => (...focus: Focus) => {
   return (state: S): VNode<S> => {
     const { onchange, disabled, ...etc } = options
-    return box("uy-control uy-textarea", [
+    return h("div", { class: "uy-control uy-textarea" }, [
       h("textarea", {
         value: get<TextareaData>(focus)(state).value,
         disabled,

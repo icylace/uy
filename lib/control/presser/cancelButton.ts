@@ -4,7 +4,6 @@ import type { Content } from "../../utility/hyperappHelper/content"
 import { h, text } from "hyperapp"
 import { c } from "../../utility/hyperappHelper/content"
 import { isAction } from "../../utility/hyperappHelper/isAction"
-import { box } from "../container/box"
 
 export type CancelButtonOptions<S> =
   | Action<S, MouseEvent>
@@ -18,7 +17,7 @@ export type CancelButtonOptions<S> =
 export const cancelButton = <S>(options: CancelButtonOptions<S>): VNode<S> => {
   const props = isAction<S, MouseEvent>(options) ? { onclick: options } : options
   const { label = text("✕"), onclick, disabled, ...etc } = props
-  return box("uy-control uy-cancelButton", [
+  return h("div", { class: "uy-control uy-cancelButton" }, [
     h("button", {
       type: "button",
       onclick,

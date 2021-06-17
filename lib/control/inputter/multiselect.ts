@@ -4,7 +4,6 @@ import type { Content } from "../../utility/hyperappHelper/content"
 import type { CheckboxData, CheckboxValue } from "./checkbox"
 
 import { h } from "hyperapp"
-import { box } from "../container/box"
 import { checkbox, freshCheckbox } from "./checkbox"
 
 export type MultiselectData = {
@@ -55,7 +54,7 @@ const multiselect = <S>(options: MultiselectOptions<S>) => (...focus: Focus) => 
         etc.class,
       ],
     }, [
-      box("uy-multiselect-options",
+      h("div", { class: "uy-multiselect-options" },
         Object.entries(choices).map(
           ([value, label]) =>
             checkbox({ label, onchange, disabled })(focus, "value", value)(state)

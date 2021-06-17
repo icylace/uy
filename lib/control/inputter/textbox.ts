@@ -3,7 +3,6 @@ import type { Action, ClassProp, VNode } from "hyperapp"
 
 import { get, set } from "eyepiece"
 import { h } from "hyperapp"
-import { box } from "../container/box"
 
 export type TextboxValue = string
 
@@ -22,7 +21,7 @@ const freshTextbox = (value: TextboxValue): TextboxData => ({ value })
 const textbox = <S>(options: TextboxOptions<S> = {}) => (...focus: Focus) => {
   return (state: S): VNode<S> => {
     const { onchange, disabled, ...etc } = options
-    return box("uy-control uy-textbox", [
+    return h("div", { class: "uy-control uy-textbox" }, [
       h("input", {
         type: "text",
         value: get<TextboxData>(focus)(state).value,

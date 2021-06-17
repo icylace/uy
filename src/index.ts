@@ -1,12 +1,3 @@
-// import './style.css'
-
-// const app = document.querySelector<HTMLDivElement>('#app')!
-
-// app.innerHTML = `
-//   <h1>Hello Vite!</h1>
-//   <a href="https://vitejs.dev/guide/features.html" target="_blank">Documentation</a>
-// `
-
 import "@fortawesome/fontawesome-free/css/fontawesome.css"
 import "@fortawesome/fontawesome-free/css/regular.css"
 import "@fortawesome/fontawesome-free/css/solid.css"
@@ -44,8 +35,11 @@ import * as cancelButtonStoryboard from "./control/button/cancelButton.storyboar
 // import * as spinnerStoryboard from "./control/indicator/spinner.storyboard"
 
 import * as checkboxStoryboard from "./control/inputter/checkbox.storyboard"
-import * as checklistStoryboard from "./control/inputter/checklist.storyboard"
-// import * as datePickerStoryboard from "./control/inputter/datePicker.storyboard"
+
+// TODO:
+// import * as checklistStoryboard from "./control/inputter/checklist.storyboard"
+
+import * as datePickerStoryboard from "./control/inputter/datePicker.storyboard"
 // import * as dropdownStoryboard from "./control/inputter/dropdown.storyboard"
 // import * as fileStoryboard from "./control/inputter/file.storyboard"
 // import * as listStoryboard from "./control/inputter/list.storyboard"
@@ -76,8 +70,11 @@ const storyboards: Storyboard[] = [
   cancelButtonStoryboard,
 
   checkboxStoryboard,
-  checklistStoryboard,
-  // datePickerStoryboard,
+
+  // TODO:
+  // checklistStoryboard,
+
+  datePickerStoryboard,
   // dropdownStoryboard,
   // fileStoryboard,
   // listStoryboard,

@@ -3,7 +3,6 @@ import type { Action, ClassProp, VNode } from "hyperapp"
 
 import { get, set } from "eyepiece"
 import { h } from "hyperapp"
-import { box } from "../container/box"
 
 export type DatePickerValue = string
 
@@ -24,7 +23,7 @@ const freshDatePicker = (value: DatePickerValue): DatePickerData => ({ value })
 const datePicker = <S>(options: DatePickerOptions<S> = {}) => (...focus: Focus) => {
   return (state: S): VNode<S> => {
     const { onchange, disabled, ...etc } = options
-    return box("uy-control uy-datePicker", [
+    return h("div", { class: "uy-control uy-datePicker" }, [
       h("input", {
         type: "date",
         value: get<DatePickerData>(focus)(state).value,
@@ -49,7 +48,7 @@ const freshDatetimeLocalPicker = (value: string): DatePickerData => ({ value })
 const datetimeLocalPicker = <S>(options: DatePickerOptions<S> = {}) => (...focus: Focus) => {
   return (state: S): VNode<S> => {
     const { onchange, disabled, ...etc } = options
-    return box("uy-control uy-datePicker", [
+    return h("div", { class: "uy-control uy-datePicker" }, [
       h("input", {
         type: "datetime-local",
         value: get<DatePickerData>(focus)(state).value,
@@ -74,7 +73,7 @@ const freshMonthPicker = (value: string): DatePickerData => ({ value })
 const monthPicker = <S>(options: DatePickerOptions<S> = {}) => (...focus: Focus) => {
   return (state: S): VNode<S> => {
     const { onchange, disabled, ...etc } = options
-    return box("uy-control uy-datePicker", [
+    return h("div", { class: "uy-control uy-datePicker" }, [
       h("input", {
         type: "month",
         value: get<DatePickerData>(focus)(state).value,
@@ -99,7 +98,7 @@ const freshTimePicker = (value: string): DatePickerData => ({ value })
 const timePicker = <S>(options: DatePickerOptions<S> = {}) => (...focus: Focus) => {
   return (state: S): VNode<S> => {
     const { onchange, disabled, ...etc } = options
-    return box("uy-control uy-datePicker", [
+    return h("div", { class: "uy-control uy-datePicker" }, [
       h("input", {
         type: "time",
         value: get<DatePickerData>(focus)(state).value,
@@ -124,7 +123,7 @@ const freshWeekPicker = (value: string): DatePickerData => ({ value })
 const weekPicker = <S>(options: DatePickerOptions<S> = {}) => (...focus: Focus) => {
   return (state: S): VNode<S> => {
     const { onchange, disabled, ...etc } = options
-    return box("uy-control uy-datePicker", [
+    return h("div", { class: "uy-control uy-datePicker" }, [
       h("input", {
         type: "week",
         value: get<DatePickerData>(focus)(state).value,

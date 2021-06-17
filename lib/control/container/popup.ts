@@ -16,5 +16,9 @@ export type PopupOptions =
 export const popup = <S>(options: PopupOptions, contents: Content<S>): VNode<S> => {
   const props = typeof options === "string" ? { id: options } : options
   const { id, disabled, ...etc } = props
-  return h("div", { id, ...etc, class: ["uy-popup", { disabled }, etc.class] }, c(contents))
+  return h("div", {
+    id,
+    ...etc,
+    class: ["uy-popup", { disabled }, etc.class],
+  }, c(contents))
 }

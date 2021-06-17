@@ -6,7 +6,6 @@ import { get, set } from "eyepiece"
 import { h } from "hyperapp"
 import { c, isContent } from "../../utility/hyperappHelper/content"
 import { Defocus, Refocus } from "../action/helper"
-import { box } from "../container/box"
 
 export type NumberboxValue = number
 
@@ -35,7 +34,7 @@ const numberbox = <S>(options: NumberboxOptions<S> = {}) => (...focus: Focus) =>
     const props = isContent<S>(options) ? { label: options } : options
     const { label, onchange, disabled, ...etc } = props
     const x = get<NumberboxData>(focus)(state)
-    return box("uy-control uy-numberbox", [
+    return h("div", { class: "uy-control uy-numberbox" }, [
       h("label", { class: { focus: x.focused, disabled } }, [
         h("input", {
           type: "number",

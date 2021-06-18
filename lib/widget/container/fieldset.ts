@@ -14,10 +14,6 @@ export type FieldsetOptions<S> =
     disabled?: boolean
   }
 
-// TODO:
-// - `fieldset` -> `fields`
-//   - the renaming is to distinguish from the plain `fieldset` HTML element
-
 export const fieldset = <S>(options: FieldsetOptions<S>, views: ((state: S) => VNode<S>)[]) => {
   return (state: S): VNode<S> => {
     const props = isContent<S>(options) ? { label: options } : options

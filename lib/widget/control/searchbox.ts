@@ -4,7 +4,7 @@ import type { StateWithEffects } from "../../utility/hyperappHelper/types"
 
 import { get, set } from "eyepiece"
 import { h, text } from "hyperapp"
-import { Defocus, Refocus } from "../action/helper"
+import { Defocus, Refocus } from "../../action/helper"
 import { popup } from "../container/popup"
 import { icon } from "../indicator/icon"
 

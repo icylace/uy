@@ -5,10 +5,9 @@ import type { StateWithEffects, Transform } from "../../utility/hyperappHelper/t
 
 import { get, set } from "eyepiece"
 import { h } from "hyperapp"
-import { c } from "../../utility/hyperappHelper/content"
-import { isVDOM } from "ntml"
 import { encase } from "../../utility/encase"
-import { scrollIntoView } from "../effect/scrollIntoView"
+import { c, isVDOM } from "../../utility/hyperappHelper/content"
+import { scrollIntoView } from "../../effect/scrollIntoView"
 
 export type TabIndex = number | string
 

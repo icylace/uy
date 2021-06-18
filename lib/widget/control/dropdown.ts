@@ -5,7 +5,7 @@ import type { Content } from "../../utility/hyperappHelper/content"
 import { get, set } from "eyepiece"
 import { h } from "hyperapp"
 import { c } from "../../utility/hyperappHelper/content"
-import { Defocus, Refocus } from "../action/helper"
+import { Defocus, Refocus } from "../../action/helper"
 
 export type DropdownValue = string
 

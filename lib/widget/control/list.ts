@@ -10,7 +10,7 @@ import { get, set } from "eyepiece"
 import { h } from "hyperapp"
 import { exclude } from "../../utility/exclude"
 import { table } from "../container/table"
-import { button } from "../presser/button"
+import { button } from "./button"
 import { cancelButton } from "../presser/cancelButton"
 import { textbox, freshTextbox } from "./textbox"
 
@@ -70,7 +70,7 @@ const list = <S>(options: ListOptions<S> = {}) => (...focus: Focus) => {
       table({ headers, disabled, sortDescending: false, }, [
         ...xr.items.map(item),
         grower,
-      ]),
+      ])(state),
     ])
   }
 }

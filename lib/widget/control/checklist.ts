@@ -44,10 +44,11 @@ const checklist = <S>(options: ChecklistOptions<S>) => (...focus: Focus) => {
       ],
     ]
 
-    return h("div", {
-      ...etc,
-      class: ["uy-checklist", { disabled }, etc.class],
-    }, table({ disabled }, get<ChecklistData>(focus)(state).items.map(item)))
+    return h(
+      "div",
+      { ...etc, class: ["uy-checklist", { disabled }, etc.class] },
+      table({ disabled }, get<ChecklistData>(focus)(state).items.map(item))(state)
+    )
   }
 }
 

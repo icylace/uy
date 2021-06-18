@@ -17,8 +17,6 @@
 .uy-tabs-item {
   cursor: pointer;
   user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   -webkit-user-select: none;
 }
 .uy-tabs-item.selected {

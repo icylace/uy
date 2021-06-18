@@ -8,8 +8,8 @@ import { always } from "../../utility/always"
 const freshState = (state: Story): Story => state
 
 const overlayNormal = overlay({ class: "test-uy-overlay" }, [
-  always(h("h3", {}, [text("Test Process")])),
-  always(h("div", { class: "busy-wrapper" }, [busy()])),
+  always(h("h3", {}, text("Test Process"))),
+  always(h("div", { class: "busy-wrapper" }, busy())),
 ])
 const overlayDisabled = overlay(
   { disabled: true },

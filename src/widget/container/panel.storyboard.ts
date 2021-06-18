@@ -14,9 +14,9 @@ const view = (state: Story): VNode<Story> =>
         h("section", {}, [
           panel("uy-storyboard-showcase-section-view", [
             (_state: Story) => text("TEST1"),
-            row<Story>([always(text("TEST1")), always(text("TEST2")), always(text("TEST3"))]),
-            column<Story>([always(text("AAA")), always(text("BBB")), always(text("CCC"))]),
-            row<Story>([always(text("111")), always(text("222")), always(text("333"))]),
+            always(text("TEST1")),
+            text("TEST2"),
+            "TEST3",
           ])(state),
         ]),
       ]),

@@ -5,7 +5,7 @@ import type { StateForm } from "../../utility/hyperappHelper/types"
 import { get, set } from "eyepiece"
 import { h, text } from "hyperapp"
 import { Defocus, Refocus } from "../../action/helper"
-import { popup } from "../container/popup"
+import { popper } from "../container/popper"
 import { icon } from "../indicator/icon"
 
 export type SearchboxValue = string
@@ -135,7 +135,7 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
 
     const popupNode = (
       x.results.length && !disabled
-        ? popup({ disabled, id }, [
+        ? popper({ disabled, id }, [
             h("ul", { class: "uy-searchbox-results uy-scroller" }, x.results.map(searchResult)),
           ])
         : null

@@ -1,4 +1,10 @@
-.uy-overlay-background {
+.uy-popper.uy-popper {
+  position: absolute;
+  z-index: 100;
+}
+
+/* // TODO: */
+/* .uy-overlay-background {
   align-items: center;
   bottom: 0;
   display: flex;
@@ -8,4 +14,4 @@
   right: 0;
   top: 0;
   z-index: 100;
-}
+} */

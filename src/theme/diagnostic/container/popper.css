@@ -1,10 +1,10 @@
-.uy-popup.uy-popup {
+.uy-popper.uy-popper {
   padding: var(--uy-input-padding);
 }
 
 /* -------------------------------------------------------------------------- */
 
-.uy-control-storyboard-popup {
+.uy-control-storyboard-popper {
   background-color: #555;
   height: 100px;
   position: relative;

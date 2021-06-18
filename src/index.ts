@@ -22,9 +22,8 @@ import { h, app, text } from "hyperapp"
 
 // import * as fieldStoryboard from "./widget/container/field.storyboard"
 // import * as fieldsetStoryboard from "./widget/container/fieldset.storyboard"
-// // import * as overlayStoryboard from "./widget/container/overlay.storyboard"
 // import * as panelStoryboard from "./widget/container/panel.storyboard"
-// import * as popupStoryboard from "./widget/container/popup.storyboard"
+// import * as popperStoryboard from "./widget/container/popper.storyboard"
 // // import * as tableStoryboard from "./widget/container/table.storyboard"
 
 import * as buttonStoryboard from "./widget/control/button.storyboard"
@@ -58,9 +57,8 @@ export type Storyboard = {
 const storyboards: Storyboard[] = [
   // fieldStoryboard,
   // fieldsetStoryboard,
-  // // overlayStoryboard,
   // panelStoryboard,
-  // popupStoryboard,
+  // popperStoryboard,
   // // tableStoryboard,
 
   buttonStoryboard,

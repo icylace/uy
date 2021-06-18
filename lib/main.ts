@@ -18,9 +18,8 @@ export * from "./effect/scrollIntoView"
 
 export * from "./widget/container/field"
 export * from "./widget/container/fieldset"
-export * from "./widget/container/overlay"
 export * from "./widget/container/panel"
-export * from "./widget/container/popup"
+export * from "./widget/container/popper"
 export * from "./widget/container/table"
 
 export * from "./widget/indicator/busy"

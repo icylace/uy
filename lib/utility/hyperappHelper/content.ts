@@ -5,7 +5,7 @@ import { text } from "hyperapp"
 export type BaseContent<S> = number | string | MaybeVNode<S>
 export type Content<S> = BaseContent<S> | readonly BaseContent<S>[]
 export type View<S> = (state: S) => MaybeVNode<S>
-export type ContentView<S> = Content<S> | View<S>
+export type ContentView<S> = BaseContent<S> | View<S>
 
 const render = <S>(x: BaseContent<S>): MaybeVNode<S> =>
   typeof x === "number" || typeof x === "string" ? text(x) : x

@@ -13,13 +13,7 @@ export type ButtonOptions<S> = {
 
 export const button = <S>(options: ButtonOptions<S>): VNode<S> => {
   const { label, onclick, disabled, ...etc } = options
-  return h("div", { class: "uy-control uy-button" }, [
-    h("button", {
-      type: "button",
-      onclick,
-      disabled,
-      ...etc,
-      class: [{ disabled }, etc.class],
-    }, c(label)),
+  return h("div", { class: etc.class ?? "uy-control uy-button" }, [
+    h("button", { type: "button", onclick, disabled, ...etc }, c(label)),
   ])
 }

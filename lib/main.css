@@ -6,15 +6,14 @@ TODO:
 
 
 
-
 uy
 
-- uy-control: An interactive component.
-- uy-container: A component meant to contain other components.
-- uy-indicator: A component meant to display information.
-- uy-input: The element of a control that accepts user input data.
-- uy-clicky: The element of a control that can be clicked.
-- uy-presser: The element of a control that can be clicked.
+- uy-container: A widget meant to contain other widgets.
+- uy-control: An interactive widget.
+- uy-indicator: A widget meant to display information.
+- uy-input: The element of a widget that accepts user input data.
+- uy-clicky (old): The element of a widget that can be clicked.
+- uy-presser: The element of a widget that can be clicked.
 
 input control modes:
 - regular

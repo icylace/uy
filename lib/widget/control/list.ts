@@ -11,7 +11,7 @@ import { h } from "hyperapp"
 import { exclude } from "../../utility/exclude"
 import { table } from "../container/table"
 import { button } from "./button"
-import { cancelButton } from "../presser/cancelButton"
+import { cancelButton } from "./cancelButton"
 import { textbox, freshTextbox } from "./textbox"
 
 export type ListData = {

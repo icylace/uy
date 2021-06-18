@@ -1,3 +1,6 @@
+// TODO:
+// - get rid of this
+
 import type { Action, ClassProp, VNode } from "hyperapp"
 import type { Content } from "../../utility/hyperappHelper/content"
 

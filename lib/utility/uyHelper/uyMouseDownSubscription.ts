@@ -3,7 +3,7 @@
 // import type { Action, Dispatch, Subscription } from "hyperapp"
 import type { Transform } from "../hyperappHelper/types"
 
-// import { handleUsing } from "./handleUsing"
+// import { handleUsing } from "../hyperappHelper/handleUsing"
 
 // -----------------------------------------------------------------------------
 
@@ -57,7 +57,7 @@ export type Handlers<S> = (state: S) => Transform<S, Event>[]
 // }
 
 // const uyMouseDownSubscriberAction = <S>(getHandlers: Handlers<S>) =>
-//   (state: S, _props: any): StateWithEffects<S, Action<S, Event>> =>
+//   (state: S, _props: any): StateForm<S, Action<S, Event>> =>
 //     [state, onMouseDown(handleUsing(getHandlers(state)))]
 
 // const uyMouseDownSubscription = <S>(getHandlers: Handlers<S>) => {

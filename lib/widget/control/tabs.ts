@@ -1,7 +1,7 @@
 import type { Focus } from "eyepiece"
 import type { ClassProp, MaybeVNode, VNode } from "hyperapp"
 import type { Content } from "../../utility/hyperappHelper/content"
-import type { StateWithEffects, Transform } from "../../utility/hyperappHelper/types"
+import type { StateForm, Transform } from "../../utility/hyperappHelper/types"
 
 import { get, set } from "eyepiece"
 import { h } from "hyperapp"
@@ -58,10 +58,11 @@ const tab = <S>(focus: Focus, activeTab: TabIndex, onclick?: Transform<S>) => {
           //   : i
         )
         const transition = set<S>(focus)(nextValue)(state)
-        const nextState = selected
-          // TODO: get rid of this if possible
-          // ? [...encase(transition), scrollIntoView(target)] as StateWithEffects<S>
-          ? [transition, scrollIntoView(target)] as StateWithEffects<S>
+        // TODO:
+        // const nextState: StateForm<S> =
+        //   [transition, selected ? scrollIntoView(target) : undefined]
+        const nextState: StateForm<S> = selected
+          ? [transition, scrollIntoView(target)]
           : transition
         return onclick ? onclick(nextState, nextValue) : nextState
       },

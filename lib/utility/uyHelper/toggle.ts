@@ -1,3 +1,6 @@
+// TODO:
+// - get rid of this ?
+
 import type { Focus } from "eyepiece"
 import type { MaybeVNode } from "hyperapp"
 

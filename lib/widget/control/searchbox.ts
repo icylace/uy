@@ -1,6 +1,6 @@
 import type { Focus } from "eyepiece"
 import type { Action, ClassProp, Effect, MaybeVNode, VNode } from "hyperapp"
-import type { StateWithEffects } from "../../utility/hyperappHelper/types"
+import type { StateForm } from "../../utility/hyperappHelper/types"
 
 import { get, set } from "eyepiece"
 import { h, text } from "hyperapp"
@@ -62,7 +62,7 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
 
     const x = get<SearchboxData>(focus)(state)
 
-    const updateResults = (state: S, props?: SearchboxData): StateWithEffects<S> => {
+    const updateResults = (state: S, props?: SearchboxData): StateForm<S> => {
       const r = get<SearchboxData>(focus)(state)
 
       const { value, results } = props ?? { value: "", results: [] }
@@ -86,7 +86,7 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
       ]
     }
 
-    const update = (value: string) => (state: S): StateWithEffects<S> => {
+    const update = (value: string) => (state: S): StateForm<S> => {
       const r = get<SearchboxData>(focus)(state)
       return r.searching
         ? [set<S>(focus, "value")(value)(state)]

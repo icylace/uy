@@ -3,6 +3,6 @@
   user-select: none;
   -webkit-user-select: none;
 }
-.uy-field > label.disabled {
+.uy-field.disabled > label {
   pointer-events: none;
 }

@@ -19,6 +19,6 @@ export const popper = <S>(options: PopperOptions, contents: Content<S>): VNode<S
   return h("div", {
     id,
     ...etc,
-    class: ["uy-popper", { disabled }, etc.class],
+    class: [etc.class ?? "uy-popper", { disabled }],
   }, c(contents))
 }

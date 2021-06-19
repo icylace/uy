@@ -26,7 +26,7 @@ const tableHeader = <S>(orderColumn: string | null | undefined, sortDescending: 
     const sorting = orderColumn != null && orderColumn === column
     return h("th", {
       ...props,
-      class: [{ "sort-column": sorting }, props.class]
+      class: [props.class, { "sort-column": sorting }]
     }, [
       ...headerContents,
       sorting
@@ -56,8 +56,8 @@ const table = <S>(options: TableOptions<S> = {}, rows: TableRow<S>[]) => {
   return (state: S): VNode<S> => {
     const props = Array.isArray(options) ? { headers: options } : options
     const { headers, orderColumn, sortDescending, disabled, ...etc } = props
-    return h("div", { class: ["uy-control uy-table", { disabled }] }, [
-      h("table", etc, [
+    return h("div", { ...etc, class: [etc.class ?? "uy-control uy-table", { disabled }] }, [
+      h("table", {}, [
         Array.isArray(headers) && headers.length
           ? h("thead", {}, headers.map(tableHeader(orderColumn, sortDescending)))
           : null,

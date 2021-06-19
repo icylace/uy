@@ -17,6 +17,6 @@
 .uy-field > label:active {
   color: var(--uy-label-color--active);
 }
-.uy-field > label.disabled {
+.uy-field.disabled > label {
   color: var(--uy-label-color--disabled);
 }

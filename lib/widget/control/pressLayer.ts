@@ -16,6 +16,6 @@ export const pressLayer = <S>(options: PressLayerOptions<S>): VNode<S> => {
     onclick,
     disabled,
     ...etc,
-    class: ["uy-pressLayer", { disabled }, etc.class],
+    class: [etc.class ?? "uy-pressLayer", { disabled }],
   })
 }

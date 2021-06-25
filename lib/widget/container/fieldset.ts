@@ -1,15 +1,15 @@
-import type { ClassProp, VNode } from "hyperapp"
-import type { Content } from "../../utility/hyperappHelper/content"
+import type { ClassProp, MaybeVNode, VNode } from "hyperapp"
 
 import { h } from "hyperapp"
 import { using } from "../../utility/using"
-import { c, isContent } from "../../utility/hyperappHelper/content"
+import { isContent } from "../../utility/hyperappHelper/content"
 
 export type FieldsetOptions<S> =
-  | Content<S>
+  | MaybeVNode<S>
+  | readonly MaybeVNode<S>[]
   | {
     [_: string]: unknown
-    label?: Content<S>
+    label?: MaybeVNode<S> | readonly MaybeVNode<S>[]
     class?: ClassProp
     disabled?: boolean
   }
@@ -23,6 +23,6 @@ export const fieldset = <S>(options: FieldsetOptions<S>, views: ((state: S) => V
       disabled,
       ...etc,
       class: [etc.class ?? "uy-fieldset", { disabled }],
-    }, label ? [h("legend", {}, c(label)), ...contents] : contents)
+    }, label ? [h("legend", {}, label), ...contents] : contents)
   }
 }

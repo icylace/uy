@@ -1,11 +1,10 @@
 import type { Focus } from "eyepiece"
-import type { Action, ClassProp, VNode } from "hyperapp"
-import type { Content } from "../../utility/hyperappHelper/content"
+import type { Action, ClassProp, MaybeVNode, VNode } from "hyperapp"
 import type { TableRow } from "../container/table"
 import type { CheckboxData, CheckboxValue } from "./checkbox"
 
 import { get } from "eyepiece"
-import { h } from "hyperapp"
+import { h, text } from "hyperapp"
 import { table } from "../container/table"
 import { checkbox } from "./checkbox"
 
@@ -19,7 +18,7 @@ export type ChecklistData = {
 }
 
 export type ChecklistOptions<S> = {
-  renderLabel: (_: Content<S>) => Content<S>
+  renderLabel: (_: MaybeVNode<S> | readonly MaybeVNode<S>[]) => MaybeVNode<S> | readonly MaybeVNode<S>[]
   onchange?: Action<S, CheckboxValue>
   class?: ClassProp
   disabled?: boolean
@@ -36,7 +35,7 @@ const checklist = <S>(options: ChecklistOptions<S>) => (...focus: Focus) => {
         { class: { "uy-horizontal": x.id === "other" } },
         [
           checkbox({
-            label: renderLabel(x.id),
+            label: renderLabel(text(x.id)),
             onchange,
             disabled,
           })(focus, i, "selected")(state),
@@ -46,7 +45,7 @@ const checklist = <S>(options: ChecklistOptions<S>) => (...focus: Focus) => {
 
     return h(
       "div",
-      { ...etc, class: ["uy-checklist", { disabled }, etc.class] },
+      { ...etc, class: [etc.class ?? "uy-checklist", { disabled }] },
       table({ disabled }, get<ChecklistData>(focus)(state).items.map(item))(state)
     )
   }

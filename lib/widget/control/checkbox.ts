@@ -1,10 +1,9 @@
 import type { Focus } from "eyepiece"
-import type { Action, ClassProp, VNode } from "hyperapp"
-import type { Content } from "../../utility/hyperappHelper/content"
+import type { Action, ClassProp, MaybeVNode, VNode } from "hyperapp"
 
 import { get, set } from "eyepiece"
 import { h } from "hyperapp"
-import { c, isContent } from "../../utility/hyperappHelper/content"
+import { isContent } from "../../utility/hyperappHelper/content"
 
 export type CheckboxValue = boolean | null | undefined
 
@@ -13,9 +12,10 @@ export type CheckboxData = {
 }
 
 export type CheckboxOptions<S> =
-  | Content<S>
+  | MaybeVNode<S>
+  | readonly MaybeVNode<S>[]
   | {
-    label?: Content<S>
+    label?: MaybeVNode<S> | readonly MaybeVNode<S>[]
     onchange?: Action<S, CheckboxValue>
     class?: ClassProp
     disabled?: boolean
@@ -42,9 +42,9 @@ const checkbox = <S>(options: CheckboxOptions<S> = {}) => (...focus: Focus) => {
             return onchange ? onchange(nextState, nextValue) : nextState
           },
           ...etc,
-          class: ["uy-input", { disabled }, etc.class],
+          class: [etc.class ?? "uy-input", { disabled }],
         }),
-        label ? h("span", {}, c(label)) : null,
+        label ? h("span", {}, label) : null,
       ]),
     ])
   }

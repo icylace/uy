@@ -1,11 +1,9 @@
-import type { ClassProp, EventActions, VNode } from "hyperapp"
-import type { Content } from "../../utility/hyperappHelper/content"
+import type { ClassProp, EventActions, MaybeVNode, VNode } from "hyperapp"
 
 import { h } from "hyperapp"
-import { c } from "../../utility/hyperappHelper/content"
 
 export type ButtonOptions<S> = {
-  label: Content<S>
+  label: MaybeVNode<S> | readonly MaybeVNode<S>[]
   onclick: EventActions<S>["onclick"]
   class?: ClassProp
   disabled?: boolean
@@ -14,6 +12,6 @@ export type ButtonOptions<S> = {
 export const button = <S>(options: ButtonOptions<S>): VNode<S> => {
   const { label, onclick, disabled, ...etc } = options
   return h("div", { class: etc.class ?? "uy-control uy-button" }, [
-    h("button", { type: "button", onclick, disabled, ...etc }, c(label)),
+    h("button", { type: "button", onclick, disabled, ...etc }, label),
   ])
 }

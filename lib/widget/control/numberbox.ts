@@ -1,10 +1,9 @@
 import type { Focus } from "eyepiece"
-import type { Action, ClassProp, VNode } from "hyperapp"
-import type { Content } from "../../utility/hyperappHelper/content"
+import type { Action, ClassProp, MaybeVNode, VNode } from "hyperapp"
 
 import { get, set } from "eyepiece"
 import { h } from "hyperapp"
-import { c, isContent } from "../../utility/hyperappHelper/content"
+import { isContent } from "../../utility/hyperappHelper/content"
 import { Defocus, Refocus } from "../../action/helper"
 
 export type NumberboxValue = number
@@ -15,9 +14,10 @@ export type NumberboxData = {
 }
 
 export type NumberboxOptions<S> =
-  | Content<S>
+  | MaybeVNode<S>
+  | readonly MaybeVNode<S>[]
   | {
-    label?: Content<S>
+    label?: MaybeVNode<S> | readonly MaybeVNode<S>[]
     onchange?: Action<S, NumberboxValue>
     class?: ClassProp
     disabled?: boolean
@@ -56,7 +56,7 @@ const numberbox = <S>(options: NumberboxOptions<S> = {}) => (...focus: Focus) =>
           class: ["uy-input", { disabled }, etc.class],
         }),
         label != null
-          ? h("span", { class: { "uy-input": true, disabled } }, c(label))
+          ? h("span", { class: { "uy-input": true, disabled } }, label)
           : null,
       ]),
     ])

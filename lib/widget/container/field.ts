@@ -1,25 +1,26 @@
-import type { ClassProp, VNode } from "hyperapp"
-import type { Content, View } from "../../utility/hyperappHelper/content"
+import type { ClassProp, MaybeVNode, VNode } from "hyperapp"
+import type { View } from "../../utility/hyperappHelper/content"
 
 import { h } from "hyperapp"
 import { encase } from "../../utility/encase"
 import { using } from "../../utility/using"
-import { c, isContent } from "../../utility/hyperappHelper/content"
+import { isContent } from "../../utility/hyperappHelper/content"
 
 export type FieldOptions<S> =
-  | Content<S>
+  | MaybeVNode<S>
+  | readonly MaybeVNode<S>[]
   | {
-    label?: Content<S>
-    class?: ClassProp
-    disabled?: boolean
-  }
+      label?: MaybeVNode<S> | readonly MaybeVNode<S>[]
+      class?: ClassProp
+      disabled?: boolean
+    }
 
 export const field = <S>(options: FieldOptions<S>, views: View<S>[]) => {
   return (state: S): VNode<S> => {
     const props = isContent<S>(options) ? { label: options } : options
     const { label, disabled, ...etc } = props
     return h("div", { ...etc, class: [etc.class ?? "uy-field", { disabled }] }, [
-      h("label", {}, [...encase(c(label)), ...using(views)(state)]),
+      h("label", {}, [...encase(label), ...using(views)(state)]),
     ])
   }
 }

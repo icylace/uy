@@ -1,6 +1,5 @@
 import type { Focus } from "eyepiece"
-import type { Action, ClassProp, VNode } from "hyperapp"
-import type { Content } from "../../utility/hyperappHelper/content"
+import type { Action, ClassProp, MaybeVNode, VNode } from "hyperapp"
 import type { CheckboxData, CheckboxValue } from "./checkbox"
 
 import { h } from "hyperapp"
@@ -10,7 +9,7 @@ export type MultiselectData = {
   value: Record<string, CheckboxData>
 }
 
-export type MultiselectChoices<S> = Record<string, Content<S>>
+export type MultiselectChoices<S> = Record<string, MaybeVNode<S> | readonly MaybeVNode<S>[]>
 
 export type MultiselectOptions<S> =
   | MultiselectChoices<S>
@@ -39,7 +38,7 @@ const freshMultiselect = <S>(
   }
 }
 
-const isOnlyChoices = <S>(x: any): x is Record<string, Content<S>> =>
+const isOnlyChoices = <S>(x: any): x is Record<string, MaybeVNode<S> | readonly MaybeVNode<S>[]> =>
   typeof x === "object" && !("choices" in x)
 
 const multiselect = <S>(options: MultiselectOptions<S>) => (...focus: Focus) => {

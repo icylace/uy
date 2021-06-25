@@ -1,12 +1,11 @@
 import type { Focus } from "eyepiece"
 import type { ClassProp, MaybeVNode, VNode } from "hyperapp"
-import type { Content } from "../../utility/hyperappHelper/content"
 import type { StateForm, Transform } from "../../utility/hyperappHelper/types"
 
 import { get, set } from "eyepiece"
 import { h } from "hyperapp"
 import { encase } from "../../utility/encase"
-import { c, isVDOM } from "../../utility/hyperappHelper/content"
+import { isVNode } from "../../utility/hyperappHelper/content"
 import { scrollIntoView } from "../../effect/scrollIntoView"
 
 export type TabIndex = number | string
@@ -24,8 +23,8 @@ export type TabsOptions<S> =
   | Tab<S>[]
   | Readonly<{
     tabList: Tab<S>[]
-    itemsHeader?: Content<S>
-    itemsFooter?: Content<S>
+    itemsHeader?: MaybeVNode<S> | readonly MaybeVNode<S>[]
+    itemsFooter?: MaybeVNode<S> | readonly MaybeVNode<S>[]
     onclick?: Transform<S, TabIndex>
     class?: ClassProp
     disabled?: boolean
@@ -37,7 +36,7 @@ const isSelected = (activeTab: TabIndex) => <S>(item: MaybeVNode<S>, i: number):
   (
     typeof item === "object"
     && item != null
-    && isVDOM(item)
+    && isVNode(item)
     // TODO:
     // && activeTab === (item.props["data-tab-id"] as string)
   )
@@ -53,7 +52,7 @@ const tab = <S>(focus: Focus, activeTab: TabIndex, onclick?: Transform<S>) => {
         const nextValue = freshTabs(
           i
           // TODO:
-          // isVDOM(item) && "data-tab-id" in item.props
+          // isVNode(item) && "data-tab-id" in item.props
           //   ? item.props["data-tab-id"] as string
           //   : i
         )
@@ -81,16 +80,16 @@ const tabs = <S>(options: TabsOptions<S>) => (...focus: Focus) => {
 
     return h("div", {
       ...etc,
-      class: ["uy-control uy-tabs", { disabled }, etc.class],
+      class: [etc.class ?? "uy-control uy-tabs", { disabled }],
     }, [
       h("div", { class: "uy-tabs-navigation" }, [
-        ...encase(c(itemsHeader)),
+        ...encase(itemsHeader),
         h(
           "div",
           { class: "uy-tabs-list uy-scroller" },
           headings.map(tab<S>(focus, x, onclick))
         ),
-        ...encase(c(itemsFooter)),
+        ...encase(itemsFooter),
       ]),
       h("div", { class: "uy-tabs-panels" }, [
         panels[headings.findIndex(isSelected(x))],

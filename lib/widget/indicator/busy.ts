@@ -8,4 +8,4 @@ export type BusyOptions = {
 }
 
 export const busy = <S>(props: BusyOptions = {}): VNode<S> =>
-  h("span", { ...props, class: ["uy-indicator uy-busy", props.class] })
+  h("span", { ...props, class: [props.class ?? "uy-indicator uy-busy"] })

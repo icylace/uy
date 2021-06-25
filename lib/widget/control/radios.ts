@@ -1,10 +1,8 @@
 import type { Focus } from "eyepiece"
-import type { Action, ClassProp, VNode } from "hyperapp"
-import type { Content } from "../../utility/hyperappHelper/content"
+import type { Action, ClassProp, MaybeVNode, VNode } from "hyperapp"
 
 import { get, set } from "eyepiece"
 import { h } from "hyperapp"
-import { c } from "../../utility/hyperappHelper/content"
 
 export type RadiosValue = string
 
@@ -12,7 +10,7 @@ export type RadiosData = {
   value: RadiosValue
 }
 
-export type RadiosChoices<S> = Record<string, Content<S>>
+export type RadiosChoices<S> = Record<string, MaybeVNode<S> | readonly MaybeVNode<S>[]>
 
 export type RadiosOptions<S> =
   | RadiosChoices<S>
@@ -25,7 +23,7 @@ export type RadiosOptions<S> =
 
 const freshRadios = (value: RadiosValue): RadiosData => ({ value })
 
-const isOnlyChoices = <S>(x: any): x is Record<string, Content<S>> =>
+const isOnlyChoices = <S>(x: any): x is Record<string, MaybeVNode<S> | readonly MaybeVNode<S>[]> =>
   typeof x === "object" && !("choices" in x)
 
 const radios = <S>(options: RadiosOptions<S>) => (...focus: Focus) => {
@@ -36,7 +34,7 @@ const radios = <S>(options: RadiosOptions<S>) => (...focus: Focus) => {
       // TODO:
       // - switch to using a Map object instead in order to guarantee order
       Object.entries(choices).map(
-        ([value, label]: [string, Content<S>]): VNode<S> => {
+        ([value, label]: [string, MaybeVNode<S> | readonly MaybeVNode<S>[]]): VNode<S> => {
           return h("label", { class: { disabled } }, [
             h("input", {
               value,
@@ -52,7 +50,7 @@ const radios = <S>(options: RadiosOptions<S>) => (...focus: Focus) => {
               ...etc,
               class: ["uy-input", { disabled }, etc.class],
             }),
-            label != null ? h("span", {}, c(label)) : null,
+            label != null ? h("span", {}, label) : null,
           ])
         }
       ),

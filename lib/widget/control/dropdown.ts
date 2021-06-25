@@ -1,10 +1,8 @@
 import type { Focus } from "eyepiece"
-import type { Action, ClassProp, VNode } from "hyperapp"
-import type { Content } from "../../utility/hyperappHelper/content"
+import type { Action, ClassProp, MaybeVNode, VNode } from "hyperapp"
 
 import { get, set } from "eyepiece"
 import { h } from "hyperapp"
-import { c } from "../../utility/hyperappHelper/content"
 import { Defocus, Refocus } from "../../action/helper"
 
 export type DropdownValue = string
@@ -15,7 +13,7 @@ export type DropdownData = {
   focused?: boolean
 }
 
-export type DropdownChoices<S> = Record<string, Content<S>>
+export type DropdownChoices<S> = Record<string, MaybeVNode<S> | readonly MaybeVNode<S>[]>
 
 export type DropdownOptions<S> =
   | DropdownChoices<S>
@@ -29,7 +27,7 @@ export type DropdownOptions<S> =
 const freshDropdown = (value: DropdownValue): DropdownData =>
   ({ value, focused: false })
 
-const isOnlyChoices = <S>(x: any): x is Record<string, Content<S>> =>
+const isOnlyChoices = <S>(x: any): x is Record<string, MaybeVNode<S> | readonly MaybeVNode<S>[]> =>
   typeof x === "object" && !("choices" in x)
 
 const dropdown = <S>(options: DropdownOptions<S>) => (...focus: Focus) => {
@@ -57,7 +55,7 @@ const dropdown = <S>(options: DropdownOptions<S>) => (...focus: Focus) => {
           // TODO:
           // - switch to using a Map object instead in order to guarantee order
           // - verify type of `x` is workable
-          Object.entries(choices).map(([value, label]) => h("option", { value }, c(label))),
+          Object.entries(choices).map(([value, label]) => h("option", { value }, label)),
         ),
       ]),
     ])

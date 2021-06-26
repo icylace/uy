@@ -7,7 +7,7 @@ import type { TableCell } from "../container/table"
 import type { TextboxData, TextboxValue } from "./textbox"
 
 import { get, set } from "eyepiece"
-import { h } from "hyperapp"
+import { h, text } from "hyperapp"
 import { exclude } from "../../utility/exclude"
 import { table } from "../container/table"
 import { button } from "./button"
@@ -51,7 +51,7 @@ const list = <S>(options: ListOptions<S> = {}) => (...focus: Focus) => {
       [
         { class: "uy-list-adder", colspan: 2 },
         button({
-          label: "+ Add",
+          label: text("+ Add"),
           disabled,
           onclick: (state) => {
             const nextState = set<S>(focus, "items")(

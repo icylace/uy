@@ -65,9 +65,9 @@ const list = <S>(options: ListOptions<S> = {}) => (...focus: Focus) => {
 
     return h("div", {
       ...etc,
-      class: ["uy-control uy-list", { disabled }, etc.class],
+      class: ["uy-control uy-list", etc.class, { disabled }],
     }, [
-      table({ headers, disabled, sortDescending: false, }, [
+      table({ headers, disabled, sortDescending: false }, [
         ...xr.items.map(item),
         grower,
       ])(state),

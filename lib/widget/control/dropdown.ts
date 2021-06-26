@@ -35,7 +35,7 @@ const dropdown = <S>(options: DropdownOptions<S>) => (...focus: Focus) => {
     const props = isOnlyChoices<S>(options) ? { choices: options } : options
     const { choices, onchange, disabled, ...etc } = props
     const x = get<DropdownData>(focus)(state)
-    return h("div", { class: "uy-control uy-dropdown" }, [
+    return h("div", { class: ["uy-control uy-dropdown", etc.class, { disabled }] }, [
       h("div", { class: { "uy-dropdown-arrow": true, focus: x.focused, disabled } }, [
         h("select",
           {
@@ -50,7 +50,7 @@ const dropdown = <S>(options: DropdownOptions<S>) => (...focus: Focus) => {
               return onchange ? onchange(nextState, nextValue) : nextState
             },
             ...etc,
-            class: ["uy-input", { disabled }, etc.class],
+            class: "uy-input",
           },
           // TODO:
           // - switch to using a Map object instead in order to guarantee order

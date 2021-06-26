@@ -28,8 +28,8 @@ const checkbox = <S>(options: CheckboxOptions<S> = {}) => (...focus: Focus) => {
     const props = isContent<S>(options) ? { label: options } : options
     const { label, onchange, disabled, ...etc } = props
     const value = get<CheckboxData>(focus)(state).value
-    return h("div", { class: "uy-control uy-checkbox" }, [
-      h("label", { class: { disabled } }, [
+    return h("div", { class: ["uy-control uy-checkbox", etc.class, { disabled }] }, [
+      h("label", {}, [
         h("input", {
           type: "checkbox",
           checked: !!value,
@@ -42,7 +42,7 @@ const checkbox = <S>(options: CheckboxOptions<S> = {}) => (...focus: Focus) => {
             return onchange ? onchange(nextState, nextValue) : nextState
           },
           ...etc,
-          class: [etc.class ?? "uy-input", { disabled }],
+          class: "uy-input",
         }),
         label ? h("span", {}, label) : null,
       ]),

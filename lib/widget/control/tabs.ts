@@ -80,7 +80,7 @@ const tabs = <S>(options: TabsOptions<S>) => (...focus: Focus) => {
 
     return h("div", {
       ...etc,
-      class: [etc.class ?? "uy-control uy-tabs", { disabled }],
+      class: ["uy-control uy-tabs", etc.class, { disabled }],
     }, [
       h("div", { class: "uy-tabs-navigation" }, [
         ...encase(itemsHeader),

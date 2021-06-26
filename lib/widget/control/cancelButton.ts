@@ -18,7 +18,7 @@ export type CancelButtonOptions<S> =
 export const cancelButton = <S>(options: CancelButtonOptions<S>): VNode<S> => {
   const props = isAction<S, MouseEvent>(options) ? { onclick: options } : options
   const { label = text("✕"), onclick, disabled, ...etc } = props
-  return h("div", { class: [etc.class ?? "uy-control uy-cancelButton", { disabled }] }, [
+  return h("div", { class: ["uy-control uy-cancelButton", etc.class, { disabled }] }, [
     h("button", {
       type: "button",
       onclick,

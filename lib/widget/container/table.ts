@@ -61,7 +61,7 @@ const table = <S>(options: TableOptions<S> = {}, rows: TableRow<S>[]) => {
   return (state: S): VNode<S> => {
     const props = Array.isArray(options) ? { headers: options } : options
     const { headers, orderColumn, sortDescending, disabled, ...etc } = props
-    return h("div", { ...etc, class: [etc.class ?? "uy-control uy-table", { disabled }] }, [
+    return h("div", { ...etc, class: ["uy-control uy-table", etc.class, { disabled }] }, [
       h("table", {}, [
         Array.isArray(headers) && headers.length
           ? h("thead", {}, headers.map(tableHeader(orderColumn, sortDescending)))

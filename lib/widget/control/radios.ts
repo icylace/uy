@@ -30,7 +30,7 @@ const radios = <S>(options: RadiosOptions<S>) => (...focus: Focus) => {
   return (state: S): VNode<S> => {
     const props = isOnlyChoices<S>(options) ? { choices: options } : options
     const { choices, onchange, disabled, ...etc } = props
-    return h("div", { class: [etc.class ?? "uy-control uy-radios", { disabled }] },
+    return h("div", { class: ["uy-control uy-radios", etc.class, { disabled }] },
       // TODO:
       // - switch to using a Map object instead in order to guarantee order
       Object.entries(choices).map(

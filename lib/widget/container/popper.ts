@@ -17,6 +17,6 @@ export const popper = <S>(options: PopperOptions, contents: MaybeVNode<S> | read
   return h("div", {
     id,
     ...etc,
-    class: [etc.class ?? "uy-popper", { disabled }],
+    class: ["uy-popper", etc.class, { disabled }],
   }, contents)
 }

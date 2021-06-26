@@ -23,7 +23,7 @@ const freshDatePicker = (value: DatePickerValue): DatePickerData => ({ value })
 const datePicker = <S>(options: DatePickerOptions<S> = {}) => (...focus: Focus) => {
   return (state: S): VNode<S> => {
     const { onchange, disabled, ...etc } = options
-    return h("div", { class: "uy-control uy-datePicker" }, [
+    return h("div", { class: ["uy-control uy-datePicker", etc.class, { disabled }] }, [
       h("input", {
         type: "date",
         value: get<DatePickerData>(focus)(state).value,
@@ -35,7 +35,7 @@ const datePicker = <S>(options: DatePickerOptions<S> = {}) => (...focus: Focus) 
           return onchange ? onchange(nextState, nextValue) : nextState
         },
         ...etc,
-        class: ["uy-input", { disabled }, etc.class],
+        class: "uy-input",
       }),
     ])
   }
@@ -48,7 +48,7 @@ const freshDatetimeLocalPicker = (value: string): DatePickerData => ({ value })
 const datetimeLocalPicker = <S>(options: DatePickerOptions<S> = {}) => (...focus: Focus) => {
   return (state: S): VNode<S> => {
     const { onchange, disabled, ...etc } = options
-    return h("div", { class: "uy-control uy-datePicker" }, [
+    return h("div", { class: ["uy-control uy-datePicker", etc.class, { disabled }] }, [
       h("input", {
         type: "datetime-local",
         value: get<DatePickerData>(focus)(state).value,
@@ -60,7 +60,7 @@ const datetimeLocalPicker = <S>(options: DatePickerOptions<S> = {}) => (...focus
           return onchange ? onchange(nextState, nextValue) : nextState
         },
         ...etc,
-        class: ["uy-input", { disabled }, etc.class],
+        class: "uy-input",
       }),
     ])
   }
@@ -73,7 +73,7 @@ const freshMonthPicker = (value: string): DatePickerData => ({ value })
 const monthPicker = <S>(options: DatePickerOptions<S> = {}) => (...focus: Focus) => {
   return (state: S): VNode<S> => {
     const { onchange, disabled, ...etc } = options
-    return h("div", { class: "uy-control uy-datePicker" }, [
+    return h("div", { class: ["uy-control uy-datePicker", etc.class, { disabled }] }, [
       h("input", {
         type: "month",
         value: get<DatePickerData>(focus)(state).value,
@@ -85,7 +85,7 @@ const monthPicker = <S>(options: DatePickerOptions<S> = {}) => (...focus: Focus)
           return onchange ? onchange(nextState, nextValue) : nextState
         },
         ...etc,
-        class: ["uy-input", { disabled }, etc.class],
+        class: "uy-input",
       }),
     ])
   }
@@ -98,7 +98,7 @@ const freshTimePicker = (value: string): DatePickerData => ({ value })
 const timePicker = <S>(options: DatePickerOptions<S> = {}) => (...focus: Focus) => {
   return (state: S): VNode<S> => {
     const { onchange, disabled, ...etc } = options
-    return h("div", { class: "uy-control uy-datePicker" }, [
+    return h("div", { class: ["uy-control uy-datePicker", etc.class, { disabled }] }, [
       h("input", {
         type: "time",
         value: get<DatePickerData>(focus)(state).value,
@@ -110,7 +110,7 @@ const timePicker = <S>(options: DatePickerOptions<S> = {}) => (...focus: Focus) 
           return onchange ? onchange(nextState, nextValue) : nextState
         },
         ...etc,
-        class: ["uy-input", { disabled }, etc.class],
+        class: "uy-input",
       }),
     ])
   }
@@ -123,7 +123,7 @@ const freshWeekPicker = (value: string): DatePickerData => ({ value })
 const weekPicker = <S>(options: DatePickerOptions<S> = {}) => (...focus: Focus) => {
   return (state: S): VNode<S> => {
     const { onchange, disabled, ...etc } = options
-    return h("div", { class: "uy-control uy-datePicker" }, [
+    return h("div", { class: ["uy-control uy-datePicker", etc.class, { disabled }] }, [
       h("input", {
         type: "week",
         value: get<DatePickerData>(focus)(state).value,
@@ -135,7 +135,7 @@ const weekPicker = <S>(options: DatePickerOptions<S> = {}) => (...focus: Focus) 
           return onchange ? onchange(nextState, nextValue) : nextState
         },
         ...etc,
-        class: ["uy-input", { disabled }, etc.class],
+        class: "uy-input",
       }),
     ])
   }

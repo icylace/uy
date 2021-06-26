@@ -31,7 +31,7 @@ const file = <S>(options: FileOptions<S> = {}) => (...focus: Focus) => {
   return (state: S): VNode<S> => {
     const props = typeof options === "string" ? { label: options } : options
     const { label = "Select your file...", onchange, disabled, ...etc } = props
-    return h("div", { class: [etc.class ?? "uy-control uy-file uy-input", { disabled }] }, [
+    return h("div", { class: ["uy-control uy-file uy-input", etc.class, { disabled }] }, [
       h("label", { "data-text": label }, [
         h("input", {
           type: "file",

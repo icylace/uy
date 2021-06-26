@@ -89,7 +89,7 @@ const pager = <S>(options: PagerOptions<S>) => (...focus: Focus) => {
 
     return h("div", {
       ...etc,
-      class: [etc.class ?? "uy-control uy-pager", { disabled }],
+      class: ["uy-control uy-pager", etc.class, { disabled }],
     }, [
       h("ul", {}, [
         h("li", {}, navFirst),

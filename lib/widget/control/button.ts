@@ -11,7 +11,7 @@ export type ButtonOptions<S> = {
 
 export const button = <S>(options: ButtonOptions<S>): VNode<S> => {
   const { label, onclick, disabled, ...etc } = options
-  return h("div", { class: etc.class ?? "uy-control uy-button" }, [
+  return h("div", { class: ["uy-control uy-button", etc.class, { disabled }] }, [
     h("button", { type: "button", onclick, disabled, ...etc }, label),
   ])
 }

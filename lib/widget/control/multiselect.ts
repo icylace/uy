@@ -49,8 +49,9 @@ const multiselect = <S>(options: MultiselectOptions<S>) => (...focus: Focus) => 
       ...etc,
       class: [
         "uy-control uy-scroller uy-multiselect",
-        { "uy-multiselect--grid-mode": !!usingColumnMode, disabled },
+        { "uy-multiselect--grid-mode": !!usingColumnMode },
         etc.class,
+        { disabled },
       ],
     }, [
       h("div", { class: "uy-multiselect-options" },

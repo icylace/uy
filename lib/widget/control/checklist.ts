@@ -45,7 +45,7 @@ const checklist = <S>(options: ChecklistOptions<S>) => (...focus: Focus) => {
 
     return h(
       "div",
-      { ...etc, class: [etc.class ?? "uy-checklist", { disabled }] },
+      { ...etc, class: ["uy-checklist", etc.class, { disabled }] },
       table({ disabled }, get<ChecklistData>(focus)(state).items.map(item))(state)
     )
   }

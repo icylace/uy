@@ -34,7 +34,7 @@ const numberbox = <S>(options: NumberboxOptions<S> = {}) => (...focus: Focus) =>
     const props = isContent<S>(options) ? { label: options } : options
     const { label, onchange, disabled, ...etc } = props
     const x = get<NumberboxData>(focus)(state)
-    return h("div", { class: [etc.class ?? "uy-control uy-numberbox", { disabled }] }, [
+    return h("div", { class: ["uy-control uy-numberbox", etc.class, { disabled }] }, [
       h("label", { class: { focus: x.focused, disabled } }, [
         h("input", {
           type: "number",

@@ -16,11 +16,11 @@ const fieldset1Disabled = fieldset<Story>(
 )
 
 const fieldset2Normal = fieldset<Story>(
-  { label: "TEST" },
+  { label: text("TEST") },
   [always(text("FIELDSET CONTENTS"))]
 )
 const fieldset2Disabled = fieldset<Story>(
-  { label: "TEST", disabled: true },
+  { label: text("TEST"), disabled: true },
   [always(text("FIELDSET CONTENTS"))]
 )
 

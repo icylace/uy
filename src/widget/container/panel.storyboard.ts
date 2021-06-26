@@ -16,7 +16,6 @@ const view = (state: Story): VNode<Story> =>
             (_state: Story) => text("TEST1"),
             always(text("TEST1")),
             text("TEST2"),
-            "TEST3",
           ])(state),
         ]),
       ]),

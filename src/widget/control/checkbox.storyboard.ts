@@ -1,18 +1,18 @@
 import type { VNode } from "hyperapp"
 import type { Story } from "../../types"
 
-import { h } from "hyperapp"
+import { h, text } from "hyperapp"
 import { checkbox, freshCheckbox } from "../../../lib/main"
 import { readout } from "../../utility/readout"
 
 const freshState = (state: Story): Story =>
   ({ ...state, checkbox: freshCheckbox(null) })
 
-const checkbox1Normal = checkbox<Story>("CHECK TEST")("checkbox")
-const checkbox1Disabled = checkbox<Story>({ label: "CHECK TEST", disabled: true })("checkbox")
+const checkbox1Normal = checkbox<Story>(text("CHECK TEST"))("checkbox")
+const checkbox1Disabled = checkbox<Story>({ label: text("CHECK TEST"), disabled: true })("checkbox")
 
-const checkbox2Normal = checkbox<Story>({ label: "CHECK TEST" })("checkbox")
-const checkbox2Disabled = checkbox<Story>({ label: "CHECK TEST", disabled: true })("checkbox")
+const checkbox2Normal = checkbox<Story>({ label: text("CHECK TEST") })("checkbox")
+const checkbox2Disabled = checkbox<Story>({ label: text("CHECK TEST"), disabled: true })("checkbox")
 
 // TODO:
 // - try out indeterminate state

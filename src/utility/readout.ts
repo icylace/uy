@@ -1,3 +1,6 @@
+// TODO:
+// - (?) use eyepiece with `readout`
+
 import { h, text } from "hyperapp"
 
 const readoutReplacer = <T>(_key: any, value: T): T | string =>

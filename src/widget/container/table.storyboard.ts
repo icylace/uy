@@ -9,10 +9,8 @@ import { table } from "../../../lib/main"
 const freshState = (state: Story): Story => state
 
 const dummyTable: TableRow<Story>[] = [
-  ["dfhgkldjfhg", "123", "uihew"],
-  ["354", "mnb,mnb", "uihew"],
-  ["dfhgkldjfhg", "123", "uihew"],
-  ["354", "mnb,mnb", "uihew"],
+  [text("dfhgkldjfhg"), text("123"), text("uihew")],
+  [text("354"), text("mnb,mnb"), text("uihew")],
   [h("p", {}, text("123")), h("p", {}, text("uihew"))],
   [h("p", {}, text("mnb,mnb")), h("p", {}, text("uihew"))],
 ]
@@ -20,7 +18,7 @@ const dummyTable: TableRow<Story>[] = [
 const table1Normal = table({ orderColumn: null, sortDescending: false }, dummyTable)
 const table1Disabled = table({ orderColumn: null, sortDescending: false, disabled: true }, dummyTable)
 
-const headers = ["ONE", "TWO", "THREE"]
+const headers = [text("ONE"), text("TWO"), text("THREE")]
 
 const table2Normal1 = table(headers, dummyTable)
 const table2Normal2 = table({ headers, orderColumn: null, sortDescending: false }, dummyTable)

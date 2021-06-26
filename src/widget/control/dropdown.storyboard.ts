@@ -1,42 +1,42 @@
 import type { VNode } from "hyperapp"
 import type { Story } from "../../types"
 
-import { h } from "hyperapp"
+import { h, text } from "hyperapp"
 import { dropdown, freshDropdown } from "../../../lib/main"
 import { readout } from "../../utility/readout"
 
 const choices1 = {
-  one: "ONE",
-  two: "TWO",
-  three: "THREE",
-  four: "FOUR",
-  five: "FIVE",
-  six: "SIX",
-  seven: "SEVEN",
-  eight: "EIGHT",
-  nine: "NINE",
-  ten: "TEN",
-  eleven: "ELEVEN",
-  twelve: "TWELVE",
-  thirteen: "THIRTEEN",
-  fourteen: "FOURTEEN",
-  fifteen: "FIFTEEN",
-  sixteen: "SIXTEEN",
-  seventeen: "SEVENTEEN",
-  eighteen: "EIGHTEEN",
-  nineteen: "NINETEEN",
+  one: text("ONE"),
+  two: text("TWO"),
+  three: text("THREE"),
+  four: text("FOUR"),
+  five: text("FIVE"),
+  six: text("SIX"),
+  seven: text("SEVEN"),
+  eight: text("EIGHT"),
+  nine: text("NINE"),
+  ten: text("TEN"),
+  eleven: text("ELEVEN"),
+  twelve: text("TWELVE"),
+  thirteen: text("THIRTEEN"),
+  fourteen: text("FOURTEEN"),
+  fifteen: text("FIFTEEN"),
+  sixteen: text("SIXTEEN"),
+  seventeen: text("SEVENTEEN"),
+  eighteen: text("EIGHTEEN"),
+  nineteen: text("NINETEEN"),
 }
 
 const choices2 = {
-  1: "ONE",
-  2: "TWO",
-  3: "THREE",
-  4: "FOUR",
-  5: "FIVE",
-  6: "SIX",
-  7: "SEVEN",
-  8: "EIGHT",
-  9: "NINE",
+  1: text("ONE"),
+  2: text("TWO"),
+  3: text("THREE"),
+  4: text("FOUR"),
+  5: text("FIVE"),
+  6: text("SIX"),
+  7: text("SEVEN"),
+  8: text("EIGHT"),
+  9: text("NINE"),
 }
 
 const freshState = (state: Story): Story => ({

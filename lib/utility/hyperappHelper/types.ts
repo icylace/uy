@@ -27,6 +27,6 @@ export type Transform<S, P = any> = (state: StateForm<S>, payload: P) => StateFo
 
 export type ViewComponent<S, P> = <X>(
   props: CustomPayloads<S, X> & P,
-  content: MaybeVNode<S>[],
+  content: MaybeVNode<S>[]
 ) => MaybeVNode<S>
 // Credit: https://github.com/jorgebucaran/hyperapp/discussions/1052#discussioncomment-630744

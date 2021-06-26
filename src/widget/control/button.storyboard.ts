@@ -1,7 +1,7 @@
 import type { VNode } from "hyperapp"
 import type { Story } from "../../types"
 
-import { h } from "hyperapp"
+import { h, text } from "hyperapp"
 import { button } from "../../../lib/main"
 import { readout } from "../../utility/readout"
 
@@ -11,8 +11,8 @@ const freshState = (state: Story): Story =>
 const onclick = (state: Story, _event: any): Story =>
   ({ ...state, button: { result: Math.random() } })
 
-const buttonNormal = button({ label: "TEST", onclick })
-const buttonDisabled = button({ label: "TEST", onclick, disabled: true })
+const buttonNormal = button({ label: text("TEST"), onclick })
+const buttonDisabled = button({ label: text("TEST"), onclick, disabled: true })
 
 const view = (state: Story): VNode<Story> =>
   h("section", { class: "uy-storyboard-showcase-panel" }, [

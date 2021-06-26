@@ -1,7 +1,7 @@
 import type { VNode } from "hyperapp"
 import type { Story } from "../../types"
 
-import { h } from "hyperapp"
+import { h, text } from "hyperapp"
 import { field, freshTextbox, textbox } from "../../../lib/main"
 import { readout } from "../../utility/readout"
 
@@ -13,17 +13,17 @@ const field1Disabled = field({ disabled: true }, [
   textbox<Story>({ disabled: true })("field", "textbox"),
 ])
 
-const field2Normal = field("FIELD2", [
+const field2Normal = field(text("FIELD2"), [
   textbox<Story>()("field", "textbox"),
 ])
-const field2Disabled = field({ label: "FIELD2", disabled: true }, [
+const field2Disabled = field({ label: text("FIELD2"), disabled: true }, [
   textbox<Story>({ disabled: true })("field", "textbox"),
 ])
 
-const field3Normal = field({ label: "FIELD1" }, [
+const field3Normal = field({ label: text("FIELD1") }, [
   textbox<Story>()("field", "textbox"),
 ])
-const field3Disabled = field({ label: "FIELD3", disabled: true }, [
+const field3Disabled = field({ label: text("FIELD3"), disabled: true }, [
   textbox<Story>({ disabled: true })("field", "textbox"),
 ])
 

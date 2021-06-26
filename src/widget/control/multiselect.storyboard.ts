@@ -3,46 +3,46 @@
 import type { VNode } from "hyperapp"
 import type { Story } from "../../types"
 
-import { h } from "hyperapp"
+import { h, text } from "hyperapp"
 import { freshMultiselect, multiselect } from "../../../lib/main"
 import { readout } from "../../utility/readout"
 
 const options1 = {
-  one: "ONE",
-  two: "TWO",
-  three: "THREE",
-  four: "FOUR",
-  five: "FIVE",
+  one: text("ONE"),
+  two: text("TWO"),
+  three: text("THREE"),
+  four: text("FOUR"),
+  five: text("FIVE"),
 }
 
 const options2 = {
-  one: "one",
-  two: "two",
-  three: "three",
-  four: "four",
-  five: "five",
-  six: "six",
-  seven: "seven",
-  eight: "eight",
-  nine: "nine",
-  ten: "ten",
-  eleven: "eleven",
-  twelve: "twelve",
-  thirteen: "thirteen",
-  fourteen: "fourteen",
-  fifteen: "fifteen",
-  sixteen: "sixteen",
-  seventeen: "seventeen",
-  eighteen: "eighteen",
-  nineteen: "nineteen",
+  one: text("one"),
+  two: text("two"),
+  three: text("three"),
+  four: text("four"),
+  five: text("five"),
+  six: text("six"),
+  seven: text("seven"),
+  eight: text("eight"),
+  nine: text("nine"),
+  ten: text("ten"),
+  eleven: text("eleven"),
+  twelve: text("twelve"),
+  thirteen: text("thirteen"),
+  fourteen: text("fourteen"),
+  fifteen: text("fifteen"),
+  sixteen: text("sixteen"),
+  seventeen: text("seventeen"),
+  eighteen: text("eighteen"),
+  nineteen: text("nineteen"),
 }
 
 const options3 = {
-  1: "one",
-  2: "two",
-  3: "three",
-  4: "four",
-  5: "five",
+  1: text("one"),
+  2: text("two"),
+  3: text("three"),
+  4: text("four"),
+  5: text("five"),
 }
 
 const freshState = (state: Story): Story => ({

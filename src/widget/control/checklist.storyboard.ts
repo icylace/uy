@@ -1,9 +1,8 @@
-import type { VNode } from "hyperapp"
-import type { Content } from "../../../lib/main"
+import type { MaybeVNode, VNode } from "hyperapp"
 import type { Story } from "../../types"
 
 import { h } from "hyperapp"
-import { c, checklist, freshCheckbox, freshChecklist } from "../../../lib/main"
+import { checklist, freshCheckbox, freshChecklist } from "../../../lib/main"
 import { readout } from "../../utility/readout"
 
 // const freshState = (state: Story): Story =>
@@ -17,7 +16,9 @@ const freshState = (state: Story): Story => ({
   }]),
 })
 
-const renderLabel = <S>(label: Content<S>): Content<S> => h("div", {}, c(label))
+const renderLabel = <S>(
+  label: MaybeVNode<S> | readonly MaybeVNode<S>[]
+): VNode<S> => h("div", {}, label)
 
 const checklistNormal = checklist<Story>({ renderLabel })("checklist")
 const checklistDisabled = checklist<Story>({ renderLabel, disabled: true })("checklist")

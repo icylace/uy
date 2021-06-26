@@ -1,7 +1,7 @@
 import type { VNode } from "hyperapp"
 import type { Story } from "../../types"
 
-import { h } from "hyperapp"
+import { h, text } from "hyperapp"
 import { freshRadios, radios } from "../../../lib/main"
 import { readout } from "../../utility/readout"
 
@@ -9,11 +9,11 @@ const freshState = (state: Story): Story =>
   ({ ...state, radios: freshRadios("") })
 
 const choices = {
-  one: "ONE",
-  two: "TWO",
-  three: "THREE",
-  four: "FOUR",
-  five: "FIVE",
+  one: text("ONE"),
+  two: text("TWO"),
+  three: text("THREE"),
+  four: text("FOUR"),
+  five: text("FIVE"),
 }
 
 const radios1Normal = radios<Story>(choices)("radios")

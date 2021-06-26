@@ -19,7 +19,7 @@ export const field = <S>(options: FieldOptions<S>, views: View<S>[]) => {
   return (state: S): VNode<S> => {
     const props = isContent<S>(options) ? { label: options } : options
     const { label, disabled, ...etc } = props
-    return h("div", { ...etc, class: [etc.class ?? "uy-field", { disabled }] }, [
+    return h("div", { ...etc, class: ["uy-field", etc.class, { disabled }] }, [
       h("label", {}, [...encase(label), ...using(views)(state)]),
     ])
   }

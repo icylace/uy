@@ -2,6 +2,8 @@ import type { MaybeVNode, VNode } from "hyperapp"
 
 export type View<S> = (state: S) => MaybeVNode<S>
 
+export type ContentView<S> = MaybeVNode<S> | View<S>
+
 export const isContent = <S>(x: any): x is (MaybeVNode<S> | readonly MaybeVNode<S>[]) =>
   x == null
   || Array.isArray(x)

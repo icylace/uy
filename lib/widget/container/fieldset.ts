@@ -22,7 +22,7 @@ export const fieldset = <S>(options: FieldsetOptions<S>, views: ((state: S) => V
     return h("fieldset", {
       disabled,
       ...etc,
-      class: [etc.class ?? "uy-fieldset", { disabled }],
+      class: ["uy-fieldset", etc.class, { disabled }],
     }, label ? [h("legend", {}, label), ...contents] : contents)
   }
 }

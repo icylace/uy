@@ -120,7 +120,7 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
         return update(target.value)(state)
       },
       ...etc,
-      class: ["uy-input", { disabled }, etc.class],
+      class: "uy-input",
     })
 
     const searchResult = (result: string): VNode<S> =>
@@ -141,7 +141,7 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
         : null
     ) as MaybeVNode<S>
 
-    return h("div", { class: ["uy-control uy-searchbox", { disabled }] }, [
+    return h("div", { class: [etc.class ?? "uy-control uy-searchbox", { disabled }] }, [
       h("label", {
         class: {
           "uy-searchbox-label": true,

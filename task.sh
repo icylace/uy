@@ -12,8 +12,8 @@ task:index() {
     'lint:fix'
     'lint:fix-dry-run'
     'prepare'
+    'reinstall'
     'release'
-    'reset'
     'test'
     'watch'
     'watch:postcss'
@@ -208,15 +208,6 @@ task:prepare() {
 
 # ------------------------------------------------------------------------------
 
-# https://github.com/sindresorhus/np#release-script
-task:release() {
-  echo
-  echo "Releasing..."
-  np --no-2fa
-}
-
-# ------------------------------------------------------------------------------
-
 # From `webdev-scaffolding`.
 update_json() {
   local filter="$1"
@@ -230,9 +221,9 @@ update_json() {
   jq "$filter" "$file" > "$tmp" && mv -f "$tmp" "$file"
 }
 
-task:reset() {
+task:reinstall() {
   echo
-  echo "Resetting dependencies..."
+  echo "Reinstalling dependencies..."
 
   rm ./package-lock.json
   rm -fr ./node_modules
@@ -267,6 +258,15 @@ task:reset() {
   npm install --save-dev remeda axios
 
   task:prepare
+}
+
+# ------------------------------------------------------------------------------
+
+# https://github.com/sindresorhus/np#release-script
+task:release() {
+  echo
+  echo "Releasing..."
+  np --no-2fa
 }
 
 # ------------------------------------------------------------------------------

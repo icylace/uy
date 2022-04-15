@@ -1,16 +1,18 @@
-import type { Focus } from "eyepiece"
-import type { Action, ClassProp, VNode } from "hyperapp"
+import { Action, ClassProp, VNode, h } from "hyperapp"
+import { Focus, get, set } from "eyepiece"
 
-import { get, set } from "eyepiece"
-import { h } from "hyperapp"
+export type { TextareaData, TextareaOptions, TextareaValue }
+export { freshTextarea, textarea }
 
-export type TextareaValue = string
+// -----------------------------------------------------------------------------
 
-export type TextareaData = {
+type TextareaValue = string
+
+type TextareaData = {
   value: TextareaValue
 }
 
-export type TextareaOptions<S> = {
+type TextareaOptions<S> = {
   onchange?: Action<S, TextareaValue>
   class?: ClassProp
   disabled?: boolean
@@ -37,5 +39,3 @@ const textarea = <S>(options: TextareaOptions<S> = {}) => (...focus: Focus) => {
     ])
   }
 }
-
-export { freshTextarea, textarea }

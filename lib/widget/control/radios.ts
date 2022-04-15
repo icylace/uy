@@ -1,18 +1,20 @@
-import type { Focus } from "eyepiece"
-import type { Action, ClassProp, MaybeVNode, VNode } from "hyperapp"
+import { Focus, get, set } from "eyepiece"
+import { Action, ClassProp, MaybeVNode, VNode, h } from "hyperapp"
 
-import { get, set } from "eyepiece"
-import { h } from "hyperapp"
+export type { RadiosChoices, RadiosData, RadiosOptions, RadiosValue }
+export { freshRadios, radios }
 
-export type RadiosValue = string
+// -----------------------------------------------------------------------------
 
-export type RadiosData = {
+type RadiosValue = string
+
+type RadiosData = {
   value: RadiosValue
 }
 
-export type RadiosChoices<S> = Record<string, MaybeVNode<S> | readonly MaybeVNode<S>[]>
+type RadiosChoices<S> = Record<string, MaybeVNode<S> | readonly MaybeVNode<S>[]>
 
-export type RadiosOptions<S> =
+type RadiosOptions<S> =
   | RadiosChoices<S>
   | {
     choices: RadiosChoices<S>
@@ -57,5 +59,3 @@ const radios = <S>(options: RadiosOptions<S>) => (...focus: Focus) => {
     )
   }
 }
-
-export { freshRadios, radios }

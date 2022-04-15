@@ -1,6 +1,10 @@
 import type { StateForm, Transform } from "./types"
 
-export const unite = <S, P = any>(t: Transform<S>, s: StateForm<S>, payload?: P): StateForm<S> => {
+export { unite }
+
+// -----------------------------------------------------------------------------
+
+const unite = <S, P = any>(t: Transform<S>, s: StateForm<S>, payload?: P): StateForm<S> => {
   if (!Array.isArray(s)) return t(s, payload)
   const [state1, ...fx1] = s
   const s2 = t(state1, payload)

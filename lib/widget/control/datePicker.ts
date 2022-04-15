@@ -1,16 +1,30 @@
-import type { Focus } from "eyepiece"
-import type { Action, ClassProp, VNode } from "hyperapp"
+import { Action, ClassProp, VNode, h } from "hyperapp"
+import { Focus, get, set } from "eyepiece"
 
-import { get, set } from "eyepiece"
-import { h } from "hyperapp"
+export type { DatePickerData, DatePickerOptions, DatePickerValue }
 
-export type DatePickerValue = string
+export {
+  datePicker,
+  datetimeLocalPicker,
+  freshDatePicker,
+  freshDatetimeLocalPicker,
+  freshMonthPicker,
+  freshTimePicker,
+  freshWeekPicker,
+  monthPicker,
+  timePicker,
+  weekPicker
+}
 
-export type DatePickerData = {
+// -----------------------------------------------------------------------------
+
+type DatePickerValue = string
+
+type DatePickerData = {
   value: DatePickerValue
 }
 
-export type DatePickerOptions<S> = {
+type DatePickerOptions<S> = {
   onchange?: Action<S, DatePickerValue>
   class?: ClassProp
   disabled?: boolean
@@ -139,19 +153,4 @@ const weekPicker = <S>(options: DatePickerOptions<S> = {}) => (...focus: Focus) 
       }),
     ])
   }
-}
-
-// -----------------------------------------------------------------------------
-
-export {
-  datePicker,
-  datetimeLocalPicker,
-  freshDatePicker,
-  freshDatetimeLocalPicker,
-  freshMonthPicker,
-  freshTimePicker,
-  freshWeekPicker,
-  monthPicker,
-  timePicker,
-  weekPicker
 }

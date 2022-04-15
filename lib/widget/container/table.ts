@@ -1,16 +1,21 @@
-import type { ClassProp, Props, MaybeVNode, VNode } from "hyperapp"
 import type { View } from "../../utility/hyperappHelper/content"
-
-import { h } from "hyperapp"
+import { ClassProp, Props, MaybeVNode, VNode, h } from "hyperapp"
 import { icon } from "../indicator/icon"
 
-export type TableCell<S> =
+export type { TableCell, TableOptions, TableRow }
+export { table }
+
+// -----------------------------------------------------------------------------
+
+type TableCell<S> =
   | MaybeVNode<S>
   | readonly MaybeVNode<S>[]
   | View<S>
   | [Props<S>, MaybeVNode<S> | readonly MaybeVNode<S>[] | View<S>]
-export type TableRow<S> = TableCell<S>[]
-export type TableOptions<S> =
+
+type TableRow<S> = TableCell<S>[]
+
+type TableOptions<S> =
   | TableRow<S>
   | {
     [_: string]: unknown
@@ -71,5 +76,3 @@ const table = <S>(options: TableOptions<S> = {}, rows: TableRow<S>[]) => {
     ])
   }
 }
-
-export { table }

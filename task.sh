@@ -1,5 +1,20 @@
 #!/usr/bin/env bash
 
+# From `webdev-scaffolding`.
+update_json() {
+  local filter="$1"
+  local file="$2"
+  local tmp="$(mktemp)"
+
+  if [ ! -f "$file" ] ; then
+    echo '{}' > "$file"
+  fi
+
+  jq "$filter" "$file" > "$tmp" && mv -f "$tmp" "$file"
+}
+
+# ------------------------------------------------------------------------------
+
 task:index() {
   local tasks=(
     # '_snowpack'
@@ -138,12 +153,6 @@ task:check() {
 
 # ------------------------------------------------------------------------------
 
-task:dev() {
-  npx vite
-}
-
-# ------------------------------------------------------------------------------
-
 task:clean() {
   echo
   echo "Cleaning the distribution folder..."
@@ -157,6 +166,12 @@ task:clean:all() {
   echo
   echo "Cleaning the intermiediary output folder..."
   rm -fr ./output && mkdir ./output
+}
+
+# ------------------------------------------------------------------------------
+
+task:dev() {
+  npx vite
 }
 
 # ------------------------------------------------------------------------------
@@ -207,19 +222,6 @@ task:prepare() {
 }
 
 # ------------------------------------------------------------------------------
-
-# From `webdev-scaffolding`.
-update_json() {
-  local filter="$1"
-  local file="$2"
-  local tmp="$(mktemp)"
-
-  if [ ! -f "$file" ] ; then
-    echo '{}' > "$file"
-  fi
-
-  jq "$filter" "$file" > "$tmp" && mv -f "$tmp" "$file"
-}
 
 task:reinstall() {
   echo

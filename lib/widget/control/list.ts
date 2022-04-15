@@ -1,24 +1,24 @@
 // TODO:
 // - `list` -> `textlist`
 
-import type { Focus } from "eyepiece"
-import type { Action, ClassProp, MaybeVNode, VNode } from "hyperapp"
-import type { TableCell } from "../container/table"
-import type { TextboxData, TextboxValue } from "./textbox"
-
-import { get, set } from "eyepiece"
-import { h, text } from "hyperapp"
+import { Action, ClassProp, MaybeVNode, VNode, h, text } from "hyperapp"
+import { Focus, get, set } from "eyepiece"
 import { exclude } from "../../utility/exclude"
-import { table } from "../container/table"
+import { TableCell, table } from "../container/table"
 import { button } from "./button"
 import { cancelButton } from "./cancelButton"
-import { textbox, freshTextbox } from "./textbox"
+import { TextboxData, TextboxValue, textbox, freshTextbox } from "./textbox"
 
-export type ListData = {
+export type { ListData, ListOptions }
+export { freshList, list }
+
+// -----------------------------------------------------------------------------
+
+type ListData = {
   items: TextboxData[]
 }
 
-export type ListOptions<S> =
+type ListOptions<S> =
   | MaybeVNode<S>[]
   | {
     headers?: MaybeVNode<S>[]
@@ -74,5 +74,3 @@ const list = <S>(options: ListOptions<S> = {}) => (...focus: Focus) => {
     ])
   }
 }
-
-export { freshList, list }

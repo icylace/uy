@@ -1,6 +1,8 @@
-import type { ClassProp, VNode } from "hyperapp"
+import { ClassProp, VNode, h } from "hyperapp"
 
-import { h } from "hyperapp"
+export { icon }
 
-export const icon = <S>(classProp: ClassProp): VNode<S> =>
+// -----------------------------------------------------------------------------
+
+const icon = <S>(classProp: ClassProp): VNode<S> =>
   h("i", { class: ["uy-indicator uy-icon", classProp] })

@@ -1,20 +1,22 @@
 // TODO:
 // - `file` -> `fileUpload`
 
-import type { Focus } from "eyepiece"
-import type { Action, ClassProp, VNode } from "hyperapp"
-
-import { get, set } from "eyepiece"
-import { h, text } from "hyperapp"
+import { Action, ClassProp, VNode, h, text } from "hyperapp"
+import { Focus, get, set } from "eyepiece"
 import { icon } from "../indicator/icon"
 
-export type FileValue = string
+export type { FileData, FileOptions, FileValue }
+export { file, freshFile }
 
-export type FileData = {
+// -----------------------------------------------------------------------------
+
+type FileValue = string
+
+type FileData = {
   value: FileValue
 }
 
-export type FileOptions<S> =
+type FileOptions<S> =
   | string
   | {
     label?: string
@@ -58,5 +60,3 @@ const file = <S>(options: FileOptions<S> = {}) => (...focus: Focus) => {
     ])
   }
 }
-
-export { file, freshFile }

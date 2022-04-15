@@ -1,21 +1,23 @@
-import type { Focus } from "eyepiece"
-import type { Action, ClassProp, MaybeVNode, VNode } from "hyperapp"
-
-import { get, set } from "eyepiece"
-import { h } from "hyperapp"
+import { Action, ClassProp, MaybeVNode, VNode, h } from "hyperapp"
+import { Focus, get, set } from "eyepiece"
 import { Defocus, Refocus } from "../../action/helper"
 
-export type DropdownValue = string
+export type { DropdownChoices, DropdownData, DropdownOptions, DropdownValue }
+export { dropdown, freshDropdown }
 
-export type DropdownData = {
+// -----------------------------------------------------------------------------
+
+type DropdownValue = string
+
+type DropdownData = {
   value: DropdownValue
   "uy-dropdown-arrow"?: boolean
   focused?: boolean
 }
 
-export type DropdownChoices<S> = Record<string, MaybeVNode<S> | readonly MaybeVNode<S>[]>
+type DropdownChoices<S> = Record<string, MaybeVNode<S> | readonly MaybeVNode<S>[]>
 
-export type DropdownOptions<S> =
+type DropdownOptions<S> =
   | DropdownChoices<S>
   | {
     choices: DropdownChoices<S>
@@ -61,5 +63,3 @@ const dropdown = <S>(options: DropdownOptions<S>) => (...focus: Focus) => {
     ])
   }
 }
-
-export { dropdown, freshDropdown }

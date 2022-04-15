@@ -1,19 +1,21 @@
-import type { Focus } from "eyepiece"
-import type { Action, ClassProp, MaybeVNode, VNode } from "hyperapp"
-
-import { get, set } from "eyepiece"
-import { h } from "hyperapp"
+import { Action, ClassProp, MaybeVNode, VNode, h } from "hyperapp"
+import { Focus, get, set } from "eyepiece"
 import { isContent } from "../../utility/hyperappHelper/content"
 import { Defocus, Refocus } from "../../action/helper"
 
-export type NumberboxValue = number
+export type { NumberboxData, NumberboxOptions, NumberboxValue }
+export { freshNumberbox, numberbox }
 
-export type NumberboxData = {
+// -----------------------------------------------------------------------------
+
+type NumberboxValue = number
+
+type NumberboxData = {
   focused?: boolean
   value: NumberboxValue
 }
 
-export type NumberboxOptions<S> =
+type NumberboxOptions<S> =
   | MaybeVNode<S>
   | readonly MaybeVNode<S>[]
   | {
@@ -62,5 +64,3 @@ const numberbox = <S>(options: NumberboxOptions<S> = {}) => (...focus: Focus) =>
     ])
   }
 }
-
-export { freshNumberbox, numberbox }

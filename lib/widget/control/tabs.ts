@@ -1,25 +1,27 @@
-import type { Focus } from "eyepiece"
-import type { ClassProp, MaybeVNode, VNode } from "hyperapp"
 import type { StateForm, Transform } from "../../utility/hyperappHelper/types"
-
-import { get, set } from "eyepiece"
-import { h } from "hyperapp"
+import { ClassProp, MaybeVNode, VNode, h } from "hyperapp"
+import { Focus, get, set } from "eyepiece"
 import { encase } from "../../utility/encase"
 import { isVNode } from "../../utility/hyperappHelper/content"
 import { scrollIntoView } from "../../effect/scrollIntoView"
 
-export type TabIndex = number | string
+export type { Tab, TabIndex, TabsData, TabsOptions }
+export { freshTabs, tabs }
 
-export type TabsData = Readonly<{
+// -----------------------------------------------------------------------------
+
+type TabIndex = number | string
+
+type TabsData = Readonly<{
   value: TabIndex
 }>
 
-export type Tab<S> = Readonly<{
+type Tab<S> = Readonly<{
   heading: MaybeVNode<S>
   panel: MaybeVNode<S>
 }>
 
-export type TabsOptions<S> =
+type TabsOptions<S> =
   | Tab<S>[]
   | Readonly<{
     tabList: Tab<S>[]
@@ -97,5 +99,3 @@ const tabs = <S>(options: TabsOptions<S>) => (...focus: Focus) => {
     ])
   }
 }
-
-export { freshTabs, tabs }

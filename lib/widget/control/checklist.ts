@@ -1,23 +1,23 @@
-import type { Focus } from "eyepiece"
-import type { Action, ClassProp, MaybeVNode, VNode } from "hyperapp"
-import type { TableRow } from "../container/table"
-import type { CheckboxData, CheckboxValue } from "./checkbox"
+import { Action, ClassProp, MaybeVNode, VNode, h, text } from "hyperapp"
+import { Focus, get } from "eyepiece"
+import { TableRow, table } from "../container/table"
+import { CheckboxData, CheckboxValue, checkbox } from "./checkbox"
 
-import { get } from "eyepiece"
-import { h, text } from "hyperapp"
-import { table } from "../container/table"
-import { checkbox } from "./checkbox"
+export type { ChecklistData, ChecklistItem, ChecklistOptions }
+export { checklist, freshChecklist }
 
-export type ChecklistItem = {
+// -----------------------------------------------------------------------------
+
+type ChecklistItem = {
   id: string
   selected: CheckboxData
 }
 
-export type ChecklistData = {
+type ChecklistData = {
   items: ChecklistItem[]
 }
 
-export type ChecklistOptions<S> = {
+type ChecklistOptions<S> = {
   renderLabel: (_: MaybeVNode<S> | readonly MaybeVNode<S>[]) => MaybeVNode<S> | readonly MaybeVNode<S>[]
   onchange?: Action<S, CheckboxValue>
   class?: ClassProp
@@ -50,5 +50,3 @@ const checklist = <S>(options: ChecklistOptions<S>) => (...focus: Focus) => {
     )
   }
 }
-
-export { checklist, freshChecklist }

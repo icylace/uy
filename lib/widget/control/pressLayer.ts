@@ -1,15 +1,18 @@
-import type { ClassProp, EventActions, VNode } from "hyperapp"
+import { ClassProp, EventActions, VNode, h } from "hyperapp"
 
-import { h } from "hyperapp"
+export type { PressLayerOptions }
+export { pressLayer }
 
-export type PressLayerOptions<S> = {
+// -----------------------------------------------------------------------------
+
+type PressLayerOptions<S> = {
   onclick: EventActions<S>["onclick"]
   class?: ClassProp
   disabled?: boolean
 }
 
 // An invisible layer which captures click-like events.
-export const pressLayer = <S>(options: PressLayerOptions<S>): VNode<S> => {
+const pressLayer = <S>(options: PressLayerOptions<S>): VNode<S> => {
   const { onclick, disabled, ...etc } = options
   return h("div", {
     type: "button",

@@ -1,6 +1,8 @@
-import type { Focus } from "eyepiece"
+import { Focus, set } from "eyepiece"
 
-import { set } from "eyepiece"
+export { Defocus, Refocus }
 
-export const Defocus = <S>(focus: Focus) => set<S>(focus, "focused")(false)
-export const Refocus = <S>(focus: Focus) => set<S>(focus, "focused")(true)
+// -----------------------------------------------------------------------------
+
+const Defocus = <S>(focus: Focus) => set<S>(focus, "focused")(false)
+const Refocus = <S>(focus: Focus) => set<S>(focus, "focused")(true)

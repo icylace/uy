@@ -1,28 +1,30 @@
-import type { Focus } from "eyepiece"
-import type { Action, ClassProp, Effect, MaybeVNode, VNode } from "hyperapp"
 import type { StateForm } from "../../utility/hyperappHelper/types"
-
-import { get, set } from "eyepiece"
-import { h, text } from "hyperapp"
+import { Action, ClassProp, Effect, MaybeVNode, VNode, h, text } from "hyperapp"
+import { Focus, get, set } from "eyepiece"
 import { Defocus, Refocus } from "../../action/helper"
 import { popper } from "../container/popper"
 import { icon } from "../indicator/icon"
 
-export type SearchboxValue = string
+export type { SearchboxData, SearchboxOptions, SearchboxValue, SearchEffectData }
+export { freshSearchbox, searchbox }
 
-export type SearchboxData = {
+// -----------------------------------------------------------------------------
+
+type SearchboxValue = string
+
+type SearchboxData = {
   value: SearchboxValue
   results: string[]
   searching: boolean
   focused?: boolean
 }
 
-export type SearchEffectData<S> = {
+type SearchEffectData<S> = {
   action: Action<S, SearchboxData>
   value: SearchboxValue
 }
 
-export type SearchboxOptions<S> = {
+type SearchboxOptions<S> = {
   id: string
   search: (action: Action<S, SearchboxData>, value: SearchboxValue) => Effect<S, SearchEffectData<S>>
   onresults: (results: SearchboxData["results"], id: string, state: S) => S
@@ -164,5 +166,3 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
     ])
   }
 }
-
-export { freshSearchbox, searchbox }

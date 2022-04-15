@@ -2,12 +2,16 @@
 
 // https://eslint.org/docs/rules/
 
+// https://typescript-eslint.io/docs/linting/#configuration
+// https://typescript-eslint.io/docs/linting/type-linting
+
 // https://github.com/sanctuary-js/sanctuary-style
 // https://github.com/Gipphe/eslint-config-haskellish
 // https://medium.com/@uistephen/style-guides-for-linting-ecmascript-2015-eslint-common-google-airbnb-6c25fd3dff0
 // https://levelup.gitconnected.com/setting-up-eslint-with-prettier-typescript-and-visual-studio-code-d113bbec9857
 
 module.exports = {
+  root: true,
   env: {
     browser: true,
     es6: true,
@@ -27,8 +31,9 @@ module.exports = {
   plugins: ["@typescript-eslint", "prettier"],
   parserOptions: {
     ecmaVersion: 2018,
-    project: "./tsconfig.json",
     sourceType: "module",
+    tsconfigRootDir: __dirname,
+    project: ["./tsconfig.json"],
   },
   settings: {
     "import/parsers": {

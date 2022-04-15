@@ -3,7 +3,7 @@
 // https://github.com/postcss/postcss#usage
 // https://github.com/postcss/postcss-cli#context
 
-module.exports = (ctx) => ({
+module.exports = (_ctx) => ({
   modules: true,
   plugins: [
     // require("postcss-import"),

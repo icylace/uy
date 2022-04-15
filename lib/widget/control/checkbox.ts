@@ -1,17 +1,19 @@
-import type { Focus } from "eyepiece"
-import type { Action, ClassProp, MaybeVNode, VNode } from "hyperapp"
-
-import { get, set } from "eyepiece"
-import { h } from "hyperapp"
+import { Action, ClassProp, MaybeVNode, VNode, h } from "hyperapp"
+import { Focus, get, set } from "eyepiece"
 import { isContent } from "../../utility/hyperappHelper/content"
 
-export type CheckboxValue = boolean | null | undefined
+export type { CheckboxData, CheckboxOptions, CheckboxValue }
+export { checkbox, freshCheckbox }
 
-export type CheckboxData = {
+// -----------------------------------------------------------------------------
+
+type CheckboxValue = boolean | null | undefined
+
+type CheckboxData = {
   value: CheckboxValue
 }
 
-export type CheckboxOptions<S> =
+type CheckboxOptions<S> =
   | MaybeVNode<S>
   | readonly MaybeVNode<S>[]
   | {
@@ -49,5 +51,3 @@ const checkbox = <S>(options: CheckboxOptions<S> = {}) => (...focus: Focus) => {
     ])
   }
 }
-
-export { checkbox, freshCheckbox }

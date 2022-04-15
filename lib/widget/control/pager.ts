@@ -1,19 +1,21 @@
-import type { Focus } from "eyepiece"
-import type { Action, ClassProp, MaybeVNode, VNode } from "hyperapp"
-
-import { get, set } from "eyepiece"
-import { h, text } from "hyperapp"
+import { Focus, get, set } from "eyepiece"
+import { Action, ClassProp, MaybeVNode, VNode, h, text } from "hyperapp"
 import { range } from "../../utility/range"
 import { icon } from "../indicator/icon"
 
-export type PagerValue = number
+export type { PagerData, PagerOptions, PagerValue }
+export { freshPager, pager }
 
-export type PagerData = {
+// -----------------------------------------------------------------------------
+
+type PagerValue = number
+
+type PagerData = {
   itemsTotal: number
   value: PagerValue
 }
 
-export type PagerOptions<S> = {
+type PagerOptions<S> = {
   itemsPerPage: number
   pageRange: number
   onclick?: Action<S, PagerValue>
@@ -103,5 +105,3 @@ const pager = <S>(options: PagerOptions<S>) => (...focus: Focus) => {
     ])
   }
 }
-
-export { freshPager, pager }

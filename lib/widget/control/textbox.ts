@@ -1,16 +1,18 @@
-import type { Focus } from "eyepiece"
-import type { Action, ClassProp, VNode } from "hyperapp"
+import { Action, ClassProp, VNode, h } from "hyperapp"
+import { Focus, get, set } from "eyepiece"
 
-import { get, set } from "eyepiece"
-import { h } from "hyperapp"
+export type { TextboxData, TextboxOptions, TextboxValue }
+export { freshTextbox, textbox }
 
-export type TextboxValue = string
+// -----------------------------------------------------------------------------
 
-export type TextboxData = {
+type TextboxValue = string
+
+type TextboxData = {
   value: string
 }
 
-export type TextboxOptions<S> = {
+type TextboxOptions<S> = {
   onchange?: Action<S, TextboxValue>
   class?: ClassProp
   disabled?: boolean
@@ -38,5 +40,3 @@ const textbox = <S>(options: TextboxOptions<S> = {}) => (...focus: Focus) => {
     ])
   }
 }
-
-export { freshTextbox, textbox }

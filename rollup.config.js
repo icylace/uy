@@ -1,3 +1,5 @@
+// https://rollupjs.org/guide/en/#configuration-files
+
 // TODO:
 export default (ctx) => ({
   // input: "./output/typescript/index.js",

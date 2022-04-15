@@ -5,6 +5,8 @@ import type { Transform } from "../hyperappHelper/types"
 
 // import { handleUsing } from "../hyperappHelper/handleUsing"
 
+export type { Handlers }
+
 // -----------------------------------------------------------------------------
 
 // Based on:
@@ -47,7 +49,7 @@ import type { Transform } from "../hyperappHelper/types"
 
 // -----------------------------------------------------------------------------
 
-export type Handlers<S> = (state: S) => Transform<S, Event>[]
+type Handlers<S> = (state: S) => Transform<S, Event>[]
 
 // const uyMouseDownSubscriberAction = <S>(getHandlers: Handlers<S>) => {
 //   return (state: S, _props: any): [S, Subscription<S, Action<S, Event>>] => {

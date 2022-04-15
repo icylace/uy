@@ -32,10 +32,7 @@ const tableHeader = <S>(orderColumn: string | null | undefined, sortDescending: 
     const headerContents: MaybeVNode<S>[] = (Array.isArray(header) ? header[1] : [header]) as MaybeVNode<S>[]
     const column = props && "data-column" in props && props["data-column"]
     const sorting = orderColumn != null && orderColumn === column
-    return h("th", {
-      ...props,
-      class: [props.class, { "sort-column": sorting }]
-    }, [
+    return h("th", { ...props, class: [props.class, { "sort-column": sorting }] }, [
       ...headerContents,
       sorting
         ? icon({

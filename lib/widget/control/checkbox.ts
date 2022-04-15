@@ -40,7 +40,7 @@ const checkbox = <S>(options: CheckboxOptions<S> = {}) => (...focus: Focus) => {
           onchange: (state, event) => {
             const target = event.target as HTMLInputElement
             const nextValue = target.checked
-            const nextState = set<S>(focus, "value")(nextValue)(state)
+            const nextState = set(focus, "value")(nextValue)(state)
             return onchange ? onchange(nextState, nextValue) : nextState
           },
           ...etc,

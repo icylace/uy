@@ -1,9 +1,11 @@
-import type { VNode } from "hyperapp"
 import type { Story } from "../../types"
-
-import { h, text } from "hyperapp"
+import { VNode, h, text } from "hyperapp"
 import { freshNumberbox, numberbox } from "../../../lib/main"
 import { readout } from "../../utility/readout"
+
+export { freshState, view }
+
+// -----------------------------------------------------------------------------
 
 const freshState = (state: Story): Story =>
   ({ ...state, numberbox: freshNumberbox(0) })
@@ -27,5 +29,3 @@ const view = (state: Story): VNode<Story> =>
       ]),
     ]),
   ])
-
-export { freshState, view }

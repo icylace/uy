@@ -1,1 +1,5 @@
-export const always = <T>(x: T) => (_: unknown): T => x
+export { always }
+
+// -----------------------------------------------------------------------------
+
+const always = <T>(x: T) => (_: unknown): T => x

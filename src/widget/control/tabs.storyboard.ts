@@ -1,11 +1,12 @@
-import type { VNode } from "hyperapp"
-import type { Tab } from "../../../lib/main"
 import type { Story } from "../../types"
-
-import { h, text } from "hyperapp"
+import { VNode, h, text } from "hyperapp"
 import * as R from "remeda"
-import { freshTabs, tabs } from "../../../lib/main"
+import { Tab, freshTabs, tabs } from "../../../lib/main"
 import { readout } from "../../utility/readout"
+
+export { freshState, view }
+
+// -----------------------------------------------------------------------------
 
 const freshState = (state: Story): Story =>
   ({ ...state, tabs: freshTabs("fiver") })
@@ -67,5 +68,3 @@ const view = (state: Story): VNode<Story> =>
       ]),
     ]),
   ])
-
-export { freshState, view }

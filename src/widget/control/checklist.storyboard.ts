@@ -1,9 +1,11 @@
-import type { MaybeVNode, VNode } from "hyperapp"
 import type { Story } from "../../types"
-
-import { h } from "hyperapp"
+import { MaybeVNode, VNode, h } from "hyperapp"
 import { checklist, freshCheckbox, freshChecklist } from "../../../lib/main"
 import { readout } from "../../utility/readout"
+
+export { freshState, view }
+
+// -----------------------------------------------------------------------------
 
 // const freshState = (state: Story): Story =>
 //   ({ ...state, checklist: freshChecklist([]) })
@@ -37,5 +39,3 @@ const view = (state: Story): VNode<Story> =>
       ]),
     ]),
   ])
-
-export { freshState, view }

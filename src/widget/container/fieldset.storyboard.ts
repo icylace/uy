@@ -1,9 +1,11 @@
-import type { VNode } from "hyperapp"
 import type { Story } from "../../types"
-
-import { h, text } from "hyperapp"
+import { VNode, h, text } from "hyperapp"
 import { fieldset } from "../../../lib/main"
 import { always } from "../../utility/always"
+
+export { freshState, view }
+
+// -----------------------------------------------------------------------------
 
 const freshState = (state: Story): Story => {
   return state
@@ -39,5 +41,3 @@ const view = (state: Story): VNode<Story> =>
       ]),
     ]),
   ])
-
-export { freshState, view }

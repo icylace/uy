@@ -1,11 +1,12 @@
-import type { VNode } from "hyperapp"
-import type { SearchboxData, Transform } from "../../../lib/main"
 import type { Story } from "../../types"
-
-import { h } from "hyperapp"
-import { freshSearchbox, searchbox } from "../../../lib/main"
+import { VNode, h } from "hyperapp"
+import { SearchboxData, Transform, freshSearchbox, searchbox } from "../../../lib/main"
 import { readout } from "../../utility/readout"
 import { search } from "../../effect/search"
+
+export { freshState, view }
+
+// -----------------------------------------------------------------------------
 
 const freshState = (state: Story): Story => ({
   ...state,
@@ -43,5 +44,3 @@ const view = (state: Story): VNode<Story> =>
       ]),
     ]),
   ])
-
-export { freshState, view }

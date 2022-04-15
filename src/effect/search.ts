@@ -1,7 +1,10 @@
 import type { Action, Dispatch, Effect } from "hyperapp"
 import type { SearchboxData, SearchEffectData } from "../../lib/main"
-
 import axios from "axios"
+
+export { search }
+
+// -----------------------------------------------------------------------------
 
 const runSearch = async <S>(dispatch: Dispatch<S>, props: SearchEffectData<S>): Promise<void> => {
   const { action, value } = props
@@ -43,5 +46,3 @@ const search = <S>(
 ): Effect<S, SearchEffectData<S>> => {
   return [runSearch, { action, value }]
 }
-
-export { search }

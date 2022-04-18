@@ -1,7 +1,7 @@
 // TODO:
 
 // import type { Action, Dispatch, Subscription } from "hyperapp"
-import type { Transform } from "../hyperappHelper/types"
+import type { Transform } from "hyperapplicable"
 
 // import { handleUsing } from "../hyperappHelper/handleUsing"
 

@@ -1,5 +1,5 @@
-import type { ContentView } from "../../utility/hyperappHelper/content"
 import { ClassProp, VNode, h } from "hyperapp"
+import type { ContentView } from "hyperapplicable"
 import { using } from "../../utility/using"
 
 export { panel }

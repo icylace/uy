@@ -1,8 +1,7 @@
-import type { StateForm, Transform } from "../../utility/hyperappHelper/types"
 import { ClassProp, MaybeVNode, VNode, h } from "hyperapp"
+import { StateFormat, Transform, isVNode } from "hyperapplicable"
 import { Focus, get, set } from "eyepiece"
 import { encase } from "../../utility/encase"
-import { isVNode } from "../../utility/hyperappHelper/content"
 import { scrollIntoView } from "../../effect/scrollIntoView"
 
 export type { Tab, TabIndex, TabsData, TabsOptions }
@@ -58,11 +57,11 @@ const tab = <S>(focus: Focus, activeTab: TabIndex, onclick?: Transform<S>) => {
           //   ? item.props["data-tab-id"] as string
           //   : i
         )
-        const transition = set<S>(focus)(nextValue)(state)
+        const transition = set(focus)(nextValue)(state)
         // TODO:
-        // const nextState: StateForm<S> =
+        // const nextState: StateFormat<S> =
         //   [transition, selected ? scrollIntoView(target) : undefined]
-        const nextState: StateForm<S> = selected
+        const nextState: StateFormat<S> = selected
           ? [transition, scrollIntoView(target)]
           : transition
         return onclick ? onclick(nextState, nextValue) : nextState

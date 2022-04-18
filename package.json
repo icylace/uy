@@ -48,20 +48,25 @@
     "watch:rollup": "./task.sh watch:rollup",
     "watch:typescript": "./task.sh watch:typescript"
   },
-  "dependencies": {
-    "@fortawesome/fontawesome-free": "^6.1.1",
-    "eyepiece": "^0.1.6",
-    "hyperapp": "^2.0.22"
-  },
   "publishConfig": {
     "access": "public"
   },
   "devDependencies": {
-    "axios": "^0.26.1",
-    "postcss-preset-env": "^7.4.3",
-    "postcss-reporter": "^7.0.5",
-    "remeda": "^0.0.32",
+    "@types/jest": "^27.4.1",
+    "@typescript-eslint/eslint-plugin": "^5.20.0",
+    "@typescript-eslint/parser": "^5.20.0",
+    "eslint": "^8.13.0",
+    "fast-check": "^2.24.0",
+    "jest": "^27.5.1",
+    "rollup": "^2.70.2",
+    "terser": "^5.12.1",
+    "ts-jest": "^27.1.4",
     "typescript": "^4.6.3",
     "vite": "^2.9.5"
+  },
+  "dependencies": {
+    "eyepiece": "^0.1.6",
+    "hyperapp": "^2.0.22",
+    "hyperapplicable": "^0.1.3"
   }
 }

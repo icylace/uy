@@ -1,5 +1,5 @@
-import { Focus, get, set } from "eyepiece"
 import { Action, ClassProp, MaybeVNode, VNode, h } from "hyperapp"
+import { Focus, get, set } from "eyepiece"
 
 export type { RadiosChoices, RadiosData, RadiosOptions, RadiosValue }
 export { freshRadios, radios }
@@ -12,7 +12,9 @@ type RadiosData = {
   value: RadiosValue
 }
 
-type RadiosChoices<S> = Record<string, MaybeVNode<S> | readonly MaybeVNode<S>[]>
+type RadiosChoices<S> =
+  | Record<string, MaybeVNode<S>
+  | readonly MaybeVNode<S>[]>
 
 type RadiosOptions<S> =
   | RadiosChoices<S>
@@ -46,7 +48,7 @@ const radios = <S>(options: RadiosOptions<S>) => (...focus: Focus) => {
               onchange: (state, event) => {
                 const target = event.target as HTMLInputElement
                 const nextValue = target.value
-                const nextState = set<S>(focus, "value")(nextValue)(state)
+                const nextState = set(focus, "value")(nextValue)(state)
                 return onchange ? onchange(nextState, nextValue) : nextState
               },
               ...etc,

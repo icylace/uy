@@ -1,11 +1,13 @@
 import type { Story } from "../../types"
-import { VNode, h, text } from "hyperapp"
+import { TypedH, VNode, h as ha, text } from "hyperapp"
 import { field, freshTextbox, textbox } from "../../../lib/main"
 import { readout } from "../../utility/readout"
 
 export { freshState, view }
 
 // -----------------------------------------------------------------------------
+
+const h: TypedH<Story> = ha
 
 const freshState = (state: Story): Story =>
   ({ ...state, field: { textbox: freshTextbox("") } })

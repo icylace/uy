@@ -1,5 +1,5 @@
-import type { View } from "../../utility/hyperappHelper/content"
 import { ClassProp, Props, MaybeVNode, VNode, h } from "hyperapp"
+import type { View } from "hyperapplicable"
 import { icon } from "../indicator/icon"
 
 export type { TableCell, TableOptions, TableRow }
@@ -29,7 +29,7 @@ type TableOptions<S> =
 const tableHeader = <S>(orderColumn: string | null | undefined, sortDescending: boolean | null | undefined) => {
   return (header: TableCell<S>): VNode<S> => {
     const props = (Array.isArray(header) ? header[0] : {}) as Props<S>
-    const headerContents: MaybeVNode<S>[] = (Array.isArray(header) ? header[1] : [header]) as MaybeVNode<S>[]
+    const headerContents = (Array.isArray(header) ? header[1] : [header]) as MaybeVNode<S>[]
     const column = props && "data-column" in props && props["data-column"]
     const sorting = orderColumn != null && orderColumn === column
     return h("th", { ...props, class: [props.class, { "sort-column": sorting }] }, [

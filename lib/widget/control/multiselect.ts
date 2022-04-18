@@ -1,5 +1,5 @@
-import type { Focus } from "eyepiece"
 import { Action, ClassProp, MaybeVNode, VNode, h } from "hyperapp"
+import type { Focus } from "eyepiece"
 import { CheckboxData, CheckboxValue, checkbox, freshCheckbox } from "./checkbox"
 
 export type { MultiselectChoices, MultiselectData, MultiselectOptions }

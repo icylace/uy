@@ -1,6 +1,6 @@
 import { Action, ClassProp, MaybeVNode, VNode, h } from "hyperapp"
+import { isContent } from "hyperapplicable"
 import { Focus, get, set } from "eyepiece"
-import { isContent } from "../../utility/hyperappHelper/content"
 
 export type { CheckboxData, CheckboxOptions, CheckboxValue }
 export { checkbox, freshCheckbox }

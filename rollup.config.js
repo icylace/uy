@@ -1,7 +1,8 @@
 // https://rollupjs.org/guide/en/#configuration-files
 
 // TODO:
-export default (ctx) => ({
+export default (_ctx) => ({
+  external: ["hyperapp", "hyperapplicable"],
   // input: "./output/typescript/index.js",
   // output: [
   //   {

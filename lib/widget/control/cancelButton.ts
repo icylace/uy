@@ -2,7 +2,7 @@
 // - get rid of this
 
 import { Action, ClassProp, MaybeVNode, VNode, h, text } from "hyperapp"
-import { isAction } from "../../utility/hyperappHelper/isAction"
+import { isAction } from "hyperapplicable"
 
 export type { CancelButtonOptions }
 export { cancelButton }

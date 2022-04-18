@@ -1,6 +1,6 @@
 import { Action, ClassProp, MaybeVNode, VNode, h } from "hyperapp"
 import { Focus, get, set } from "eyepiece"
-import { Defocus, Refocus } from "../../action/helper"
+// import { Defocus, Refocus } from "../../action/helper"
 
 export type { DropdownChoices, DropdownData, DropdownOptions, DropdownValue }
 export { dropdown, freshDropdown }
@@ -15,7 +15,9 @@ type DropdownData = {
   focused?: boolean
 }
 
-type DropdownChoices<S> = Record<string, MaybeVNode<S> | readonly MaybeVNode<S>[]>
+type DropdownChoices<S> =
+  | Record<string, MaybeVNode<S>
+  | readonly MaybeVNode<S>[]>
 
 type DropdownOptions<S> =
   | DropdownChoices<S>
@@ -43,12 +45,13 @@ const dropdown = <S>(options: DropdownOptions<S>) => (...focus: Focus) => {
           {
             value: x.value,
             disabled,
-            onblur: Defocus(focus),
-            onfocus: Refocus(focus),
+            // TODO:
+            // onblur: Defocus(focus),
+            // onfocus: Refocus(focus),
             onchange: (state, event) => {
               const target = event.target as HTMLInputElement
               const nextValue = target.value
-              const nextState = set<S>(focus, "value")(nextValue)(state)
+              const nextState = set(focus, "value")(nextValue)(state)
               return onchange ? onchange(nextState, nextValue) : nextState
             },
             ...etc,
@@ -57,7 +60,9 @@ const dropdown = <S>(options: DropdownOptions<S>) => (...focus: Focus) => {
           // TODO:
           // - switch to using a Map object instead in order to guarantee order
           // - verify type of `x` is workable
-          Object.entries(choices).map(([value, label]) => h("option", { value }, label)),
+          Object.entries(choices).map(
+            ([value, label]) => h("option", { value }, label)
+          ),
         ),
       ]),
     ])

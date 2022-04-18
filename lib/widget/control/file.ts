@@ -50,7 +50,7 @@ const file = <S>(options: FileOptions<S> = {}) => (...focus: Focus) => {
               : label
 
             const nextValue = target.value
-            const nextState = set<S>(focus, "value")(nextValue)(state)
+            const nextState = set(focus, "value")(nextValue)(state)
             return onchange ? onchange(nextState, nextValue) : nextState
           },
           ...etc,

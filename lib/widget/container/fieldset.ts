@@ -1,6 +1,6 @@
 import { ClassProp, MaybeVNode, VNode, h } from "hyperapp"
+import { isContent } from "hyperapplicable"
 import { using } from "../../utility/using"
-import { isContent } from "../../utility/hyperappHelper/content"
 
 export type { FieldsetOptions }
 export { fieldset }

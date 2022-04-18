@@ -13,7 +13,7 @@ export {
   freshWeekPicker,
   monthPicker,
   timePicker,
-  weekPicker
+  weekPicker,
 }
 
 // -----------------------------------------------------------------------------
@@ -45,7 +45,7 @@ const datePicker = <S>(options: DatePickerOptions<S> = {}) => (...focus: Focus) 
         onchange: (state, event) => {
           const target = event.target as HTMLInputElement
           const nextValue = target.value
-          const nextState = set<S>(focus, "value")(nextValue)(state)
+          const nextState = set(focus, "value")(nextValue)(state)
           return onchange ? onchange(nextState, nextValue) : nextState
         },
         ...etc,
@@ -70,7 +70,7 @@ const datetimeLocalPicker = <S>(options: DatePickerOptions<S> = {}) => (...focus
         onchange: (state, event) => {
           const target = event.target as HTMLInputElement
           const nextValue = target.value
-          const nextState = set<S>(focus, "value")(nextValue)(state)
+          const nextState = set(focus, "value")(nextValue)(state)
           return onchange ? onchange(nextState, nextValue) : nextState
         },
         ...etc,
@@ -95,7 +95,7 @@ const monthPicker = <S>(options: DatePickerOptions<S> = {}) => (...focus: Focus)
         onchange: (state, event) => {
           const target = event.target as HTMLInputElement
           const nextValue = target.value
-          const nextState = set<S>(focus, "value")(nextValue)(state)
+          const nextState = set(focus, "value")(nextValue)(state)
           return onchange ? onchange(nextState, nextValue) : nextState
         },
         ...etc,
@@ -120,7 +120,7 @@ const timePicker = <S>(options: DatePickerOptions<S> = {}) => (...focus: Focus) 
         onchange: (state, event) => {
           const target = event.target as HTMLInputElement
           const nextValue = target.value
-          const nextState = set<S>(focus, "value")(nextValue)(state)
+          const nextState = set(focus, "value")(nextValue)(state)
           return onchange ? onchange(nextState, nextValue) : nextState
         },
         ...etc,
@@ -145,7 +145,7 @@ const weekPicker = <S>(options: DatePickerOptions<S> = {}) => (...focus: Focus) 
         onchange: (state, event) => {
           const target = event.target as HTMLInputElement
           const nextValue = target.value
-          const nextState = set<S>(focus, "value")(nextValue)(state)
+          const nextState = set(focus, "value")(nextValue)(state)
           return onchange ? onchange(nextState, nextValue) : nextState
         },
         ...etc,

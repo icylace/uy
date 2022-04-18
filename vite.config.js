@@ -9,7 +9,7 @@ export default {
       name: "uy",
     },
     rollupOptions: {
-      external: ["hyperapp"],
+      external: ["hyperapp", "hyperapplicable"],
       output: {
         globals: {
           hyperapp: "Hyperapp"

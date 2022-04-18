@@ -41,7 +41,7 @@ const list = <S>(options: ListOptions<S> = {}) => (...focus: Focus) => {
       cancelButton({
         disabled,
         onclick: (state) => {
-          const nextState = set<S>(focus, "items")(exclude(i))(state)
+          const nextState = set(focus, "items")(exclude(i))(state)
           return onchange ? onchange(nextState, "") : nextState
         },
       }),
@@ -54,7 +54,7 @@ const list = <S>(options: ListOptions<S> = {}) => (...focus: Focus) => {
           label: text("+ Add"),
           disabled,
           onclick: (state) => {
-            const nextState = set<S>(focus, "items")(
+            const nextState = set(focus, "items")(
               (xs: TextboxData[]) => [...xs, freshTextbox("")]
             )(state)
             return onchange ? onchange(nextState, "") : nextState

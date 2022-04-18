@@ -1,5 +1,5 @@
-import type { StateForm } from "../../utility/hyperappHelper/types"
 import { Action, ClassProp, Effect, MaybeVNode, VNode, h, text } from "hyperapp"
+import type { StateFormat } from "hyperapplicable"
 import { Focus, get, set } from "eyepiece"
 import { Defocus, Refocus } from "../../action/helper"
 import { popper } from "../container/popper"
@@ -64,7 +64,7 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
 
     const x = get<SearchboxData>(focus)(state)
 
-    const updateResults = (state: S, props?: SearchboxData): StateForm<S> => {
+    const updateResults = (state: S, props?: SearchboxData): StateFormat<S> => {
       const r = get<SearchboxData>(focus)(state)
 
       const { value, results } = props ?? { value: "", results: [] }
@@ -76,24 +76,24 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
 
       if (r.value !== value) {
         return [
-          set<S>(focus, "searching")(true)(state),
+          set(focus, "searching")(true)(state),
           search(updateResults, r.value),
         ]
       }
 
       return [
-        onresults(results, id, set<S>(focus)(
+        onresults(results, id, set(focus)(
           (xr: SearchboxData) => ({ ...xr, results, searching: false })
         )(state)),
       ]
     }
 
-    const update = (value: string) => (state: S): StateForm<S> => {
+    const update = (value: string) => (state: S): StateFormat<S> => {
       const r = get<SearchboxData>(focus)(state)
       return r.searching
-        ? [set<S>(focus, "value")(value)(state)]
+        ? [set(focus, "value")(value)(state)]
         : [
-            set<S>(focus)(
+            set(focus)(
               (xr: SearchboxData) => ({ ...xr, value, searching: true })
             )(state),
             search(updateResults, value),
@@ -105,7 +105,7 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
       type: "search",
       disabled,
       onblur: Defocus(focus),
-      onfocus: Refocus<S>(focus),
+      onfocus: Refocus(focus),
       onkeyup: (state, event) => {
         if (noopKeys.includes(event.key)) return state
         const target = event.target as HTMLInputElement
@@ -129,7 +129,7 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
       h("li", {
         onclick: (state: S): S =>
           onresults([], id,
-            set<S>(focus)(
+            set(focus)(
               (xr: SearchboxData) => ({ ...xr, value: result, results: [] })
             )(state)
           ),

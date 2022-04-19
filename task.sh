@@ -150,12 +150,12 @@ task:reinstall() {
   dev_modules+=('terser')
 
   # CSS
-  # dev_modules+=('postcss')
-  # dev_modules+=('cssnano')
-  # dev_modules+=('postcss-cli')
-  # dev_modules+=('postcss-import')
-  # dev_modules+=('postcss-reporter')
-  # dev_modules+=('postcss-preset-env')
+  dev_modules+=('postcss')
+  dev_modules+=('cssnano')
+  dev_modules+=('postcss-cli')
+  dev_modules+=('postcss-import')
+  dev_modules+=('postcss-reporter')
+  dev_modules+=('postcss-preset-env')
 
   # Linting
   dev_modules+=('eslint')

@@ -13,8 +13,8 @@ type ButtonOptions<S> = {
 }
 
 const button = <S>(options: ButtonOptions<S>): VNode<S> => {
-  const { label, onclick, disabled, ...etc } = options
+  const { label, disabled, ...etc } = options
   return h("div", { class: ["uy-control uy-button", etc.class, { disabled }] }, [
-    h("button", { type: "button", onclick, disabled, ...etc }, label),
+    h("button", { type: "button", disabled, ...etc }, label),
   ])
 }

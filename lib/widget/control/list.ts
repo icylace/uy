@@ -1,5 +1,5 @@
 // TODO:
-// - `list` -> `textlist`
+// - (?) `list` -> `textlist`
 
 import { Action, ClassProp, MaybeVNode, VNode, h, text } from "hyperapp"
 import { Focus, get, set } from "eyepiece"
@@ -37,7 +37,7 @@ const list = <S>(options: ListOptions<S> = {}) => (...focus: Focus) => {
     const xr = get<ListData>(focus)(state)
 
     const item = (_value: TextboxData, i: number): TableCell<S>[] => [
-      textbox<S>({ onchange, disabled })(focus, "items", i)(state),
+      textbox({ onchange, disabled })(focus, "items", i)(state),
       cancelButton({
         disabled,
         onclick: (state) => {

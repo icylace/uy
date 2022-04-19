@@ -18,7 +18,7 @@ type MultiselectOptions<S> =
   | {
     choices: MultiselectChoices<S>
     usingColumnMode?: boolean
-    onchange?: Action<S, CheckboxValue>
+    updater?: Action<S, CheckboxValue>
     class?: ClassProp
     disabled?: boolean
   }
@@ -46,7 +46,7 @@ const isOnlyChoices = <S>(x: any): x is Record<string, MaybeVNode<S> | readonly 
 const multiselect = <S>(options: MultiselectOptions<S>) => (...focus: Focus) => {
   return (state: S): VNode<S> => {
     const props = isOnlyChoices<S>(options) ? { choices: options } : options
-    const { choices, usingColumnMode, onchange, disabled, ...etc } = props
+    const { choices, usingColumnMode, updater, disabled, ...etc } = props
     return h("div", {
       ...etc,
       class: [
@@ -59,7 +59,7 @@ const multiselect = <S>(options: MultiselectOptions<S>) => (...focus: Focus) => 
       h("div", { class: "uy-multiselect-options" },
         Object.entries(choices).map(
           ([value, label]) =>
-            checkbox({ label, onchange, disabled })(focus, "value", value)(state)
+            checkbox({ label, updater, disabled })(focus, "value", value)(state)
         ),
       ),
     ])

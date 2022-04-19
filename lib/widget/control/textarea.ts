@@ -18,7 +18,8 @@ type TextareaOptions<S> = {
   disabled?: boolean
 }
 
-const freshTextarea = (value: TextareaValue): TextareaData => ({ value })
+const freshTextarea = (value: TextareaValue): TextareaData =>
+  ({ value })
 
 const textarea = <S>(options: TextareaOptions<S> = {}) => (...focus: Focus) => (state: S): VNode<S> => {
   const { onchange, disabled, ...etc } = options

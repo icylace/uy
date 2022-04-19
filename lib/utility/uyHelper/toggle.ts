@@ -8,10 +8,7 @@ export { toggle }
 
 // -----------------------------------------------------------------------------
 
-const toggle = (...focus: Focus) => {
-  return <S>(component: (_: S) => MaybeVNode<S>) => {
-    return (state: S): MaybeVNode<S> => {
-      return get<boolean>(focus)(state) && component(state)
-    }
-  }
-}
+const toggle = (...focus: Focus) =>
+  <S>(component: (_: S) => MaybeVNode<S>) =>
+    (state: S): MaybeVNode<S> =>
+      get<boolean>(focus)(state) && component(state)

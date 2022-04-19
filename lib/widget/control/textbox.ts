@@ -18,7 +18,8 @@ type TextboxOptions<S> = {
   disabled?: boolean
 }
 
-const freshTextbox = (value: TextboxValue): TextboxData => ({ value })
+const freshTextbox = (value: TextboxValue): TextboxData =>
+  ({ value })
 
 const textbox = <S>(options: TextboxOptions<S> = {}) => (...focus: Focus) => {
   return (state: S): VNode<S> => {

@@ -1,6 +1,6 @@
 import { Action, ClassProp, MaybeVNode, VNode, h } from "hyperapp"
 import { Focus, get, set } from "eyepiece"
-// import { Defocus, Refocus } from "../../action/helper"
+import { Defocus, Refocus } from "../../action/helper"
 
 export type { DropdownChoices, DropdownData, DropdownOptions, DropdownValue }
 export { dropdown, freshDropdown }
@@ -32,7 +32,7 @@ const freshDropdown = (value: DropdownValue): DropdownData =>
   ({ value, focused: false })
 
 const isOnlyChoices = <S>(x: any): x is Record<string, MaybeVNode<S> | readonly MaybeVNode<S>[]> =>
-  typeof x === "object" && !("choices" in x)
+  x != null && typeof x === "object" && !("choices" in x)
 
 const dropdown = <S>(options: DropdownOptions<S>) => (...focus: Focus) => {
   return (state: S): VNode<S> => {
@@ -45,9 +45,8 @@ const dropdown = <S>(options: DropdownOptions<S>) => (...focus: Focus) => {
           {
             value: x.value,
             disabled,
-            // TODO:
-            // onblur: Defocus(focus),
-            // onfocus: Refocus(focus),
+            onblur: Defocus(focus),
+            onfocus: Refocus(focus),
             onchange: (state, event) => {
               const target = event.target as HTMLInputElement
               const nextValue = target.value

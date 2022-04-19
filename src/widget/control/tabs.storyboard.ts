@@ -1,5 +1,6 @@
 import { VNode, h, text } from "hyperapp"
 import { readout } from "hyperapplicable"
+import structuredClone from "@ungap/structured-clone"
 // import * as R from "remeda"
 import type { Story } from "../../types"
 import { Tab, freshTabs, tabs } from "../../../lib/main"
@@ -51,10 +52,10 @@ const tabList: Tab<Story>[] = [
 
 const tabListCopy = structuredClone(tabList)
 
-const tabs1Normal = tabs(tabList)("tabs")
-const tabs2Normal = tabs({ itemsHeader, itemsFooter, tabList })("tabs")
-// const tabsDisabled = tabs({ itemsHeader, itemsFooter, tabList: R.clone(tabList), disabled: true })("tabs")
-const tabsDisabled = tabs({ itemsHeader, itemsFooter, tabList: tabListCopy, disabled: true })("tabs")
+const tabs1Normal = tabs<Story>(tabList)("tabs")
+const tabs2Normal = tabs<Story>({ itemsHeader, itemsFooter, tabList })("tabs")
+// const tabsDisabled = tabs<Story>({ itemsHeader, itemsFooter, tabList: R.clone(tabList), disabled: true })("tabs")
+const tabsDisabled = tabs<Story>({ itemsHeader, itemsFooter, tabList: tabListCopy, disabled: true })("tabs")
 
 const view = (state: Story): VNode<Story> =>
   h("section", { class: "uy-storyboard-showcase-panel" }, [

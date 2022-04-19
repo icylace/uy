@@ -19,7 +19,7 @@ type ChecklistData = {
 
 type ChecklistOptions<S> = {
   renderLabel: (_: MaybeVNode<S> | readonly MaybeVNode<S>[]) => MaybeVNode<S> | readonly MaybeVNode<S>[]
-  onchange?: Action<S, CheckboxValue>
+  updater?: Action<S, CheckboxValue>
   class?: ClassProp
   disabled?: boolean
 }
@@ -28,7 +28,7 @@ const freshChecklist = (items: ChecklistItem[]): ChecklistData => ({ items })
 
 const checklist = <S>(options: ChecklistOptions<S>) => (...focus: Focus) => {
   return (state: S): VNode<S> => {
-    const { renderLabel, onchange, disabled, ...etc } = options
+    const { renderLabel, updater, disabled, ...etc } = options
 
     const item = (x: ChecklistItem, i: number): TableRow<S> => [
       [
@@ -36,7 +36,7 @@ const checklist = <S>(options: ChecklistOptions<S>) => (...focus: Focus) => {
         [
           checkbox({
             label: renderLabel(text(x.id)),
-            onchange,
+            updater,
             disabled,
           })(focus, i, "selected")(state),
         ],

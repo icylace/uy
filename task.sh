@@ -195,6 +195,7 @@ task:reinstall() {
   modules+=('wtv')
   # modules+=('axios')
   # modules+=('remeda')
+  modules+=('@ungap/structured-clone')
 
   npm install --save "${modules[@]}"
 }

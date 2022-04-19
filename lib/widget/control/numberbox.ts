@@ -1,7 +1,7 @@
 import { Action, ClassProp, MaybeVNode, VNode, h } from "hyperapp"
 import { isContent } from "hyperapplicable"
 import { Focus, get, set } from "eyepiece"
-// import { Defocus, Refocus } from "../../action/helper"
+import { Defocus, Refocus } from "../../action/helper"
 
 export type { NumberboxData, NumberboxOptions, NumberboxValue }
 export { freshNumberbox, numberbox }
@@ -43,9 +43,8 @@ const numberbox = <S>(options: NumberboxOptions<S> = {}) => (...focus: Focus) =>
           min: 0,
           value: x.value,
           disabled,
-          // TODO:
-          // onblur: Defocus(focus),
-          // onfocus: Refocus(focus),
+          onblur: Defocus(focus),
+          onfocus: Refocus(focus),
           onchange: (state, event) => {
             const target = event.target as HTMLInputElement
             const nextValue = sanitizedNumber(target.value)

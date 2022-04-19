@@ -1,7 +1,7 @@
 import { Action, ClassProp, Effect, MaybeVNode, VNode, h, text } from "hyperapp"
 import type { StateFormat } from "hyperapplicable"
 import { Focus, get, set } from "eyepiece"
-// import { Defocus, Refocus } from "../../action/helper"
+import { Defocus, Refocus } from "../../action/helper"
 import { popper } from "../container/popper"
 import { icon } from "../indicator/icon"
 
@@ -100,13 +100,12 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => {
           ]
     }
 
-    const inputSearch = h("input", {
+    const inputSearch = h<S>("input", {
       value: x.value,
       type: "search",
       disabled,
-      // TODO:
-      // onblur: Defocus(focus),
-      // onfocus: Refocus(focus),
+      onblur: Defocus(focus),
+      onfocus: Refocus(focus),
       onkeyup: (state, event) => {
         if (noopKeys.includes(event.key)) return state
         const target = event.target as HTMLInputElement

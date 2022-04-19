@@ -1,6 +1,6 @@
 import { Action, ClassProp, MaybeVNode, VNode, h, text } from "hyperapp"
 import { Focus, get, set } from "eyepiece"
-import { range } from "../../utility/range"
+import { range } from "wtv"
 import { icon } from "../indicator/icon"
 
 export type { PagerData, PagerOptions, PagerValue }
@@ -49,7 +49,7 @@ const pager = <S>(options: PagerOptions<S>) => (...focus: Focus) => (state: S): 
   const rangeStartPage = Math.max(0, x.value - pageRange)
   const rangeFinishPage = Math.min(lastPage, x.value + pageRange)
 
-  const pages = range(0, rangeFinishPage - rangeStartPage + 1)
+  const pages = range(0)(rangeFinishPage - rangeStartPage + 1)
     .map((n: number): MaybeVNode<S> => {
       const currentPage = rangeStartPage + n
       const current = currentPage === x.value

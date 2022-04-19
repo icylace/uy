@@ -1,7 +1,6 @@
 import { ClassProp, MaybeVNode, VNode, h } from "hyperapp"
 import { View, isContent } from "hyperapplicable"
-import { encase } from "../../utility/encase"
-import { using } from "../../utility/using"
+import { encase, using } from "wtv"
 
 export type { FieldOptions }
 export { field }

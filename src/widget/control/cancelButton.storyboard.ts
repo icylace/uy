@@ -1,7 +1,7 @@
-import type { Story } from "../../types"
 import { VNode, h } from "hyperapp"
+import { readout } from "hyperapplicable"
+import type { Story } from "../../types"
 import { cancelButton } from "../../../lib/main"
-import { readout } from "../../utility/readout"
 
 export { freshState, view }
 
@@ -28,7 +28,7 @@ const view = (state: Story): VNode<Story> =>
         ]),
       ]),
       h("section", {}, [
-        readout("cancelButton")(state),
+        readout<Story>("cancelButton")(state),
       ]),
     ]),
   ])

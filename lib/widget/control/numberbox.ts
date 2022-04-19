@@ -1,7 +1,7 @@
 import { Action, ClassProp, MaybeVNode, VNode, h } from "hyperapp"
 import { isContent } from "hyperapplicable"
 import { Focus, get, set } from "eyepiece"
-import { Defocus, Refocus } from "../../action/helper"
+// import { Defocus, Refocus } from "../../action/helper"
 
 export type { NumberboxData, NumberboxOptions, NumberboxValue }
 export { freshNumberbox, numberbox }

@@ -1,7 +1,7 @@
-import type { Story } from "../../types"
 import { VNode, h } from "hyperapp"
+import { readout } from "hyperapplicable"
+import type { Story } from "../../types"
 import { SearchboxData, Transform, freshSearchbox, searchbox } from "../../../lib/main"
-import { readout } from "../../utility/readout"
 import { search } from "../../effect/search"
 
 export { freshState, view }
@@ -39,8 +39,8 @@ const view = (state: Story): VNode<Story> =>
         ]),
       ]),
       h("section", {}, [
-        readout("searchbox")(state),
-        readout("searchboxResultsIDs")(state),
+        readout<Story>("searchbox")(state),
+        readout<Story>("searchboxResultsIDs")(state),
       ]),
     ]),
   ])

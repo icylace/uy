@@ -1,5 +1,5 @@
 import { VNode, h } from "hyperapp"
-import { readout } from "../../utility/readout"
+import { readout } from "hyperapplicable"
 import type { Story } from "../../types"
 
 import {
@@ -55,7 +55,7 @@ const view = (state: Story): VNode<Story> =>
         ]),
       ]),
       h("section", {}, [
-        readout("datePicker")(state),
+        readout<Story>("datePicker")(state),
       ]),
     ]),
 
@@ -67,7 +67,7 @@ const view = (state: Story): VNode<Story> =>
         ]),
       ]),
       h("section", {}, [
-        readout("datetimeLocalPicker")(state),
+        readout<Story>("datetimeLocalPicker")(state),
       ]),
     ]),
 
@@ -79,7 +79,7 @@ const view = (state: Story): VNode<Story> =>
         ]),
       ]),
       h("section", {}, [
-        readout("monthPicker")(state),
+        readout<Story>("monthPicker")(state),
       ]),
     ]),
 
@@ -91,7 +91,7 @@ const view = (state: Story): VNode<Story> =>
         ]),
       ]),
       h("section", {}, [
-        readout("timePicker")(state),
+        readout<Story>("timePicker")(state),
       ]),
     ]),
 
@@ -103,7 +103,7 @@ const view = (state: Story): VNode<Story> =>
         ]),
       ]),
       h("section", {}, [
-        readout("weekPicker")(state),
+        readout<Story>("weekPicker")(state),
       ]),
     ]),
   ])

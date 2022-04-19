@@ -2,7 +2,7 @@
 
 // TODO:
 export default (_ctx) => ({
-  external: ["hyperapp", "hyperapplicable"],
+  external: ["hyperapp", "hyperapplicable", "wtv"],
   // input: "./output/typescript/index.js",
   // output: [
   //   {

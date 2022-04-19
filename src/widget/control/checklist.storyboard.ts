@@ -1,7 +1,7 @@
-import type { Story } from "../../types"
 import { MaybeVNode, VNode, h } from "hyperapp"
+import { readout } from "hyperapplicable"
+import type { Story } from "../../types"
 import { checklist, freshCheckbox, freshChecklist } from "../../../lib/main"
-import { readout } from "../../utility/readout"
 
 export { freshState, view }
 
@@ -35,7 +35,7 @@ const view = (state: Story): VNode<Story> =>
         ]),
       ]),
       h("section", {}, [
-        readout("checklist")(state),
+        readout<Story>("checklist")(state),
       ]),
     ]),
   ])

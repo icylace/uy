@@ -1,9 +1,9 @@
 // TODO:
 
-import type { Story } from "../../types"
 import { VNode, h, text } from "hyperapp"
+import { readout } from "hyperapplicable"
+import type { Story } from "../../types"
 import { freshMultiselect, multiselect } from "../../../lib/main"
-import { readout } from "../../utility/readout"
 
 export { freshState, view }
 
@@ -75,7 +75,7 @@ const view = (state: Story): VNode<Story> =>
         ]),
       ]),
       h("section", {}, [
-        readout("multiselect1")(state),
+        readout<Story>("multiselect1")(state),
       ]),
     ]),
 
@@ -87,7 +87,7 @@ const view = (state: Story): VNode<Story> =>
         ]),
       ]),
       h("section", {}, [
-        readout("multiselect2")(state),
+        readout<Story>("multiselect2")(state),
       ]),
     ]),
 
@@ -99,7 +99,7 @@ const view = (state: Story): VNode<Story> =>
         ]),
       ]),
       h("section", {}, [
-        readout("multiselect3")(state),
+        readout<Story>("multiselect3")(state),
       ]),
     ]),
   ])

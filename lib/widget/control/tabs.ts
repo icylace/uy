@@ -1,7 +1,7 @@
 import { ClassProp, MaybeVNode, VNode, h } from "hyperapp"
 import { StateFormat, Transform, isVNode } from "hyperapplicable"
 import { Focus, get, set } from "eyepiece"
-import { encase } from "../../utility/encase"
+import { encase } from "wtv"
 import { scrollIntoView } from "../../effect/scrollIntoView"
 
 export type { Tab, TabIndex, TabsData, TabsOptions }

@@ -39,14 +39,10 @@
     "check": "./task.sh check",
     "clean": "./task.sh clean",
     "lint": "./task.sh lint",
-    "lint:fix": "./task.sh lint:fix",
-    "lint:fix-dry-run": "./task.sh lint:fix-dry-run",
+    "reinstall": "./task.sh reinstall",
     "release": "./task.sh release",
     "reset": "./task.sh reset",
-    "test": "./task.sh test",
-    "watch:postcss": "./task.sh watch:postcss",
-    "watch:rollup": "./task.sh watch:rollup",
-    "watch:typescript": "./task.sh watch:typescript"
+    "test": "./task.sh test"
   },
   "publishConfig": {
     "access": "public"
@@ -67,6 +63,7 @@
   "dependencies": {
     "eyepiece": "^0.1.6",
     "hyperapp": "^2.0.22",
-    "hyperapplicable": "^0.1.3"
+    "hyperapplicable": "^0.2.0",
+    "wtv": "^0.2.3"
   }
 }

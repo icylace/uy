@@ -1,7 +1,7 @@
-import type { Story } from "../../types"
 import { TypedH, VNode, h as ha, text } from "hyperapp"
+import { always } from "wtv"
+import type { Story } from "../../types"
 import { panel } from "../../../lib/main"
-import { always } from "../../utility/always"
 
 export { freshState, view }
 

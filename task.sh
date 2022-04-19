@@ -192,6 +192,7 @@ task:reinstall() {
   modules+=('hyperapp')
   modules+=('hyperapplicable')
   modules+=('eyepiece')
+  modules+=('wtv')
   # modules+=('axios')
   # modules+=('remeda')
 
@@ -202,6 +203,8 @@ task:reinstall() {
 
 # https://github.com/sindresorhus/np#release-script
 task:release() {
+  task:build:prod
+
   echo
   echo "Releasing..."
   np --no-2fa

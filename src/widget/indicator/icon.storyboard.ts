@@ -1,5 +1,5 @@
-import type { Story } from "../../types"
 import { VNode, h } from "hyperapp"
+import type { Story } from "../../types"
 import { icon } from "../../../lib/main"
 
 export { freshState, view }

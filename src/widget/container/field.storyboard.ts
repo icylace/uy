@@ -1,7 +1,7 @@
-import type { Story } from "../../types"
 import { TypedH, VNode, h as ha, text } from "hyperapp"
+import { readout } from "hyperapplicable"
+import type { Story } from "../../types"
 import { field, freshTextbox, textbox } from "../../../lib/main"
-import { readout } from "../../utility/readout"
 
 export { freshState, view }
 
@@ -49,7 +49,7 @@ const view = (state: Story): VNode<Story> =>
         ]),
       ]),
       h("section", {}, [
-        readout("field")(state),
+        readout<Story>("field")(state),
       ]),
     ]),
   ])

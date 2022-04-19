@@ -1,7 +1,7 @@
-import type { Story } from "../../types"
 import { VNode, h, text } from "hyperapp"
+import { readout } from "hyperapplicable"
+import type { Story } from "../../types"
 import { dropdown, freshDropdown } from "../../../lib/main"
-import { readout } from "../../utility/readout"
 
 export { freshState, view }
 
@@ -63,7 +63,7 @@ const view = (state: Story): VNode<Story> =>
         ]),
       ]),
       h("section", {}, [
-        readout("dropdown1")(state),
+        readout<Story>("dropdown1")(state),
       ]),
     ]),
 
@@ -75,7 +75,7 @@ const view = (state: Story): VNode<Story> =>
         ]),
       ]),
       h("section", {}, [
-        readout("dropdown2")(state),
+        readout<Story>("dropdown2")(state),
       ]),
     ]),
   ])

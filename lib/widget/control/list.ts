@@ -3,7 +3,7 @@
 
 import { Action, ClassProp, MaybeVNode, VNode, h, text } from "hyperapp"
 import { Focus, get, set } from "eyepiece"
-import { exclude } from "../../utility/exclude"
+import { exclude } from "wtv"
 import { TableCell, table } from "../container/table"
 import { button } from "./button"
 import { cancelButton } from "./cancelButton"

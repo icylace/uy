@@ -1,6 +1,6 @@
 # uy
 
-## WORK-IN-PROGRESS
+_**WORK-IN-PROGRESS**_
 
 uy is a UI library for [Hyperapp](https://github.com/jorgebucaran/hyperapp).
 
@@ -9,3 +9,7 @@ uy is a UI library for [Hyperapp](https://github.com/jorgebucaran/hyperapp).
 - Tooltips
 - Panel Groups
 - Command Palettes
+
+## License
+
+[MIT](LICENSE.md)

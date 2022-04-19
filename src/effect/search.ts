@@ -1,6 +1,5 @@
 import type { Action, Dispatch, Effect } from "hyperapp"
 import type { SearchboxData, SearchEffectData } from "../../lib/main"
-import axios from "axios"
 
 export { search }
 
@@ -20,9 +19,9 @@ const runSearch = async <S>(dispatch: Dispatch<S>, props: SearchEffectData<S>): 
   }
 
   try {
-    const response = await axios.get(`https://restcountries.eu/rest/v2/name/${value}`)
-    const data = response.data as Record<string, any>[]
-    const results = data.map((x: Record<string, any>) => x.name as string)
+    const response = await fetch(`https://restcountries.eu/rest/v2/name/${value}`)
+    const data: Record<string, any>[] = await response.json()
+    const results: string[] = data.map((x: Record<string, any>) => x.name)
     const payload = {
       value,
       results: results ?? [],

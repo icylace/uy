@@ -16,19 +16,21 @@ type CheckboxData = {
 type CheckboxOptions<S> =
   | MaybeVNode<S>
   | readonly MaybeVNode<S>[]
-  | {
-    label?: MaybeVNode<S> | readonly MaybeVNode<S>[]
-    onchange?: EventActions<S>["onchange"]
-    // onchange?: Action<S, CheckboxValue>
-    class?: ClassProp
-    disabled?: boolean
-  }
+  | RawCheckboxOptions<S>
+
+type RawCheckboxOptions<S> = {
+  label?: MaybeVNode<S> | readonly MaybeVNode<S>[]
+  onchange?: EventActions<S>["onchange"]
+  // onchange?: Action<S, CheckboxValue>
+  class?: ClassProp
+  disabled?: boolean
+}
+
 
 const freshCheckbox = (value: CheckboxValue): CheckboxData => ({ value })
 
-const rawCheckbox = <S>(options: CheckboxOptions<S>) => (onchange: Action<S, Event>) => (value: CheckboxValue): VNode<S> => {
-  const props = isContent<S>(options) ? { label: options } : options
-  const { label, disabled, ...etc } = props
+const rawCheckbox = <S>(options: RawCheckboxOptions<S>) => (onchange: Action<S, Event>) => (value: CheckboxValue): VNode<S> => {
+  const { label, disabled, ...etc } = options
   return h("div", { class: ["uy-control uy-checkbox", etc.class, { disabled }] }, [
     h("label", {}, [
       h("input", {
@@ -47,9 +49,9 @@ const rawCheckbox = <S>(options: CheckboxOptions<S>) => (onchange: Action<S, Eve
 
 const checkbox = <S>(options: CheckboxOptions<S> = {}) => (...focus: Focus) => {
   return (state: S): VNode<S> => {
-    const props = isContent<S>(options) ? {} : options
+    const props = isContent<S>(options) ? { label: options } : options
     const { onchange } = props
-    const updater: Action<S, Event> = (state, event) => {
+      const updater: Action<S, Event> = (state, event) => {
       const target = event.target as HTMLInputElement
       const nextValue = target.checked
       const nextState = set(focus, "value")(nextValue)(state)
@@ -64,6 +66,6 @@ const checkbox = <S>(options: CheckboxOptions<S> = {}) => (...focus: Focus) => {
         ]
         : nextState
     }
-    return rawCheckbox<S>(options)(updater)(get<CheckboxData>(focus)(state).value)
+    return rawCheckbox<S>(props)(updater)(get<CheckboxData>(focus)(state).value)
   }
 }

@@ -5,11 +5,11 @@
   "keywords": [
     "hyperapp"
   ],
-  "license": "ISC",
+  "license": "MIT",
   "homepage": "https://github.com/icylace/uy",
   "repository": {
     "type": "git",
-    "url": "https://github.com/icylace/uy"
+    "url": "git+https://github.com/icylace/uy.git"
   },
   "bugs": "https://github.com/icylace/uy/issues",
   "author": {
@@ -61,9 +61,9 @@
     "vite": "^2.9.5"
   },
   "dependencies": {
-    "eyepiece": "^0.1.6",
+    "eyepiece": "^0.1.8",
     "hyperapp": "^2.0.22",
-    "hyperapplicable": "^0.2.0",
-    "wtv": "^0.2.3"
+    "hyperapplicable": "^0.2.1",
+    "wtv": "^0.2.4"
   }
 }

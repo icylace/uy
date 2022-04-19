@@ -12,9 +12,9 @@ export default {
       external: ["hyperapp", "hyperapplicable"],
       output: {
         globals: {
-          hyperapp: "Hyperapp"
-        }
-      }
-    }
-  }
+          hyperapp: "Hyperapp",
+        },
+      },
+    },
+  },
 }

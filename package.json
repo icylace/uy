@@ -20,14 +20,15 @@
   "files": [
     "dist"
   ],
-  "types": "./dist/uy.d.ts",
-  "main": "./dist/uy.umd.js",
-  "module": "./dist/uy.es.js",
-  "browser": "./dist/uy.es.js",
+  "main": "./dist/index.js",
+  "browser": "./dist/index.esm.js",
+  "unpkg": "./dist/index.js",
+  "module": "./dist/index.esm.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/uy.es.js",
-      "require": "./dist/uy.umd.js"
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.umd.js"
     }
   },
   "scripts": {

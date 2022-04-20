@@ -21,11 +21,11 @@ type ListData = {
 type ListOptions<S> =
   | MaybeVNode<S>[]
   | {
-    headers?: MaybeVNode<S>[]
-    onchange?: Action<S, TextboxValue>
-    class?: ClassProp
-    disabled?: boolean
-  }
+      headers?: MaybeVNode<S>[]
+      onchange?: Action<S, TextboxValue>
+      class?: ClassProp
+      disabled?: boolean
+    }
 
 const freshList = (items: string[]): ListData =>
   ({ items: items.map(freshTextbox) })

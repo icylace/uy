@@ -14,7 +14,7 @@ const view = (state: Story): VNode<Story> =>
     h("section", {}, [
       h("section", {}, [
         h("section", {}, [
-          panel<Story>("uy-storyboard-showcase-section-view", [
+          panel("uy-storyboard-showcase-section-view", [
             (_state: Story) => text("TEST1"),
             always(text("TEST1")),
             text("TEST2"),

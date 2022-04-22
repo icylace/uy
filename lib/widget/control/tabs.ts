@@ -31,7 +31,8 @@ type TabsOptions<S> =
     disabled?: boolean
   }>
 
-const freshTabs = (value: TabIndex): TabsData => ({ value })
+const freshTabs = (value: TabIndex): TabsData =>
+  ({ value })
 
 const isSelected = (activeTab: TabIndex) => <S>(item: MaybeVNode<S>, i: number): boolean =>
   (

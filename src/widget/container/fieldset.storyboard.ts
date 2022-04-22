@@ -7,9 +7,7 @@ export { freshState, view }
 
 // -----------------------------------------------------------------------------
 
-const freshState = (state: Story): Story => {
-  return state
-}
+const freshState = (state: Story): Story => state
 
 const fieldset1Normal = fieldset<Story>({}, [always(text("FIELDSET CONTENTS"))])
 const fieldset1Disabled = fieldset<Story>(

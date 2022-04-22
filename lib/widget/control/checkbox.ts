@@ -28,29 +28,27 @@ type RawCheckboxOptions<S> = {
 const freshCheckbox = (value: CheckboxValue): CheckboxData =>
   ({ value })
 
-const checkbox = <S>(options: CheckboxOptions<S> = {}) => (...focus: Focus) => {
-  return (state: S): VNode<S> => {
-    const props = isContent<S>(options) ? { label: options } : options
-    const { label, disabled, updater, ...etc } = props
-    const value = get<CheckboxData>(focus)(state).value
-    return h("div", { class: ["uy-control uy-checkbox", etc.class, { disabled }] }, [
-      h("label", {}, [
-        h("input", {
-          type: "checkbox",
-          checked: !!value,
-          indeterminate: value == null,
-          disabled,
-          onchange: (state, event) => {
-            const target = event.target as HTMLInputElement
-            const nextValue = target.checked
-            const nextState = set(focus, "value")(nextValue)(state)
-            return updater ? updater(nextState, nextValue) : nextState
-          },
-          ...etc,
-          class: "uy-input",
-        }),
-        label ? h("span", {}, label) : null,
-      ]),
-    ])
-  }
+const checkbox = <S>(options: CheckboxOptions<S> = {}) => (...focus: Focus) => (state: S): VNode<S> => {
+  const props = isContent<S>(options) ? { label: options } : options
+  const { label, disabled, updater, ...etc } = props
+  const value = get<CheckboxData>(focus)(state).value
+  return h("div", { class: ["uy-control uy-checkbox", etc.class, { disabled }] }, [
+    h("label", {}, [
+      h("input", {
+        type: "checkbox",
+        checked: !!value,
+        indeterminate: value == null,
+        disabled,
+        onchange: (state, event) => {
+          const target = event.target as HTMLInputElement
+          const nextValue = target.checked
+          const nextState = set(focus, "value")(nextValue)(state)
+          return updater ? updater(nextState, nextValue) : nextState
+        },
+        ...etc,
+        class: "uy-input",
+      }),
+      label ? h("span", {}, label) : null,
+    ]),
+  ])
 }

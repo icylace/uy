@@ -43,25 +43,23 @@ const freshMultiselect = <S>(
 const isOnlyChoices = <S>(x: any): x is Record<string, MaybeVNode<S> | readonly MaybeVNode<S>[]> =>
   typeof x === "object" && !("choices" in x)
 
-const multiselect = <S>(options: MultiselectOptions<S>) => (...focus: Focus) => {
-  return (state: S): VNode<S> => {
-    const props = isOnlyChoices<S>(options) ? { choices: options } : options
-    const { choices, usingColumnMode, updater, disabled, ...etc } = props
-    return h("div", {
-      ...etc,
-      class: [
-        "uy-control uy-scroller uy-multiselect",
-        { "uy-multiselect--grid-mode": !!usingColumnMode },
-        etc.class,
-        { disabled },
-      ],
-    }, [
-      h("div", { class: "uy-multiselect-options" },
-        Object.entries(choices).map(
-          ([value, label]) =>
-            checkbox({ label, updater, disabled })(focus, "value", value)(state)
-        ),
+const multiselect = <S>(options: MultiselectOptions<S>) => (...focus: Focus) => (state: S): VNode<S> => {
+  const props = isOnlyChoices<S>(options) ? { choices: options } : options
+  const { choices, usingColumnMode, updater, disabled, ...etc } = props
+  return h("div", {
+    ...etc,
+    class: [
+      "uy-control uy-scroller uy-multiselect",
+      { "uy-multiselect--grid-mode": !!usingColumnMode },
+      etc.class,
+      { disabled },
+    ],
+  }, [
+    h("div", { class: "uy-multiselect-options" },
+      Object.entries(choices).map(
+        ([value, label]) =>
+          checkbox({ label, updater, disabled })(focus, "value", value)(state)
       ),
-    ])
-  }
+    ),
+  ])
 }

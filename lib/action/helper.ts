@@ -4,5 +4,7 @@ export { Defocus, Refocus }
 
 // -----------------------------------------------------------------------------
 
-const Defocus = <S>(...focus: Focus): ((_: S) => S) => set(focus, "focused")(false)
-const Refocus = <S>(...focus: Focus): ((_: S) => S) => set(focus, "focused")(true)
+type Focuser = <S>(..._: Focus) => ((_: S) => S)
+
+const Defocus: Focuser = (...focus) => set(focus, "focused")(false)
+const Refocus: Focuser = (...focus) => set(focus, "focused")(true)

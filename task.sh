@@ -188,11 +188,11 @@ task:reinstall() {
 
   local modules=()
 
-  # modules+=('@fortawesome/fontawesome-free')
   modules+=('hyperapp')
   modules+=('hyperapplicable')
   modules+=('eyepiece')
   modules+=('wtv')
+  # modules+=('@fortawesome/fontawesome-free')
   # modules+=('axios')
   # modules+=('remeda')
   modules+=('@ungap/structured-clone')

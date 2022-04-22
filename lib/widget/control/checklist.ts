@@ -24,29 +24,28 @@ type ChecklistOptions<S> = {
   disabled?: boolean
 }
 
-const freshChecklist = (items: ChecklistItem[]): ChecklistData => ({ items })
+const freshChecklist = (items: ChecklistItem[]): ChecklistData =>
+  ({ items })
 
-const checklist = <S>(options: ChecklistOptions<S>) => (...focus: Focus) => {
-  return (state: S): VNode<S> => {
-    const { renderLabel, updater, disabled, ...etc } = options
+const checklist = <S>(options: ChecklistOptions<S>) => (...focus: Focus) => (state: S): VNode<S> => {
+  const { renderLabel, updater, disabled, ...etc } = options
 
-    const item = (x: ChecklistItem, i: number): TableRow<S> => [
+  const item = (x: ChecklistItem, i: number): TableRow<S> => [
+    [
+      { class: { "uy-horizontal": x.id === "other" } },
       [
-        { class: { "uy-horizontal": x.id === "other" } },
-        [
-          checkbox({
-            label: renderLabel(text(x.id)),
-            updater,
-            disabled,
-          })(focus, i, "selected")(state),
-        ],
+        checkbox({
+          label: renderLabel(text(x.id)),
+          updater,
+          disabled,
+        })(focus, i, "selected")(state),
       ],
-    ]
+    ],
+  ]
 
-    return h(
-      "div",
-      { ...etc, class: ["uy-checklist", etc.class, { disabled }] },
-      table({ disabled }, get<ChecklistData>(focus)(state).items.map(item))(state)
-    )
-  }
+  return h(
+    "div",
+    { ...etc, class: ["uy-checklist", etc.class, { disabled }] },
+    table({ disabled }, get<ChecklistData>(focus)(state).items.map(item))(state)
+  )
 }

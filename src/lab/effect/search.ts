@@ -1,5 +1,5 @@
 import type { Action, Dispatch, Effect } from "hyperapp"
-import type { SearchboxData, SearchEffectData } from "../../lib/main"
+import type { SearchboxData, SearchEffectData } from "../../lib/uy"
 
 export { search }
 

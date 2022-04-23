@@ -1,7 +1,7 @@
 import { VNode, h } from "hyperapp"
 import { readout } from "hyperapplicable"
 import type { Story } from "../../types"
-import { freshPager, pager } from "../../../lib/main"
+import { freshPager, pager } from "../../../lib/uy"
 
 export { freshState, view }
 

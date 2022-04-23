@@ -1,7 +1,7 @@
 import { VNode, h } from "hyperapp"
 import { readout } from "hyperapplicable"
 import type { Story } from "../../types"
-import { cancelButton } from "../../../lib/main"
+import { cancelButton } from "../../../lib/uy"
 
 export { freshState, view }
 

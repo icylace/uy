@@ -1,7 +1,7 @@
 import { MaybeVNode, VNode, h } from "hyperapp"
 import { readout } from "hyperapplicable"
 import type { Story } from "../../types"
-import { checklist, freshCheckbox, freshChecklist } from "../../../lib/main"
+import { checklist, freshCheckbox, freshChecklist } from "../../../lib/uy"
 
 export { freshState, view }
 

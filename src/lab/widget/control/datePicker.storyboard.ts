@@ -13,7 +13,7 @@ import {
   monthPicker,
   timePicker,
   weekPicker,
-} from "../../../lib/main"
+} from "../../../lib/uy"
 
 export { freshState, view }
 

@@ -17,11 +17,8 @@ update_json() {
 task:index() {
   local tasks=(
     'build'
-    'build:dev'
-    'build:prod'
     'check'
     'clean'
-    'clean:all'
     'dev'
     'lint'
     'preview'
@@ -107,7 +104,7 @@ task:check() {
 task:clean() {
   echo
   echo "Cleaning the distribution folder..."
-  rm -fr ./dist && mkdir ./dist
+  rm -fr ./dist
 }
 
 # ------------------------------------------------------------------------------
@@ -116,7 +113,7 @@ task:clean:all() {
   task:clean
   echo
   echo "Cleaning the intermiediary output folder..."
-  rm -fr ./output && mkdir ./output
+  rm -fr ./output
 }
 
 # ------------------------------------------------------------------------------

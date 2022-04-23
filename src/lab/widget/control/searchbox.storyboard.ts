@@ -1,7 +1,7 @@
 import { VNode, h } from "hyperapp"
 import { Transform, readout } from "hyperapplicable"
 import type { Story } from "../../types"
-import { SearchboxData, freshSearchbox, searchbox } from "../../../lib/main"
+import { SearchboxData, freshSearchbox, searchbox } from "../../../lib/uy"
 import { search } from "../../effect/search"
 
 export { freshState, view }

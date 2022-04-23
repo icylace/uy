@@ -1,7 +1,7 @@
 import { VNode, h } from "hyperapp"
 import { readout } from "hyperapplicable"
 import type { Story } from "../../types"
-import { freshTextarea, textarea } from "../../../lib/main"
+import { freshTextarea, textarea } from "../../../lib/uy"
 
 export { freshState, view }
 

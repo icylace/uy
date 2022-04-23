@@ -71,7 +71,7 @@
     "@ungap/structured-clone": "^0.3.4",
     "eyepiece": "^0.1.9",
     "hyperapp": "^2.0.22",
-    "hyperapplicable": "^0.2.1",
+    "hyperapplicable": "^0.2.2",
     "wtv": "^0.3.0"
   }
 }

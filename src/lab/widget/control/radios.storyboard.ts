@@ -1,7 +1,7 @@
 import { VNode, h, text } from "hyperapp"
 import { readout } from "hyperapplicable"
 import type { Story } from "../../types"
-import { freshRadios, radios } from "../../../lib/main"
+import { freshRadios, radios } from "../../../lib/uy"
 
 export { freshState, view }
 

@@ -3,7 +3,7 @@ import { readout } from "hyperapplicable"
 import structuredClone from "@ungap/structured-clone"
 // import * as R from "remeda"
 import type { Story } from "../../types"
-import { Tab, freshTabs, tabs } from "../../../lib/main"
+import { Tab, freshTabs, tabs } from "../../../lib/uy"
 
 export { freshState, view }
 

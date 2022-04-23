@@ -1,7 +1,7 @@
 import { VNode, h, text } from "hyperapp"
 import { readout } from "hyperapplicable"
 import type { Story } from "../../types"
-import { field, freshTextbox, textbox } from "../../../lib/main"
+import { field, freshTextbox, textbox } from "../../../lib/uy"
 
 export { freshState, view }
 

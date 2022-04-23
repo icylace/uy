@@ -16,6 +16,7 @@ update_json() {
 
 task:index() {
   local tasks=(
+    'build'
     'build:dev'
     'build:prod'
     'check'
@@ -23,6 +24,7 @@ task:index() {
     'clean:all'
     'dev'
     'lint'
+    'preview'
     'reinstall'
     'release'
     'reset'
@@ -38,9 +40,9 @@ task:index() {
 
 # ------------------------------------------------------------------------------
 
-# task:build() {
-#   npx vite build
-# }
+task:build() {
+  npx vite build
+}
 
 # ------------------------------------------------------------------------------
 
@@ -129,6 +131,12 @@ task:lint() {
   echo
   echo "Linting..."
   npx eslint ./src --ext .js,.jsx,.ts,.tsx
+}
+
+# ------------------------------------------------------------------------------
+
+task:preview() {
+  npx vite preview
 }
 
 # ------------------------------------------------------------------------------

@@ -10,9 +10,8 @@ export { checkbox, freshCheckbox }
 
 type CheckboxValue = Want<boolean>
 type CheckboxData = { value: CheckboxValue }
-type CheckboxOptions<S> = Content<S> | RawCheckboxOptions<S>
-
-type RawCheckboxOptions<S> = {
+type CheckboxOptions<S> = Content<S> | CheckboxFullOptions<S>
+type CheckboxFullOptions<S> = {
   label?: Content<S>
   updater?: Action<S, CheckboxValue>
   class?: ClassProp

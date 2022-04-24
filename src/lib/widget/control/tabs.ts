@@ -1,5 +1,5 @@
 import { ClassProp, MaybeVNode, VNode, h } from "hyperapp"
-import { StateFormat, Transform, isVNode } from "hyperapplicable"
+import { Content, StateFormat, Transform, isVNode } from "hyperapplicable"
 import { Focus, get, set } from "eyepiece"
 import { encase } from "wtv"
 import { scrollIntoView } from "../../effect/scrollIntoView"
@@ -10,29 +10,23 @@ export { freshTabs, tabs }
 // -----------------------------------------------------------------------------
 
 type TabIndex = number | string
-
-type TabsData = Readonly<{
-  value: TabIndex
-}>
-
+type TabsData = Readonly<{ value: TabIndex }>
 type Tab<S> = Readonly<{
   heading: MaybeVNode<S>
   panel: MaybeVNode<S>
 }>
+type TabsOptions<S> = readonly Tab<S>[] | TabsFullOptions<S>
+type TabsFullOptions<S> = Readonly<{
+  tabList: readonly Tab<S>[]
+  itemsHeader?: Content<S>
+  itemsFooter?: Content<S>
+  onclick?: Transform<S, TabIndex>
+  class?: ClassProp
+  disabled?: boolean
+}>
 
-type TabsOptions<S> =
-  | Tab<S>[]
-  | Readonly<{
-    tabList: Tab<S>[]
-    itemsHeader?: MaybeVNode<S> | readonly MaybeVNode<S>[]
-    itemsFooter?: MaybeVNode<S> | readonly MaybeVNode<S>[]
-    onclick?: Transform<S, TabIndex>
-    class?: ClassProp
-    disabled?: boolean
-  }>
 
-const freshTabs = (value: TabIndex): TabsData =>
-  ({ value })
+const freshTabs = (value: TabIndex): TabsData => ({ value })
 
 const isSelected = (activeTab: TabIndex) => <S>(item: MaybeVNode<S>, i: number): boolean =>
   (
@@ -71,31 +65,29 @@ const tab = <S>(focus: Focus, activeTab: TabIndex, onclick?: Transform<S>) => {
   }
 }
 
-const tabs = <S>(options: TabsOptions<S>) => (...focus: Focus) => {
-  return (state: S): VNode<S> => {
-    const props = Array.isArray(options) ? { tabList: options } : options
-    const { tabList, itemsHeader, itemsFooter, onclick, disabled, ...etc } = props
+const tabs = <S>(options: TabsOptions<S>) => (...focus: Focus) => (state: S): VNode<S> => {
+  const props = (Array.isArray(options) ? { tabList: options } : options) as TabsFullOptions<S>
+  const { tabList, itemsHeader, itemsFooter, onclick, disabled, ...etc } = props
 
-    const x = get<TabsData>(focus)(state).value
-    const headings = tabList.map((tab) => tab.heading)
-    const panels = tabList.map((tab) => tab.panel)
+  const x = get<TabsData>(focus)(state).value
+  const headings = tabList.map((tab) => tab.heading)
+  const panels = tabList.map((tab) => tab.panel)
 
-    return h("div", {
-      ...etc,
-      class: ["uy-control uy-tabs", etc.class, { disabled }],
-    }, [
-      h("div", { class: "uy-tabs-navigation" }, [
-        ...encase(itemsHeader),
-        h(
-          "div",
-          { class: "uy-tabs-list uy-scroller" },
-          headings.map(tab<S>(focus, x, onclick))
-        ),
-        ...encase(itemsFooter),
-      ]),
-      h("div", { class: "uy-tabs-panels" }, [
-        panels[headings.findIndex(isSelected(x))],
-      ]),
-    ])
-  }
+  return h("div", {
+    ...etc,
+    class: ["uy-control uy-tabs", etc.class, { disabled }],
+  }, [
+    h("div", { class: "uy-tabs-navigation" }, [
+      ...encase(itemsHeader),
+      h(
+        "div",
+        { class: "uy-tabs-list uy-scroller" },
+        headings.map(tab<S>(focus, x, onclick))
+      ),
+      ...encase(itemsFooter),
+    ]),
+    h("div", { class: "uy-tabs-panels" }, [
+      panels[headings.findIndex(isSelected(x))],
+    ]),
+  ])
 }

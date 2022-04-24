@@ -14,28 +14,24 @@ export { freshList, list }
 
 // -----------------------------------------------------------------------------
 
-type ListData = {
-  items: TextboxData[]
+type ListData = { items: readonly TextboxData[] }
+type ListOptions<S> = readonly MaybeVNode<S>[] | ListFullOptions<S>
+type ListFullOptions<S> = {
+  headers?: readonly MaybeVNode<S>[]
+  onchange?: Action<S, TextboxValue>
+  class?: ClassProp
+  disabled?: boolean
 }
-
-type ListOptions<S> =
-  | MaybeVNode<S>[]
-  | {
-      headers?: MaybeVNode<S>[]
-      onchange?: Action<S, TextboxValue>
-      class?: ClassProp
-      disabled?: boolean
-    }
 
 const freshList = (items: string[]): ListData =>
   ({ items: items.map(freshTextbox) })
 
 const list = <S>(options: ListOptions<S> = {}) => (...focus: Focus) => (state: S): VNode<S> => {
-  const props = Array.isArray(options) ? { headers: options } : options
+  const props = (Array.isArray(options) ? { headers: options } : options) as ListFullOptions<S>
   const { headers, onchange, disabled, ...etc } = props
   const xr = get<ListData>(focus)(state)
 
-  const item = (_value: TextboxData, i: number): TableCell<S>[] => [
+  const item = (_value: TextboxData, i: number): readonly TableCell<S>[] => [
     textbox({ onchange, disabled })(focus, "items", i)(state),
     cancelButton({
       disabled,
@@ -46,7 +42,7 @@ const list = <S>(options: ListOptions<S> = {}) => (...focus: Focus) => (state: S
     }),
   ]
 
-  const grower: TableCell<S>[] = [
+  const grower: readonly TableCell<S>[] = [
     [
       { class: "uy-list-adder", colspan: 2 },
       button({
@@ -54,7 +50,7 @@ const list = <S>(options: ListOptions<S> = {}) => (...focus: Focus) => (state: S
         disabled,
         onclick: (state) => {
           const nextState = set(focus, "items")(
-            (xs: TextboxData[]) => [...xs, freshTextbox("")]
+            (xs: readonly TextboxData[]) => [...xs, freshTextbox("")]
           )(state)
           return onchange ? onchange(nextState, "") : nextState
         },
@@ -66,9 +62,9 @@ const list = <S>(options: ListOptions<S> = {}) => (...focus: Focus) => (state: S
     ...etc,
     class: ["uy-control uy-list", etc.class, { disabled }],
   }, [
-    table({ headers, disabled, sortDescending: false }, [
-      ...xr.items.map(item),
-      grower,
-    ])(state),
+    table(
+      { headers, disabled, sortDescending: false },
+      [...xr.items.map(item), grower]
+    )(state),
   ])
 }

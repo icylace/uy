@@ -14,7 +14,7 @@ type SearchboxValue = string
 
 type SearchboxData = {
   value: SearchboxValue
-  results: string[]
+  results: readonly string[]
   searching: boolean
   focused?: boolean
 }

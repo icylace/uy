@@ -1,32 +1,25 @@
-import { Action, ClassProp, MaybeVNode, VNode, h } from "hyperapp"
-import { isContent } from "hyperapplicable"
+import { Action, ClassProp, VNode, h } from "hyperapp"
+import { Content, isContent } from "hyperapplicable"
 import { Focus, get, set } from "eyepiece"
+import type { Want } from "wtv"
 
 export type { CheckboxData, CheckboxOptions, CheckboxValue }
 export { checkbox, freshCheckbox }
 
 // -----------------------------------------------------------------------------
 
-type CheckboxValue = boolean | null | undefined
-
-type CheckboxData = {
-  value: CheckboxValue
-}
-
-type CheckboxOptions<S> =
-  | MaybeVNode<S>
-  | readonly MaybeVNode<S>[]
-  | RawCheckboxOptions<S>
+type CheckboxValue = Want<boolean>
+type CheckboxData = { value: CheckboxValue }
+type CheckboxOptions<S> = Content<S> | RawCheckboxOptions<S>
 
 type RawCheckboxOptions<S> = {
-  label?: MaybeVNode<S> | readonly MaybeVNode<S>[]
+  label?: Content<S>
   updater?: Action<S, CheckboxValue>
   class?: ClassProp
   disabled?: boolean
 }
 
-const freshCheckbox = (value: CheckboxValue): CheckboxData =>
-  ({ value })
+const freshCheckbox = (value: CheckboxValue): CheckboxData => ({ value })
 
 const checkbox = <S>(options: CheckboxOptions<S> = {}) => (...focus: Focus) => (state: S): VNode<S> => {
   const props = isContent<S>(options) ? { label: options } : options

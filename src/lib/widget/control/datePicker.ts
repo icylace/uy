@@ -2,7 +2,6 @@ import { Action, ClassProp, VNode, h } from "hyperapp"
 import { Focus, get, set } from "eyepiece"
 
 export type { DatePickerData, DatePickerOptions, DatePickerValue }
-
 export {
   datePicker,
   datetimeLocalPicker,
@@ -53,8 +52,8 @@ const temporalPicker = (type: string) => <S>(options: DatePickerOptions<S> = {})
 
 // -----------------------------------------------------------------------------
 
-const freshDatePicker = (value: DatePickerValue): DatePickerData =>
-  ({ value })
+const freshDatePicker =
+  (value: DatePickerValue): DatePickerData => ({ value })
 
 const datePicker = temporalPicker("date")
 

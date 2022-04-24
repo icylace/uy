@@ -1,22 +1,21 @@
 // TODO:
 // - get rid of this
 
-import { Action, ClassProp, MaybeVNode, VNode, h, text } from "hyperapp"
-import { isAction } from "hyperapplicable"
+import { Action, ClassProp, VNode, h, text } from "hyperapp"
+import { Content, isAction } from "hyperapplicable"
 
 export type { CancelButtonOptions }
 export { cancelButton }
 
 // -----------------------------------------------------------------------------
 
-type CancelButtonOptions<S> =
-  | Action<S, MouseEvent>
-  | {
-    onclick: Action<S, MouseEvent>
-    label?: MaybeVNode<S> | readonly MaybeVNode<S>[]
-    class?: ClassProp
-    disabled?: boolean
-  }
+type CancelButtonOptions<S> = Action<S, MouseEvent> | CancelButtonFullOptions<S>
+type CancelButtonFullOptions<S> = {
+  onclick: Action<S, MouseEvent>
+  label?: Content<S>
+  class?: ClassProp
+  disabled?: boolean
+}
 
 const cancelButton = <S>(options: CancelButtonOptions<S>): VNode<S> => {
   const props = isAction<S, MouseEvent>(options) ? { onclick: options } : options

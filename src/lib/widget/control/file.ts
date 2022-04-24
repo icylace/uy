@@ -11,22 +11,16 @@ export { file, freshFile }
 // -----------------------------------------------------------------------------
 
 type FileValue = string
-
-type FileData = {
-  value: FileValue
+type FileData = { value: FileValue }
+type FileOptions<S> = string | FileFullOptions<S>
+type FileFullOptions<S> = {
+  label?: string
+  onchange?: Action<S, FileValue>
+  class?: ClassProp
+  disabled?: boolean
 }
 
-type FileOptions<S> =
-  | string
-  | {
-      label?: string
-      onchange?: Action<S, FileValue>
-      class?: ClassProp
-      disabled?: boolean
-    }
-
-const freshFile = (value: FileValue): FileData =>
-  ({ value })
+const freshFile = (value: FileValue): FileData => ({ value })
 
 // https://codepen.io/adamlaki/pen/VYpewx
 

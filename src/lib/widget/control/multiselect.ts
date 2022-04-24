@@ -1,4 +1,5 @@
-import { Action, ClassProp, MaybeVNode, VNode, h } from "hyperapp"
+import { Action, ClassProp, VNode, h } from "hyperapp"
+import type { Content } from "hyperapplicable"
 import type { Focus } from "eyepiece"
 import { CheckboxData, CheckboxValue, checkbox, freshCheckbox } from "./checkbox"
 
@@ -7,25 +8,20 @@ export { freshMultiselect, multiselect }
 
 // -----------------------------------------------------------------------------
 
-type MultiselectData = {
-  value: Record<string, CheckboxData>
+type MultiselectData = { value: Record<string, CheckboxData> }
+type MultiselectChoices<S> = Record<string, Content<S>>
+type MultiselectOptions<S> = MultiselectChoices<S> | MultiselectFullOptions<S>
+type MultiselectFullOptions<S> = {
+  choices: MultiselectChoices<S>
+  usingColumnMode?: boolean
+  updater?: Action<S, CheckboxValue>
+  class?: ClassProp
+  disabled?: boolean
 }
-
-type MultiselectChoices<S> = Record<string, MaybeVNode<S> | readonly MaybeVNode<S>[]>
-
-type MultiselectOptions<S> =
-  | MultiselectChoices<S>
-  | {
-    choices: MultiselectChoices<S>
-    usingColumnMode?: boolean
-    updater?: Action<S, CheckboxValue>
-    class?: ClassProp
-    disabled?: boolean
-  }
 
 const freshMultiselect = <S>(
   choices: MultiselectChoices<S>,
-  value: string[]
+  value: readonly string[]
 ): MultiselectData => {
   const data = Object.fromEntries(
     Object.entries(choices).map(([k, _]) => [k, freshCheckbox(false)])
@@ -40,7 +36,7 @@ const freshMultiselect = <S>(
   }
 }
 
-const isOnlyChoices = <S>(x: any): x is Record<string, MaybeVNode<S> | readonly MaybeVNode<S>[]> =>
+const isOnlyChoices = <S>(x: any): x is Record<string, Content<S>> =>
   typeof x === "object" && !("choices" in x)
 
 const multiselect = <S>(options: MultiselectOptions<S>) => (...focus: Focus) => (state: S): VNode<S> => {

@@ -1,4 +1,5 @@
-import { Action, ClassProp, MaybeVNode, VNode, h } from "hyperapp"
+import { Action, ClassProp, VNode, h } from "hyperapp"
+import type { Content } from "hyperapplicable"
 import { Focus, get, set } from "eyepiece"
 import { Defocus, Refocus } from "../../action/helper"
 
@@ -8,30 +9,24 @@ export { dropdown, freshDropdown }
 // -----------------------------------------------------------------------------
 
 type DropdownValue = string
-
 type DropdownData = {
   value: DropdownValue
   "uy-dropdown-arrow"?: boolean
   focused?: boolean
 }
-
-type DropdownChoices<S> =
-  | Record<string, MaybeVNode<S>
-  | readonly MaybeVNode<S>[]>
-
-type DropdownOptions<S> =
-  | DropdownChoices<S>
-  | {
-    choices: DropdownChoices<S>
-    onchange?: Action<S, DropdownValue>
-    class?: ClassProp
-    disabled?: boolean
-  }
+type DropdownChoices<S> = Record<string, Content<S>>
+type DropdownOptions<S> = DropdownChoices<S> | DropdownFullOptions<S>
+type DropdownFullOptions<S> = {
+  choices: DropdownChoices<S>
+  onchange?: Action<S, DropdownValue>
+  class?: ClassProp
+  disabled?: boolean
+}
 
 const freshDropdown = (value: DropdownValue): DropdownData =>
   ({ value, focused: false })
 
-const isOnlyChoices = <S>(x: any): x is Record<string, MaybeVNode<S> | readonly MaybeVNode<S>[]> =>
+const isOnlyChoices = <S>(x: any): x is Record<string, Content<S>> =>
   x != null && typeof x === "object" && !("choices" in x)
 
 const dropdown = <S>(options: DropdownOptions<S>) => (...focus: Focus) => (state: S): VNode<S> => {

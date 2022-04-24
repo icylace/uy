@@ -1,4 +1,5 @@
 import { Action, ClassProp, MaybeVNode, VNode, h, text } from "hyperapp"
+import type { Content } from "hyperapplicable"
 import { Focus, get, set } from "eyepiece"
 import { range } from "wtv"
 import { icon } from "../indicator/icon"
@@ -9,12 +10,10 @@ export { freshPager, pager }
 // -----------------------------------------------------------------------------
 
 type PagerValue = number
-
 type PagerData = {
   itemsTotal: number
   value: PagerValue
 }
-
 type PagerOptions<S> = {
   itemsPerPage: number
   pageRange: number
@@ -26,13 +25,13 @@ type PagerOptions<S> = {
 const freshPager = (itemsTotal: number, value: PagerValue): PagerData =>
   ({ value, itemsTotal })
 
-const pagerNav = <S>(onclick: Action<S>, content: MaybeVNode<S> | readonly MaybeVNode<S>[], active: boolean): VNode<S> =>
+const pagerNav = <S>(onclick: Action<S>, content: Content<S>, active: boolean): VNode<S> =>
   h("span", {
     class: ["uy-pager-nav", !active && "uy-pager-nav-inactive"],
     ...(active ? { onclick } : {}),
   }, content)
 
-const pagerMore = <S>(content: MaybeVNode<S> | readonly MaybeVNode<S>[]): VNode<S> =>
+const pagerMore = <S>(content: Content<S>): VNode<S> =>
   h("span", { class: "uy-pager-more" }, content)
 
 const pager = <S>(options: PagerOptions<S>) => (...focus: Focus) => (state: S): VNode<S> => {

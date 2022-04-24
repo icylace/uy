@@ -1,4 +1,5 @@
-import { ClassProp, EventActions, MaybeVNode, VNode, h } from "hyperapp"
+import { ClassProp, EventActions, VNode, h } from "hyperapp"
+import type { Content } from "hyperapplicable"
 
 export type { ButtonOptions }
 export { button }
@@ -6,7 +7,7 @@ export { button }
 // -----------------------------------------------------------------------------
 
 type ButtonOptions<S> = {
-  label: MaybeVNode<S> | readonly MaybeVNode<S>[]
+  label: Content<S>
   onclick: EventActions<S>["onclick"]
   class?: ClassProp
   disabled?: boolean

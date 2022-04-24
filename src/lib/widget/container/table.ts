@@ -1,5 +1,6 @@
 import { ClassProp, Props, MaybeVNode, VNode, h } from "hyperapp"
-import type { View } from "hyperapplicable"
+import type { Content, View } from "hyperapplicable"
+import type { Want } from "wtv"
 import { icon } from "../indicator/icon"
 
 export type { TableCell, TableOptions, TableRow }
@@ -7,26 +8,21 @@ export { table }
 
 // -----------------------------------------------------------------------------
 
-type TableCell<S> =
-  | MaybeVNode<S>
-  | readonly MaybeVNode<S>[]
-  | View<S>
-  | [Props<S>, MaybeVNode<S> | readonly MaybeVNode<S>[] | View<S>]
+type TableCellContentView<S> = Content<S> | View<S>
+type TableCell<S> = TableCellContentView<S> | [Props<S>, TableCellContentView<S>]
 
 type TableRow<S> = TableCell<S>[]
 
-type TableOptions<S> =
-  | TableRow<S>
-  | {
-    [_: string]: unknown
-    class?: ClassProp
-    disabled?: boolean
-    headers?: TableRow<S>
-    orderColumn?: string | null
-    sortDescending?: boolean
-  }
+type TableFullOptions<S> = {
+  [_: string]: unknown
+  class?: ClassProp
+  disabled?: boolean
+  headers?: TableRow<S>
+  orderColumn?: string | null
+  sortDescending?: boolean
+}
 
-type Want<T> = T | null | undefined
+type TableOptions<S> = TableRow<S> | TableFullOptions<S>
 
 const tableHeader = <S>(orderColumn: Want<string>, sortDescending: Want<boolean>) => (header: TableCell<S>): VNode<S> => {
   const props = (Array.isArray(header) ? header[0] : {}) as Props<S>
@@ -61,8 +57,8 @@ const tableCell = <S>(x: TableCell<S>) => (state: S): VNode<S> =>
 const tableRow = <S>(row: TableRow<S>) => (state: S): VNode<S> =>
   h("tr", {}, row.map((cell) => tableCell(cell)(state)))
 
-const table = <S>(options: TableOptions<S> = {}, rows: TableRow<S>[]) => (state: S): VNode<S> => {
-  const props = Array.isArray(options) ? { headers: options } : options
+const table = <S>(options: TableOptions<S> = {}, rows: readonly TableRow<S>[]) => (state: S): VNode<S> => {
+  const props = (Array.isArray(options) ? { headers: options } : options) as TableFullOptions<S>
   const { headers, orderColumn, sortDescending, disabled, ...etc } = props
   return h("div", { ...etc, class: ["uy-control uy-table", etc.class, { disabled }] }, [
     h("table", {}, [

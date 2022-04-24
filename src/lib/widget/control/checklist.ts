@@ -1,4 +1,5 @@
-import { Action, ClassProp, MaybeVNode, VNode, h, text } from "hyperapp"
+import { Action, ClassProp, VNode, h, text } from "hyperapp"
+import type { Content } from "hyperapplicable"
 import { Focus, get } from "eyepiece"
 import { TableRow, table } from "../container/table"
 import { CheckboxData, CheckboxValue, checkbox } from "./checkbox"
@@ -14,18 +15,18 @@ type ChecklistItem = {
 }
 
 type ChecklistData = {
-  items: ChecklistItem[]
+  items: readonly ChecklistItem[]
 }
 
 type ChecklistOptions<S> = {
-  renderLabel: (_: MaybeVNode<S> | readonly MaybeVNode<S>[]) => MaybeVNode<S> | readonly MaybeVNode<S>[]
+  renderLabel: (_: Content<S>) => Content<S>
   updater?: Action<S, CheckboxValue>
   class?: ClassProp
   disabled?: boolean
 }
 
-const freshChecklist = (items: ChecklistItem[]): ChecklistData =>
-  ({ items })
+const freshChecklist =
+  (items: readonly ChecklistItem[]): ChecklistData => ({ items })
 
 const checklist = <S>(options: ChecklistOptions<S>) => (...focus: Focus) => (state: S): VNode<S> => {
   const { renderLabel, updater, disabled, ...etc } = options

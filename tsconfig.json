@@ -6,16 +6,14 @@
 
 {
   "include": ["./src/**/*"],
-  "exclude": ["./dist", "./output", "./node_modules"],
+  "exclude": ["./dist", "./node_modules"],
   "compilerOptions": {
     /* Basic Options */
-    "incremental": true,                      /* Enable incremental compilation */
     "target": "ESNext",
     "module": "ESNext",
     "lib": ["DOM", "ESNext"],
     "allowJs": true,                          /* Allow javascript files to be compiled. */
     "declaration": true,                      /* Generates corresponding '.d.ts' file. */
-    "outDir": "./output/typescript",
     "removeComments": true,                   /* Do not emit comments to output. */
     "isolatedModules": true,                  /* Transpile each file as a separate module (similar to 'ts.transpileModule'). */
 

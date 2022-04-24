@@ -1,5 +1,5 @@
-import { Action, ClassProp, MaybeVNode, VNode, h } from "hyperapp"
-import { isContent } from "hyperapplicable"
+import { Action, ClassProp, VNode, h } from "hyperapp"
+import { Content, isContent } from "hyperapplicable"
 import { Focus, get, set } from "eyepiece"
 import { Defocus, Refocus } from "../../action/helper"
 
@@ -9,21 +9,17 @@ export { freshNumberbox, numberbox }
 // -----------------------------------------------------------------------------
 
 type NumberboxValue = number
-
 type NumberboxData = {
   focused?: boolean
   value: NumberboxValue
 }
-
-type NumberboxOptions<S> =
-  | MaybeVNode<S>
-  | readonly MaybeVNode<S>[]
-  | {
-    label?: MaybeVNode<S> | readonly MaybeVNode<S>[]
-    onchange?: Action<S, NumberboxValue>
-    class?: ClassProp
-    disabled?: boolean
-  }
+type NumberboxOptions<S> = Content<S> | NumberboxFullOptions<S>
+type NumberboxFullOptions<S> = {
+  label?: Content<S>
+  onchange?: Action<S, NumberboxValue>
+  class?: ClassProp
+  disabled?: boolean
+}
 
 const freshNumberbox = (value: NumberboxValue): NumberboxData =>
   ({ value, focused: false })

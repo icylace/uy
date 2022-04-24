@@ -11,7 +11,7 @@ export { table }
 type TableCellContentView<S> = Content<S> | View<S>
 type TableCell<S> = TableCellContentView<S> | [Props<S>, TableCellContentView<S>]
 
-type TableRow<S> = TableCell<S>[]
+type TableRow<S> = readonly TableCell<S>[]
 
 type TableFullOptions<S> = {
   [_: string]: unknown

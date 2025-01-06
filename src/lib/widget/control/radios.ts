@@ -26,7 +26,7 @@ const isOnlyChoices = <S>(x: any): x is Record<string, Content<S>> =>
 const radios = <S>(options: RadiosOptions<S>) => (...focus: Focus) => (state: S): VNode<S> => {
   const props = isOnlyChoices<S>(options) ? { choices: options } : options
   const { choices, onchange, disabled, ...etc } = props
-  return h("div", { class: ["uy-control uy-radios", etc.class, { disabled }] },
+  return h("div", { class: ["uwye-control uwye-radios", etc.class, { disabled }] },
     // TODO:
     // - switch to using a Map object instead in order to guarantee order
     Object.entries(choices).map(
@@ -44,7 +44,7 @@ const radios = <S>(options: RadiosOptions<S>) => (...focus: Focus) => (state: S)
               return onchange ? onchange(nextState, nextValue) : nextState
             },
             ...etc,
-            class: "uy-input",
+            class: "uwye-input",
           }),
           label != null ? h("span", {}, label) : null,
         ])

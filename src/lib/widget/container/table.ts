@@ -8,11 +8,10 @@ export { table }
 
 // -----------------------------------------------------------------------------
 
-type TableCellContentView<S> = Content<S> | View<S>
-type TableCell<S> = TableCellContentView<S> | [Props<S>, TableCellContentView<S>]
-
+type ContentView<S> = Content<S> | View<S>
+type TableCell<S> = ContentView<S> | [Props<S>, ContentView<S>]
 type TableRow<S> = readonly TableCell<S>[]
-
+type TableOptions<S> = TableRow<S> | TableFullOptions<S>
 type TableFullOptions<S> = {
   [_: string]: unknown
   class?: ClassProp
@@ -21,8 +20,6 @@ type TableFullOptions<S> = {
   orderColumn?: string | null
   sortDescending?: boolean
 }
-
-type TableOptions<S> = TableRow<S> | TableFullOptions<S>
 
 const tableHeader = <S>(orderColumn: Want<string>, sortDescending: Want<boolean>) => (header: TableCell<S>): VNode<S> => {
   const props = (Array.isArray(header) ? header[0] : {}) as Props<S>
@@ -45,9 +42,8 @@ const tableHeader = <S>(orderColumn: Want<string>, sortDescending: Want<boolean>
   ])
 }
 
-const hasPropList = <S>(x: TableCell<S>): x is [
-  Props<S>, MaybeVNode<S> | readonly MaybeVNode<S>[] | View<S>
-] => Array.isArray(x)
+const hasPropList = <S>(x: TableCell<S>): x is [Props<S>, ContentView<S>] =>
+  Array.isArray(x)
 
 const tableCell = <S>(x: TableCell<S>) => (state: S): VNode<S> =>
   hasPropList(x)
@@ -60,7 +56,7 @@ const tableRow = <S>(row: TableRow<S>) => (state: S): VNode<S> =>
 const table = <S>(options: TableOptions<S> = {}, rows: readonly TableRow<S>[]) => (state: S): VNode<S> => {
   const props = (Array.isArray(options) ? { headers: options } : options) as TableFullOptions<S>
   const { headers, orderColumn, sortDescending, disabled, ...etc } = props
-  return h("div", { ...etc, class: ["uy-control uy-table", etc.class, { disabled }] }, [
+  return h("div", { ...etc, class: ["uwye-control uwye-table", etc.class, { disabled }] }, [
     h("table", {}, [
       Array.isArray(headers) && headers.length
         ? h("thead", {}, headers.map(tableHeader(orderColumn, sortDescending)))

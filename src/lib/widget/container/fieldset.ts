@@ -22,6 +22,6 @@ const fieldset = <S>(options: FieldsetOptions<S>, views: readonly View<S>[]) => 
   return h("fieldset", {
     disabled,
     ...etc,
-    class: ["uy-fieldset", etc.class, { disabled }],
+    class: ["uwye-fieldset", etc.class, { disabled }],
   }, label ? [h("legend", {}, label), ...contents] : contents)
 }

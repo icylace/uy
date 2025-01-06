@@ -6,14 +6,14 @@ TODO:
 
 
 
-uy
+uwye
 
-- uy-container: A widget meant to contain other widgets.
-- uy-control: An interactive widget.
-- uy-indicator: A widget meant to display information.
-- uy-input: The element of a widget that accepts user input data.
-- uy-clicky (old): The element of a widget that can be clicked.
-- uy-presser: The element of a widget that can be clicked.
+- uwye-container: A widget meant to contain other widgets.
+- uwye-control: An interactive widget.
+- uwye-indicator: A widget meant to display information.
+- uwye-input: The element of a widget that accepts user input data.
+- uwye-clicky (old): The element of a widget that can be clicked.
+- uwye-presser: The element of a widget that can be clicked.
 
 input control modes:
 - regular
@@ -51,116 +51,116 @@ input control states:
 
 /* -------------------------------------------------------------------------- */
 
-.uy-container {
-  background-color: var(--uy-container-bg-color);
-  border-color: var(--uy-container-border-color);
+.uwye-container {
+  background-color: var(--uwye-container-bg-color);
+  border-color: var(--uwye-container-border-color);
   border-style: solid;
-  border-width: var(--uy-border-width);
-  color: var(--uy-container-color);
-  font-family: var(--uy-font-family);
-  font-size: var(--uy-font-size);
-  padding: var(--uy-container-padding);
+  border-width: var(--uwye-border-width);
+  color: var(--uwye-container-color);
+  font-family: var(--uwye-font-family);
+  font-size: var(--uwye-font-size);
+  padding: var(--uwye-container-padding);
   outline: 0;
 }
-.uy-container.hover,
-.uy-container:hover {
-  background-color: var(--uy-container-bg-color--hover);
-  border-color: var(--uy-container-border-color--hover);
-  color: var(--uy-container-color--hover);
+.uwye-container.hover,
+.uwye-container:hover {
+  background-color: var(--uwye-container-bg-color--hover);
+  border-color: var(--uwye-container-border-color--hover);
+  color: var(--uwye-container-color--hover);
 }
-.uy-container.focus,
-.uy-container:focus {
-  background-color: var(--uy-container-bg-color--focus);
-  border-color: var(--uy-container-border-color--focus);
-  color: var(--uy-container-color--focus);
+.uwye-container.focus,
+.uwye-container:focus {
+  background-color: var(--uwye-container-bg-color--focus);
+  border-color: var(--uwye-container-border-color--focus);
+  color: var(--uwye-container-color--focus);
 }
-.uy-container.active,
-.uy-container:active {
-  background-color: var(--uy-container-bg-color--active);
-  border-color: var(--uy-container-border-color--active);
-  color: var(--uy-container-color--active);
+.uwye-container.active,
+.uwye-container:active {
+  background-color: var(--uwye-container-bg-color--active);
+  border-color: var(--uwye-container-border-color--active);
+  color: var(--uwye-container-color--active);
 }
-.uy-container.disabled,
-.uy-container:disabled {
-  background-color: var(--uy-container-bg-color--disabled);
-  border-color: var(--uy-container-border-color--disabled);
-  color: var(--uy-container-color--disabled);
+.uwye-container.disabled,
+.uwye-container:disabled {
+  background-color: var(--uwye-container-bg-color--disabled);
+  border-color: var(--uwye-container-border-color--disabled);
+  color: var(--uwye-container-color--disabled);
   pointer-events: none;
 }
-.uy-container.locked {
-  border-color: var(--uy-container-border-color--disabled);
+.uwye-container.locked {
+  border-color: var(--uwye-container-border-color--disabled);
 }
 
 /* -------------------------------------------------------------------------- */
 
-.uy-input {
-  background-color: var(--uy-input-bg-color);
-  border-color: var(--uy-input-border-color);
+.uwye-input {
+  background-color: var(--uwye-input-bg-color);
+  border-color: var(--uwye-input-border-color);
   border-style: solid;
-  border-width: var(--uy-border-width);
-  color: var(--uy-input-color);
+  border-width: var(--uwye-border-width);
+  color: var(--uwye-input-color);
   cursor: pointer;
-  font-family: var(--uy-font-family);
-  font-size: var(--uy-font-size);
-  padding: var(--uy-input-padding);
+  font-family: var(--uwye-font-family);
+  font-size: var(--uwye-font-size);
+  padding: var(--uwye-input-padding);
   outline: 0;
 }
-.uy-input.hover,
-.uy-input:hover {
-  background-color: var(--uy-input-bg-color--hover);
-  border-color: var(--uy-input-border-color--hover);
-  color: var(--uy-input-color--hover);
+.uwye-input.hover,
+.uwye-input:hover {
+  background-color: var(--uwye-input-bg-color--hover);
+  border-color: var(--uwye-input-border-color--hover);
+  color: var(--uwye-input-color--hover);
 }
-.uy-input.focus,
-.uy-input:focus {
-  background-color: var(--uy-input-bg-color--focus);
-  border-color: var(--uy-input-border-color--focus);
-  color: var(--uy-input-color--focus);
+.uwye-input.focus,
+.uwye-input:focus {
+  background-color: var(--uwye-input-bg-color--focus);
+  border-color: var(--uwye-input-border-color--focus);
+  color: var(--uwye-input-color--focus);
 }
-.uy-input.active,
-.uy-input:active {
-  background-color: var(--uy-input-bg-color--active);
-  border-color: var(--uy-input-border-color--active);
-  color: var(--uy-input-color--active);
+.uwye-input.active,
+.uwye-input:active {
+  background-color: var(--uwye-input-bg-color--active);
+  border-color: var(--uwye-input-border-color--active);
+  color: var(--uwye-input-color--active);
 }
-.uy-input.disabled,
-.uy-input:disabled {
-  background-color: var(--uy-input-bg-color--disabled);
-  border-color: var(--uy-input-border-color--disabled);
-  color: var(--uy-input-color--disabled);
+.uwye-input.disabled,
+.uwye-input:disabled {
+  background-color: var(--uwye-input-bg-color--disabled);
+  border-color: var(--uwye-input-border-color--disabled);
+  color: var(--uwye-input-color--disabled);
   pointer-events: none;
 }
-.uy-input.locked {
-  border-color: var(--uy-input-border-color--disabled);
+.uwye-input.locked {
+  border-color: var(--uwye-input-border-color--disabled);
   pointer-events: none;
 }
 
 /* -------------------------------------------------------------------------- */
 
-.uy-clicky {
+.uwye-clicky {
   cursor: pointer;
 }
 
 /* -------------------------------------------------------------------------- */
 
-/* .uy-horizontal {
+/* .uwye-horizontal {
   align-items: center;
   display: flex;
 }
 
-.uy-horizontal > * + * {
+.uwye-horizontal > * + * {
   margin-left: 0.5em;
 }
 
-.uy-horizontal > * + .uy-checkbox-wrapper {
+.uwye-horizontal > * + .uwye-checkbox-wrapper {
   margin-left: 2em;
 }
 
-.uy-table .uy-horizontal .uy-textbox-wrapper {
+.uwye-table .uwye-horizontal .uwye-textbox-wrapper {
   margin-left: 0.5em;
 }
 
-.uy-table .uy-horizontal .uy-textbox {
+.uwye-table .uwye-horizontal .uwye-textbox {
   width: 10em;
 } */
 

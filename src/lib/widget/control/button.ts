@@ -15,7 +15,7 @@ type ButtonOptions<S> = {
 
 const button = <S>(options: ButtonOptions<S>): VNode<S> => {
   const { label, disabled, ...etc } = options
-  return h("div", { class: ["uy-control uy-button", etc.class, { disabled }] }, [
+  return h("div", { class: ["uwye-control uwye-button", etc.class, { disabled }] }, [
     h("button", { type: "button", disabled, ...etc }, label),
   ])
 }

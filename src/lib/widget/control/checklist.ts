@@ -33,7 +33,7 @@ const checklist = <S>(options: ChecklistOptions<S>) => (...focus: Focus) => (sta
 
   const item = (x: ChecklistItem, i: number): TableRow<S> => [
     [
-      { class: { "uy-horizontal": x.id === "other" } },
+      { class: { "uwye-horizontal": x.id === "other" } },
       [
         checkbox({
           label: renderLabel(text(x.id)),
@@ -46,7 +46,7 @@ const checklist = <S>(options: ChecklistOptions<S>) => (...focus: Focus) => (sta
 
   return h(
     "div",
-    { ...etc, class: ["uy-checklist", etc.class, { disabled }] },
+    { ...etc, class: ["uwye-checklist", etc.class, { disabled }] },
     table({ disabled }, get<ChecklistData>(focus)(state).items.map(item))(state)
   )
 }

@@ -42,7 +42,7 @@ const tab = <S>(focus: Focus, activeTab: TabIndex, onclick?: Transform<S>) => {
   return (item: MaybeVNode<S>, i: number): VNode<S> => {
     const selected = isSelected(activeTab)(item, i)
     return h("div", {
-      class: ["uy-tabs-item", { selected }],
+      class: ["uwye-tabs-item", { selected }],
       onclick: (state, event) => {
         const target = event.target as HTMLInputElement
         const nextValue = freshTabs(
@@ -75,18 +75,18 @@ const tabs = <S>(options: TabsOptions<S>) => (...focus: Focus) => (state: S): VN
 
   return h("div", {
     ...etc,
-    class: ["uy-control uy-tabs", etc.class, { disabled }],
+    class: ["uwye-control uwye-tabs", etc.class, { disabled }],
   }, [
-    h("div", { class: "uy-tabs-navigation" }, [
+    h("div", { class: "uwye-tabs-navigation" }, [
       ...encase(itemsHeader),
       h(
         "div",
-        { class: "uy-tabs-list uy-scroller" },
+        { class: "uwye-tabs-list uwye-scroller" },
         headings.map(tab<S>(focus, x, onclick))
       ),
       ...encase(itemsFooter),
     ]),
-    h("div", { class: "uy-tabs-panels" }, [
+    h("div", { class: "uwye-tabs-panels" }, [
       panels[headings.findIndex(isSelected(x))],
     ]),
   ])

@@ -27,7 +27,7 @@ const freshFile = (value: FileValue): FileData => ({ value })
 const file = <S>(options: FileOptions<S> = {}) => (...focus: Focus) => (state: S): VNode<S> => {
   const props = typeof options === "string" ? { label: options } : options
   const { label = "Select your file...", onchange, disabled, ...etc } = props
-  return h("div", { class: ["uy-control uy-file uy-input", etc.class, { disabled }] }, [
+  return h("div", { class: ["uwye-control uwye-file uwye-input", etc.class, { disabled }] }, [
     h("label", { "data-text": label }, [
       h("input", {
         type: "file",

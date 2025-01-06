@@ -45,13 +45,13 @@ const multiselect = <S>(options: MultiselectOptions<S>) => (...focus: Focus) => 
   return h("div", {
     ...etc,
     class: [
-      "uy-control uy-scroller uy-multiselect",
-      { "uy-multiselect--grid-mode": !!usingColumnMode },
+      "uwye-control uwye-scroller uwye-multiselect",
+      { "uwye-multiselect--grid-mode": !!usingColumnMode },
       etc.class,
       { disabled },
     ],
   }, [
-    h("div", { class: "uy-multiselect-options" },
+    h("div", { class: "uwye-multiselect-options" },
       Object.entries(choices).map(
         ([value, label]) =>
           checkbox({ label, updater, disabled })(focus, "value", value)(state)

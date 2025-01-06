@@ -11,7 +11,7 @@ export { dropdown, freshDropdown }
 type DropdownValue = string
 type DropdownData = {
   value: DropdownValue
-  "uy-dropdown-arrow"?: boolean
+  "uwye-dropdown-arrow"?: boolean
   focused?: boolean
 }
 type DropdownChoices<S> = Record<string, Content<S>>
@@ -33,8 +33,8 @@ const dropdown = <S>(options: DropdownOptions<S>) => (...focus: Focus) => (state
   const props = isOnlyChoices<S>(options) ? { choices: options } : options
   const { choices, onchange, disabled, ...etc } = props
   const x = get<DropdownData>(focus)(state)
-  return h("div", { class: ["uy-control uy-dropdown", etc.class, { disabled }] }, [
-    h("div", { class: { "uy-dropdown-arrow": true, focus: x.focused, disabled } }, [
+  return h("div", { class: ["uwye-control uwye-dropdown", etc.class, { disabled }] }, [
+    h("div", { class: { "uwye-dropdown-arrow": true, focus: x.focused, disabled } }, [
       h("select",
         {
           value: x.value,
@@ -48,7 +48,7 @@ const dropdown = <S>(options: DropdownOptions<S>) => (...focus: Focus) => (state
             return onchange ? onchange(nextState, nextValue) : nextState
           },
           ...etc,
-          class: "uy-input",
+          class: "uwye-input",
         },
         // TODO:
         // - switch to using a Map object instead in order to guarantee order

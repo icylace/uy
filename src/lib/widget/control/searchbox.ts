@@ -121,7 +121,7 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => (sta
       return update(target.value)(state)
     },
     ...etc,
-    class: "uy-input",
+    class: "uwye-input",
   })
 
   const searchResult = (result: string): VNode<S> =>
@@ -141,15 +141,15 @@ const searchbox = <S>(options: SearchboxOptions<S>) => (...focus: Focus) => (sta
   const popupNode = (
     x.results.length && !disabled
       ? popper({ disabled, id }, [
-          h("ul", { class: "uy-searchbox-results uy-scroller" }, x.results.map(searchResult)),
+          h("ul", { class: "uwye-searchbox-results uwye-scroller" }, x.results.map(searchResult)),
         ])
       : null
   ) as MaybeVNode<S>
 
-  return h("div", { class: ["uy-control uy-searchbox", etc.class, { disabled }] }, [
+  return h("div", { class: ["uwye-control uwye-searchbox", etc.class, { disabled }] }, [
     h("label", {
       class: {
-        "uy-searchbox-label": true,
+        "uwye-searchbox-label": true,
         focus: x.focused,
         busy: x.searching,
         disabled,

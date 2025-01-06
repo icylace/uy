@@ -5,4 +5,4 @@ export { icon }
 // -----------------------------------------------------------------------------
 
 const icon = <S>(classProp: ClassProp): VNode<S> =>
-  h("i", { class: ["uy-indicator uy-icon", classProp] })
+  h("i", { class: ["uwye-indicator uwye-icon", classProp] })

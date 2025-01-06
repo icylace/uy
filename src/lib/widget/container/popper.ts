@@ -20,6 +20,6 @@ const popper = <S>(options: PopperOptions, content: Content<S>): VNode<S> => {
   return h("div", {
     id,
     ...etc,
-    class: ["uy-popper", etc.class, { disabled }],
+    class: ["uwye-popper", etc.class, { disabled }],
   }, content)
 }

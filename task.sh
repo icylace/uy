@@ -21,10 +21,10 @@ task:index() {
     'clean'
     'dev'
     'lint'
-    'preview'
     'reinstall'
     'release'
     'reset'
+    'serve'
     'test'
   )
 
@@ -132,12 +132,6 @@ task:lint() {
 
 # ------------------------------------------------------------------------------
 
-task:preview() {
-  npx vite preview
-}
-
-# ------------------------------------------------------------------------------
-
 task:reinstall() {
   echo
   echo "Reinstalling dependencies..."
@@ -221,6 +215,12 @@ task:release() {
 task:reset() {
   task:reinstall
   task:clean
+}
+
+# ------------------------------------------------------------------------------
+
+task:serve() {
+  npx vite preview
 }
 
 # ------------------------------------------------------------------------------

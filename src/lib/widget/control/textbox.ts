@@ -18,7 +18,7 @@ const freshTextbox = (value: TextboxValue): TextboxData => ({ value })
 
 const textbox = <S>(options: TextboxOptions<S> = {}) => (...focus: Focus) => (state: S): VNode<S> => {
   const { onchange, disabled, ...etc } = options
-  return h("div", { class: ["uy-control uy-textbox", etc.class, { disabled }] }, [
+  return h("div", { class: ["uwye-control uwye-textbox", etc.class, { disabled }] }, [
     h("input", {
       type: "text",
       value: get<TextboxData>(focus)(state).value,
@@ -30,7 +30,7 @@ const textbox = <S>(options: TextboxOptions<S> = {}) => (...focus: Focus) => (st
         return onchange ? onchange(nextState, nextValue) : nextState
       },
       ...etc,
-      class: "uy-input",
+      class: "uwye-input",
     }),
   ])
 }

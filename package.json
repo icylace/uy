@@ -1,17 +1,17 @@
 {
-  "name": "@icylace/uy",
-  "version": "0.1.92",
-  "description": "uy is a UI library for Hyperapp.",
+  "name": "uwye",
+  "version": "0.0.0",
+  "description": "uwye is a UI library for Hyperapp.",
   "keywords": [
     "hyperapp"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/icylace/uy",
+  "homepage": "https://github.com/icylace/uwye",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/icylace/uy.git"
+    "url": "git+https://github.com/icylace/uwye.git"
   },
-  "bugs": "https://github.com/icylace/uy/issues",
+  "bugs": "https://github.com/icylace/uwye/issues",
   "author": {
     "name": "Ron Martinez",
     "email": "ramartin.net@gmail.com",
@@ -20,29 +20,21 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/index.js",
-  "browser": "./dist/index.esm.js",
-  "unpkg": "./dist/index.js",
-  "module": "./dist/index.esm.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/index.esm.js",
-      "require": "./dist/index.umd.js"
-    }
-  },
+  "main": "./dist/uwye.es.js",
+  "browser": "./dist/uwye.es.js",
+  "unpkg": "./dist/uwye.es.js",
+  "module": "./dist/uwye.es.js",
+  "types": "./dist/uwye.d.ts",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "serve": "vite preview",
-    "build:dev": "./task.sh build:dev",
-    "build:prod": "./task.sh build:prod",
+    "build": "./task.sh build",
     "check": "./task.sh check",
     "clean": "./task.sh clean",
+    "dev": "./task.sh dev",
     "lint": "./task.sh lint",
     "reinstall": "./task.sh reinstall",
     "release": "./task.sh release",
     "reset": "./task.sh reset",
+    "serve": "./task.sh serve",
     "test": "./task.sh test"
   },
   "publishConfig": {
@@ -50,8 +42,8 @@
   },
   "devDependencies": {
     "@types/jest": "^27.4.1",
-    "@typescript-eslint/eslint-plugin": "^5.20.0",
-    "@typescript-eslint/parser": "^5.20.0",
+    "@typescript-eslint/eslint-plugin": "^5.21.0",
+    "@typescript-eslint/parser": "^5.21.0",
     "cssnano": "^5.1.7",
     "eslint": "^8.14.0",
     "fast-check": "^2.24.0",

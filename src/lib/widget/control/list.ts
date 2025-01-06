@@ -44,7 +44,7 @@ const list = <S>(options: ListOptions<S> = {}) => (...focus: Focus) => (state: S
 
   const grower: readonly TableCell<S>[] = [
     [
-      { class: "uy-list-adder", colspan: 2 },
+      { class: "uwye-list-adder", colspan: 2 },
       button({
         label: text("+ Add"),
         disabled,
@@ -60,7 +60,7 @@ const list = <S>(options: ListOptions<S> = {}) => (...focus: Focus) => (state: S
 
   return h("div", {
     ...etc,
-    class: ["uy-control uy-list", etc.class, { disabled }],
+    class: ["uwye-control uwye-list", etc.class, { disabled }],
   }, [
     table(
       { headers, disabled, sortDescending: false },

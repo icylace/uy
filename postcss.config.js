@@ -1,5 +1,3 @@
-"use strict"
-
 // https://github.com/postcss/postcss#usage
 // https://github.com/postcss/postcss-cli#context
 

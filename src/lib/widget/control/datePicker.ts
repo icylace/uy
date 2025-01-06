@@ -33,7 +33,7 @@ type DatePickerOptions<S> = {
 
 const temporalPicker = (type: string) => <S>(options: DatePickerOptions<S> = {}) => (...focus: Focus) => (state: S): VNode<S> => {
   const { onchange, disabled, ...etc } = options
-  return h("div", { class: ["uy-control uy-datePicker", etc.class, { disabled }] }, [
+  return h("div", { class: ["uwye-control uwye-datePicker", etc.class, { disabled }] }, [
     h("input", {
       type,
       value: get<DatePickerData>(focus)(state).value,
@@ -45,7 +45,7 @@ const temporalPicker = (type: string) => <S>(options: DatePickerOptions<S> = {})
         return onchange ? onchange(nextState, nextValue) : nextState
       },
       ...etc,
-      class: "uy-input",
+      class: "uwye-input",
     }),
   ])
 }

@@ -24,7 +24,7 @@ const checkbox = <S>(options: CheckboxOptions<S> = {}) => (...focus: Focus) => (
   const props = isContent<S>(options) ? { label: options } : options
   const { label, disabled, updater, ...etc } = props
   const value = get<CheckboxData>(focus)(state).value
-  return h("div", { class: ["uy-control uy-checkbox", etc.class, { disabled }] }, [
+  return h("div", { class: ["uwye-control uwye-checkbox", etc.class, { disabled }] }, [
     h("label", {}, [
       h("input", {
         type: "checkbox",
@@ -38,7 +38,7 @@ const checkbox = <S>(options: CheckboxOptions<S> = {}) => (...focus: Focus) => (
           return updater ? updater(nextState, nextValue) : nextState
         },
         ...etc,
-        class: "uy-input",
+        class: "uwye-input",
       }),
       label ? h("span", {}, label) : null,
     ]),

@@ -7,8 +7,8 @@ const { resolve } = require("path")
 export default defineConfig({
   build: {
     lib: {
-      entry: resolve(__dirname, "./src/lib/uy.ts"),
-      name: "uy",
+      entry: resolve(__dirname, "./src/lib/uwye.ts"),
+      name: "uwye",
     },
     rollupOptions: {
       external: [

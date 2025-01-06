@@ -18,7 +18,7 @@ const freshTextarea = (value: TextareaValue): TextareaData => ({ value })
 
 const textarea = <S>(options: TextareaOptions<S> = {}) => (...focus: Focus) => (state: S): VNode<S> => {
   const { onchange, disabled, ...etc } = options
-  return h("div", { class: ["uy-control uy-textarea", etc.class, { disabled }] }, [
+  return h("div", { class: ["uwye-control uwye-textarea", etc.class, { disabled }] }, [
     h("textarea", {
       value: get<TextareaData>(focus)(state).value,
       disabled,
@@ -29,7 +29,7 @@ const textarea = <S>(options: TextareaOptions<S> = {}) => (...focus: Focus) => (
         return onchange ? onchange(nextState, nextValue) : nextState
       },
       ...etc,
-      class: "uy-input",
+      class: "uwye-input",
     }),
   ])
 }

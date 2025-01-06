@@ -27,12 +27,12 @@ const freshPager = (itemsTotal: number, value: PagerValue): PagerData =>
 
 const pagerNav = <S>(onclick: Action<S>, content: Content<S>, active: boolean): VNode<S> =>
   h("span", {
-    class: ["uy-pager-nav", !active && "uy-pager-nav-inactive"],
+    class: ["uwye-pager-nav", !active && "uwye-pager-nav-inactive"],
     ...(active ? { onclick } : {}),
   }, content)
 
 const pagerMore = <S>(content: Content<S>): VNode<S> =>
-  h("span", { class: "uy-pager-more" }, content)
+  h("span", { class: "uwye-pager-more" }, content)
 
 const pager = <S>(options: PagerOptions<S>) => (...focus: Focus) => (state: S): VNode<S> => {
   const { itemsPerPage, pageRange, onclick, disabled, ...etc } = options
@@ -54,7 +54,7 @@ const pager = <S>(options: PagerOptions<S>) => (...focus: Focus) => (state: S): 
       const current = currentPage === x.value
       return rangeStartPage <= currentPage && currentPage <= rangeFinishPage
         ? h("li", {
-          class: ["uy-pager-nav uy-pager-page", current && "uy-pager-current"],
+          class: ["uwye-pager-nav uwye-pager-page", current && "uwye-pager-current"],
           onclick: update(currentPage),
         }, h("span", {}, text(currentPage + 1)))
         : null
@@ -89,7 +89,7 @@ const pager = <S>(options: PagerOptions<S>) => (...focus: Focus) => (state: S): 
 
   return h("div", {
     ...etc,
-    class: ["uy-control uy-pager", etc.class, { disabled }],
+    class: ["uwye-control uwye-pager", etc.class, { disabled }],
   }, [
     h("ul", {}, [
       h("li", {}, navFirst),
